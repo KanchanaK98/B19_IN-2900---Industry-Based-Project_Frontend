@@ -8,3 +8,7 @@ export const searchCandidate = (NIC) =>
   API.get(`/recruitment/candidate/${NIC}`);
 export const updateCandidate = (candidateData, candidateId) =>
   API.put(`/recruitment/candidate/${candidateId}`, candidateData);
+
+
+export const userLogin = (user) =>
+  API.post("/login",user);

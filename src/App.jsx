@@ -5,8 +5,10 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import NavBar from "./Components/Navigation/NavBar/NavBar";
 import SideBar from "./Components/Navigation/SideBar/SideBar";
 import CreateCandidate from "./Pages/RecruitmentModule/CreateCandidateProfile/CreateCandidate";
-import Example from "./Components/AssetManagementModule/Example";
+import ViewAsset from "./Components/AssetManagementModule/ViewAsset";
+// import ViewAsset from './Pages/AssetManagementModule/ViewAsset'
 import Login from "./Components/Login/Login";
+import AssetInsertion from "./Components/AssetManagementModule/AssetInsertion";
 
 function App() {
   const [open, setOpen] = useState(true);
@@ -28,7 +30,8 @@ function App() {
             <Routes>
               <Route exact path="/" element={<Login setUser={setUser} />} />
               <Route path="candidate" element={<CreateCandidate />} />
-              <Route path="/asset" element={<Example />} />
+              <Route path="/asset" element={<ViewAsset />} />
+              <Route path="/assetInsertion" element={<AssetInsertion />} />
             </Routes>
           </BrowserRouter>
         </Grid>

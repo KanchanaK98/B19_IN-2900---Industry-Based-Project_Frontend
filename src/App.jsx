@@ -7,10 +7,11 @@ import SideBar from "./Components/Navigation/SideBar/SideBar";
 import CreateCandidate from "./Pages/RecruitmentModule/CreateCandidateProfile/CreateCandidate";
 import Example from "./Components/AssetManagementModule/Example";
 import Login from "./Components/Login/Login";
+import Interviews from "./Pages/RecruitmentModule/CreateInterviews/Interviews";
 
 function App() {
   const [open, setOpen] = useState(true);
-  const [user, setUser] = useState(false);
+  const [user, setUser] = useState(true);
 
   const toggleDrawer = () => {
     setOpen(!open);
@@ -23,11 +24,12 @@ function App() {
         <Grid item sm={12} md={12}>
           {user && <NavBar open={open} toggleDrawer={toggleDrawer} />}
         </Grid>
-        <Grid item sm={12} md={12} sx={{ p: !user ? 0 : 4 }}>
+        <Grid item sm={12} md={12}>
           <BrowserRouter>
             <Routes>
               <Route exact path="/" element={<Login setUser={setUser} />} />
-              <Route path="candidate" element={<CreateCandidate />} />
+              <Route path="/candidate" element={<CreateCandidate />} />
+              <Route path="/interview" element={<Interviews />} />
               <Route path="/asset" element={<Example />} />
             </Routes>
           </BrowserRouter>

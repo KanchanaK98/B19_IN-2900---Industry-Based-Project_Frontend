@@ -8,28 +8,34 @@ import CreateCandidate from "./Pages/RecruitmentModule/CreateCandidateProfile/Cr
 import ViewAsset from "./Components/AssetManagementModule/ViewAsset";
 // import ViewAsset from './Pages/AssetManagementModule/ViewAsset'
 import Login from "./Components/Login/Login";
+import Interviews from "./Pages/RecruitmentModule/Interviews/Interviews";
 import AssetInsertion from "./Components/AssetManagementModule/AssetInsertion";
+import CreateUpdateInterview from "./Pages/RecruitmentModule/Interviews/CreateUpdateInterview/CreateUpdateInterview";
 
 function App() {
   const [open, setOpen] = useState(true);
-  const [user, setUser] = useState(false);
+  const [user, setUser] = useState(true);
 
   const toggleDrawer = () => {
     setOpen(!open);
   };
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", }}>
       <CssBaseline />
       {user && <SideBar open={open} toggleDrawer={toggleDrawer} />}
       <Grid container>
         <Grid item sm={12} md={12}>
           {user && <NavBar open={open} toggleDrawer={toggleDrawer} />}
         </Grid>
-        <Grid item sm={12} md={12} sx={{ p: !user ? 0 : 4 }}>
+        <Grid item sm={12} md={12}>
           <BrowserRouter>
             <Routes>
               <Route exact path="/" element={<Login setUser={setUser} />} />
-              <Route path="candidate" element={<CreateCandidate />} />
+
+              <Route path="/candidate" element={<CreateCandidate />} />
+              <Route path="/interview" element={<Interviews open={open}/>} />
+              <Route path="/interview/create" element={<CreateUpdateInterview />} />
+
               <Route path="/asset" element={<ViewAsset />} />
               <Route path="/assetInsertion" element={<AssetInsertion />} />
             </Routes>

@@ -2,7 +2,6 @@ import * as React from 'react';
 import { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
@@ -10,10 +9,9 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import axios from "axios";
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
+import {LoginApi} from '../../Api/Login/LoginApi';
 
 function Copyright(props) {
     return (
@@ -28,49 +26,56 @@ function Copyright(props) {
     );
   }
   
-  const theme = createTheme();
+  
 
 export default function Login() {
     
     const [nonfill, setnonfill] = useState(false);
     const [invalid, setinvalid] = useState(false);
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        console.log({
-          userName:data.get('uname'),password:data.get('password'),
-        });
+        
         const user = {
           userName:data.get('uname'),password:data.get('password'),
         }
             if(data.get('uname')!==""&&data.get('password')!=="")
             {
-                axios.post("http://localhost:8070/login",user).then(()=>{
-                    window.location.href = '/asset';
-                }).catch((err)=>{
-                    setnonfill(false);
-                    setinvalid(true);
-                    
-                    
-                })
+              const response = await LoginApi(user);
+              if(response.success === true)
+              {
+                //console.log("user can sign in")
+                window.location.href = '/asset';
+              }else
+              {
+                setinvalid(true);
+                
+                setTimeout(() => {
+                  setinvalid(false);
+                }, 2000);
+              }
+              
+
+                
             }else{
-                //alert("Fill both Email and Password!")
-                setinvalid(false);
                 setnonfill(true);
+                setTimeout(() => {
+                  setnonfill(false);
+                }, 2000);
             }
         
     
       };
   return (
-    <ThemeProvider theme={theme}>
+    
       <Grid container component="main" sx={{ height: '100vh' }}>
-        <CssBaseline />
+        
         <Grid
           item
           xs={false}
           sm={4}
-          md={6}
+          md={7}
           sx={{
             backgroundImage: 'url(https://www.thesoftwarereport.com/wp-content/uploads/2020/08/Tech-company-IPO.jpg)',
             backgroundRepeat: 'no-repeat',
@@ -152,6 +157,6 @@ export default function Login() {
           </Box>
         </Grid>
       </Grid>
-    </ThemeProvider>
+    
   );
 }

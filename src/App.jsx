@@ -9,10 +9,11 @@ import ViewAsset from "./Components/AssetManagementModule/ViewAsset";
 // import ViewAsset from './Pages/AssetManagementModule/ViewAsset'
 import Login from "./Components/Login/Login";
 import AssetInsertion from "./Components/AssetManagementModule/AssetInsertion";
+import RequestLeaves from "./Pages/LeaveManagementModule/RequestLeaves/RequestLeaves";
 
 function App() {
   const [open, setOpen] = useState(true);
-  const [user, setUser] = useState(false);
+  const [user, setUser] = useState(true);
 
   const toggleDrawer = () => {
     setOpen(!open);
@@ -32,6 +33,9 @@ function App() {
               <Route path="candidate" element={<CreateCandidate />} />
               <Route path="/asset" element={<ViewAsset />} />
               <Route path="/assetInsertion" element={<AssetInsertion />} />
+
+              <Route path="/requestLeave" element={<RequestLeaves />} />
+
             </Routes>
           </BrowserRouter>
         </Grid>

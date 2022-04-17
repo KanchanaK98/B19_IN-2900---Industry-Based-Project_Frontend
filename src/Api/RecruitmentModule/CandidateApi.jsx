@@ -49,3 +49,13 @@ export const updateCandidate = async (candidateData, candidateId) => {
     console.log(error);
   }
 };
+
+export const fetchCandidates = async () => {
+  try {
+    const { data } = await api.fetchCandidates();
+
+    return data.candidates;
+  } catch (error) {
+    console.log(error);
+  }
+};

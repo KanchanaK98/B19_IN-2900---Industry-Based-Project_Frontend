@@ -8,8 +8,9 @@ import CreateCandidate from "./Pages/RecruitmentModule/CreateCandidateProfile/Cr
 import ViewAsset from "./Components/AssetManagementModule/ViewAsset";
 // import ViewAsset from './Pages/AssetManagementModule/ViewAsset'
 import Login from "./Components/Login/Login";
-import Interviews from "./Pages/RecruitmentModule/CreateInterviews/Interviews";
+import Interviews from "./Pages/RecruitmentModule/Interviews/Interviews";
 import AssetInsertion from "./Components/AssetManagementModule/AssetInsertion";
+import CreateUpdateInterview from "./Pages/RecruitmentModule/Interviews/CreateUpdateInterview/CreateUpdateInterview";
 
 function App() {
   const [open, setOpen] = useState(true);
@@ -19,7 +20,7 @@ function App() {
     setOpen(!open);
   };
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", }}>
       <CssBaseline />
       {user && <SideBar open={open} toggleDrawer={toggleDrawer} />}
       <Grid container>
@@ -32,7 +33,8 @@ function App() {
               <Route exact path="/" element={<Login setUser={setUser} />} />
 
               <Route path="/candidate" element={<CreateCandidate />} />
-              <Route path="/interview" element={<Interviews />} />
+              <Route path="/interview" element={<Interviews open={open}/>} />
+              <Route path="/interview/create" element={<CreateUpdateInterview />} />
 
               <Route path="/asset" element={<ViewAsset />} />
               <Route path="/assetInsertion" element={<AssetInsertion />} />

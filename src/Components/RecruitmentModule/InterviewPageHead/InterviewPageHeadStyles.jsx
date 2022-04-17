@@ -3,11 +3,11 @@ import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles((theme) => ({
     container : {
-        height : '30vh',
+        // height : '40vh',
         width: '100%',
         backgroundColor : 'rgb(0, 0, 255)',
-        padding: theme.spacing(4),
-        borderRadius : theme.spacing(0, 0, 4, 4),
+        borderRadius : theme.spacing(0, 100, 100, 0),
+        //boxShadow: theme.spacing(0, 2, 5, 0.1),
     },
     header :{
         display: 'flex',
@@ -16,8 +16,6 @@ const useStyles = makeStyles((theme) => ({
     },
     button : {
         display: 'flex',
-        
-       
         justifyContent : 'flex-end'
     }
 }))

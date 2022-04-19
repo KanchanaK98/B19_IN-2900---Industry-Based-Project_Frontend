@@ -9,6 +9,11 @@ export const searchCandidate = (NIC) =>
 export const updateCandidate = (candidateData, candidateId) =>
   API.put(`/recruitment/candidate/${candidateId}`, candidateData);
 
+export const userLogin = (user) => API.post("/login", user);
 
-export const userLogin = (user) =>
-  API.post("/login",user);
+export const createEmployee = (employee) =>
+  API.post(`/employee/add/`, employee);
+
+
+  export const updateEmployee = (employeeData) =>
+  API.put(`/employee/update/${employeeData.employeeID}`, employeeData);

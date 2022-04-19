@@ -7,10 +7,16 @@ import SideBar from "./Components/Navigation/SideBar/SideBar";
 import CreateCandidate from "./Pages/RecruitmentModule/CreateCandidateProfile/CreateCandidate";
 import Example from "./Components/AssetManagementModule/Example";
 import Login from "./Components/Login/Login";
-
+import CreateEmployee from "./Components/ReportersManagementModule/CreateEmployeeForm/CreateEmployee";
+import EditEmployee from "./Components/ReportersManagementModule/UpdateEmployeesForm/EditEmployee";
+import DashBord from "./Pages/ReportersManagementModule/DashBoard/DashBord";
+import Add from "./Components/ReportersManagementModule/TeamCreate/Add";
+import TeamPage from "./Pages/ReportersManagementModule/Teams/TeamPage";
+import ProductPage from "./Pages/ReportersManagementModule/Products/ProductPage";
+import CreateTeams from "./Components/ReportersManagementModule/TeamCreate/CreateTeams";
 function App() {
   const [open, setOpen] = useState(true);
-  const [user, setUser] = useState(false);
+  const [user, setUser] = useState(true); //true when working
 
   const toggleDrawer = () => {
     setOpen(!open);
@@ -29,6 +35,13 @@ function App() {
               <Route exact path="/" element={<Login setUser={setUser} />} />
               <Route path="candidate" element={<CreateCandidate />} />
               <Route path="/asset" element={<Example />} />
+              <Route path="/dashboard" element={<DashBord />} />
+              <Route path="/profile/update/" element={<EditEmployee />} />
+              <Route path="createemployee" element={<CreateEmployee />} />
+              <Route path="add" element={<Add />} />
+              <Route path="/teams" element={<TeamPage />} />
+              <Route path="/products" element={<ProductPage />} />
+              <Route path="/team" element={<CreateTeams />} />
             </Routes>
           </BrowserRouter>
         </Grid>

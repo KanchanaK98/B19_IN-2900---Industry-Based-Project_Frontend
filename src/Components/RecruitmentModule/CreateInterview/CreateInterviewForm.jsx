@@ -29,7 +29,9 @@ import { fetchCandidates } from "../../../Api/RecruitmentModule/CandidateApi";
 import {
   createInterview,
   fetchEmployees,
+  updateInterview,
 } from "../../../Api/RecruitmentModule/InterviewApi";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const CreateInterviewForm = () => {
   const [interview, setInterview] = useState({
@@ -41,10 +43,14 @@ const CreateInterviewForm = () => {
   });
   const [candidates, setCandidates] = useState([]);
   const [employees, setEmployees] = useState([]);
+  const [interviewID, setInterviewID] = useState(null);
   const [openSnackBar, setOpenSnackBar] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
 
+  const location = useLocation();
+  const navigate = useNavigate();
   const classes = useStyles();
+
   const fetchData = async () => {
     setCandidates(await fetchCandidates());
     setEmployees(await fetchEmployees());
@@ -52,18 +58,38 @@ const CreateInterviewForm = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+    if (location.state) {
+      const updateInterview = location.state.interview;
+      setInterview({
+        candidateName: updateInterview.candidateName,
+        candidateID : updateInterview.candidateID,
+        InterviewType: updateInterview.InterviewType,
+        InterviewDate: updateInterview.InterviewDate,
+        InterviewTime: updateInterview.InterviewDate,
+        Interviewers: updateInterview.Interviewers,
+      });
+      setInterviewID(location.state.interview._id);
+    }
+  }, [location.state]);
 
-  const handleSubmit = async(event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const response = await createInterview(interview);
-    if (response.success === true) setOpenSnackBar(true);
+    if (interviewID) {
+      const response = await updateInterview(interview, interviewID);
+      if (response.success === true) setOpenSnackBar(true);
+    } else {
+      const response = await createInterview(interview);
+      if (response.success === true) setOpenSnackBar(true);
+
+    }
     clearForm();
+    navigate("/interview");
   };
 
   const clearForm = () => {
     setInterview({
       candidate: "",
+      candidateName: "",
       InterviewType: "",
       InterviewDate: new Date(),
       InterviewTime: new Date(),
@@ -89,7 +115,9 @@ const CreateInterviewForm = () => {
         <Grid container>
           <Grid item sm={12} md={12} className={classes.formHeader}>
             <PeopleAltIcon />
-            <Typography variant="h4">Create Interview</Typography>
+            <Typography variant="h4">
+              {interviewID ? "Update " : "Create "}Interview
+            </Typography>
           </Grid>
 
           <Grid item sm={12} md={12}>
@@ -106,39 +134,53 @@ const CreateInterviewForm = () => {
                       <InputLabel>Candidate</InputLabel>
                     </Grid>
                     <Grid item sm={8} md={8}>
-                      <TextField
-                        label="Candidate"
-                        variant="filled"
-                        name="candidate"
-                        select
-                        value={interview.candidate}
-                        onChange={handleOnChange}
-                        fullWidth
-                        SelectProps={{
-                          renderValue: (candidate) => candidate.candidateName,
-                        }}
-                      >
-                        {candidates &&
-                          candidates.map((candidate) => (
-                            <MenuItem value={candidate} key={candidate._id}>
-                              <Grid container className={classes.menuItem}>
-                                <Grid item>
-                                  <Avatar sx={{ height: 35, width: 35 }}>
-                                    {candidate.candidateName[0].toUpperCase()}
-                                  </Avatar>
+                      {interviewID ? (
+                        <TextField
+                          label="Candidate"
+                          variant="filled"
+                          name="candidate"
+                          value={interview.candidateName}
+                          fullWidth
+                          disabled
+                        />
+                      ) : (
+                        <TextField
+                          label="Candidate"
+                          variant="filled"
+                          name="candidate"
+                          select
+                          value={interview.candidate}
+                          onChange={handleOnChange}
+                          fullWidth
+                          SelectProps={{
+                            renderValue: (candidate) => candidate.candidateName,
+                          }}
+                        >
+                          {candidates &&
+                            candidates.map((candidate) => (
+                              <MenuItem value={candidate} key={candidate._id}>
+                                <Grid container className={classes.menuItem}>
+                                  <Grid item>
+                                    <Avatar sx={{ height: 35, width: 35 }}>
+                                      {candidate.candidateName[0].toUpperCase()}
+                                    </Avatar>
+                                  </Grid>
+                                  <Grid item>
+                                    <Typography sx={{ mb: -0.7, ml: 1 }}>
+                                      {candidate.candidateName}
+                                    </Typography>
+                                    <Typography
+                                      variant="body2"
+                                      sx={{ ml: 1.3 }}
+                                    >
+                                      {candidate.NIC}
+                                    </Typography>
+                                  </Grid>
                                 </Grid>
-                                <Grid item>
-                                  <Typography sx={{ mb: -0.7, ml: 1 }}>
-                                    {candidate.candidateName}
-                                  </Typography>
-                                  <Typography variant="body2" sx={{ ml: 1.3 }}>
-                                    {candidate.NIC}
-                                  </Typography>
-                                </Grid>
-                              </Grid>
-                            </MenuItem>
-                          ))}
-                      </TextField>
+                              </MenuItem>
+                            ))}
+                        </TextField>
+                      )}
                     </Grid>
                   </Grid>
 
@@ -201,7 +243,12 @@ const CreateInterviewForm = () => {
                       {interview.Interviewers &&
                         interview.Interviewers.map((interviewer) => (
                           <Chip
-                            label={interviewer.employeeName}
+                            label={
+                              interviewer.employeeName ||
+                              interviewer.employeeFirstName +
+                                " " +
+                                interviewer.employeeLastName
+                            }
                             key={interviewer.employeeID}
                             className={classes.chip}
                           />
@@ -272,7 +319,7 @@ const CreateInterviewForm = () => {
                   size="large"
                   type="submit"
                 >
-                  Create
+                  {interviewID ? "Update" : "Create"}
                 </Button>
               </Grid>
             </form>
@@ -299,7 +346,7 @@ const CreateInterviewForm = () => {
                 variant="filled"
                 sx={{ width: "100%" }}
               >
-                Interview successfully created
+                Interview successfully {interviewID ? "updated" : "created"} 
               </Alert>
             </Snackbar>
           </Grid>

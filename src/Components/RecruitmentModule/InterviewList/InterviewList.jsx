@@ -1,125 +1,109 @@
-import * as React from 'react';
-import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
+import React, { useState, useEffect } from "react";
+import Paper from "@mui/material/Paper";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableHead from "@mui/material/TableHead";
+//import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
+import { getInterviewList } from "../../../Api/RecruitmentModule/InterviewApi";
+import { Avatar, AvatarGroup, Button } from "@mui/material";
+import InterviewDetailsDialog from "./InterviewDetailsDialog/InterviewDetailsDialog";
 
-const columns = [
-  { id: 'name', label: 'Name', minWidth: 170 },
-  { id: 'code', label: 'ISO\u00a0Code', minWidth: 100 },
-  {
-    id: 'population',
-    label: 'Population',
-    minWidth: 170,
-    align: 'right',
-    format: (value) => value.toLocaleString('en-US'),
-  },
-  {
-    id: 'size',
-    label: 'Size\u00a0(km\u00b2)',
-    minWidth: 170,
-    align: 'right',
-    format: (value) => value.toLocaleString('en-US'),
-  },
-  {
-    id: 'density',
-    label: 'Density',
-    minWidth: 170,
-    align: 'right',
-    format: (value) => value.toFixed(2),
-  },
-];
-
-function createData(name, code, population, size) {
-  const density = population / size;
-  return { name, code, population, size, density };
-}
-
-const rows = [
-  createData('India', 'IN', 1324171354, 3287263),
-  createData('China', 'CN', 1403500365, 9596961),
-  createData('Italy', 'IT', 60483973, 301340),
-  createData('United States', 'US', 327167434, 9833520),
-  createData('Canada', 'CA', 37602103, 9984670),
-  createData('Australia', 'AU', 25475400, 7692024),
-  createData('Germany', 'DE', 83019200, 357578),
-  createData('Ireland', 'IE', 4857000, 70273),
-  createData('Mexico', 'MX', 126577691, 1972550),
-  createData('Japan', 'JP', 126317000, 377973),
-  createData('France', 'FR', 67022000, 640679),
-  createData('United Kingdom', 'GB', 67545757, 242495),
-  createData('Russia', 'RU', 146793744, 17098246),
-  createData('Nigeria', 'NG', 200962417, 923768),
-  createData('Brazil', 'BR', 210147125, 8515767),
-];
-
-export default function InterviewList({open}) {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
+const InterviewList = ({ open }) => {
+  //const [page, setPage] = useState(0);
+  //const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [interviewList, setInterviewList] = useState([]);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [interview, setInterview] = useState();
+  const fetchData = async () => {
+    setInterviewList(await getInterviewList("E001"));
+    //console.log(interviewList);
   };
+  useEffect(() => {
+    fetchData();
+  }, []);
+  // const handleChangePage = (event, newPage) => {
+  //   setPage(newPage);
+  // };
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
+  // const handleChangeRowsPerPage = (event) => {
+  //   setRowsPerPage(event.target.value);
+  //   setPage(0);
+  // };
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
   };
-
+  const handleViewDetails = (interview) => {
+    console.log(interview);
+    setInterview(interview);
+    setOpenDialog(true);
+  };
   return (
-    <Paper elevation={4} sx={{ width: '100%', overflow: 'hidden', p : 2 }}>
-      {/* <TableContainer sx={{ maxHeight: 440 }}> */}
-        <Table >
-          <TableHead >
-            <TableRow >
-              {columns.map((column) => (
-                <TableCell
-                sx={{bgcolor : 'rgb(0, 0, 0, 0.2)'}}
-                  key={column.id}
-                  align={column.align}
-                  style={{ minWidth: column.minWidth }}
-                >
-                  {column.label}
+    <Paper elevation={4} sx={{ width: "100%", overflow: "hidden", p: 2 }}>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>Candidate</TableCell>
+            <TableCell>Interview Type</TableCell>
+            <TableCell>Interview Date</TableCell>
+            <TableCell>Interview Time</TableCell>
+            <TableCell align="center">Interviewers</TableCell>
+            <TableCell></TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell></TableCell>
+            <TableCell></TableCell>
+            <TableCell></TableCell>
+            <TableCell></TableCell>
+            <TableCell></TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {interviewList &&
+            interviewList.map((interview) => (
+              <TableRow key={interview._id}>
+                <TableCell>{interview.candidateName}</TableCell>
+                <TableCell>{interview.InterviewType}</TableCell>
+                <TableCell>{new Date(interview.InterviewDate).toDateString()}</TableCell>
+                <TableCell>{interview.InterviewTime}</TableCell>
+                <TableCell>
+                  <AvatarGroup total={interview.Interviewers.length}>
+                    {interview.Interviewers &&
+                      interview.Interviewers.map((interviewer) => (
+                        <Avatar key={interviewer._id} src={interviewer.profilePic}/>
+                      ))}
+                  </AvatarGroup>
                 </TableCell>
-              ))}
-            </TableRow>
-            <TableRow><TableCell></TableCell><TableCell></TableCell><TableCell></TableCell><TableCell></TableCell><TableCell></TableCell></TableRow>
-            
-          </TableHead>
-          <TableBody>
-            {rows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                    {columns.map((column) => {
-                      const value = row[column.id];
-                      return (
-                        <TableCell key={column.id} align={column.align}>
-                          {column.format && typeof value === 'number'
-                            ? column.format(value)
-                            : value}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })}
-          </TableBody>
-        </Table>
-      {/* </TableContainer> */}
-      <TablePagination
-        rowsPerPageOptions={[15, 5, 25, 100]}
+                <TableCell>
+                  <Button
+                    onClick={() => handleViewDetails(interview)}
+                    size="small"
+                    variant="contained"
+                  >
+                    View
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+        </TableBody>
+      </Table>
+      <InterviewDetailsDialog
+        openDialog={openDialog}
+        handleCloseDialog={handleCloseDialog}
+        interview={interview}
+      />
+
+      {/* <TablePagination
+        rowsPerPageOptions={[5, 10]}
         component="div"
-        count={rows.length}
+        count={interviewList.length }
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
-      />
+      /> */}
     </Paper>
   );
-}
+};
+export default InterviewList;

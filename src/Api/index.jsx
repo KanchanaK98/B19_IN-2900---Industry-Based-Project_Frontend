@@ -14,11 +14,13 @@ export const fetchCandidates = () => API.get(`/recruitment/candidates`);
 export const fetchEmployees = () => API.get(`/employee/`);
 export const createInterview = (interviewData) =>
   API.post(`/recruitment/interview/create`, interviewData);
-
+export const getInterviewList = (employeeID) =>
+  API.get(`/recruitment/interview/${employeeID}`,);
+  export const updateInterview = (interview, interviewID) =>
+  API.put(`/recruitment/interview/${interviewID}`, interview);
 
 // LogIn API
 export const userLogin = (user) => API.post("/login", user);
-
 
 // Assets API
 export const availableAssets = () => API.get("/assets/available");

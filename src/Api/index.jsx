@@ -10,6 +10,10 @@ export const updateCandidate = (candidateData, candidateId) =>
   API.put(`/recruitment/candidate/${candidateId}`, candidateData);
 export const fetchCandidates = () => API.get(`/recruitment/candidates`);
 
+
+
+
+
 // Interview API
 export const fetchEmployees = () => API.get(`/employee/`);
 export const createInterview = (interviewData) =>
@@ -23,6 +27,7 @@ export const getInterviewList = (employeeID) =>
 export const userLogin = (user) => API.post("/login", user);
 
 // Assets API
+
 export const availableAssets = () => API.get("/assets/available");
 export const nonavailableAssets = () => API.get("/assets/unavailable");
 export const allAssets = () => API.get("/assets/");
@@ -35,3 +40,17 @@ export const assignAsset = (assignAsset, employee) =>
 export const searchAssetCategory = (assetCategory) =>
   API.get("/assets/category/" + assetCategory);
 export const insertAsset = (asset) => API.post("/assets/add", asset);
+
+
+export const requestLeave = (leaveDetail) =>
+  API.post("/leave/request", leaveDetail);
+export const getLeaveList = (employeeId) => API.get("/leave/" + employeeId);
+export const cancelLeave = (id, reason, employeeId) => API.post(`/leave/cancel/${id}`, {reason, employeeId});
+export const getRequestedleave = (employeeId) =>
+  API.get("/leave/requestedLeave/" + employeeId);
+export const responseRequestedLeave = (id) =>
+  API.post("/leave/requestedLeave/response/" + id);
+
+export const getLeaveBalance = (employeeID) =>
+  API.get(`/leave/leaveBalance/${employeeID}`);
+

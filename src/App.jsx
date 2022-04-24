@@ -35,6 +35,7 @@ function App() {
               <Route path="/candidate" element={<CreateCandidate />} />
               <Route path="/interview" element={<Interviews open={open}/>} />
               <Route path="/interview/create" element={<CreateUpdateInterview />} />
+              <Route path="/interview/update" element={<CreateUpdateInterview />} />
 
               <Route path="/asset" element={<ViewAsset />} />
               <Route path="/assetInsertion" element={<AssetInsertion />} />

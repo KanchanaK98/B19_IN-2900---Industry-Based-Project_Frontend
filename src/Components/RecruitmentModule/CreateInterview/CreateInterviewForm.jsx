@@ -32,6 +32,7 @@ import {
   updateInterview,
 } from "../../../Api/RecruitmentModule/InterviewApi";
 import { useLocation, useNavigate } from "react-router-dom";
+import SnackBar from "../SnackBar/SnackBar";
 
 const CreateInterviewForm = () => {
   const [interview, setInterview] = useState({
@@ -44,7 +45,7 @@ const CreateInterviewForm = () => {
   const [candidates, setCandidates] = useState([]);
   const [employees, setEmployees] = useState([]);
   const [interviewID, setInterviewID] = useState(null);
-  const [openSnackBar, setOpenSnackBar] = useState(false);
+  
   const [openDialog, setOpenDialog] = useState(false);
 
   const location = useLocation();
@@ -62,7 +63,7 @@ const CreateInterviewForm = () => {
       const updateInterview = location.state.interview;
       setInterview({
         candidateName: updateInterview.candidateName,
-        candidateID : updateInterview.candidateID,
+        candidateID: updateInterview.candidateID,
         InterviewType: updateInterview.InterviewType,
         InterviewDate: updateInterview.InterviewDate,
         InterviewTime: updateInterview.InterviewDate,
@@ -74,16 +75,17 @@ const CreateInterviewForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    var response = null;
     if (interviewID) {
-      const response = await updateInterview(interview, interviewID);
-      if (response.success === true) setOpenSnackBar(true);
+       response = await updateInterview(interview, interviewID);
+      //if (response.success === true) setOpenSnackBar(true);
     } else {
-      const response = await createInterview(interview);
-      if (response.success === true) setOpenSnackBar(true);
-
+       response = await createInterview(interview);
+      //if (response.success === true) setOpenSnackBar(true);
     }
     clearForm();
-    navigate("/interview");
+    
+    navigate("/interview", {state : response});
   };
 
   const clearForm = () => {
@@ -101,9 +103,7 @@ const CreateInterviewForm = () => {
     setInterview({ ...interview, [event.target.name]: event.target.value });
   };
 
-  const handleCloseSnackBar = () => {
-    setOpenSnackBar(false);
-  };
+  
 
   const handleInterviewerClick = () => {
     setOpenDialog(true);
@@ -324,31 +324,7 @@ const CreateInterviewForm = () => {
               </Grid>
             </form>
 
-            <Snackbar
-              anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-              open={openSnackBar}
-              onClose={handleCloseSnackBar}
-              autoHideDuration={5000}
-              action={
-                <IconButton
-                  size="small"
-                  aria-label="close"
-                  color="inherit"
-                  onClick={handleCloseSnackBar}
-                >
-                  <Close fontSize="small" />
-                </IconButton>
-              }
-            >
-              <Alert
-                onClose={handleCloseSnackBar}
-                severity="success"
-                variant="filled"
-                sx={{ width: "100%" }}
-              >
-                Interview successfully {interviewID ? "updated" : "created"} 
-              </Alert>
-            </Snackbar>
+           
           </Grid>
         </Grid>
       </Paper>

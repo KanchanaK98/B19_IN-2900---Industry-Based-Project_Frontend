@@ -6,9 +6,14 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 //import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import { getInterviewList } from "../../../Api/RecruitmentModule/InterviewApi";
+import {
+  cancelInterview,
+  getInterviewList,
+} from "../../../Api/RecruitmentModule/InterviewApi";
 import { Avatar, AvatarGroup, Button } from "@mui/material";
 import InterviewDetailsDialog from "./InterviewDetailsDialog/InterviewDetailsDialog";
+import SnackBar from "../SnackBar/SnackBar";
+import { useLocation } from "react-router-dom";
 
 const InterviewList = ({ open }) => {
   //const [page, setPage] = useState(0);
@@ -16,13 +21,20 @@ const InterviewList = ({ open }) => {
   const [interviewList, setInterviewList] = useState([]);
   const [openDialog, setOpenDialog] = useState(false);
   const [interview, setInterview] = useState();
+  const [openSnackBar, setOpenSnackBar] = useState(false);
+
+  const location = useLocation();
+ 
   const fetchData = async () => {
     setInterviewList(await getInterviewList("E001"));
-    //console.log(interviewList);
   };
   useEffect(() => {
     fetchData();
-  }, []);
+    if(location.state) setOpenSnackBar(location.state.success);
+    window.history.replaceState(location.pathname, null)
+    
+   
+  }, [location]);
   // const handleChangePage = (event, newPage) => {
   //   setPage(newPage);
   // };
@@ -31,11 +43,23 @@ const InterviewList = ({ open }) => {
   //   setRowsPerPage(event.target.value);
   //   setPage(0);
   // };
+
+  const handleCancelInterview = () => {
+    cancelInterview(interview._id);
+    setInterviewList(
+      interviewList.filter((Interview) => interview !== Interview)
+    );
+    handleCloseDialog();
+    setOpenSnackBar(true);
+    location.state.message = ""
+  };
+  const handleCloseSnackBar = () => {
+    setOpenSnackBar(false);
+  };
   const handleCloseDialog = () => {
     setOpenDialog(false);
   };
   const handleViewDetails = (interview) => {
-    console.log(interview);
     setInterview(interview);
     setOpenDialog(true);
   };
@@ -65,13 +89,18 @@ const InterviewList = ({ open }) => {
               <TableRow key={interview._id}>
                 <TableCell>{interview.candidateName}</TableCell>
                 <TableCell>{interview.InterviewType}</TableCell>
-                <TableCell>{new Date(interview.InterviewDate).toDateString()}</TableCell>
+                <TableCell>
+                  {new Date(interview.InterviewDate).toDateString()}
+                </TableCell>
                 <TableCell>{interview.InterviewTime}</TableCell>
                 <TableCell>
                   <AvatarGroup total={interview.Interviewers.length}>
                     {interview.Interviewers &&
                       interview.Interviewers.map((interviewer) => (
-                        <Avatar key={interviewer._id} src={interviewer.profilePic}/>
+                        <Avatar
+                          key={interviewer._id}
+                          src={interviewer.profilePic}
+                        />
                       ))}
                   </AvatarGroup>
                 </TableCell>
@@ -92,6 +121,7 @@ const InterviewList = ({ open }) => {
         openDialog={openDialog}
         handleCloseDialog={handleCloseDialog}
         interview={interview}
+        handleCancelInterview={handleCancelInterview}
       />
 
       {/* <TablePagination
@@ -102,7 +132,14 @@ const InterviewList = ({ open }) => {
         page={page}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
+
       /> */}
+
+      <SnackBar
+        handleCloseSnackBar={handleCloseSnackBar}
+        openSnackBar={openSnackBar}
+        message={location.state && location.state.message}
+      />
     </Paper>
   );
 };

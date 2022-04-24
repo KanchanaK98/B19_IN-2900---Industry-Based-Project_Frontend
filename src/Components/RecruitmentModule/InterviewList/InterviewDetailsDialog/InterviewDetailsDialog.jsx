@@ -12,8 +12,10 @@ const InterviewDetailsDialog = ({
   openDialog,
   handleCloseDialog,
   interview,
+  handleCancelInterview
 }) => {
   const classes = useStyles();
+ 
 
   return (
     <Dialog fullWidth open={openDialog} onClose={handleCloseDialog}>
@@ -78,25 +80,40 @@ const InterviewDetailsDialog = ({
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Grid container className={classes.buttons}>
-          <Grid item md={6}>
-            <Button size="small" color="warning" variant="contained">
-              Cancel Interview
-            </Button>
+        {interview && new Date() < new Date(interview.InterviewDate) ? (
+          <Grid container className={classes.buttons}>
+            <Grid item md={6}>
+              <Button onClick={handleCancelInterview} size="small" color="warning" variant="contained">
+                Cancel Interview
+              </Button>
+            </Grid>
+            <Grid item md={6} className={classes.buttonUpdate}>
+              <Button
+                component={Link}
+                to={"/interview/update"}
+                state={{ interview }}
+                size="small"
+                color="secondary"
+                variant="contained"
+              >
+                Update
+              </Button>
+            </Grid>
           </Grid>
+        ) : (
           <Grid item md={6} className={classes.buttonUpdate}>
-            <Button
-              component={Link}
-              to={"/interview/update"}
-              state={{ interview }}
-              size="small"
-              color="secondary"
-              variant="contained"
-            >
-              Update
-            </Button>
-          </Grid>
-        </Grid>
+              <Button
+                component={Link}
+                to={"/interview/update"}
+                state={{ interview }}
+                size="small"
+                color="secondary"
+                variant="contained"
+              >
+                Start
+              </Button>
+            </Grid>
+        )}
       </DialogActions>
     </Dialog>
   );

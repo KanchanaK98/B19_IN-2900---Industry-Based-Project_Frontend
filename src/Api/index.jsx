@@ -15,9 +15,11 @@ export const fetchEmployees = () => API.get(`/employee/`);
 export const createInterview = (interviewData) =>
   API.post(`/recruitment/interview/create`, interviewData);
 export const getInterviewList = (employeeID) =>
-  API.get(`/recruitment/interview/${employeeID}`,);
-  export const updateInterview = (interview, interviewID) =>
+  API.get(`/recruitment/interview/${employeeID}`);
+export const updateInterview = (interview, interviewID) =>
   API.put(`/recruitment/interview/${interviewID}`, interview);
+export const cancelInterview = (interviewID) =>
+  API.delete(`/recruitment/interview/${interviewID}`);
 
 // LogIn API
 export const userLogin = (user) => API.post("/login", user);

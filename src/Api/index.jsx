@@ -1,16 +1,31 @@
 import axios from "axios";
 
 const API = axios.create({ baseURL: "http://localhost:8070" });
-
+// candidate API
 export const createCandidate = (candidateData) =>
   API.post("/recruitment/candidate/create", candidateData);
 export const searchCandidate = (NIC) =>
   API.get(`/recruitment/candidate/${NIC}`);
 export const updateCandidate = (candidateData, candidateId) =>
   API.put(`/recruitment/candidate/${candidateId}`, candidateData);
+export const fetchCandidates = () => API.get(`/recruitment/candidates`);
 
+<<<<<<< HEAD
 export const userLogin = (user) => API.post("/login", user);
 
+=======
+// Interview API
+export const fetchEmployees = () => API.get(`/employee/`);
+export const createInterview = (interviewData) =>
+  API.post(`/recruitment/interview/create`, interviewData);
+
+
+// LogIn API
+export const userLogin = (user) => API.post("/login", user);
+
+
+// Assets API
+>>>>>>> 8fded71853fb8c8a77cddebf3870d22c84486428
 export const availableAssets = () => API.get("/assets/available");
 export const nonavailableAssets = () => API.get("/assets/unavailable");
 export const allAssets = () => API.get("/assets/");
@@ -23,6 +38,7 @@ export const assignAsset = (assignAsset, employee) =>
 export const searchAssetCategory = (assetCategory) =>
   API.get("/assets/category/" + assetCategory);
 export const insertAsset = (asset) => API.post("/assets/add", asset);
+<<<<<<< HEAD
 
 export const requestLeave = (leaveDetail) =>
   API.post("/leave/request", leaveDetail);
@@ -35,3 +51,5 @@ export const responseRequestedLeave = (id) =>
 
 export const getLeaveBalance = (employeeID) =>
   API.get(`/leave/leaveBalance/${employeeID}`);
+=======
+>>>>>>> 8fded71853fb8c8a77cddebf3870d22c84486428

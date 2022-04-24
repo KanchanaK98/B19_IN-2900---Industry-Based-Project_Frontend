@@ -10,7 +10,11 @@
     "@mui/lab": "^5.0.0-alpha.74",
     "@mui/material": "^5.5.0",
     "@mui/styles": "^5.5.1",
+<<<<<<< HEAD
     "@mui/x-date-pickers": "^5.0.0-alpha.1",
+=======
+    "@mui/x-date-pickers": "^5.0.0-alpha.0",
+>>>>>>> 8fded71853fb8c8a77cddebf3870d22c84486428
     "@react-pdf-viewer/core": "^3.1.2",
     "@react-pdf-viewer/default-layout": "^3.1.2",
     "@react-pdf-viewer/print": "^3.1.2",

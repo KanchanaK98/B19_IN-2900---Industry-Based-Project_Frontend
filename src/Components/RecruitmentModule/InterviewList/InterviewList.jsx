@@ -12,7 +12,7 @@ import {
 } from "../../../Api/RecruitmentModule/InterviewApi";
 import { Avatar, AvatarGroup, Button } from "@mui/material";
 import InterviewDetailsDialog from "./InterviewDetailsDialog/InterviewDetailsDialog";
-import SnackBar from "../SnackBar/SnackBar";
+import SnackBar from "../../SnackBar/SnackBar";
 import { useLocation } from "react-router-dom";
 
 const InterviewList = ({ open }) => {
@@ -24,16 +24,13 @@ const InterviewList = ({ open }) => {
   const [openSnackBar, setOpenSnackBar] = useState(false);
 
   const location = useLocation();
- 
   const fetchData = async () => {
     setInterviewList(await getInterviewList("E001"));
   };
   useEffect(() => {
     fetchData();
-    if(location.state) setOpenSnackBar(location.state.success);
-    window.history.replaceState(location.pathname, null)
-    
-   
+    if (location.state) setOpenSnackBar(location.state.success);
+    window.history.replaceState(location.pathname, null);
   }, [location]);
   // const handleChangePage = (event, newPage) => {
   //   setPage(newPage);
@@ -44,14 +41,14 @@ const InterviewList = ({ open }) => {
   //   setPage(0);
   // };
 
-  const handleCancelInterview = () => {
-    cancelInterview(interview._id);
+  const handleCancelInterview = async () => {
+    const response = await cancelInterview(interview._id);
     setInterviewList(
       interviewList.filter((Interview) => interview !== Interview)
     );
     handleCloseDialog();
-    setOpenSnackBar(true);
-    location.state.message = ""
+    location.state = response;
+      setOpenSnackBar(true);
   };
   const handleCloseSnackBar = () => {
     setOpenSnackBar(false);

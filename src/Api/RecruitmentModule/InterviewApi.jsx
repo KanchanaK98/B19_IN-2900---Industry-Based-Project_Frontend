@@ -101,8 +101,8 @@ export const updateInterview = async (interview, interviewID) => {
 export const cancelInterview = async (interviewID) => {
   try {
     const { data } = await api.cancelInterview(interviewID);
-    console.log(data);
-    // return data;
+    //console.log(data);
+     return data;
   } catch (error) {
     console.log(error);
   }

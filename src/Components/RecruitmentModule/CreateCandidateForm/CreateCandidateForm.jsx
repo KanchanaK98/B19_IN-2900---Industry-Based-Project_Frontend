@@ -8,10 +8,7 @@ import {
   Typography,
   Dialog,
   DialogTitle,
-  DialogContent,
-  Snackbar,
-  IconButton,
-  Alert,
+  DialogContent
 } from "@mui/material";
 import React, { useState } from "react";
 import useStyles from "./CreateCandidateFormStyles";
@@ -25,12 +22,12 @@ import { Viewer } from "@react-pdf-viewer/core";
 import AppsIcon from "@mui/icons-material/Apps";
 import { Worker } from "@react-pdf-viewer/core";
 import "@react-pdf-viewer/core/lib/styles/index.css";
-import { Close } from "@mui/icons-material";
+import SnackBar from "../../SnackBar/SnackBar";
 
 const CreateCandidateForm = ({
   candidateData,
   setCandidateData,
-  candidateId
+  candidateId,
 }) => {
   const [openDialog, setOpenDialog] = useState(false);
   const [openSnackBar, setOpenSnackBar] = useState(false);
@@ -67,7 +64,6 @@ const CreateCandidateForm = ({
     } else {
       const updateResponse = await updateCandidate(candidateData, candidateId);
       if (updateResponse.success === true) {
-        console.log("hi");
         setOpenSnackBar(true);
       }
     }
@@ -235,34 +231,14 @@ const CreateCandidateForm = ({
                 </Dialog>
               </>
             )}
-
-            <Snackbar
-              anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-              open={openSnackBar}
-              onClose={handleCloseSnackBar}
-              autoHideDuration={5000}
-              action={
-                <IconButton
-                  size="small"
-                  aria-label="close"
-                  color="inherit"
-                  onClick={handleCloseSnackBar}
-                >
-                  <Close fontSize="small" />
-                </IconButton>
-              }
-            >
-              <Alert
-                onClose={handleCloseSnackBar}
-                severity="success"
-                variant="filled"
-                sx={{ width: "100%" }}
-              >
-                {candidateId
-                  ? "Candidate successfully updated"
-                  : "Candidate successfully created"}
-              </Alert>
-            </Snackbar>
+            <SnackBar
+              handleCloseSnackBar={handleCloseSnackBar}
+              openSnackBar={openSnackBar}
+              message= {candidateId
+                ? "Candidate successfully updated"
+                : "Candidate successfully created"}
+            />
+            
           </Grid>
         </Grid>
       </Paper>

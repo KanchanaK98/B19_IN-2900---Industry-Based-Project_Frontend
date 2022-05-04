@@ -36,22 +36,7 @@ function AssetInsertion() {
         const asset = {assetID, assetCategory, model, serialNumber, status}
         if(assetID&&assetCategory&&model&&serialNumber)
             {
-                // axios.post("http://localhost:8070/assets/add",asset).then(()=>{
                 
-                // setAssetID("");
-                // setAssetCategory("");
-                // setModel("");
-                // setSerialNumber("");
-                // setStatus("Available");
-                // setadded(true);
-                // setTimeout(() => {
-                //     setadded(false);
-                // }, 2000);
-
-                // }).catch((err)=>{
-                //     console.log(err.response.data.message)
-                
-                // })
                 const response = await assetInsertionApi(asset);
                 if(response.success === true)
                 {
@@ -94,12 +79,7 @@ function AssetInsertion() {
               Asset Insertion
             </Typography>
           </Grid>
-            {error?(<Stack sx={{ width: '100%' }} spacing={2}><Alert variant="filled" severity="error">
-                            Please enter all the details! 
-            </Alert></Stack>):null}
-            {alreadyID?(<Stack sx={{ width: '100%' }} spacing={2}><Alert variant="filled" severity="error">
-                            Asset ID already exists 
-            </Alert></Stack>):null}
+            
             
           <Grid item sm={12} md={12}>
             <Divider variant="middle" />
@@ -118,14 +98,29 @@ function AssetInsertion() {
                     onChange={(e)=>{setAssetID(e.target.value)}}
                     fullWidth
                   />
-                  <TextField
-                    label="Asset Category"
-                    variant="outlined"
-                    name="assetCategory"
+                  
+                  <FormControl sx={{ m: 1, minWidth: 120 }}>
+                    <InputLabel id="demo-simple-select-helper-label">Category</InputLabel>
+                    <Select
+                    labelId="demo-simple-select-helper-label"
+                    id="demo-simple-select-helper"
                     value={assetCategory}
+                    label="Category"
                     onChange={(e)=>{setAssetCategory(e.target.value)}}
-                    fullWidth
-                  />
+                    >
+                    
+                    <MenuItem value="Laptop">Laptop</MenuItem>
+                    <MenuItem value="Mobile">Mobile</MenuItem>
+                    <MenuItem value="Tablet">Tablet</MenuItem>
+                    <MenuItem value="Keyboard">Keyboard</MenuItem>
+                    <MenuItem value="Router">Router</MenuItem>
+                    <MenuItem value="UPS">UPS</MenuItem>
+                    <MenuItem value="Printer">Printer</MenuItem>
+                    <MenuItem value="Monitor">Monitor</MenuItem>
+                    <MenuItem value="Headphone">Headphone</MenuItem>
+                    </Select>
+                    <FormHelperText>Category of Asset</FormHelperText>
+                </FormControl>
                   
                 </Grid>
                 <Grid item sm={12} md={6} className={classes.inputs}>
@@ -186,6 +181,12 @@ function AssetInsertion() {
                     <AlertTitle>Success</AlertTitle>
                             Asset has been successfully added! — <strong>check it out!</strong>
                     </Alert>  </Stack>):null}
+      {error?(<Stack sx={{ width: '100%' }} spacing={2}><Alert variant="filled" severity="error">
+                            Please enter all the details! 
+            </Alert></Stack>):null}
+      {alreadyID?(<Stack sx={{ width: '100%' }} spacing={2}><Alert variant="filled" severity="error">
+                            Asset ID already exists 
+            </Alert></Stack>):null}
     </Box>
     );
 }

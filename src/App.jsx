@@ -10,7 +10,12 @@ import ViewAsset from "./Components/AssetManagementModule/ViewAsset";
 import Login from "./Components/Login/Login";
 import Interviews from "./Pages/RecruitmentModule/Interviews/Interviews";
 import AssetInsertion from "./Components/AssetManagementModule/AssetInsertion";
+
+import RequestLeaves from "./Pages/LeaveManagementModule/RequestLeaves/RequestLeaves";
+
 import CreateUpdateInterview from "./Pages/RecruitmentModule/Interviews/CreateUpdateInterview/CreateUpdateInterview";
+import LeaveHistory from "./Pages/LeaveManagementModule/RequestLeaves/LeaveHistory";
+
 
 function App() {
   const [open, setOpen] = useState(true);
@@ -39,6 +44,11 @@ function App() {
 
               <Route path="/asset" element={<ViewAsset />} />
               <Route path="/assetInsertion" element={<AssetInsertion />} />
+
+              <Route path="/requestLeave" element={<RequestLeaves />} />
+              <Route path="/myLeaveHistory" element={<LeaveHistory />} />
+
+
             </Routes>
           </BrowserRouter>
         </Grid>

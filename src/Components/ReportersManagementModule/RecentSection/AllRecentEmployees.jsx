@@ -1,7 +1,6 @@
-
 import { useState, useEffect, React } from "react";
 import axios from "axios";
-import { Grid } from "@mui/material";
+import { Grid, Box } from "@mui/material";
 import useStyles from "./RecentEmployeeSectionStyles";
 import RecentEmployee from "./RecentEmployee";
 const fetchHandler = async () => {
@@ -27,28 +26,27 @@ function AllRecentEmployees() {
     //   });
   }, []);
 
-
-  console.log(profiles)
-  const classes = useStyles();
+  // console.log(profiles);
+  // const classes = useStyles();
   return (
     <div>
-      {/* <DisplayProfile/> */}
-      <Grid  container
-  spacing={4}
-  className={classes.gridContainer}
-  justifyItems="center"
- >
+      <Grid
+        container
+        spacing={4}
+        sx={{
+         
+          justifyContent: "center",
+          display: "flex",
+        }}
+      >
         {profiles &&
           profiles.map((prof) => {
             return (
-              <div className="profile" key={prof._id} >
-              
-                  <Grid item  xs={12} sm={6} md={4} component="span">
-                  <RecentEmployee profile={prof}  />
-                 
+              <div className="profile" key={prof._id}>
+                <Grid item xs={12} sm={6} md={4} component="span">
+                  <RecentEmployee profile={prof} />
                 </Grid>
-             
-               </div>
+              </div>
             );
           })}
       </Grid>

@@ -2,7 +2,8 @@ import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles((theme) => ({
   form: {
-    padding: theme.spacing(5),
+    padding: theme.spacing(3),
+    margin: theme.spacing(3),
     "& .MuiTextField-root": {
       margin: theme.spacing(2),
     },
@@ -24,12 +25,22 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     marginTop: theme.spacing(2),
-    alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     "& .MuiTextField-root" : {
         width : theme.spacing(30)
     }
   },
+  texFieldLabel: {
+    display: "flex",
+    justifyContent: 'center',
+    alignItems: "center",
+   "& .MuiFormLabel-root" : {
+    fontWeight: 600,
+    fontSize: 19
+   },
+  
+  },
+
   createButton: {
     display: "flex",
     justifyContent: "flex-end",

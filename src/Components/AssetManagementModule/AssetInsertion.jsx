@@ -90,77 +90,104 @@ function AssetInsertion() {
             <form autoComplete="off" onSubmit={sendData}>
               <Grid container>
                 <Grid item sm={12} md={6} className={classes.inputs}>
-                  <TextField
-                    label="Asset ID"
-                    variant="outlined"
-                    name="assetID"
-                    value={assetID}
-                    onChange={(e)=>{setAssetID(e.target.value)}}
-                    fullWidth
-                  />
-                  
-                  <FormControl sx={{ m: 1, minWidth: 120 }}>
-                    <InputLabel id="demo-simple-select-helper-label">Category</InputLabel>
-                    <Select
-                    labelId="demo-simple-select-helper-label"
-                    id="demo-simple-select-helper"
-                    value={assetCategory}
-                    label="Category"
-                    onChange={(e)=>{setAssetCategory(e.target.value)}}
-                    >
-                    
-                    <MenuItem value="Laptop">Laptop</MenuItem>
-                    <MenuItem value="Mobile">Mobile</MenuItem>
-                    <MenuItem value="Tablet">Tablet</MenuItem>
-                    <MenuItem value="Keyboard">Keyboard</MenuItem>
-                    <MenuItem value="Router">Router</MenuItem>
-                    <MenuItem value="UPS">UPS</MenuItem>
-                    <MenuItem value="Printer">Printer</MenuItem>
-                    <MenuItem value="Monitor">Monitor</MenuItem>
-                    <MenuItem value="Headphone">Headphone</MenuItem>
-                    </Select>
-                    <FormHelperText>Category of Asset</FormHelperText>
-                </FormControl>
-                  
+                  <Grid container>
+                    <Grid item sm={4} md={4} className={classes.texFieldLabel}>
+                      <InputLabel>Asset ID</InputLabel>
+                    </Grid>
+                      <TextField
+                        label="ID"
+                        variant="outlined"
+                        name="assetID"
+                        value={assetID}
+                        onChange={(e)=>{setAssetID(e.target.value)}}
+                        fullWidth
+                      />
+                  </Grid>
+
+                  <Grid container>
+                    <Grid item sm={4} md={4} className={classes.texFieldLabel}>
+                      <InputLabel>Asset Category</InputLabel>
+                    </Grid>
+                    <FormControl sx={{ m: 1, minWidth: 120 }}>
+                        <InputLabel id="demo-simple-select-helper-label">Category</InputLabel>
+                        <Select
+                        labelId="demo-simple-select-helper-label"
+                        id="demo-simple-select-helper"
+                        value={assetCategory}
+                        label="Category"
+                        onChange={(e)=>{setAssetCategory(e.target.value)}}
+                        >
+                        
+                        <MenuItem value="Laptop">Laptop</MenuItem>
+                        <MenuItem value="Mobile">Mobile</MenuItem>
+                        <MenuItem value="Tablet">Tablet</MenuItem>
+                        <MenuItem value="Keyboard">Keyboard</MenuItem>
+                        <MenuItem value="Router">Router</MenuItem>
+                        <MenuItem value="UPS">UPS</MenuItem>
+                        <MenuItem value="Printer">Printer</MenuItem>
+                        <MenuItem value="Monitor">Monitor</MenuItem>
+                        <MenuItem value="Headphone">Headphone</MenuItem>
+                        </Select>
+                        <FormHelperText>Category of Asset</FormHelperText>
+                    </FormControl>
+                  </Grid>
                 </Grid>
+                
                 <Grid item sm={12} md={6} className={classes.inputs}>
-                  <TextField
-                    label="Asset Model"
-                    variant="outlined"
-                    name="model"
-                    value={model}
-                    onChange={(e)=>{setModel(e.target.value)}}
-                    fullWidth
-                  />
-                  <TextField
-                    label="Serial Number"
-                    variant="outlined"
-                    name="serialNumber"
-                    value={serialNumber}
-                    onChange={(e)=>{setSerialNumber(e.target.value)}}
-                    fullWidth
-                  />
+                  <Grid container>
+                    <Grid item sm={4} md={4} className={classes.texFieldLabel}>
+                      <InputLabel>Asset Model</InputLabel>
+                    </Grid>
+                        <TextField
+                          label="Model"
+                          variant="outlined"
+                          name="model"
+                          value={model}
+                          onChange={(e)=>{setModel(e.target.value)}}
+                          fullWidth
+                        />
+                  </Grid>
+
+                  <Grid container>
+                    <Grid item sm={4} md={4} className={classes.texFieldLabel}>
+                      <InputLabel>Serial Number</InputLabel>
+                    </Grid>
+                        <TextField
+                          label="Serial Number"
+                          variant="outlined"
+                          name="serialNumber"
+                          value={serialNumber}
+                          onChange={(e)=>{setSerialNumber(e.target.value)}}
+                          fullWidth
+                        />
+                  </Grid>
 
                 </Grid>
                  <Grid item sm={12} md={6} className={classes.inputs}>
-                <FormControl sx={{ m: 1, minWidth: 120 }}>
-                    <InputLabel id="demo-simple-select-helper-label">Status</InputLabel>
-                    <Select
-                    labelId="demo-simple-select-helper-label"
-                    id="demo-simple-select-helper"
-                    value={status}
-                    label="Status"
-                    onChange={(e)=>{setStatus(e.target.value)}}
-                    >
-                    <MenuItem value="">
-                        <em>None</em>
-                    </MenuItem>
-                    <MenuItem value="Available">Available</MenuItem>
-                    <MenuItem value="Non-Available">Non-Available</MenuItem>
-                    <MenuItem value="Fault">Fault</MenuItem>
-                    </Select>
-                    <FormHelperText>Status of Asset</FormHelperText>
-                </FormControl>
+
+                 <Grid container>
+                    <Grid item sm={4} md={4} className={classes.texFieldLabel}>
+                      <InputLabel>Asset Status</InputLabel>
+                    </Grid>
+                        <FormControl sx={{ m: 1, minWidth: 120 }}>
+                            <InputLabel id="demo-simple-select-helper-label">Status</InputLabel>
+                            <Select
+                            labelId="demo-simple-select-helper-label"
+                            id="demo-simple-select-helper"
+                            value={status}
+                            label="Status"
+                            onChange={(e)=>{setStatus(e.target.value)}}
+                            >
+                            <MenuItem value="">
+                                <em>None</em>
+                            </MenuItem>
+                            <MenuItem value="Available">Available</MenuItem>
+                            <MenuItem value="Non-Available">Non-Available</MenuItem>
+                            <MenuItem value="Fault">Fault</MenuItem>
+                            </Select>
+                            <FormHelperText>Status of Asset</FormHelperText>
+                        </FormControl>
+                    </Grid>
                 </Grid>
               </Grid>
               <Grid item sm={12} md={12} className={classes.createButton}>

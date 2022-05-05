@@ -16,40 +16,47 @@ const fetchHandler = async () => {
       console.log(err);
     });
 };
+//------------------
+
 function DisplayProducts() {
   const [products, setProducts] = useState([]);
+
   useEffect(() => {
     async function fetchData() {
       setProducts(await fetchHandler());
     }
     fetchData();
   }, []);
+
   return (
     <div component="div">
-      <Card sx={{ mb: 2, minWidth: 1000 }}>
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 700 }} aria-label="customized table">
-            <TableHead>
-              <TableRow sx={{backgroundColor:"blueviolet"}}>
-                <TableCell align="left">Product ID </TableCell>
-                <TableCell align="left">Product Name</TableCell>
-                <TableCell align="left">Description</TableCell>
-              </TableRow>
-            </TableHead>
-          </Table>
-        </TableContainer>
-      </Card>
+      <Grid container>
+        <Grid item md={1}></Grid>
+        <Grid item md={11}>
+          <Card sx={{ mb: 2, minWidth: 1000 }}>
+            <TableContainer component={Paper}>
+              <Table sx={{ minWidth: 700 }} aria-label="customized table">
+                <TableHead>
+                  <TableRow sx={{ backgroundColor: "blueviolet" }}>
+                    <TableCell align="left">Product ID </TableCell>
+                    <TableCell align="left">Product Name</TableCell>
+                    <TableCell align="left">Description</TableCell>
+                    <TableCell align="left">Team NAme</TableCell>
+                  </TableRow>
+                </TableHead>
+              </Table>
+            </TableContainer>
+          </Card>
+        </Grid>
+      </Grid>
+
       <Grid>
         {products &&
           products.map((tm) => {
             return (
-              <div key={tm._id} component="div">
-                <Grid item xs={12} sm={6} md={4} component="div">
-                  <DisplayProduct product={tm} />
-                  
-                </Grid>
-                <Divider sx={{mt:2,mb:2}}></Divider>
-              </div>
+              <Grid item xs={12} sm={6} md={4} component="div" key={tm._id}>
+                <DisplayProduct product={tm} />
+              </Grid>
             );
           })}
       </Grid>

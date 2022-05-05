@@ -12,7 +12,28 @@ import DisplayTeam from "./DisplayTeam";
 const fetchHandler = async () => {
   return await axios
     .get("http://localhost:8070/employee/viewTeam")
-    .then((res) => res.data.data)
+    .then((res) => {
+      res.data.data.map((team) => {
+        let teamMembers = [];
+        team.TeamWithEmp.map((member) => {
+          const {
+            employeeFirstName,
+            employeeLastName,
+            employeeID,
+            profilePic,
+          } = member;
+
+          teamMembers.push({
+            employeeName: employeeFirstName + " " + employeeLastName,
+            employeeID,
+            profilePic,
+          });
+        });
+        team.TeamWithEmp = teamMembers;
+      });
+      console.log(res.data.data);
+      return res.data.data;
+    })
     .catch((err) => {
       console.log(err);
     });
@@ -26,11 +47,16 @@ function DisplayTeams() {
     fetchData();
   }, []);
 
-
   return (
     <div component="div">
-        <Grid item sm={12} md={12} >
-      <Card sx={{ mb: 2, minWidth: 1000 }}>
+      <Grid
+        container
+        sx={{
+          justifyContent: "center",
+          display: "flex",
+        }}
+      >
+        {/* <Card sx={{ mb: 2, minWidth: 1000 }}>
 
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -44,21 +70,18 @@ function DisplayTeams() {
             </TableHead>
           </Table>
         </TableContainer>
-      </Card>
-      </Grid>
-      <Grid item sm={12} md={12} >
-      <Grid>
+      </Card> */}
+
         {teams &&
           teams.map((tm) => {
             return (
               <div key={tm._id} component="div">
-                <Grid item xs={12} sm={6} md={4} component="div">
+                <Grid item xs={12} sm={6} md={6} component="div" padding={2}>
                   <DisplayTeam team={tm} />
                 </Grid>
               </div>
             );
           })}
-      </Grid>
       </Grid>
     </div>
   );

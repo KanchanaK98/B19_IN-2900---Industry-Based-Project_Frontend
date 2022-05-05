@@ -1,13 +1,21 @@
-import useStyles from "./DisplayProfileCardStyles";
-import { Typography, Button, Avatar, Card, Grid } from "@mui/material";
+// import useStyles from "./DisplayProfileCardStyles";
+import { Divider, Typography, Button, Avatar, Card, Grid } from "@mui/material";
 import { Link } from "react-router-dom";
-function DisplayProfile({ profile}) {
+import moment from "moment";
+import ProgressBar from "./ProgressBar";
+import ContactPhoneIcon from "@mui/icons-material/ContactPhone";
+import PermIdentityIcon from "@mui/icons-material/PermIdentity";
+import ContactMailIcon from "@mui/icons-material/ContactMail";
+import SchoolIcon from "@mui/icons-material/School";
+import CakeIcon from "@mui/icons-material/Cake";
+import PlaceIcon from "@mui/icons-material/Place";
+
+function DisplayProfile({ profile }) {
   // const handleUpdate = () => {
   //   setUpdateEmployee(profile);
   //   setUpdateState(true);
   // };
   const {
-  
     employeeFirstName,
     employeeLastName,
     birthday,
@@ -18,36 +26,73 @@ function DisplayProfile({ profile}) {
     companyEmail,
     jobRole,
     jobType,
+    lastSeen,
     profilePic,
     status,
     teamID,
     EmployeeWithAcc,
     EmpWithProf,
   } = profile;
- console.log(profile)
-  const classes = useStyles();
+  console.log(profile);
+  // const classes = useStyles();
   return (
     <div>
-      <Card className={classes.card} sx={{ maxWidth: 800 }}>
-        <Avatar
-          sx={{ width: 120, height: 120 }}
-          className={classes.avatar}
-          src={profilePic}
-          alt={employeeFirstName + " " + employeeLastName}
-        ></Avatar>
-        <Grid className={classes.empDetails} >
-          <Typography className={classes.typography}>
-            Name :{employeeFirstName + " " + employeeLastName}
+      <Card
+        sx={{
+          borderRadius: 5,
+          marginBottom: 5,
+          padding: 5,
+          maxWidth: 350,
+          backgroundColor: "#e4ecf7",
+        }}
+      >
+        <Typography variant="h6" textAlign="center" sx={{ mb: 1 }}>
+          {employeeFirstName + " " + employeeLastName}
+        </Typography>
+        <Grid sx={{ justifyContent: "center", display: "flex" }}>
+          <Avatar
+            sx={{ width: 120, height: 120, border: "0.5px solid #1b529e" }}
+            src={profilePic}
+            alt={employeeFirstName + " " + employeeLastName}
+          ></Avatar>
+        </Grid>
+        <ProgressBar
+          EmployeeWithAcc={EmployeeWithAcc}
+          EmpWithProf={EmpWithProf}
+        />
+        {/* <Typography>{moment("lastSeen", "YYYYMMDD").fromNow()}</Typography> */}
+        <Typography>{lastSeen}</Typography>
+
+        <Divider sx={{ mt: 2, mb: 2 }}></Divider>
+        <Grid>
+          <Typography>
+            {" "}
+            <PlaceIcon />
+            &nbsp; {streetNo + "," + city}
           </Typography>
-          <Typography>Address :{streetNo + "," + city}</Typography>
-          <Typography>Birthday : {new Date(birthday).toDateString()}</Typography>
-          <Typography>NIC : {NIC}</Typography>
-          <Typography>Phone : {phoneNumber}</Typography>
-          <Typography>Email : {companyEmail}</Typography>
+
+          <Typography>
+            <ContactPhoneIcon />
+            &nbsp; {phoneNumber}
+          </Typography>
+          <Typography>
+            <ContactMailIcon />
+            &nbsp;&nbsp;{companyEmail}
+          </Typography>
+          <Typography>
+            <CakeIcon />
+            &nbsp; {new Date(birthday).toDateString()}
+          </Typography>
+          <Typography>
+            <PermIdentityIcon />
+            &nbsp; {NIC}
+          </Typography>
+          <Divider sx={{ mt: 1, mb: 1 }}></Divider>
           <Typography>Job Role : {jobRole}</Typography>
           <Typography>Job Type : {jobType}</Typography>
           <Typography>Status : {status}</Typography>
           <Typography>Team : {teamID}</Typography>
+          <Divider sx={{ mt: 2, mb: 2 }}></Divider>
         </Grid>
         <Typography>
           O/L Results :
@@ -82,6 +127,7 @@ function DisplayProfile({ profile}) {
               );
             })}
         </Typography>
+        <Divider sx={{ mt: 2, mb: 2 }}></Divider>
         <Typography>
           Degree :
           {EmpWithProf.length > 0 &&
@@ -122,7 +168,7 @@ function DisplayProfile({ profile}) {
           component={Link}
           to={`/profile/update`}
           state={{ profile }}
-          sx={{ mt: 5 }}
+          sx={{ mt: 5, backgroundColor: "#1b529e" }}
           fullWidth
           variant="contained"
           size="medium"

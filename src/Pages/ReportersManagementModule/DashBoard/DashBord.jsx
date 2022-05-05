@@ -1,12 +1,9 @@
 import React, { useState } from "react";
 import DisplayProfiles from "../../../Components/ReportersManagementModule/DisplayEmployees/DisplayProfiles";
-
 import { Grid, Button } from "@mui/material";
-
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import Box from "@mui/material/Box";
 import AllRecentEmployees from "../../../Components/ReportersManagementModule/RecentSection/AllRecentEmployees";
-
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
@@ -36,7 +33,7 @@ function DashBord() {
       <Grid item sm={12} md={12} sx={{ mb: 5 }}>
         <Button
           variant="contained"
-          sx={{ justifyContent: 'right' }}
+          sx={{ justifyContent: "right" }}
           startIcon={<AddBoxIcon />}
         >
           CAREATE NEW EMPLOYEE

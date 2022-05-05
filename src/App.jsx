@@ -19,7 +19,12 @@ import LeaveHistory from "./Pages/LeaveManagementModule/RequestLeaves/LeaveHisto
 
 function App() {
   const [open, setOpen] = useState(true);
-  const [user, setUser] = useState(true);
+  // const [user, setUser] = useState(true);
+  const data = JSON.parse(localStorage.getItem("apiData"));
+  const [user, setUser] = useState(data.employeeFirstName);
+  const [role, setRole] = useState(data.jobRole);
+  const [profileImage, setProfileImage] = useState(data.profilePic);
+  // console.log(data.employeeFirstName);
 
   const toggleDrawer = () => {
     setOpen(!open);
@@ -27,7 +32,7 @@ function App() {
   return (
     <Box sx={{ display: "flex", }}>
       <CssBaseline />
-      {user && <SideBar open={open} toggleDrawer={toggleDrawer} />}
+      {user && <SideBar open={open} toggleDrawer={toggleDrawer} setUser={user} image={profileImage} jobRole={role}/>}
       <Grid container>
         <Grid item sm={12} md={12}>
           {user && <NavBar open={open} toggleDrawer={toggleDrawer} />}
@@ -35,7 +40,7 @@ function App() {
         <Grid item sm={12} md={12}>
           <BrowserRouter>
             <Routes>
-              <Route exact path="/" element={<Login setUser={setUser} />} />
+              <Route exact path="/" element={<Login setUser={setUser} />}/>
 
               <Route path="/candidate" element={<CreateCandidate />} />
               <Route path="/interview" element={<Interviews open={open}/>} />

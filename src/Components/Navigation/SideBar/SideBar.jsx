@@ -92,7 +92,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 
-const SideBar = ({ open, toggleDrawer }) => {
+const SideBar = ({ open, toggleDrawer,setUser,image,jobRole }) => {
   const styleProps = {
     display: open ? "flex" : "none",
     displayLogOut: open ? "none" : "flex",
@@ -115,14 +115,14 @@ const SideBar = ({ open, toggleDrawer }) => {
               variant="dot"
             >
               <Avatar
-                src={photo}
+                src={image}
                 sx={{ mt: 1, mb: 1, height: 50, width: 50 }}
               />
             </StyledBadge>
 
             <Grid className={classes.profileName}>
               <Typography color={"white"} variant="h6" sx={{ mb: -1 }}>
-                Kushan M.
+                {setUser}
               </Typography>
               <Typography color={"white"} variant="caption">
                 HR manager

@@ -46,6 +46,7 @@ export default function Login() {
               if(response.success === true)
               {
                 //console.log("user can sign in")
+                localStorage.setItem("apiData", JSON.stringify(response.user));
                 window.location.href = '/asset';
               }else
               {

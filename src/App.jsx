@@ -14,6 +14,11 @@ import Add from "./Components/ReportersManagementModule/TeamCreate/Add";
 import TeamPage from "./Pages/ReportersManagementModule/Teams/TeamPage";
 import ProductPage from "./Pages/ReportersManagementModule/Products/ProductPage";
 import CreateTeams from "./Components/ReportersManagementModule/TeamCreate/CreateTeams";
+import CreateProduct from "./Components/ReportersManagementModule/ProductCreate/CreateProduct";
+import UserProfile from "./Components/ReportersManagementModule/UserProfile/UserProfile";
+import EditProduct from "./Components/ReportersManagementModule/ProductUpdate/EditProduct";
+import ProgressBar from "./Components/ReportersManagementModule/DisplayEmployees/ProgressBar";
+import EditTeam from "./Components/ReportersManagementModule/TeamUpdate/EditTeam";
 function App() {
   const [open, setOpen] = useState(true);
   const [user, setUser] = useState(true); //true when working
@@ -40,8 +45,13 @@ function App() {
               <Route path="createemployee" element={<CreateEmployee />} />
               <Route path="add" element={<Add />} />
               <Route path="/teams" element={<TeamPage />} />
+              <Route path="/teams/update/:id" element={<EditTeam/>}/>
               <Route path="/products" element={<ProductPage />} />
               <Route path="/team" element={<CreateTeams />} />
+              <Route path="/pro" element={<CreateProduct />} />
+              <Route path="/user" element={<UserProfile/>}/>
+              <Route path="/products/update/:id" element={<EditProduct/>}/>
+              <Route path="progress" element={<ProgressBar/>}/>
             </Routes>
           </BrowserRouter>
         </Grid>
@@ -50,4 +60,4 @@ function App() {
   );
 }
 
-export default App;
+export default App

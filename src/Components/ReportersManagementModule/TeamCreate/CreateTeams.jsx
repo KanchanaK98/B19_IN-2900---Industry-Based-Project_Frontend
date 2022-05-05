@@ -24,24 +24,24 @@ function CreateTeams() {
     teamMembers: [],
   });
 
+  //const filterMembers=setMembers(members.filter((mem)=>(mem.name==='teamLead')))
   // console.log(teaminputs)
   const handleChange = (e) => {
     setTeaminputs((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
     }));
-    if(e.target.name === 'teamLead'){
+    if (e.target.name === "teamLead") {
       setMembers(members.filter((mem) => mem !== e.target.value));
     }
   };
 
   const sendRequest = async () => {
-
     await axios
       .post("http://localhost:8070/employee/teamAdd", {
         teamName: teaminputs.teamName,
         teamLeadID: teaminputs.teamLead.employeeID,
-        teamMembers: teaminputs.teamMembers.map(({ employeeID }) => employeeID)
+        teamMembers: teaminputs.teamMembers.map(({ employeeID }) => employeeID),
       })
       .then((res) => res.data);
   };
@@ -49,7 +49,7 @@ function CreateTeams() {
   //console.log(teaminputs);
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(teaminputs);
+    // console.log(teaminputs);
     sendRequest()
       .then((res) => {})
       .catch((err) => {
@@ -57,7 +57,7 @@ function CreateTeams() {
       });
     setTeaminputs({
       teamName: "",
-      teamLead: "",
+      teamLead: {},
       teamMembers: [],
     });
   };
@@ -66,7 +66,6 @@ function CreateTeams() {
 
   const [members, setMembers] = useState([]);
 
-  const [newmembers, setNewmembers] = useState([]);
   //----------------------------------
   // const handleSave = () => {
   //   setNewmembers({ ...newmembers, NewMembers: newmembers });
@@ -104,7 +103,7 @@ function CreateTeams() {
   };
   useEffect(() => {
     async function fetchData() {
-        setMembers(await handleAddMembers());
+      setMembers(await handleAddMembers());
     }
     fetchData();
   }, []);
@@ -155,7 +154,10 @@ function CreateTeams() {
                 <IconButton onClick={handleOpenDialog}>
                   <AddCircleIcon sx={{ color: "gray" }} fontSize="large" />
                 </IconButton>
-                <IconButton onClick={handleOpenDialog} disabled={teaminputs.teamMembers.length === 0? true: false}>
+                <IconButton
+                  onClick={handleOpenDialog}
+                  disabled={teaminputs.teamMembers.length === 0 ? true : false}
+                >
                   <EditIcon sx={{ color: "gray" }} fontSize="large" />
                 </IconButton>
               </Grid>
@@ -165,34 +167,32 @@ function CreateTeams() {
               setOpenDialog={setOpenDialog}
               teaminputs={teaminputs}
               setTeaminputs={setTeaminputs}
-              employees= {members}
+              employees={members}
               setEmployee={setMembers}
             />
 
             <Grid container sx={{ mb: 5 }}>
-              <Grid item sm={4} md={4}>
-               
-              </Grid>
+              <Grid item sm={4} md={4}></Grid>
               <Grid item sm={8} md={8}>
-                
-          {teaminputs.teamMembers &&
-            teaminputs.teamMembers.map((member) => (
-              <Chip
-                label={member.employeeFirstName + " " + member.employeeLastName}
-                key={member.employeeID}
-               
-                sx={{
-                  mr: 0.5,
-                  mt: 1,
-                  bgcolor: "rgba(49, 24, 62, 1)",
-                  color: "white",
-                  "& .MuiSvgIcon-root": {
-                    color: "white",
-                  },
-                }}
-              />
-            ))}
-        </Grid>
+                {teaminputs.teamMembers &&
+                  teaminputs.teamMembers.map((member) => (
+                    <Chip
+                      label={
+                        member.employeeFirstName + " " + member.employeeLastName
+                      }
+                      key={member.employeeID}
+                      sx={{
+                        mr: 0.5,
+                        mt: 1,
+                        bgcolor: "rgba(49, 24, 62, 1)",
+                        color: "white",
+                        "& .MuiSvgIcon-root": {
+                          color: "white",
+                        },
+                      }}
+                    />
+                  ))}
+              </Grid>
             </Grid>
           </Grid>
 
@@ -203,6 +203,7 @@ function CreateTeams() {
               </Grid>
               <Grid item sm={8} md={8}>
                 <TextField
+                  id="data"
                   label="Team Leader"
                   variant="filled"
                   name="teamLead"
@@ -250,9 +251,6 @@ function CreateTeams() {
               options={members}
               displayValue="fullName"
             ></Multiselect> */}
-              
-
-            
             </Grid>
           </Grid>
         </Grid>
@@ -262,8 +260,6 @@ function CreateTeams() {
           Team Members :
           <Multiselect options={members} displayValue="fullName"></Multiselect>
         </FormLabel> */}
-
-       
 
         <Button onClick={handleSubmit} variant="contained" sx={{ mt: 2 }}>
           Save New Team

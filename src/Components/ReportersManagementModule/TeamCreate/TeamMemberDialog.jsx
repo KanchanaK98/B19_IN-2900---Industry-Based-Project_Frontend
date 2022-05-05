@@ -45,7 +45,7 @@ const TeamMemberDialog = ({
       <DialogTitle>
         <Grid container sx={{ display: "flex", alignItems: "center" }}>
           <Grid sm={10} md={10} item>
-            <Typography variant="h5">Interviewers</Typography>
+            <Typography variant="h5">Team Members</Typography>
           </Grid>
 
           <Grid
@@ -64,7 +64,7 @@ const TeamMemberDialog = ({
       <Divider variant="middle" />
       <DialogContent>
         <Typography variant="subTitle">
-          add HR manager or team leader as interviewer
+          Add Team Members
         </Typography>
         <Grid>
           {members &&
@@ -87,7 +87,7 @@ const TeamMemberDialog = ({
             ))}
         </Grid>
         <TextField
-          label="Interviewers"
+          label="Team Members"
           variant="filled"
           name="interviewers"
           select

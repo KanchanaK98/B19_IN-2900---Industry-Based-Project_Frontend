@@ -15,7 +15,7 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import Stack from "@mui/material/Stack";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import {  Link, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Typography } from "@mui/material";
 import { updateEmployee } from "../../../Api/ReportersManagementModule/EmployeeApi";
 
@@ -142,10 +142,25 @@ function EditEmployee() {
     display: "none",
   });
 
+  //-----------------------------------
+  // const showPreview = (event) => {
+  //   if (event.target.files && event.target.files[0]) {
+  //     let imgFile = event.target.files[0];
+  //     const reader = new FileReader();
+  //     reader.onload = (x) => {
+  //       setProImg(imgFile);
+  //       setProPicSrc(x.target.result);
+  //       console.log(x.target.value);
+  //     };
+  //     reader.readAsDataURL(imgFile);
+  //   }
+  // };
+
+  //-----------------------------------
   const uploadProfilePhoto = (event) => {
     const fileType = ["image/png"];
     let selectedFile = event.target.files[0];
-    console.log(selectedFile.type);
+    // console.log(selectedFile.type);
     if (selectedFile && fileType.includes(selectedFile.type)) {
       let reader = new FileReader();
       reader.readAsDataURL(selectedFile);
@@ -183,31 +198,33 @@ function EditEmployee() {
                   }}
                 >
                   <Avatar
+                    src={inputs.profilePic}
                     sx={{
                       mt: 5,
                       mb: 5,
                       width: 150,
                       height: 150,
-                      
+                      border: "0.5px solid #1b529e" 
                     }}
-                  >
-                    <label htmlFor="icon-button-file">
-                      <Input
-                        src={inputs.profilePic}
-                        accept="image/*"
-                        id="icon-button-file"
-                        type="file"
-                        onChange={uploadProfilePhoto}
-                      />
-                      <IconButton
-                        color="primary"
-                        aria-label="upload picture"
-                        component="span"
-                      >
-                        <PhotoCamera />
-                      </IconButton>
-                    </label>
-                  </Avatar>
+                  />
+
+                  <label htmlFor="icon-button-file">
+                    <Input
+                      accept="image/*"
+                      id="icon-button-file"
+                      type="file"
+                      onChange={uploadProfilePhoto}
+                    />
+                    <IconButton
+                      color="primary"
+                      aria-label="upload picture"
+                      component="span"
+                    >
+                      <PhotoCamera sx={{mt:10,width:30,height:30}}/>
+                    </IconButton>
+                  </label>
+
+                  {/* </Avatar> */}
                 </Grid>
                 <Grid item sm={12} md={12}>
                   <Grid container spacing={2}>

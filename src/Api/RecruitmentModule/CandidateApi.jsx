@@ -2,10 +2,11 @@ import * as api from "../index";
 
 export const createCandidate = async (candidateData) => {
   try {
-    const { firstName, lastName, NIC, phoneNumber, email, cv } = candidateData;
+    const { firstName, lastName, appliedPosition, NIC, phoneNumber, email, cv } = candidateData;
     const candidateName = firstName + " " + lastName;
     candidateData = {
       candidateName,
+      appliedPosition,
       NIC,
       phoneNumber,
       email,
@@ -34,10 +35,11 @@ export const searchCandidate = async (NIC) => {
 
 export const updateCandidate = async (candidateData, candidateId) => {
   try {
-    const { firstName, lastName, NIC, phoneNumber, email, cv } = candidateData;
+    const { firstName, lastName, appliedPosition,  NIC, phoneNumber, email, cv } = candidateData;
     const candidateName = firstName + " " + lastName;
     candidateData = {
       candidateName,
+      appliedPosition,
       NIC,
       phoneNumber,
       email,

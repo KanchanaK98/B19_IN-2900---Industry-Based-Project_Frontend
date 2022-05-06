@@ -6,9 +6,7 @@ import {
   Paper,
   TextField,
   Typography,
-  Dialog,
-  DialogTitle,
-  DialogContent
+  MenuItem,
 } from "@mui/material";
 import React, { useState } from "react";
 import useStyles from "./CreateCandidateFormStyles";
@@ -18,11 +16,23 @@ import {
   createCandidate,
   updateCandidate,
 } from "../../../Api/RecruitmentModule/CandidateApi";
-import { Viewer } from "@react-pdf-viewer/core";
-import AppsIcon from "@mui/icons-material/Apps";
-import { Worker } from "@react-pdf-viewer/core";
 import "@react-pdf-viewer/core/lib/styles/index.css";
 import SnackBar from "../../SnackBar/SnackBar";
+import ViewCandidateCV from "../ViewCandidateCV/ViewCandidateCV";
+
+const jobPositions = [
+  "Software engineer",
+  "Business analyst",
+  "Human resources manager",
+  "Chief technology officer (CTO)",
+  "IT director",
+  "IT manager",
+  "IT coordinator",
+  "UI/UX designer",
+  "Product manager",
+  "Associate Software engineer",
+  "Intern",
+];
 
 const CreateCandidateForm = ({
   candidateData,
@@ -49,6 +59,7 @@ const CreateCandidateForm = ({
       firstName: "",
       lastName: "",
       NIC: "",
+      appliedPosition: "",
       phoneNumber: "",
       email: "",
       cv: "",
@@ -148,6 +159,26 @@ const CreateCandidateForm = ({
                       })
                     }
                   />
+                  <TextField
+                    label="Applied Position"
+                    variant="outlined"
+                    name="appliedPosition"
+                    select
+                    value={candidateData.appliedPosition}
+                    onChange={(event) =>
+                      setCandidateData({
+                        ...candidateData,
+                        appliedPosition: event.target.value,
+                      })
+                    }
+                    fullWidth
+                  >
+                    {jobPositions.map((jobPosition) => (
+                      <MenuItem value={jobPosition} key={jobPosition}>
+                        {jobPosition}
+                      </MenuItem>
+                    ))}
+                  </TextField>
                 </Grid>
                 <Grid item sm={12} md={6} className={classes.inputs}>
                   <TextField
@@ -209,36 +240,22 @@ const CreateCandidateForm = ({
                 >
                   Old CV
                 </Button>
-                <Dialog fullWidth open={openDialog} onClose={handleCloseDialog}>
-                  <DialogTitle>
-                    <Grid sx={{ display: "flex", alignItems: "center" }}>
-                      <AppsIcon fontSize="large" sx={{ mr: 1 }} />
-                      <Typography variant="h5">
-                        {candidateData.firstName +
-                          " " +
-                          candidateData.lastName +
-                          "'s CV"}
-                      </Typography>
-                    </Grid>
-                  </DialogTitle>
-                  <Divider variant="middle" />
-                  <Divider variant="middle" />
-                  <DialogContent>
-                    <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.13.216/build/pdf.worker.min.js">
-                      <Viewer fileUrl={candidateData.cv} />
-                    </Worker>
-                  </DialogContent>
-                </Dialog>
+                <ViewCandidateCV
+                  openDialog={openDialog}
+                  handleCloseDialog={handleCloseDialog}
+                  candidateData={candidateData}
+                />
               </>
             )}
             <SnackBar
               handleCloseSnackBar={handleCloseSnackBar}
               openSnackBar={openSnackBar}
-              message= {candidateId
-                ? "Candidate successfully updated"
-                : "Candidate successfully created"}
+              message={
+                candidateId
+                  ? "Candidate successfully updated"
+                  : "Candidate successfully created"
+              }
             />
-            
           </Grid>
         </Grid>
       </Paper>

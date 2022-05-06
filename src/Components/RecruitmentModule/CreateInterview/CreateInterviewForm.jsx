@@ -7,16 +7,14 @@ import {
   Paper,
   TextField,
   Typography,
-  Snackbar,
   IconButton,
-  Alert,
   MenuItem,
   InputLabel,
   Avatar,
   Chip,
 } from "@mui/material";
 import useStyles from "./CreateInterviewStyles";
-import { AddCircle, Close, Edit } from "@mui/icons-material";
+import { AddCircle,Edit } from "@mui/icons-material";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 
 import Stack from "@mui/material/Stack";
@@ -32,7 +30,6 @@ import {
   updateInterview,
 } from "../../../Api/RecruitmentModule/InterviewApi";
 import { useLocation, useNavigate } from "react-router-dom";
-import SnackBar from "../SnackBar/SnackBar";
 
 const CreateInterviewForm = () => {
   const [interview, setInterview] = useState({
@@ -62,7 +59,7 @@ const CreateInterviewForm = () => {
     if (location.state) {
       const updateInterview = location.state.interview;
       setInterview({
-        candidateName: updateInterview.candidateName,
+        candidateName: updateInterview.candidate.candidateName,
         candidateID: updateInterview.candidateID,
         InterviewType: updateInterview.InterviewType,
         InterviewDate: updateInterview.InterviewDate,
@@ -102,8 +99,6 @@ const CreateInterviewForm = () => {
   const handleOnChange = (event) => {
     setInterview({ ...interview, [event.target.name]: event.target.value });
   };
-
-  
 
   const handleInterviewerClick = () => {
     setOpenDialog(true);

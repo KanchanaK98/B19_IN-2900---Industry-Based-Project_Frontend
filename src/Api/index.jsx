@@ -10,10 +10,6 @@ export const updateCandidate = (candidateData, candidateId) =>
   API.put(`/recruitment/candidate/${candidateId}`, candidateData);
 export const fetchCandidates = () => API.get(`/recruitment/candidates`);
 
-
-
-
-
 // Interview API
 export const fetchEmployees = () => API.get(`/employee/`);
 export const createInterview = (interviewData) =>
@@ -24,7 +20,9 @@ export const updateInterview = (interview, interviewID) =>
   API.put(`/recruitment/interview/${interviewID}`, interview);
 export const cancelInterview = (interviewID) =>
   API.delete(`/recruitment/interview/${interviewID}`);
-
+export const markedCandidate = (marks, interviewID) => {
+ return API.put(`/recruitment/interview/start/${interviewID}`, marks)
+}
 // LogIn API
 export const userLogin = (user) => API.post("/login", user);
 

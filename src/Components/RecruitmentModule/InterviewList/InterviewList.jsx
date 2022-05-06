@@ -16,8 +16,6 @@ import SnackBar from "../../SnackBar/SnackBar";
 import { useLocation } from "react-router-dom";
 
 const InterviewList = ({ open }) => {
-  //const [page, setPage] = useState(0);
-  //const [rowsPerPage, setRowsPerPage] = useState(5);
   const [interviewList, setInterviewList] = useState([]);
   const [openDialog, setOpenDialog] = useState(false);
   const [interview, setInterview] = useState();
@@ -32,14 +30,6 @@ const InterviewList = ({ open }) => {
     if (location.state) setOpenSnackBar(location.state.success);
     window.history.replaceState(location.pathname, null);
   }, [location]);
-  // const handleChangePage = (event, newPage) => {
-  //   setPage(newPage);
-  // };
-
-  // const handleChangeRowsPerPage = (event) => {
-  //   setRowsPerPage(event.target.value);
-  //   setPage(0);
-  // };
 
   const handleCancelInterview = async () => {
     const response = await cancelInterview(interview._id);
@@ -84,7 +74,7 @@ const InterviewList = ({ open }) => {
           {interviewList &&
             interviewList.map((interview) => (
               <TableRow key={interview._id}>
-                <TableCell>{interview.candidateName}</TableCell>
+                <TableCell>{interview.candidate.candidateName}</TableCell>
                 <TableCell>{interview.InterviewType}</TableCell>
                 <TableCell>
                   {new Date(interview.InterviewDate).toDateString()}
@@ -120,17 +110,6 @@ const InterviewList = ({ open }) => {
         interview={interview}
         handleCancelInterview={handleCancelInterview}
       />
-
-      {/* <TablePagination
-        rowsPerPageOptions={[5, 10]}
-        component="div"
-        count={interviewList.length }
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-
-      /> */}
 
       <SnackBar
         handleCloseSnackBar={handleCloseSnackBar}

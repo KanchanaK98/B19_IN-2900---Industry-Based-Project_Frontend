@@ -12,6 +12,14 @@ const useStyles = makeStyles((theme) => ({
     },
     buttons: {
         margin: theme.spacing(1)
+    },
+    yesNoButtons : {
+        display: 'flex',
+        justifyContent: 'center',
+        marginBottom: theme.spacing(1.5),
+        "& .MuiButton-containedPrimary": {
+            background: "gray"
+        }
     }
 }))
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
@@ -12,8 +12,10 @@ const InterviewDetailsDialog = ({
   openDialog,
   handleCloseDialog,
   interview,
+  handleCancelInterview,
 }) => {
   const classes = useStyles();
+  const [open, setOpen] = useState(false);
 
   return (
     <Dialog fullWidth open={openDialog} onClose={handleCloseDialog}>
@@ -40,7 +42,7 @@ const InterviewDetailsDialog = ({
         <Grid className={classes.item}>
           <Typography>Candidate : </Typography>
           <Typography sx={{ ml: 2 }}>
-            {interview && interview.candidateName}
+            {interview && interview.candidate.candidateName}
           </Typography>
         </Grid>
 
@@ -78,26 +80,76 @@ const InterviewDetailsDialog = ({
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Grid container className={classes.buttons}>
-          <Grid item md={6}>
-            <Button size="small" color="warning" variant="contained">
-              Cancel Interview
-            </Button>
+        {interview && new Date() < new Date(interview.InterviewDate) ? (
+          <Grid container className={classes.buttons}>
+            <Grid item md={6}>
+              <Button
+                onClick={() => setOpen(true)}
+                size="small"
+                color="warning"
+                variant="contained"
+              >
+                Cancel Interview
+              </Button>
+            </Grid>
+            <Grid item md={6} className={classes.buttonUpdate}>
+              <Button
+                component={Link}
+                to={"/interview/update"}
+                state={{ interview }}
+                size="small"
+                color="secondary"
+                variant="contained"
+              >
+                Update
+              </Button>
+            </Grid>
           </Grid>
+        ) : (
           <Grid item md={6} className={classes.buttonUpdate}>
             <Button
               component={Link}
-              to={"/interview/update"}
+              to={"/interview/start"}
               state={{ interview }}
               size="small"
               color="secondary"
               variant="contained"
             >
-              Update
+              Start
             </Button>
           </Grid>
-        </Grid>
+        )}
       </DialogActions>
+
+      <Dialog open={open} onClose={() => setOpen(false)}>
+        <DialogContent>
+          <Typography>
+            Are you sure you want to cancel this interview ?
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Grid container>
+            <Grid item sm={6} md={6} className={classes.yesNoButtons}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => setOpen(false)}
+              >
+                No
+              </Button>
+            </Grid>
+            <Grid item sm={6} md={6} className={classes.yesNoButtons}>
+              <Button
+                variant="contained"
+                color="error"
+                onClick={handleCancelInterview}
+              >
+                Yes
+              </Button>
+            </Grid>
+          </Grid>
+        </DialogActions>
+      </Dialog>
     </Dialog>
   );
 };

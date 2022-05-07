@@ -25,6 +25,7 @@ const SearchCandidate = ({ setCandidateData, setCandidateId }) => {
     setCandidateData({
       firstName: candidate.candidateName.split(" ")[0],
       lastName: candidate.candidateName.split(" ")[1],
+      appliedPosition : candidate.appliedPosition,
       NIC: candidate.NIC,
       phoneNumber: candidate.phoneNumber,
       email: candidate.email,

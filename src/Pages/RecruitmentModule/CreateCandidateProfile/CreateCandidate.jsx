@@ -8,6 +8,7 @@ const CreateCandidate = () => {
     firstName: "",
     lastName: "",
     NIC: "",
+    appliedPosition : "",
     phoneNumber: "",
     email: "",
     cv: "",

@@ -7,16 +7,14 @@ import {
   Paper,
   TextField,
   Typography,
-  Snackbar,
   IconButton,
-  Alert,
   MenuItem,
   InputLabel,
   Avatar,
   Chip,
 } from "@mui/material";
 import useStyles from "./CreateInterviewStyles";
-import { AddCircle, Close, Edit } from "@mui/icons-material";
+import { AddCircle,Edit } from "@mui/icons-material";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 
 import Stack from "@mui/material/Stack";
@@ -44,7 +42,7 @@ const CreateInterviewForm = () => {
   const [candidates, setCandidates] = useState([]);
   const [employees, setEmployees] = useState([]);
   const [interviewID, setInterviewID] = useState(null);
-  const [openSnackBar, setOpenSnackBar] = useState(false);
+  
   const [openDialog, setOpenDialog] = useState(false);
 
   const location = useLocation();
@@ -61,8 +59,8 @@ const CreateInterviewForm = () => {
     if (location.state) {
       const updateInterview = location.state.interview;
       setInterview({
-        candidateName: updateInterview.candidateName,
-        candidateID : updateInterview.candidateID,
+        candidateName: updateInterview.candidate.candidateName,
+        candidateID: updateInterview.candidateID,
         InterviewType: updateInterview.InterviewType,
         InterviewDate: updateInterview.InterviewDate,
         InterviewTime: updateInterview.InterviewDate,
@@ -74,16 +72,17 @@ const CreateInterviewForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    var response = null;
     if (interviewID) {
-      const response = await updateInterview(interview, interviewID);
-      if (response.success === true) setOpenSnackBar(true);
+       response = await updateInterview(interview, interviewID);
+      //if (response.success === true) setOpenSnackBar(true);
     } else {
-      const response = await createInterview(interview);
-      if (response.success === true) setOpenSnackBar(true);
-
+       response = await createInterview(interview);
+      //if (response.success === true) setOpenSnackBar(true);
     }
     clearForm();
-    navigate("/interview");
+    
+    navigate("/interview", {state : response});
   };
 
   const clearForm = () => {
@@ -99,10 +98,6 @@ const CreateInterviewForm = () => {
 
   const handleOnChange = (event) => {
     setInterview({ ...interview, [event.target.name]: event.target.value });
-  };
-
-  const handleCloseSnackBar = () => {
-    setOpenSnackBar(false);
   };
 
   const handleInterviewerClick = () => {
@@ -324,31 +319,7 @@ const CreateInterviewForm = () => {
               </Grid>
             </form>
 
-            <Snackbar
-              anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-              open={openSnackBar}
-              onClose={handleCloseSnackBar}
-              autoHideDuration={5000}
-              action={
-                <IconButton
-                  size="small"
-                  aria-label="close"
-                  color="inherit"
-                  onClick={handleCloseSnackBar}
-                >
-                  <Close fontSize="small" />
-                </IconButton>
-              }
-            >
-              <Alert
-                onClose={handleCloseSnackBar}
-                severity="success"
-                variant="filled"
-                sx={{ width: "100%" }}
-              >
-                Interview successfully {interviewID ? "updated" : "created"} 
-              </Alert>
-            </Snackbar>
+           
           </Grid>
         </Grid>
       </Paper>

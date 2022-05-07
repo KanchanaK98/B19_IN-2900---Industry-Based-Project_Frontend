@@ -15,6 +15,7 @@ import RequestLeaves from "./Pages/LeaveManagementModule/RequestLeaves/RequestLe
 
 import CreateUpdateInterview from "./Pages/RecruitmentModule/Interviews/CreateUpdateInterview/CreateUpdateInterview";
 import LeaveHistory from "./Pages/LeaveManagementModule/RequestLeaves/LeaveHistory";
+import StartInterview from "./Pages/RecruitmentModule/StartInterview/StartInterview";
 
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
               <Route path="/interview" element={<Interviews open={open}/>} />
               <Route path="/interview/create" element={<CreateUpdateInterview />} />
               <Route path="/interview/update" element={<CreateUpdateInterview />} />
+              <Route path="/interview/start" element={<StartInterview />} />
 
               <Route path="/asset" element={<ViewAsset />} />
               <Route path="/assetInsertion" element={<AssetInsertion />} />

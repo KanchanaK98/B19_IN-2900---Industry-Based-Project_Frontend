@@ -19,42 +19,48 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import EditIcon from "@mui/icons-material/Edit";
 import axios from "axios";
 import TeamMemberDialog from "./TeamMemberDialog";
+import { updateTeam } from "../../../Api/ReportersManagementModule/TeamsApi";
+import { getEmployeesWithoutTeam } from "../../../Api/ReportersManagementModule/TeamsApi";
 function EditTeam() {
   const { id } = useParams();
   const [members, setMembers] = useState([]);
   const location = useLocation();
   const { team } = location.state;
   const [editTeam, setEditTeam] = useState({
-    // _id: team._id,
     teamName: team.teamName,
     //teamLeadID: team.teamLeadID,
-    teamMembers:  team.TeamWithEmp.filter((member)=> member.employeeID !== team.teamLeadID),
+    teamMembers: team.TeamWithEmp.filter(
+      (member) => member.employeeID !== team.teamLeadID
+    ),
+
+    teamLeader: team.TeamWithEmp.filter(
+      (member) => member.employeeID === team.teamLeadID
+    )[0],
     // TeamWithEmp: team.TeamWithEmp,
     // ProductOfTeam: team.ProductOfTeam,
-    teamLeader: team.TeamWithEmp.filter((member)=> member.employeeID === team.teamLeadID)[0],
-      // team.TeamWithEmp.length > 0 &&
-      // team.TeamWithEmp.map((tm, i) => {
-      //   if (tm.employeeID === team.teamLeadID) {
-      //     tm.teamLeder = tm.employeeFirstName + " " + tm.employeeLastName;
-      //     return tm.teamLeder;
-      //   }
-      // }),
+    // team.TeamWithEmp.length > 0 &&
+    // team.TeamWithEmp.map((tm, i) => {
+    //   if (tm.employeeID === team.teamLeadID) {
+    //     tm.teamLeder = tm.employeeFirstName + " " + tm.employeeLastName;
+    //     return tm.teamLeder;
+    //   }
+    // }),
   });
-//console.log(team);
-console.log(editTeam);
-  const sendRequest = async () => {
-    await axios
-      .put(`http://localhost:8070/employee/updateTeam/${id}`, {
-        teamName: editTeam.teamName,
-        teamLeadID: editTeam.teamLeader.employeeID,
-        teamMembers:editTeam.teamMembers.map((member) => member.employeeID)
-        // teamLeader: editTeam.teamLeader,
-      })
-      .then((res) => res.data)
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  // console.log(team);
+  // console.log(editTeam);
+  // const sendRequest = async () => {
+  //   await axios
+  //     .put(`http://localhost:8070/employee/updateTeam/${team._id}`, {
+  //       teamName: editTeam.teamName,
+  //       teamLeadID: editTeam.teamLeader.employeeID,
+  //       teamMembers:editTeam.teamMembers.map((member) => member.employeeID)
+  //       // teamLeader: editTeam.teamLeader,
+  //     })
+  //     .then((res) => res.data)
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
   const handleChange = (e) => {
     setEditTeam((prevState) => ({
@@ -64,35 +70,49 @@ console.log(editTeam);
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    updateTeam(editTeam, team._id);
 
-    sendRequest()
-      .then((res) => {})
-      .catch((err) => {
-        console.log(err);
-      });
+    // sendRequest()
+    // .then((res) => {})
+    // .catch((err) => {
+    //   console.log(err);
+    // });
   };
 
-  // console.log(editTeam.teamLeader[0]);
-  // console.log(team.TeamWithEmp[0].employeeID)
-  const handleAddMembers = async () => {
-    return await axios
-      .get("http://localhost:8070/employee/get")
-      .then((res) => res.data.data)
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  // const handleAddMembers = async () => {
+  //   return await axios
+  //     .get("http://localhost:8070/employee/get")
+  //     .then((res) => res.data.data)
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     setMembers(await handleAddMembers());
+  //   }
+  //   fetchData();
+  // }, []);
+  // const fetchData = async () => {
+  //   setMembers(await getEmployeesWithoutTeam({}));
+  // };
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
+
   useEffect(() => {
     async function fetchData() {
-      setMembers(await handleAddMembers());
+      setMembers(await getEmployeesWithoutTeam());
     }
     fetchData();
   }, []);
-  team.TeamWithEmp.map((tm, i) => {
-    if (tm.employeeID === team.teamLeadID) {
-      tm.teamLeder = tm.employeeFirstName + " " + tm.employeeLastName;
-    }
-  });
+
+  console.log(members);
+  // team.TeamWithEmp.map((tm, i) => {
+  //   if (tm.employeeID === team.teamLeadID) {
+  //     tm.teamLeder = tm.employeeFirstName + " " + tm.employeeLastName;
+  //   }
+  // });
   //-------------------------
   const [openDialog, setOpenDialog] = useState(false);
   const handleOpenDialog = () => {
@@ -102,9 +122,9 @@ console.log(editTeam);
   return (
     <div>
       <Paper sx={{ padding: 4 }}>
-        <Typography variant="h5" sx={{ mb: 5,fontWeight:"bold" }}>
-          <GroupAddIcon />&nbsp;
-          Update Team
+        <Typography variant="h5" sx={{ mb: 5, fontWeight: "bold" }}>
+          <GroupAddIcon />
+          &nbsp; Update Team
         </Typography>
         <Divider sx={{ mb: 5, mt: 2 }}></Divider>
         <Grid container spacing={3}>
@@ -148,7 +168,6 @@ console.log(editTeam);
               setEditTeam={setEditTeam}
               employees={members}
               setEmployee={setMembers}
-              
             />
 
             <Grid container sx={{ mb: 5 }}>
@@ -157,9 +176,7 @@ console.log(editTeam);
                 {editTeam.teamMembers.length > 0 &&
                   editTeam.teamMembers.map((member, i) => (
                     <Chip
-                      label={
-                        member.employeeName
-                      }
+                      label={member.employeeName}
                       key={member.employeeID}
                       sx={{
                         mr: 0.5,
@@ -213,9 +230,10 @@ console.log(editTeam);
                           }}
                         >
                           <Grid item>
-                            <Avatar src={mem.profilePic} sx={{ height: 35, width: 35 }} />
-                             
-                            
+                            <Avatar
+                              src={mem.profilePic}
+                              sx={{ height: 35, width: 35 }}
+                            />
                           </Grid>
                           <Grid item>
                             <Typography sx={{ mb: -0.7, ml: 1 }}>

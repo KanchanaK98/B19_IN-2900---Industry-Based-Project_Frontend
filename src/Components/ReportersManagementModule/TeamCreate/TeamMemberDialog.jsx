@@ -44,12 +44,12 @@ const TeamMemberDialog = ({
     <Dialog fullWidth open={openDialog}>
       <DialogTitle>
         <Grid container sx={{ display: "flex", alignItems: "center" }}>
-          <Grid sm={10} md={10} item>
+          <Grid  md={10} item>
             <Typography variant="h5">Team Members</Typography>
           </Grid>
 
           <Grid
-            sm={2}
+            
             md={2}
             item
             sx={{ display: "flex", justifyContent: "flex-end" }}
@@ -70,7 +70,7 @@ const TeamMemberDialog = ({
           {members &&
             members.map((member) => (
               <Chip
-                label={member.employeeFirstName + " "+ member.employeeLastName}
+                label={member.employeeName}
                 key={member.employeeID}
                 onDelete={()=> handleDelete(member)}
                 sx={{
@@ -111,12 +111,12 @@ const TeamMemberDialog = ({
                 >
                   <Grid item>
                     <Avatar sx={{ height: 35, width: 35 }}>
-                      {employee.employeeFirstName[0].toUpperCase()}
+                      {employee.employeeName.toUpperCase()}
                     </Avatar>
                   </Grid>
                   <Grid item>
                     <Typography sx={{ mb: -0.7, ml: 1 }}>
-                      {employee.employeeFirstName + " "+ employee.employeeLastName}
+                      {employee.employeeName}
                     </Typography>
                     <Typography variant="body2" sx={{ ml: 1.3 }}>
                       {employee.employeeID}

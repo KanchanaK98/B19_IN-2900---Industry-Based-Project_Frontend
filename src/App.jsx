@@ -50,17 +50,17 @@ function App() {
               <Route path="dashboard/create" element={<CreateEmployeePage />} />
               <Route path="add" element={<Add />} />
               <Route path="/teams" element={<TeamPage />} />
-              <Route path="/teams/update/:id" element={<EditTeam/>}/>
+              <Route path="/teams/update/:id" element={<EditTeam />} />
               <Route path="/products" element={<ProductPage />} />
-              <Route path="/products/create" element={<CreateProductPage/>}/>
+              <Route path="/products/create" element={<CreateProductPage />} />
               <Route path="teams/create" element={<CreateTeamPage />} />
               {/* <Route path="/createteams" element={<CreateTeams />} /> */}
               <Route path="/pro" element={<CreateProduct />} />
 
-              <Route path="/user" element={<UserProfile user={user}/>}/>
-              <Route path="/products/update/:id" element={<EditProduct/>}/>
-              <Route path="progress" element={<ProgressBar/>}/>
-              <Route path="snack" element={<SnackBar/>}/>
+              <Route path="/user" element={<UserProfile user={user} />} />
+              <Route path="/products/update/:id" element={<EditProduct />} />
+              <Route path="progress" element={<ProgressBar />} />
+              <Route path="snack" element={<SnackBar />} />
             </Routes>
           </BrowserRouter>
         </Grid>
@@ -69,4 +69,4 @@ function App() {
   );
 }
 
-export default App
+export default App;

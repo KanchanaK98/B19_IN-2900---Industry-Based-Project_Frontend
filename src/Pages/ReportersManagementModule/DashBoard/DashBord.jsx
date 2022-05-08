@@ -8,6 +8,7 @@ import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
+import { Link } from "react-router-dom";
 function DashBord() {
   const [value, setValue] = React.useState("1");
 
@@ -16,28 +17,12 @@ function DashBord() {
   };
   return (
     <div>
-      {/* <Grid item sm={12} md={12}>
-        <Grid container spacing={2}>
-          <Grid item sm={12} md={6} sx={{ mb: 5 }}>
-            <Button variant="contained" fullWidth>
-              REACNT REPORTERS SECTION
-            </Button>
-          </Grid>
-          <Grid item sm={12} md={6}>
-            <Button LinkComponent={Link} to={`#`} variant="contained" fullWidth>
-              ORGANIZATION STRUCTURE
-            </Button>
-          </Grid>
-        </Grid>
-      </Grid> */}
       <Grid item sm={12} md={12} sx={{ mb: 5 }}>
-        <Button
-          variant="contained"
-          sx={{ justifyContent: "right" }}
-          startIcon={<AddBoxIcon />}
-        >
-          CAREATE NEW EMPLOYEE
-        </Button>
+        <Link to="/dashboard/create">
+          <Button type="button" variant="contained" startIcon={<AddBoxIcon />}>
+            CAREATE NEW EMPLOYEE
+          </Button>
+        </Link>
       </Grid>
       <Grid item sm={12} md={12}>
         <Box sx={{ width: "100%", typography: "body1" }}>

@@ -1,11 +1,5 @@
 import React from "react";
 import { Typography, Button, Card, Grid, Avatar, Divider } from "@mui/material";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import Table from "@mui/material/Table";
-import TableCell from "@mui/material/TableCell";
 import { Link } from "react-router-dom";
 function DisplayTeam({ team }) {
   const { _id, teamName, teamLeadID, TeamWithEmp, ProductOfTeam } = team;
@@ -18,8 +12,8 @@ function DisplayTeam({ team }) {
           mt: 5,
           mb: 2,
           borderRadius: 5,
-          padding: 5,
-          minWidth: 300,
+          padding: 3,
+          minWidth: 320,
           backgroundColor: "#e4ecf7",
         }}
       >
@@ -29,35 +23,73 @@ function DisplayTeam({ team }) {
           {teamName}
         </Typography>
         <Grid sx={{ justifyContent: "center", display: "flex" }}>
-          <Avatar src={TeamWithEmp[0].profilePic}></Avatar>
+          {/* <Avatar
+            sx={{ width: 60, height: 60 }}
+            src={TeamWithEmp[0].profilePic}
+          ></Avatar> */}
+
+          {TeamWithEmp.length > 0 &&
+            TeamWithEmp.map((result, i, j) => {
+              if (TeamWithEmp[i].employeeID === teamLeadID) {
+                return (
+                  <Grid sx={{ mb: 1, mt: 1 }}>
+                    <Avatar
+                      src={TeamWithEmp[i].profilePic}
+                      sx={{
+                        width: 60,
+                        height: 60,
+                      }}
+                      component={"span"}
+                    />
+
+                    <Typography component={"span"} key={j} align="center">
+                      {TeamWithEmp[i].employeeID}
+                      &nbsp;
+                      {
+                        TeamWithEmp[i].employeeName
+                        // " " +
+                        // TeamWithEmp[i].employeeLastName
+                      }
+                    </Typography>
+                  </Grid>
+                );
+              }
+            })}
         </Grid>
 
-        <Typography align="center">
-          {teamLeadID +
-            " " +
-            TeamWithEmp[0].employeeName 
+        {/* <Typography align="center">
+          {
+            teamLeadID + " " + TeamWithEmp[0].employeeName
             // " " +
             // TeamWithEmp[0].employeeLastName
           }
-        </Typography>
+        </Typography> */}
         <Divider sx={{ mt: 2, mb: 2 }}></Divider>
         <Grid>
-          <Typography>
+          <Typography component={"span"}>
             {TeamWithEmp.length > 0 &&
               TeamWithEmp.map((result, i) => {
                 if (TeamWithEmp[i].employeeID !== teamLeadID) {
                   return (
                     <Typography component={"span"} key={i}>
-                      <Avatar
-                        src={TeamWithEmp[i].profilePic}
-                        component={"span"}
-                      ></Avatar>
-                      {TeamWithEmp[i].employeeID +
-                        " " +
-                        TeamWithEmp[i].employeeName 
-                        // " " +
-                        // TeamWithEmp[i].employeeLastName
-                        }
+                      <Grid container sx={{ mb: 1 }}>
+                        <Grid item>
+                          <Avatar
+                            src={TeamWithEmp[i].profilePic}
+                            component={"span"}
+                          ></Avatar>
+                        </Grid>
+                        <Grid item sx={{}}>
+                          &nbsp;
+                          {TeamWithEmp[i].employeeID}
+                          <br /> &nbsp;
+                          {
+                            TeamWithEmp[i].employeeName
+                            // " " +
+                            // TeamWithEmp[i].employeeLastName
+                          }
+                        </Grid>
+                      </Grid>
                     </Typography>
                   );
                 }
@@ -82,35 +114,6 @@ function DisplayTeam({ team }) {
           </Button>
         </Typography>
       </Card>
-
-      {/* <Card sx={{ mb: 2, minWidth: 1000 }}>
-        <Grid>
-          <Typography>Team Name :{teamName}</Typography>
-          <Avatar src={leaderProfPic}></Avatar>
-          <Typography>
-            Team Leader :{teamLeadID + " " + leadFirstName + " " + leadLastName}
-          </Typography>
-          <Typography>
-            Product Name :
-            {ProductOfTeam.length > 0 && ProductOfTeam[0].productName}
-          </Typography>
-          <Typography>
-            Team Members :
-            {TeamWithEmp.length > 0 &&
-              TeamWithEmp.map((result, i) => {
-                return (
-                  <Typography component={"span"} key={i}>
-                    {TeamWithEmp[i].employeeID +
-                      TeamWithEmp[i].employeeFirstName +
-                      " " +
-                      TeamWithEmp[i].employeeLastName}
-                    ,
-                  </Typography>
-                );
-              })}
-          </Typography>
-        </Grid>
-      </Card> */}
     </div>
   );
 }

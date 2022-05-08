@@ -39,9 +39,27 @@ export const updateEmployee = async (employeeData) => {
       language: employeeData.language.split(","),
       course: employeeData.course.split(","),
     };
-  const {data} =  await api.updateEmployee(empData);
-  return data;
+    const { data } = await api.updateEmployee(empData);
+    return data;
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const viewAllEmployees = async (viewemployees) => {
+  try {
+    const { data } = await api.viewAllEmployees(viewemployees);
+    return data.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const recentEmployees = async (recentemployees) => {
+  try {
+    const { data } = await api.recentEmployees(recentemployees);
+    return data.data;
+  } catch (err) {
+    console.log(err);
   }
 };

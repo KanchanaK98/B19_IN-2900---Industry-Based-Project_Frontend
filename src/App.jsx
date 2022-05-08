@@ -10,7 +10,6 @@ import Login from "./Components/Login/Login";
 import CreateEmployee from "./Components/ReportersManagementModule/CreateEmployeeForm/CreateEmployee";
 import EditEmployee from "./Components/ReportersManagementModule/UpdateEmployeesForm/EditEmployee";
 import DashBord from "./Pages/ReportersManagementModule/DashBoard/DashBord";
-import Add from "./Components/ReportersManagementModule/TeamCreate/Add";
 import TeamPage from "./Pages/ReportersManagementModule/Teams/TeamPage";
 import ProductPage from "./Pages/ReportersManagementModule/Products/ProductPage";
 import CreateTeams from "./Components/ReportersManagementModule/TeamCreate/CreateTeams";
@@ -48,7 +47,7 @@ function App() {
               <Route path="/dashboard" element={<DashBord />} />
               <Route path="/profile/update/" element={<EditEmployee />} />
               <Route path="dashboard/create" element={<CreateEmployeePage />} />
-              <Route path="add" element={<Add />} />
+             
               <Route path="/teams" element={<TeamPage />} />
               <Route path="/teams/update/:id" element={<EditTeam />} />
               <Route path="/products" element={<ProductPage />} />

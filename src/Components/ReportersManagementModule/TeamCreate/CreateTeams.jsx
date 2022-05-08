@@ -17,8 +17,6 @@ import {
 } from "@mui/material";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import TeamMemberDialog from "./TeamMemberDialog";
-import SnackBar from "../SnackBar/SnackBar";
-import { useLocation } from "react-router-dom";
 import { createTeams } from "../../../Api/ReportersManagementModule/TeamsApi";
 
 function CreateTeams() {

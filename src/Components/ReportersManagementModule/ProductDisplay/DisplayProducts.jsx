@@ -1,5 +1,4 @@
 import { React, useState, useEffect } from "react";
-import axios from "axios";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
@@ -8,14 +7,15 @@ import Table from "@mui/material/Table";
 import TableCell from "@mui/material/TableCell";
 import { Grid, Card, Divider } from "@mui/material";
 import DisplayProduct from "./DisplayProduct";
-const fetchHandler = async () => {
-  return await axios
-    .get("http://localhost:8070/employee/viewProducts")
-    .then((res) => res.data.data)
-    .catch((err) => {
-      console.log(err);
-    });
-};
+import { viewProducts } from "../../../Api/ReportersManagementModule/ProductApi";
+// const fetchHandler = async () => {
+//   return await axios
+//     .get("http://localhost:8070/employee/viewProducts")
+//     .then((res) => res.data.data)
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// };
 //------------------
 
 function DisplayProducts() {
@@ -23,7 +23,7 @@ function DisplayProducts() {
 
   useEffect(() => {
     async function fetchData() {
-      setProducts(await fetchHandler());
+      setProducts(await viewProducts());
     }
     fetchData();
   }, []);
@@ -52,9 +52,9 @@ function DisplayProducts() {
 
       <Grid>
         {products &&
-          products.map((tm) => {
+          products.map((tm, i) => {
             return (
-              <Grid item xs={12} sm={6} md={4} component="div" key={tm._id}>
+              <Grid item xs={12} sm={6} md={4} component="div" key={i}>
                 <DisplayProduct product={tm} />
               </Grid>
             );

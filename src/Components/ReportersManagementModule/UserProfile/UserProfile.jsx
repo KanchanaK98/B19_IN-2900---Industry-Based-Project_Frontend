@@ -37,7 +37,7 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
     backgroundColor: theme.palette.mode === "light" ? "#183d78" : "#308fe8",
   },
 }));
-function UserProfile() {
+function UserProfile({user}) {
   return (
     <div>
       <Box sx={{ width: "100%" ,backgroundColor:'#d7dde0' ,padding:5}}>

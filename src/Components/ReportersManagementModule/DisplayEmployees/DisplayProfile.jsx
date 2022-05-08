@@ -43,6 +43,7 @@ function DisplayProfile({ profile }) {
           marginBottom: 5,
           padding: 5,
           maxWidth: 350,
+          minWidth: 350,
           backgroundColor: "#e4ecf7",
         }}
       >
@@ -66,7 +67,6 @@ function DisplayProfile({ profile }) {
         <Divider sx={{ mt: 2, mb: 2 }}></Divider>
         <Grid>
           <Typography>
-            {" "}
             <PlaceIcon />
             &nbsp; {streetNo + "," + city}
           </Typography>

@@ -1,22 +1,22 @@
 import { useState, useEffect, React } from "react";
-import axios from "axios";
 import DisplayProfile from "./DisplayProfile";
 import { Grid } from "@mui/material";
+import { viewAllEmployees } from "../../../Api/ReportersManagementModule/EmployeeApi";
 // import useStyles from "./DisplayProfileCardStyles";
-const fetchHandler = async () => {
-  return await axios
-    .get("http://localhost:8070/employee/")
-    .then((res) => res.data.data)
-    .catch((err) => {
-      console.log(err);
-    });
-};
+// const fetchHandler = async () => {
+//   return await axios
+//     .get("http://localhost:8070/employee/")
+//     .then((res) => res.data.data)
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// };
 function DisplayProfiles() {
   const [profiles, setProfiles] = useState([]);
-  // console.log(profiles)
+
   useEffect(() => {
     async function fetchData() {
-      setProfiles(await fetchHandler());
+      setProfiles(await viewAllEmployees());
     }
     fetchData();
     // fetchHandler()
@@ -32,13 +32,11 @@ function DisplayProfiles() {
 
       <Grid
         container
-       
         sx={{
-         
           justifyContent: "center",
           display: "flex",
-          
         }}
+        
       >
         {profiles &&
           profiles.map((prof) => {

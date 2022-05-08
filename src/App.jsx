@@ -19,7 +19,6 @@ import EditProduct from "./Components/ReportersManagementModule/ProductUpdate/Ed
 import ProgressBar from "./Components/ReportersManagementModule/DisplayEmployees/ProgressBar";
 import EditTeam from "./Components/ReportersManagementModule/TeamUpdate/EditTeam";
 import CreateTeamPage from "./Pages/ReportersManagementModule/Teams/CreateTeamPage";
-import SnackBar from "./Components/ReportersManagementModule/SnackBar/SnackBar";
 import CreateProductPage from "./Pages/ReportersManagementModule/Products/CreateProductPage";
 import CreateEmployeePage from "./Pages/ReportersManagementModule/DashBoard/CreateEmployeePage";
 function App() {
@@ -59,7 +58,6 @@ function App() {
               <Route path="/user" element={<UserProfile user={user} />} />
               <Route path="/products/update/:id" element={<EditProduct />} />
               <Route path="progress" element={<ProgressBar />} />
-              <Route path="snack" element={<SnackBar />} />
             </Routes>
           </BrowserRouter>
         </Grid>

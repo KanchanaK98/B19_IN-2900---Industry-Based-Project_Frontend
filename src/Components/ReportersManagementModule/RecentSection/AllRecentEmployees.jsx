@@ -3,20 +3,21 @@ import axios from "axios";
 import { Grid, Box } from "@mui/material";
 import useStyles from "./RecentEmployeeSectionStyles";
 import RecentEmployee from "./RecentEmployee";
-const fetchHandler = async () => {
-  return await axios
-    .get("http://localhost:8070/employee/recentSection")
-    .then((res) => res.data.data)
-    .catch((err) => {
-      console.log(err);
-    });
-};
+import { recentEmployees } from "../../../Api/ReportersManagementModule/EmployeeApi";
+// const fetchHandler = async () => {
+//   return await axios
+//     .get("http://localhost:8070/employee/recentSection")
+//     .then((res) => res.data.data)
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// };
 function AllRecentEmployees() {
   const [profiles, setProfiles] = useState([]);
   // console.log(profiles)
   useEffect(() => {
     async function fetchData() {
-      setProfiles(await fetchHandler());
+      setProfiles(await recentEmployees());
     }
     fetchData();
     // fetchHandler()

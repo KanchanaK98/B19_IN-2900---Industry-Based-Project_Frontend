@@ -17,6 +17,10 @@ import {
 } from "@mui/material";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import TeamMemberDialog from "./TeamMemberDialog";
+import SnackBar from "../SnackBar/SnackBar";
+import { useLocation } from "react-router-dom";
+import { createTeams } from "../../../Api/ReportersManagementModule/TeamsApi";
+
 function CreateTeams() {
   const [teaminputs, setTeaminputs] = useState({
     teamName: "",
@@ -36,25 +40,26 @@ function CreateTeams() {
     }
   };
 
-  const sendRequest = async () => {
-    await axios
-      .post("http://localhost:8070/employee/teamAdd", {
-        teamName: teaminputs.teamName,
-        teamLeadID: teaminputs.teamLead.employeeID,
-        teamMembers: teaminputs.teamMembers.map(({ employeeID }) => employeeID),
-      })
-      .then((res) => res.data);
-  };
+  // const sendRequest = async () => {
+  //   await axios
+  //     .post("http://localhost:8070/employee/teamAdd", {
+  //       teamName: teaminputs.teamName,
+  //       teamLeadID: teaminputs.teamLead.employeeID,
+  //       teamMembers: teaminputs.teamMembers.map(({ employeeID }) => employeeID),
+  //     })
+  //     .then((res) => res.data);
+  // };
 
   //console.log(teaminputs);
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log(teaminputs);
-    sendRequest()
-      .then((res) => {})
-      .catch((err) => {
-        console.log(err);
-      });
+    createTeams(teaminputs);
+    // sendRequest()
+    //   .then((res) => {})
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
     setTeaminputs({
       teamName: "",
       teamLead: {},
@@ -107,12 +112,12 @@ function CreateTeams() {
     }
     fetchData();
   }, []);
-  if (members.length > 0) {
-    members.map((mem) => {
-      mem.fullName = mem.employeeFirstName + " " + mem.employeeLastName;
-    });
-  }
-  //console.log(members);
+  // if (members.length > 0) {
+  //   members.map((mem) => {
+  //     mem.fullName = mem.employeeFirstName + " " + mem.employeeLastName;
+  //   });
+  // }
+  console.log(members);
   //----------------------------------------------------
   //----------------------------------------------------
 
@@ -120,6 +125,9 @@ function CreateTeams() {
   const handleOpenDialog = () => {
     setOpenDialog(true);
   };
+  //add snackbar-------------------------
+
+  //----------------------------------------
   return (
     <div>
       <Paper sx={{ padding: 4 }}>
@@ -177,9 +185,7 @@ function CreateTeams() {
                 {teaminputs.teamMembers &&
                   teaminputs.teamMembers.map((member) => (
                     <Chip
-                      label={
-                        member.employeeFirstName + " " + member.employeeLastName
-                      }
+                      label={member.employeeName}
                       key={member.employeeID}
                       sx={{
                         mr: 0.5,
@@ -197,7 +203,7 @@ function CreateTeams() {
           </Grid>
 
           <Grid item sm={12} md={6}>
-            <Grid container sx={12}>
+            <Grid container>
               <Grid item sm={4} md={4}>
                 <FormLabel>Team Lead :</FormLabel>
               </Grid>
@@ -212,7 +218,7 @@ function CreateTeams() {
                   onChange={handleChange}
                   fullWidth
                   SelectProps={{
-                    renderValue: (mem) => mem.fullName,
+                    renderValue: (mem) => mem.employeeName,
                   }}
                 >
                   {members &&
@@ -233,9 +239,7 @@ function CreateTeams() {
                           </Grid>
                           <Grid item>
                             <Typography sx={{ mb: -0.7, ml: 1 }}>
-                              {mem.employeeFirstName +
-                                " " +
-                                mem.employeeLastName}
+                              {mem.employeeName}
                             </Typography>
                             <Typography variant="body2" sx={{ ml: 1.3 }}>
                               {mem.employeeID}

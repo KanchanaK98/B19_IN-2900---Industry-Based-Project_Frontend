@@ -11,7 +11,8 @@ import {
 } from "@mui/material";
 import InventoryIcon from "@mui/icons-material/Inventory";
 import { TextareaAutosize } from "@mui/material";
-import axios from "axios";
+import { createProduct } from "../../../Api/ReportersManagementModule/ProductApi";
+import { getAllTeams } from "../../../Api/ReportersManagementModule/TeamsApi";
 function CreateProduct() {
   const [products, setProducts] = useState({
     productID: "",
@@ -26,19 +27,20 @@ function CreateProduct() {
       [e.target.name]: e.target.value,
     }));
   };
-  const sendRequest = async () => {
-    await axios
-      .post("http://localhost:8070/employee/addProduct", {
-        productID: products.productID,
-        productName: products.productName,
-        description: products.description,
-        teamNames: products.nameofTeam.teamName,
-      })
-      .then((res) => res.data);
-  };
+  // const sendRequest = async () => {
+  //   await axios
+  //     .post("http://localhost:8070/employee/addProduct", {
+  //       productID: products.productID,
+  //       productName: products.productName,
+  //       description: products.description,
+  //       teamNames: products.nameofTeam.teamName,
+  //     })
+  //     .then((res) => res.data);
+  // };
   const handleSubmit = (e) => {
     e.preventDefault();
-    sendRequest()
+    // sendRequest()
+    createProduct(products)
       .then((res) => {})
       .catch((err) => {
         console.log(err);
@@ -50,22 +52,21 @@ function CreateProduct() {
       teamNames: {},
     });
   };
-  const handlegetTeams = async () => {
-    return await axios
-      .get("http://localhost:8070/employee/getTeam")
-      .then((res) => res.data.data)
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  // const handlegetTeams = async () => {
+  //   return await axios
+  //     .get("http://localhost:8070/employee/getTeam")
+  //     .then((res) => res.data.data)
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
   useEffect(() => {
     async function fetchData() {
-      setTeams(await handlegetTeams());
+      setTeams(await getAllTeams());
     }
     fetchData();
   }, []);
 
-  console.log(teams);
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -77,7 +78,7 @@ function CreateProduct() {
 
           <Grid container sx={{ mb: 5 }} spacing={4}>
             <Grid item md={6}>
-              <Grid container  >
+              <Grid container>
                 <Grid item md={3}>
                   <FormLabel>Product ID:</FormLabel>
                 </Grid>

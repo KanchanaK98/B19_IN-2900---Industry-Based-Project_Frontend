@@ -19,6 +19,10 @@ import UserProfile from "./Components/ReportersManagementModule/UserProfile/User
 import EditProduct from "./Components/ReportersManagementModule/ProductUpdate/EditProduct";
 import ProgressBar from "./Components/ReportersManagementModule/DisplayEmployees/ProgressBar";
 import EditTeam from "./Components/ReportersManagementModule/TeamUpdate/EditTeam";
+import CreateTeamPage from "./Pages/ReportersManagementModule/Teams/CreateTeamPage";
+import SnackBar from "./Components/ReportersManagementModule/SnackBar/SnackBar";
+import CreateProductPage from "./Pages/ReportersManagementModule/Products/CreateProductPage";
+import CreateEmployeePage from "./Pages/ReportersManagementModule/DashBoard/CreateEmployeePage";
 function App() {
   const [open, setOpen] = useState(true);
   const [user, setUser] = useState(true); //true when working
@@ -40,18 +44,23 @@ function App() {
               <Route exact path="/" element={<Login setUser={setUser} />} />
               <Route path="candidate" element={<CreateCandidate />} />
               <Route path="/asset" element={<Example />} />
+              {/*reporters management paths */}
               <Route path="/dashboard" element={<DashBord />} />
               <Route path="/profile/update/" element={<EditEmployee />} />
-              <Route path="createemployee" element={<CreateEmployee />} />
+              <Route path="dashboard/create" element={<CreateEmployeePage />} />
               <Route path="add" element={<Add />} />
               <Route path="/teams" element={<TeamPage />} />
               <Route path="/teams/update/:id" element={<EditTeam/>}/>
               <Route path="/products" element={<ProductPage />} />
-              <Route path="/team" element={<CreateTeams />} />
+              <Route path="/products/create" element={<CreateProductPage/>}/>
+              <Route path="teams/create" element={<CreateTeamPage />} />
+              {/* <Route path="/createteams" element={<CreateTeams />} /> */}
               <Route path="/pro" element={<CreateProduct />} />
-              <Route path="/user" element={<UserProfile/>}/>
+
+              <Route path="/user" element={<UserProfile user={user}/>}/>
               <Route path="/products/update/:id" element={<EditProduct/>}/>
               <Route path="progress" element={<ProgressBar/>}/>
+              <Route path="snack" element={<SnackBar/>}/>
             </Routes>
           </BrowserRouter>
         </Grid>

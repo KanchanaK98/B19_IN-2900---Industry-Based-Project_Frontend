@@ -1,15 +1,8 @@
-import { React, useState, useEffect } from "react";
-import { Typography, Grid, Card, Button, Divider } from "@mui/material";
+import { React } from "react";
+import { Typography, Grid, Card,  } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import { IconButton } from "@mui/material";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import Table from "@mui/material/Table";
-import TableCell from "@mui/material/TableCell";
 import { Link } from "react-router-dom";
-import axios from "axios";
 
 // const getTeams = async () => {
 //   return await axios
@@ -21,7 +14,8 @@ import axios from "axios";
 // };
 
 function DisplayProduct({ product }) {
-  const { _id,productID, productName, description, teamID ,teamName} = product;
+  const { _id, productID, productName, description, teamID, teamName } =
+    product;
   // const [teams, setTeams] = useState([]);
   // useEffect(() => {
   //   async function fetchData() {
@@ -45,43 +39,28 @@ function DisplayProduct({ product }) {
           </IconButton>
         </Grid>
         <Grid item md={9}>
-          <Card sx={{ mb: 2, minWidth: 1110, backgroundColor: "lightgray" ,padding:3}}>
+          <Card
+            sx={{
+              mb: 2,
+              minWidth: 1110,
+              backgroundColor: "lightgray",
+              padding: 3,
+            }}
+          >
             <Grid container>
-              <Grid item md={3}>  <Typography>{productID}</Typography></Grid>
-              <Grid item md={3}> <Typography>{productName}</Typography></Grid>
-              <Grid item md={3}><Typography>{description}</Typography></Grid>
-              <Grid item md={3}>   <Typography>{teamName}</Typography></Grid>
+              <Grid item md={3}>
+                <Typography>{productID}</Typography>
+              </Grid>
+              <Grid item md={3}>
+                <Typography>{productName}</Typography>
+              </Grid>
+              <Grid item md={3}>
+                <Typography>{description}</Typography>
+              </Grid>
+              <Grid item md={3}>
+                <Typography>{teamName}</Typography>
+              </Grid>
             </Grid>
-            {/* <TableContainer component={Paper}>
-              <Table sx={{ minWidth: 700 }} aria-label="customized table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell align="left">
-                      <Typography>{productID}</Typography>
-                    </TableCell>
-                    <TableCell align="left">
-                      <Typography>{productName}</Typography>
-                    </TableCell>
-                    <TableCell align="left">
-                      <Typography>{description}</Typography>
-                    </TableCell>
-                    <TableCell align="left">
-                      <Typography>{teamName}</Typography>
-                      {/* {teams.length > 0 &&
-                        teams.map((team) => {
-                          if (team._id === teamID) {
-                            return (
-                              <Typography key={team._id}>
-                                {team.teamName}
-                              </Typography>
-                            );
-                          }
-                        })} 
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
-              </Table>
-            </TableContainer> */}
           </Card>
         </Grid>
       </Grid>

@@ -29,19 +29,23 @@ function DisplayTeam({ team }) {
           ></Avatar> */}
 
           {TeamWithEmp.length > 0 &&
-            TeamWithEmp.map((result, i, j) => {
+            TeamWithEmp.map((result, i, j, k) => {
               if (TeamWithEmp[i].employeeID === teamLeadID) {
                 return (
                   <Grid sx={{ mb: 1, mt: 1 }}>
-                    <Avatar
-                      src={TeamWithEmp[i].profilePic}
-                      sx={{
-                        width: 60,
-                        height: 60,
-                      }}
-                      component={"span"}
-                    />
-
+                    <Grid
+                      sx={{ justifyContent: "center", display: "flex", mb: 1 }}
+                    >
+                      <Avatar
+                        src={TeamWithEmp[i].profilePic}
+                        sx={{
+                          width: 60,
+                          height: 60,
+                        }}
+                        key={i}
+                        component={"span"}
+                      />
+                    </Grid>
                     <Typography component={"span"} key={j} align="center">
                       {TeamWithEmp[i].employeeID}
                       &nbsp;

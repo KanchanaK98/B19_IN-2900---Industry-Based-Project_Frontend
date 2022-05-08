@@ -33,11 +33,11 @@ import StartInterview from "./Pages/RecruitmentModule/StartInterview/StartInterv
 
 function App() {
   const [open, setOpen] = useState(true);
-  // const [user, setUser] = useState(true);
-  const data = JSON.parse(localStorage.getItem("apiData"));
-  const [user, setUser] = useState(data.employeeFirstName);
-  const [role, setRole] = useState(data.jobRole);
-  const [profileImage, setProfileImage] = useState(data.profilePic);
+  const [user, setUser] = useState(true);
+  // const data = JSON.parse(localStorage.getItem("apiData"));
+  // const [user, setUser] = useState(data.employeeFirstName);
+  // const [role, setRole] = useState(data.jobRole);
+  // const [profileImage, setProfileImage] = useState(data.profilePic);
   // console.log(data.employeeFirstName);
 
   const toggleDrawer = () => {
@@ -46,7 +46,7 @@ function App() {
   return (
     <Box sx={{ display: "flex", }}>
       <CssBaseline />
-      {user && <SideBar open={open} toggleDrawer={toggleDrawer} setUser={user} image={profileImage} jobRole={role}/>}
+      {user && <SideBar open={open} toggleDrawer={toggleDrawer} setUser={user} />}
       <Grid container>
         <Grid item sm={12} md={12}>
           {user && <NavBar open={open} toggleDrawer={toggleDrawer} />}

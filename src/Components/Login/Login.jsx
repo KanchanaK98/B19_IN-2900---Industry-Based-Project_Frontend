@@ -46,18 +46,24 @@ export default function Login() {
               if(response.success === true)
               {
                 //console.log("user can sign in")
+                localStorage.setItem("apiData", JSON.stringify(response.user));
                 window.location.href = '/asset';
               }else
               {
-                setnonfill(false);
                 setinvalid(true);
+                
+                setTimeout(() => {
+                  setinvalid(false);
+                }, 2000);
               }
               
 
                 
             }else{
-                setinvalid(false);
                 setnonfill(true);
+                setTimeout(() => {
+                  setnonfill(false);
+                }, 2000);
             }
         
     

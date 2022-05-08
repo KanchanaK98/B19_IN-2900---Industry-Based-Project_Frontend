@@ -8,6 +8,7 @@ const CreateCandidate = () => {
     firstName: "",
     lastName: "",
     NIC: "",
+    appliedPosition : "",
     phoneNumber: "",
     email: "",
     cv: "",
@@ -16,7 +17,7 @@ const CreateCandidate = () => {
 
   
   return (
-    <Grid container>
+    <Grid container sx={{p : 4}}>
       <Grid item sm={12} md={8}>
         <CreateCandidateForm
           candidateData={candidateData}

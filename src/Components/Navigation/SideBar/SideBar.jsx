@@ -21,8 +21,8 @@ import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import PaidIcon from "@mui/icons-material/Paid";
 import HowToRegIcon from "@mui/icons-material/HowToReg";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { Scrollbars } from 'react-custom-scrollbars-2';
-
+import { Scrollbars } from "react-custom-scrollbars-2";
+import Badge from "@mui/material/Badge";
 const drawerWidth = 260;
 
 const openedMixin = (theme) => ({
@@ -63,14 +63,43 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-const SideBar = ({ open, toggleDrawer }) => {
+const StyledBadge = styled(Badge)(({ theme }) => ({
+  "& .MuiBadge-badge": {
+    backgroundColor: "#44b700",
+    color: "#44b700",
+    boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
+    "&::after": {
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      borderRadius: "50%",
+      animation: "ripple 1.2s infinite ease-in-out",
+      border: "1px solid currentColor",
+      content: '""',
+    },
+  },
+  "@keyframes ripple": {
+    "0%": {
+      transform: "scale(.8)",
+      opacity: 1,
+    },
+    "100%": {
+      transform: "scale(2.4)",
+      opacity: 0,
+    },
+  },
+}));
+
+const SideBar = ({ open, toggleDrawer,setUser,image,jobRole }) => {
   const styleProps = {
     display: open ? "flex" : "none",
     displayLogOut: open ? "none" : "flex",
   };
 
   const classes = useStyles(styleProps);
- 
+
   return (
     <Box>
       <Drawer
@@ -80,14 +109,20 @@ const SideBar = ({ open, toggleDrawer }) => {
       >
         <Grid className={classes.drawerHeader}>
           <Grid className={classes.profile}>
-            <Avatar
-              src={photo}
-              sx={{ mt: "8px", mb: "8px", height: "50px", width: "50px" }}
-            />
+            <StyledBadge
+              overlap="circular"
+              anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+              variant="dot"
+            >
+              <Avatar
+                src={image}
+                sx={{ mt: 1, mb: 1, height: 50, width: 50 }}
+              />
+            </StyledBadge>
 
             <Grid className={classes.profileName}>
               <Typography color={"white"} variant="h6" sx={{ mb: -1 }}>
-                Kushan M.
+                {setUser}
               </Typography>
               <Typography color={"white"} variant="caption">
                 HR manager
@@ -124,96 +159,95 @@ const SideBar = ({ open, toggleDrawer }) => {
         <Divider variant="middle" classes={{ root: classes.divider }} />
 
         <Scrollbars sx={{ width: 260, height: 300 }}>
-        <Grid className={classes.navList}>
-          <Grid className={classes.item}>
-            <Home />
-            <Grid className={classes.navText}>
-              <TreeView
-                defaultCollapseIcon={<ExpandMoreIcon />}
-                defaultExpandIcon={<ChevronRightIcon />}
-                multiSelect
-              >
-                <TreeItem nodeId="1" label="Dashboard">
-                  <TreeItem nodeId="2" label="" />
-                </TreeItem>
-              </TreeView>
+          <Grid className={classes.navList}>
+            <Grid className={classes.item}>
+              <Home />
+              <Grid className={classes.navText}>
+                <TreeView
+                  defaultCollapseIcon={<ExpandMoreIcon />}
+                  defaultExpandIcon={<ChevronRightIcon />}
+                  multiSelect
+                >
+                  <TreeItem nodeId="1" label="Dashboard">
+                    <TreeItem nodeId="2" label="" />
+                  </TreeItem>
+                </TreeView>
+              </Grid>
             </Grid>
-          </Grid>
 
-          <Grid className={classes.item}>
+            <Grid className={classes.item}>
               <DevicesIcon />
-            <Grid className={classes.navText}>
-              <TreeView
-                defaultCollapseIcon={<ExpandMoreIcon />}
-                defaultExpandIcon={<ChevronRightIcon />}
-              >
-                <TreeItem nodeId="1" label="Assets">
-                  <TreeItem nodeId="2" label="add assets" />
-                  <TreeItem nodeId="3" label="create fault" />
-                </TreeItem>
-              </TreeView>
+              <Grid className={classes.navText}>
+                <TreeView
+                  defaultCollapseIcon={<ExpandMoreIcon />}
+                  defaultExpandIcon={<ChevronRightIcon />}
+                >
+                  <TreeItem nodeId="1" label="Assets">
+                    <TreeItem nodeId="2" label="add assets" />
+                    <TreeItem nodeId="3" label="create fault" />
+                  </TreeItem>
+                </TreeView>
+              </Grid>
             </Grid>
-          </Grid>
 
-          <Grid className={classes.item}>
-            <AccessTimeIcon />
-            <Grid className={classes.navText}>
-              <TreeView
-                defaultCollapseIcon={<ExpandMoreIcon />}
-                defaultExpandIcon={<ChevronRightIcon />}
-              >
-                <TreeItem nodeId="1" label="Leaves">
-                  <TreeItem nodeId="2" label="request leave" />
-                  <TreeItem nodeId="3" label="view leave" />
-                </TreeItem>
-              </TreeView>
+            <Grid className={classes.item}>
+              <AccessTimeIcon />
+              <Grid className={classes.navText}>
+                <TreeView
+                  defaultCollapseIcon={<ExpandMoreIcon />}
+                  defaultExpandIcon={<ChevronRightIcon />}
+                >
+                  <TreeItem nodeId="1" label="Leaves">
+                    <TreeItem nodeId="2" label="request leave" />
+                    <TreeItem nodeId="3" label="view leave" />
+                  </TreeItem>
+                </TreeView>
+              </Grid>
+            </Grid>
+            <Grid className={classes.item}>
+              <PaidIcon />
+              <Grid className={classes.navText}>
+                <TreeView
+                  defaultCollapseIcon={<ExpandMoreIcon />}
+                  defaultExpandIcon={<ChevronRightIcon />}
+                >
+                  <TreeItem nodeId="1" label="Payrolls">
+                    <TreeItem nodeId="2" label="view salary" />
+                    <TreeItem nodeId="3" label="find salary-sheet" />
+                  </TreeItem>
+                </TreeView>
+              </Grid>
+            </Grid>
+            <Grid className={classes.item}>
+              <PeopleAltIcon />
+              <Grid className={classes.navText}>
+                <TreeView
+                  defaultCollapseIcon={<ExpandMoreIcon />}
+                  defaultExpandIcon={<ChevronRightIcon />}
+                >
+                  <TreeItem nodeId="1" label="Recruitment">
+                    <TreeItem nodeId="2" label="create interview" />
+                    <TreeItem nodeId="3" label="create candidate" />
+                  </TreeItem>
+                </TreeView>
+              </Grid>
+            </Grid>
+            <Grid className={classes.item}>
+              <HowToRegIcon />
+              <Grid className={classes.navText}>
+                <TreeView
+                  defaultCollapseIcon={<ExpandMoreIcon />}
+                  defaultExpandIcon={<ChevronRightIcon />}
+                >
+                  <TreeItem nodeId="1" label="Promotion">
+                    <TreeItem nodeId="2" label="history" />
+                    <TreeItem nodeId="3" label="promote" />
+                  </TreeItem>
+                </TreeView>
+              </Grid>
             </Grid>
           </Grid>
-          <Grid className={classes.item}>
-            <PaidIcon />
-            <Grid className={classes.navText}>
-              <TreeView
-                defaultCollapseIcon={<ExpandMoreIcon />}
-                defaultExpandIcon={<ChevronRightIcon />}
-              >
-                <TreeItem nodeId="1" label="Payrolls">
-                  <TreeItem nodeId="2" label="view salary" />
-                  <TreeItem nodeId="3" label="find salary-sheet" />
-                </TreeItem>
-              </TreeView>
-            </Grid>
-          </Grid>
-          <Grid className={classes.item}>
-            <PeopleAltIcon />
-            <Grid className={classes.navText}>
-              <TreeView
-                defaultCollapseIcon={<ExpandMoreIcon />}
-                defaultExpandIcon={<ChevronRightIcon />}
-              >
-                <TreeItem nodeId="1" label="Recruitment">
-                  <TreeItem nodeId="2" label="create interview" />
-                  <TreeItem nodeId="3" label="create candidate" />
-                </TreeItem>
-              </TreeView>
-            </Grid>
-          </Grid>
-          <Grid className={classes.item}>
-            <HowToRegIcon />
-            <Grid className={classes.navText}>
-              <TreeView
-                defaultCollapseIcon={<ExpandMoreIcon />}
-                defaultExpandIcon={<ChevronRightIcon />}
-              >
-                <TreeItem nodeId="1" label="Promotion">
-                  <TreeItem nodeId="2" label="history" />
-                  <TreeItem nodeId="3" label="promote" />
-                </TreeItem>
-              </TreeView>
-            </Grid>
-          </Grid>
-        </Grid>
         </Scrollbars>
-        
 
         <Divider variant="middle" classes={{ root: classes.divider }} />
         <Divider variant="middle" classes={{ root: classes.divider }} />

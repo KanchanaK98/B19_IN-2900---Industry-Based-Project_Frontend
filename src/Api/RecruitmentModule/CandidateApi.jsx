@@ -2,10 +2,11 @@ import * as api from "../index";
 
 export const createCandidate = async (candidateData) => {
   try {
-    const { firstName, lastName, NIC, phoneNumber, email, cv } = candidateData;
+    const { firstName, lastName, appliedPosition, NIC, phoneNumber, email, cv } = candidateData;
     const candidateName = firstName + " " + lastName;
     candidateData = {
       candidateName,
+      appliedPosition,
       NIC,
       phoneNumber,
       email,
@@ -34,10 +35,11 @@ export const searchCandidate = async (NIC) => {
 
 export const updateCandidate = async (candidateData, candidateId) => {
   try {
-    const { firstName, lastName, NIC, phoneNumber, email, cv } = candidateData;
+    const { firstName, lastName, appliedPosition,  NIC, phoneNumber, email, cv } = candidateData;
     const candidateName = firstName + " " + lastName;
     candidateData = {
       candidateName,
+      appliedPosition,
       NIC,
       phoneNumber,
       email,
@@ -45,6 +47,16 @@ export const updateCandidate = async (candidateData, candidateId) => {
     };
     const { data } = await api.updateCandidate(candidateData, candidateId);
     return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const fetchCandidates = async () => {
+  try {
+    const { data } = await api.fetchCandidates();
+
+    return data.candidates;
   } catch (error) {
     console.log(error);
   }

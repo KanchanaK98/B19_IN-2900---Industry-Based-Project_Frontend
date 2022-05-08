@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useParams } from "react-router-dom";
-import axios from "axios";
 import {
   Card,
   Divider,
@@ -10,21 +9,21 @@ import {
   Grid,
   Box,
   TextareaAutosize,
-  MenuItem,
   Button,
 } from "@mui/material";
-import InventoryIcon from '@mui/icons-material/Inventory';
-const getTeams = async () => {
-  return await axios
-    .get("http://localhost:8070/employee/getTeam")
-    .then((res) => res.data.data)
-    .catch((err) => {
-      console.log(err);
-    });
-};
+import InventoryIcon from "@mui/icons-material/Inventory";
+import { updateProduct } from "../../../Api/ReportersManagementModule/ProductApi";
+// const getTeams = async () => {
+//   return await axios
+//     .get("http://localhost:8070/employee/getTeam")
+//     .then((res) => res.data.data)
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// };
 function EditProduct() {
-  const {id}=useParams();
-  console.log(id)
+  const { id } = useParams();
+  console.log(id);
   const [teams, setTeams] = useState([]);
   const location = useLocation();
   const { product } = location.state;
@@ -44,22 +43,20 @@ function EditProduct() {
     description: product.description,
     teamName: product.teamName,
   });
-  console.log(product.productID)
-  console.log(product);
-  const sendRequest = async () => {
-    await axios
-      .put(`http://localhost:8070/employee/updateProduct/${id}`, {
-        productID: products.productID,
-        productName: products.productName,
-        description: products.description,
-        // teamID: products.teamID,
-      })
-      .then((res) => res.data)
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-  console.log(product);
+
+  // const sendRequest = async () => {
+  //   await axios
+  //     .put(`http://localhost:8070/employee/updateProduct/${id}`, {
+  //       productID: products.productID,
+  //       productName: products.productName,
+  //       description: products.description,
+  //       // teamID: products.teamID,
+  //     })
+  //     .then((res) => res.data)
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
   const handleChange = (e) => {
     setProducts((prevState) => ({
@@ -70,26 +67,30 @@ function EditProduct() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    sendRequest()
+    // sendRequest()
+    updateProduct(products, product._id)
       .then((res) => {})
       .catch((err) => {
         console.log(err);
       });
   };
-  useEffect(() => {
-    async function fetchData() {
-      setTeams(await getTeams());
-    }
-    fetchData();
-  }, []);
-  console.log(product)
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     setTeams(await getTeams());
+  //   }
+  //   fetchData();
+  // }, []);
+  console.log(product);
   return (
     <div>
       {products && (
         <form>
           <Box>
             <Card sx={{ padding: 5 }}>
-              <Typography variant="h5" sx={{fontWeight:'bold'}}><InventoryIcon/>&nbsp;{products.productName} | {products.productID}</Typography>
+              <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+                <InventoryIcon />
+                &nbsp;{products.productName} | {products.productID}
+              </Typography>
               <Divider sx={{ mt: 5, mb: 5 }}></Divider>
               <Grid container>
                 <Grid item md={6}>
@@ -145,7 +146,7 @@ function EditProduct() {
                 </Grid>
               </Grid>
 
-              <Grid container sx={{ mb: 5 ,mt:2}}>
+              <Grid container sx={{ mb: 5, mt: 2 }}>
                 <Grid item md={1.5}>
                   <FormLabel>Team Name:</FormLabel>
                 </Grid>
@@ -156,7 +157,6 @@ function EditProduct() {
                     variant="filled"
                     // name="teamName"
                     disabled
-               
                     value={products.teamName}
                     // onChange={handleChange}
                     fullWidth
@@ -177,7 +177,7 @@ function EditProduct() {
                   </TextField>
                 </Grid>
 
-                <Grid item md={6} textAlign="right" sx={{mt:2}}>
+                <Grid item md={6} textAlign="right" sx={{ mt: 2 }}>
                   <Button variant="contained" onClick={handleSubmit}>
                     Update
                   </Button>

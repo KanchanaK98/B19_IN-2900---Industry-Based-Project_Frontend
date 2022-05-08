@@ -28,20 +28,6 @@ function CreateEmployee() {
     }));
   };
 
-  // const sendRequest = async () => {
-  //   await axios
-  //     .post("http://localhost:8070/employee/add", {
-  //       employeeID: String(inputs.employeeID),
-  //       employeeFirstName: String(inputs.employeeFirstName),
-  //       employeeLastName: String(inputs.employeeLastName),
-  //       jobRole: String(inputs.jobRole),
-  //       NIC: String(inputs.NIC),
-  //       companyEmail: String(inputs.companyEmail),
-  //       status: String(inputs.status),
-  //       jobType: String(inputs.jobType),
-  //     })
-  //     .then((res) => res.data);
-  // };
   const handleSubmit = (e) => {
     e.preventDefault();
     createEmployee(inputs);
@@ -55,24 +41,18 @@ function CreateEmployee() {
       status: "",
       jobType: "",
     });
-    // sendRequest()
-    //   .then((res) => {})
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
   };
   return (
     <div>
       <form onSubmit={handleSubmit}>
         <Box>
-         
           <Paper elevation={3} style={{ marginInlineEnd: 2, padding: 30 }}>
-          <Grid>
-            <Typography variant="h5">
-              <PersonIcon sx={{ width: 50, height: 50 }} />
-              CREATE EMPLOYEE
-            </Typography>
-          </Grid>
+            <Grid>
+              <Typography variant="h5">
+                <PersonIcon sx={{ width: 50, height: 50 }} />
+                CREATE EMPLOYEE
+              </Typography>
+            </Grid>
             <Grid
               container
               rowSpacing={1}

@@ -7,12 +7,10 @@ import SideBar from "./Components/Navigation/SideBar/SideBar";
 import CreateCandidate from "./Pages/RecruitmentModule/CreateCandidateProfile/CreateCandidate";
 import Example from "./Components/AssetManagementModule/Example";
 import Login from "./Components/Login/Login";
-import CreateEmployee from "./Components/ReportersManagementModule/CreateEmployeeForm/CreateEmployee";
 import EditEmployee from "./Components/ReportersManagementModule/UpdateEmployeesForm/EditEmployee";
 import DashBord from "./Pages/ReportersManagementModule/DashBoard/DashBord";
 import TeamPage from "./Pages/ReportersManagementModule/Teams/TeamPage";
 import ProductPage from "./Pages/ReportersManagementModule/Products/ProductPage";
-import CreateTeams from "./Components/ReportersManagementModule/TeamCreate/CreateTeams";
 import CreateProduct from "./Components/ReportersManagementModule/ProductCreate/CreateProduct";
 import UserProfile from "./Components/ReportersManagementModule/UserProfile/UserProfile";
 import EditProduct from "./Components/ReportersManagementModule/ProductUpdate/EditProduct";
@@ -46,7 +44,7 @@ function App() {
               <Route path="/dashboard" element={<DashBord />} />
               <Route path="/profile/update/" element={<EditEmployee />} />
               <Route path="dashboard/create" element={<CreateEmployeePage />} />
-             
+
               <Route path="/teams" element={<TeamPage />} />
               <Route path="/teams/update/:id" element={<EditTeam />} />
               <Route path="/products" element={<ProductPage />} />
@@ -54,7 +52,6 @@ function App() {
               <Route path="teams/create" element={<CreateTeamPage />} />
               {/* <Route path="/createteams" element={<CreateTeams />} /> */}
               <Route path="/pro" element={<CreateProduct />} />
-
               <Route path="/user" element={<UserProfile user={user} />} />
               <Route path="/products/update/:id" element={<EditProduct />} />
               <Route path="progress" element={<ProgressBar />} />

@@ -13,14 +13,7 @@ import {
 } from "@mui/material";
 import InventoryIcon from "@mui/icons-material/Inventory";
 import { updateProduct } from "../../../Api/ReportersManagementModule/ProductApi";
-// const getTeams = async () => {
-//   return await axios
-//     .get("http://localhost:8070/employee/getTeam")
-//     .then((res) => res.data.data)
-//     .catch((err) => {
-//       console.log(err);
-//     });
-// };
+
 function EditProduct() {
   const { id } = useParams();
   console.log(id);
@@ -44,20 +37,6 @@ function EditProduct() {
     teamName: product.teamName,
   });
 
-  // const sendRequest = async () => {
-  //   await axios
-  //     .put(`http://localhost:8070/employee/updateProduct/${id}`, {
-  //       productID: products.productID,
-  //       productName: products.productName,
-  //       description: products.description,
-  //       // teamID: products.teamID,
-  //     })
-  //     .then((res) => res.data)
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
-
   const handleChange = (e) => {
     setProducts((prevState) => ({
       ...prevState,
@@ -74,12 +53,7 @@ function EditProduct() {
         console.log(err);
       });
   };
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     setTeams(await getTeams());
-  //   }
-  //   fetchData();
-  // }, []);
+
   console.log(product);
   return (
     <div>

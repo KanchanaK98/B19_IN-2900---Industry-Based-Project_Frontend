@@ -27,16 +27,7 @@ function CreateProduct() {
       [e.target.name]: e.target.value,
     }));
   };
-  // const sendRequest = async () => {
-  //   await axios
-  //     .post("http://localhost:8070/employee/addProduct", {
-  //       productID: products.productID,
-  //       productName: products.productName,
-  //       description: products.description,
-  //       teamNames: products.nameofTeam.teamName,
-  //     })
-  //     .then((res) => res.data);
-  // };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // sendRequest()
@@ -52,14 +43,7 @@ function CreateProduct() {
       teamNames: {},
     });
   };
-  // const handlegetTeams = async () => {
-  //   return await axios
-  //     .get("http://localhost:8070/employee/getTeam")
-  //     .then((res) => res.data.data)
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
+
   useEffect(() => {
     async function fetchData() {
       setTeams(await getAllTeams());

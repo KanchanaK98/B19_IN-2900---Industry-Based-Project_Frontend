@@ -17,12 +17,11 @@ import {
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import EditIcon from "@mui/icons-material/Edit";
-import axios from "axios";
 import TeamMemberDialog from "./TeamMemberDialog";
 import { updateTeam } from "../../../Api/ReportersManagementModule/TeamsApi";
 import { getEmployeesWithoutTeam } from "../../../Api/ReportersManagementModule/TeamsApi";
 function EditTeam() {
-  const { id } = useParams();
+  // const { id } = useParams();
   const [members, setMembers] = useState([]);
   const location = useLocation();
   const { team } = location.state;
@@ -46,21 +45,6 @@ function EditTeam() {
     //   }
     // }),
   });
-  // console.log(team);
-  // console.log(editTeam);
-  // const sendRequest = async () => {
-  //   await axios
-  //     .put(`http://localhost:8070/employee/updateTeam/${team._id}`, {
-  //       teamName: editTeam.teamName,
-  //       teamLeadID: editTeam.teamLeader.employeeID,
-  //       teamMembers:editTeam.teamMembers.map((member) => member.employeeID)
-  //       // teamLeader: editTeam.teamLeader,
-  //     })
-  //     .then((res) => res.data)
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
 
   const handleChange = (e) => {
     setEditTeam((prevState) => ({
@@ -71,34 +55,7 @@ function EditTeam() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     updateTeam(editTeam, team._id);
-
-    // sendRequest()
-    // .then((res) => {})
-    // .catch((err) => {
-    //   console.log(err);
-    // });
   };
-
-  // const handleAddMembers = async () => {
-  //   return await axios
-  //     .get("http://localhost:8070/employee/get")
-  //     .then((res) => res.data.data)
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     setMembers(await handleAddMembers());
-  //   }
-  //   fetchData();
-  // }, []);
-  // const fetchData = async () => {
-  //   setMembers(await getEmployeesWithoutTeam({}));
-  // };
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
 
   useEffect(() => {
     async function fetchData() {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -62,60 +62,6 @@ function EditEmployee() {
       profile.EmpWithProf.length > 0 ? profile.EmpWithProf[0].course : " "
     ),
   });
-  //{
-  // employeeFirstName: "",
-  // employeeLastName: "",
-  // birthday: "",
-  // streetNo: "",
-  // city: "",
-  // phoneNumber: "",
-  // NIC: "",
-  // companyEmail: "",
-  // profilePic: "",
-  // ordinaryLevelResult: [""],
-  // advancedLevelResults: [""],
-  // achievements: [""],
-  // degree: [""],
-  // language: [""],
-  // course: [""],
-  // }
-
-  // useEffect(() => {
-  //   setInputs();
-
-  //   // const fetchHandler = async () => {
-  //   //   await axios
-  //   //     .get(`http://localhost:8070/employee/filterEmployee/${id}`)
-  //   //     .then((res) => res.data)
-  //   //     .then((data) => setInputs(data.employee));
-  //   // };
-  //   // fetchHandler();
-  // }, []);
-  // ----------------------------------------------------------
-  // const sendRequest = async () => {
-
-  //   await axios
-  //     .put(`http://localhost:8070/employee/update/${inputs.employeeID}`, {
-  //       employeeFirstName: String(inputs.employeeFirstName),
-  //       employeeLastName: String(inputs.employeeLastName),
-  //       streetNo: String(inputs.streetNo),
-  //       phoneNumber: String(inputs.phoneNumber),
-  //       companyEmail: String(inputs.companyEmail),
-  //       profilePic: String(inputs.profilePic),
-  //       //-------------------------------------------------------------
-  //       ordinaryLevelResult: Array(inputs.ordinaryLevelResult),
-  //       advancedLevelResults: Array(inputs.advancedLevelResults),
-  //       achievements: Array(inputs.achievements),
-  //       degree: Array(inputs.degree),
-  //       language: Array(inputs.language),
-  //       course: Array(inputs.course),
-  //     })
-  //     .then((res) => res.data)
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
-  //-----------------------------------------------------------
   const handleChange = (e) => {
     setInputs((prevState) => ({
       ...prevState,
@@ -125,14 +71,6 @@ function EditEmployee() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    //----------------------------------
-    console.log(inputs);
-    // sendRequest()
-    //   .then((res) => {})
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
-    //----------------------
 
     const response = await updateEmployee(inputs);
     console.log(response);
@@ -204,7 +142,7 @@ function EditEmployee() {
                       mb: 5,
                       width: 150,
                       height: 150,
-                      border: "0.5px solid #1b529e" 
+                      border: "0.5px solid #1b529e",
                     }}
                   />
 
@@ -220,7 +158,7 @@ function EditEmployee() {
                       aria-label="upload picture"
                       component="span"
                     >
-                      <PhotoCamera sx={{mt:10,width:30,height:30}}/>
+                      <PhotoCamera sx={{ mt: 10, width: 30, height: 30 }} />
                     </IconButton>
                   </label>
 

@@ -3,35 +3,6 @@ import { Grid } from "@mui/material";
 import DisplayTeam from "./DisplayTeam";
 import { viewAllTeams } from "../../../Api/ReportersManagementModule/TeamsApi";
 
-// const fetchHandler = async () => {
-//   return await axios
-//     .get("http://localhost:8070/employee/viewTeam")
-//     .then((res) => {
-//       res.data.data.map((team) => {
-//         let teamMembers = [];
-//         team.TeamWithEmp.map((member) => {
-//           const {
-//             employeeFirstName,
-//             employeeLastName,
-//             employeeID,
-//             profilePic,
-//           } = member;
-
-//           teamMembers.push({
-//             employeeName: employeeFirstName + " " + employeeLastName,
-//             employeeID,
-//             profilePic,
-//           });
-//         });
-//         team.TeamWithEmp = teamMembers;
-//       });
-//       // console.log(res.data.data);
-//       return res.data.data;
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//     });
-// };
 function DisplayTeams() {
   const [teams, setTeams] = useState([]);
   useEffect(() => {

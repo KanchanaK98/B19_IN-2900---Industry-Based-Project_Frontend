@@ -61,13 +61,7 @@ function DisplayTeam({ team }) {
             })}
         </Grid>
 
-        {/* <Typography align="center">
-          {
-            teamLeadID + " " + TeamWithEmp[0].employeeName
-            // " " +
-            // TeamWithEmp[0].employeeLastName
-          }
-        </Typography> */}
+     
         <Divider sx={{ mt: 2, mb: 2 }}></Divider>
         <Grid>
           <Typography component={"span"}>

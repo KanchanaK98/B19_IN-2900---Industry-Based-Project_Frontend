@@ -2,15 +2,6 @@ import { React, useState, useEffect } from "react";
 import { Grid, Card, Typography } from "@mui/material";
 import DisplayProduct from "./DisplayProduct";
 import { viewProducts } from "../../../Api/ReportersManagementModule/ProductApi";
-// const fetchHandler = async () => {
-//   return await axios
-//     .get("http://localhost:8070/employee/viewProducts")
-//     .then((res) => res.data.data)
-//     .catch((err) => {
-//       console.log(err);
-//     });
-// };
-//------------------
 
 function DisplayProducts() {
   const [products, setProducts] = useState([]);

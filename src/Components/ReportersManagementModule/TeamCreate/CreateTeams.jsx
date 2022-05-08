@@ -38,26 +38,12 @@ function CreateTeams() {
     }
   };
 
-  // const sendRequest = async () => {
-  //   await axios
-  //     .post("http://localhost:8070/employee/teamAdd", {
-  //       teamName: teaminputs.teamName,
-  //       teamLeadID: teaminputs.teamLead.employeeID,
-  //       teamMembers: teaminputs.teamMembers.map(({ employeeID }) => employeeID),
-  //     })
-  //     .then((res) => res.data);
-  // };
 
-  //console.log(teaminputs);
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log(teaminputs);
     createTeams(teaminputs);
-    // sendRequest()
-    //   .then((res) => {})
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+  
     setTeaminputs({
       teamName: "",
       teamLead: {},
@@ -69,33 +55,7 @@ function CreateTeams() {
 
   const [members, setMembers] = useState([]);
 
-  //----------------------------------
-  // const handleSave = () => {
-  //   setNewmembers({ ...newmembers, NewMembers: newmembers });
-  //   setOpenDialog(false);
-  // };
 
-  // const handleDelete = (memeber) => {
-  //   setNewmembers(newmembers.filter((mem) => mem !== memeber));
-  // };
-  // //--------------------------------------------------------
-
-  // const handleTeam = async () => {
-  //   return await axios
-  //     .get("http://localhost:8070/employee/viewTeam")
-  //     .then((res) => res.data.data)
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     setTeam(await handleTeam());
-  //   }
-  //   fetchData();
-  // }, []);
-
-  // console.log(teams);
   const handleAddMembers = async () => {
     return await axios
       .get("http://localhost:8070/employee/get")

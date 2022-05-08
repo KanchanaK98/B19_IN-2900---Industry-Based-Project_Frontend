@@ -1,7 +1,6 @@
 import React from "react";
 import { Grid, Button} from "@mui/material";
 import DisplayProducts from "../../../Components/ReportersManagementModule/ProductDisplay/DisplayProducts";
-import SearchProduct from "../../../Components/ReportersManagementModule/ProductSearch/SearchProduct";
 import {Link} from 'react-router-dom'
 function ProductPage() {
   return (

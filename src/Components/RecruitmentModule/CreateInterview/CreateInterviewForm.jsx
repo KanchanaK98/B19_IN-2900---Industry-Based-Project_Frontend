@@ -18,7 +18,6 @@ import {
 import useStyles from "./CreateInterviewStyles";
 import { AddCircle, Close, Edit } from "@mui/icons-material";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
-
 import Stack from "@mui/material/Stack";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";

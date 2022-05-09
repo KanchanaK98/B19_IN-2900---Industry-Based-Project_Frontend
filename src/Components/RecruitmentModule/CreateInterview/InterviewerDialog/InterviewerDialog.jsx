@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
@@ -25,13 +25,17 @@ const InterviewerDialog = ({
 }) => {
   const [interviewers, setInterviewers] = useState([]);
 
+  useEffect(() => {
+    if (interview.Interviewers) setInterviewers(interview.Interviewers);
+  }, [interview.Interviewers]);
+
   const handleSave = () => {
     setInterview({ ...interview, Interviewers: interviewers });
     setOpenDialog(false);
   };
 
   const handleDelete = (interviewer) => {
-    setInterviewers(interviewers.filter((intWr)=> intWr !== interviewer))
+    setInterviewers(interviewers.filter((intWr) => intWr !== interviewer));
   };
   return (
     <Dialog fullWidth open={openDialog}>
@@ -63,18 +67,22 @@ const InterviewerDialog = ({
           {interviewers &&
             interviewers.map((interviewer) => (
               <Chip
-                label={interviewer.employeeName}
+                label={
+                  interviewer.employeeName ||
+                  interviewer.employeeFirstName +
+                    " " +
+                    interviewer.employeeLastName
+                }
                 key={interviewer.employeeID}
-                onDelete={()=> handleDelete(interviewer)}
+                onDelete={() => handleDelete(interviewer)}
                 sx={{
                   mr: 0.5,
                   mt: 1,
                   bgcolor: "rgba(49, 24, 62, 1)",
                   color: "white",
-                  "& .MuiSvgIcon-root" : {
-                  color: "white",
-
-                  }
+                  "& .MuiSvgIcon-root": {
+                    color: "white",
+                  },
                 }}
               />
             ))}

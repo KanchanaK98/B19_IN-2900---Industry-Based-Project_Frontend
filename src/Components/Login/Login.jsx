@@ -45,8 +45,17 @@ export default function Login() {
     };
     if (data.get("uname") !== "" && data.get("password") !== "") {
       const response = await LoginApi(user);
-      console.log(data.get("uname"));
-      console.log(data.get("password"));
+      if (response.success === true) {
+        //console.log("user can sign in")
+        localStorage.setItem("apiData", JSON.stringify(response.user));
+        window.location.href = "/asset";
+      } else {
+        setinvalid(true);
+
+        setTimeout(() => {
+          setinvalid(false);
+        }, 2000);
+      }
 
       if (response.success === true) {
         //console.log("user can sign in")

@@ -60,43 +60,43 @@ export const updateEmployee = (employeeData) =>
   API.put(`/employee/update/${employeeData.employeeID}`, employeeData);
 
 export const viewAllEmployees = () => {
-  return API.get(`http://localhost:8070/employee/`);
+  return API.get(`/employee/`);
 };
 
 export const recentEmployees = () => {
-  return API.get(`http://localhost:8070/employee/recentSection`);
+  return API.get(`/employee/recentSection`);
 };
 //teams api
 export const createTeams = (teamcreate) =>
-  API.post(`http://localhost:8070/employee/teamAdd`, teamcreate);
+  API.post(`/employee/teamAdd`, teamcreate);
 
 export const updateTeam = (updateteam, id) => {
-  API.put(`http://localhost:8070/employee/updateTeam/${id}`, updateteam);
+  API.put(`/employee/updateTeam/${id}`, updateteam);
 };
 
 export const getEmployeesWithoutTeam = () => {
-  return API.get(`http://localhost:8070/employee/get`);
+  return API.get(`/employee/get`);
 };
 
 export const viewAllTeams = () => {
-  return API.get(`http://localhost:8070/employee/viewTeam`);
+  return API.get(`/employee/viewTeam`);
 };
 
 export const getAllTeams = () => {
-  return API.get(`http://localhost:8070/employee/getTeam`);
+  return API.get(`/employee/getTeam`);
 };
 //product api
 
 export const createProduct = (productcreate) => {
-  API.post(`http://localhost:8070/employee/addProduct`, productcreate);
+  API.post(`/employee/addProduct`, productcreate);
 };
 
 export const updateProduct = (updateProdData, id) => {
-  API.put(`http://localhost:8070/employee/updateProduct/${id}`, updateProdData);
+  API.put(`/employee/updateProduct/${id}`, updateProdData);
 };
 
 export const viewPProducts=(viewproduct)=>{
-  return API.get(`http://localhost:8070/employee/viewProducts`);
+  return API.get(`/employee/viewProducts`);
 }
 export const getLeaveBalance = (employeeID) =>
   API.get(`/leave/leaveBalance/${employeeID}`);

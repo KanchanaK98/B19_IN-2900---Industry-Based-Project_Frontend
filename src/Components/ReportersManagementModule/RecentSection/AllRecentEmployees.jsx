@@ -1,7 +1,6 @@
 import { useState, useEffect, React } from "react";
-import axios from "axios";
-import { Grid, Box } from "@mui/material";
-import useStyles from "./RecentEmployeeSectionStyles";
+import { Grid } from "@mui/material";
+// import useStyles from "./RecentEmployeeSectionStyles";
 import RecentEmployee from "./RecentEmployee";
 import { recentEmployees } from "../../../Api/ReportersManagementModule/EmployeeApi";
 

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import EditIcon from "@mui/icons-material/Edit";
-import { Multiselect } from "multiselect-react-dropdown";
-import { Avatar, IconButton } from "@mui/material";
+// import { Multiselect } from "multiselect-react-dropdown";
+import { Avatar, IconButton ,Box} from "@mui/material";
 import { MenuItem } from "@mui/material";
 import { Chip } from "@mui/material";
 import axios from "axios";
@@ -38,12 +38,11 @@ function CreateTeams() {
     }
   };
 
-
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log(teaminputs);
     createTeams(teaminputs);
-  
+
     setTeaminputs({
       teamName: "",
       teamLead: {},
@@ -54,7 +53,6 @@ function CreateTeams() {
   //----------------------------------------------------------
 
   const [members, setMembers] = useState([]);
-
 
   const handleAddMembers = async () => {
     return await axios
@@ -88,6 +86,7 @@ function CreateTeams() {
   //----------------------------------------
   return (
     <div>
+      <Box padding={4}>
       <Paper sx={{ padding: 4 }}>
         <Typography variant="h5" sx={{ mb: 5 }}>
           <GroupAddIcon />
@@ -222,11 +221,13 @@ function CreateTeams() {
           Team Members :
           <Multiselect options={members} displayValue="fullName"></Multiselect>
         </FormLabel> */}
-
-        <Button onClick={handleSubmit} variant="contained" sx={{ mt: 2 }}>
-          Save New Team
-        </Button>
+        <Grid sx={{ textAlign: "right" }}>
+          <Button onClick={handleSubmit} variant="contained" sx={{ mt: 2 }}>
+            Save New Team
+          </Button>
+        </Grid>
       </Paper>
+      </Box>
     </div>
   );
 }

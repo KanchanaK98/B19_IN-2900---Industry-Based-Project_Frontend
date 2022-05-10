@@ -47,7 +47,7 @@ export default function Login({ setUser }) {
       const response = await LoginApi(user);
       if (response.success === true) {
         setUser(response.user)
-        window.location.replace("/asset")
+        window.location.replace("/dashboard")
         
       } else {
         setinvalid(true);

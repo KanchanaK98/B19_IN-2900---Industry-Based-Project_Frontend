@@ -80,45 +80,46 @@ const InterviewDetailsDialog = ({
         </Grid>
       </DialogContent>
       <DialogActions>
-        {interview && new Date() < new Date(interview.InterviewDate) ? (
-          <Grid container className={classes.buttons}>
-            <Grid item md={6}>
-              <Button
-                onClick={() => setOpen(true)}
-                size="small"
-                color="warning"
-                variant="contained"
-              >
-                Cancel Interview
-              </Button>
+        {interview &&
+          (new Date() < new Date(interview.InterviewDate) ? (
+            <Grid container className={classes.buttons}>
+              <Grid item md={6}>
+                <Button
+                  onClick={() => setOpen(true)}
+                  size="small"
+                  color="warning"
+                  variant="contained"
+                >
+                  Cancel Interview
+                </Button>
+              </Grid>
+              <Grid item md={6} className={classes.buttonUpdate}>
+                <Button
+                  component={Link}
+                  to={`/interview/update/${interview._id}`}
+                  state={{ interview }}
+                  size="small"
+                  color="secondary"
+                  variant="contained"
+                >
+                  Update
+                </Button>
+              </Grid>
             </Grid>
+          ) : (
             <Grid item md={6} className={classes.buttonUpdate}>
               <Button
                 component={Link}
-                to={"/interview/update"}
+                to={`/interview/start/${interview._id}`}
                 state={{ interview }}
                 size="small"
                 color="secondary"
                 variant="contained"
               >
-                Update
+                Start
               </Button>
             </Grid>
-          </Grid>
-        ) : (
-          <Grid item md={6} className={classes.buttonUpdate}>
-            <Button
-              component={Link}
-              to={"/interview/start"}
-              state={{ interview }}
-              size="small"
-              color="secondary"
-              variant="contained"
-            >
-              Start
-            </Button>
-          </Grid>
-        )}
+          ))}
       </DialogActions>
 
       <Dialog open={open} onClose={() => setOpen(false)}>

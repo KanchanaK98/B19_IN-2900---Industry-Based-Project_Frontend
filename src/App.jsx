@@ -56,12 +56,7 @@ import DisplayTeamMemberSubmissions from "./Pages/PromotionModule/Evaluations/Te
 
 function App() {
   const [open, setOpen] = useState(true);
-  const [user, setUser] = useState(true);
-  // const data = JSON.parse(localStorage.getItem("apiData"));
-  // const [user, setUser] = useState(data.employeeFirstName);
-  // const [role, setRole] = useState(data.jobRole);
-  // const [profileImage, setProfileImage] = useState(data.profilePic);
-  // console.log(data.employeeFirstName);
+   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
 
   const toggleDrawer = () => {
     setOpen(!open);
@@ -69,9 +64,7 @@ function App() {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      {user && (
-        <SideBar open={open} toggleDrawer={toggleDrawer} setUser={user} />
-      )}
+      {user && <SideBar open={open} toggleDrawer={toggleDrawer} user={user}/>}
       <Grid container>
         <Grid item sm={12} md={12}>
           {user && <NavBar open={open} toggleDrawer={toggleDrawer} />}
@@ -107,7 +100,7 @@ function App() {
               />
               <Route path="/interview/start" element={<StartInterview />} />
 
-              <Route path="/asset" element={<ViewAsset />} />
+              <Route path="/asset" element={<ViewAsset user={user}/>} />
               <Route path="/assetInsertion" element={<AssetInsertion />} />
 
               <Route path="/requestLeave" element={<RequestLeaves />} />

@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     marginTop: theme.spacing(2),
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     "& .MuiTextField-root" : {
         width : theme.spacing(30)
     }

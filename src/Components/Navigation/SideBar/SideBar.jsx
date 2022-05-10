@@ -29,9 +29,9 @@ import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import StarBorder from "@mui/icons-material/StarBorder";
 import { GroupAdd } from "@mui/icons-material";
+import { Link } from "react-router-dom";
 
-
-const SideBar = ({ open, toggleDrawer, user }) => {
+const SideBar = ({ open, toggleDrawer, user, handleLogOut }) => {
   const [openCollapse, setOpenCollapse] = useState({
     Assets: false,
     Leave: false,
@@ -53,7 +53,7 @@ const SideBar = ({ open, toggleDrawer, user }) => {
   const styleProps = {
     display: open ? "flex" : "none",
     displayLogOut: open ? "none" : "flex",
-    iconPadding: open? 1: 1
+    iconPadding: open ? 1 : 1,
   };
 
   const classes = useStyles(styleProps);
@@ -64,36 +64,36 @@ const SideBar = ({ open, toggleDrawer, user }) => {
         open={open}
         classes={{ paper: classes.paper }}
       >
-        <Grid className={classes.drawerHeader}>
-          <Grid className={classes.profile}>
-            <StyledBadge
-              overlap="circular"
-              anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-              variant="dot"
-            >
-              <Avatar
-                src={user.profilePic}
-                sx={{ mt: 1, mb: 1, height: 50, width: 50 }}
-              />
-            </StyledBadge>
+        <Grid
+          component={Link}
+          to="/user"
+          sx={{ textDecoration: "none" }}
+          className={classes.profile}
+        >
+          <StyledBadge
+            overlap="circular"
+            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+            variant="dot"
+          >
+            <Avatar
+              src={user.profilePic}
+              sx={{ mt: 1, mb: 1, height: 50, width: 50 }}
+            />
+          </StyledBadge>
 
-            <Grid className={classes.profileName}>
-              <Typography color={"white"} variant="h6" sx={{ mb: -1 }}>
-                {user.employeeFirstName +
-                  " " +
-                  user.employeeFirstName.slice(0, 1).toUpperCase() +
-                  "."}
-              </Typography>
-              <Typography color={"white"} variant="caption">
-                {user.jobRole}
-              </Typography>
-            </Grid>
+          <Grid className={classes.profileName}>
+            <Typography color={"white"} variant="h6" sx={{ mb: -1 }}>
+              Welcome !
+            </Typography>
+            <Typography color={"white"} variant="caption">
+              {user.employeeFirstName + " " + user.employeeFirstName}
+            </Typography>
           </Grid>
-
-          <IconButton onClick={toggleDrawer} className={classes.icon}>
-            <ChevronLeftIcon />
-          </IconButton>
         </Grid>
+
+        <IconButton onClick={toggleDrawer} className={classes.icon}>
+          <ChevronLeftIcon />
+        </IconButton>
 
         <Grid className={classes.iconRow}>
           <IconButton className={classes.iconRowIcon}>
@@ -125,8 +125,13 @@ const SideBar = ({ open, toggleDrawer, user }) => {
         <Scrollbars sx={{ width: 260, height: 300 }}>
           <Grid className={classes.navItem}>
             <ListItem
+              component={Link}
+              to="/dashboard"
               selected={selectedIndex === 0}
-              onClick={() => handleListItemClick(0)}
+              onClick={() => {
+                handleListItemClick(0);
+                setOpenCollapse(false);
+              }}
               className={classes.navButton}
             >
               <ListItemIcon>
@@ -154,6 +159,8 @@ const SideBar = ({ open, toggleDrawer, user }) => {
             <Collapse in={openCollapse.Assets} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
                 <ListItem2
+                  component={Link}
+                  to="/assetInsertion"
                   selected={selectedIndex2 === 0}
                   onClick={() => {
                     handleListItemClick2(0);
@@ -163,10 +170,12 @@ const SideBar = ({ open, toggleDrawer, user }) => {
                   <ListItemIcon>
                     <StarBorder />
                   </ListItemIcon>
-                  <ListItemText primary="Add Asset" />
+                  <ListItemText primary="Asset Insertion" />
                 </ListItem2>
 
                 <ListItem2
+                  component={Link}
+                  to="/asset"
                   selected={selectedIndex2 === 1}
                   onClick={() => {
                     handleListItemClick2(1);
@@ -176,7 +185,7 @@ const SideBar = ({ open, toggleDrawer, user }) => {
                   <ListItemIcon>
                     <StarBorder />
                   </ListItemIcon>
-                  <ListItemText primary="Create Fault" />
+                  <ListItemText primary="Asset List" />
                 </ListItem2>
               </List>
             </Collapse>
@@ -200,6 +209,8 @@ const SideBar = ({ open, toggleDrawer, user }) => {
             <Collapse in={openCollapse.Reporter} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
                 <ListItem2
+                  component={Link}
+                  to="/teams"
                   selected={selectedIndex2 === 0}
                   onClick={() => {
                     handleListItemClick2(0);
@@ -213,6 +224,8 @@ const SideBar = ({ open, toggleDrawer, user }) => {
                 </ListItem2>
 
                 <ListItem2
+                  component={Link}
+                  to="/products"
                   selected={selectedIndex2 === 1}
                   onClick={() => {
                     handleListItemClick2(1);
@@ -246,6 +259,8 @@ const SideBar = ({ open, toggleDrawer, user }) => {
             <Collapse in={openCollapse.Leave} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
                 <ListItem2
+                  component={Link}
+                  to="/leaveHistory"
                   selected={selectedIndex2 === 0}
                   onClick={() => {
                     handleListItemClick2(0);
@@ -259,6 +274,8 @@ const SideBar = ({ open, toggleDrawer, user }) => {
                 </ListItem2>
 
                 <ListItem2
+                  component={Link}
+                  to="/requestLeave"
                   selected={selectedIndex2 === 1}
                   onClick={() => {
                     handleListItemClick2(1);
@@ -292,6 +309,8 @@ const SideBar = ({ open, toggleDrawer, user }) => {
             <Collapse in={openCollapse.PayRolls} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
                 <ListItem2
+                  component={Link}
+                  to="/salary/summarySalary"
                   selected={selectedIndex2 === 0}
                   onClick={() => {
                     handleListItemClick2(0);
@@ -325,6 +344,8 @@ const SideBar = ({ open, toggleDrawer, user }) => {
             <Collapse in={openCollapse.Promotion} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
                 <ListItem2
+                  component={Link}
+                  to="/promotion/Questions"
                   selected={selectedIndex2 === 0}
                   onClick={() => {
                     handleListItemClick2(0);
@@ -334,7 +355,22 @@ const SideBar = ({ open, toggleDrawer, user }) => {
                   <ListItemIcon>
                     <StarBorder />
                   </ListItemIcon>
-                  <ListItemText primary="Promotion History" />
+                  <ListItemText primary="Question" />
+                </ListItem2>
+
+                <ListItem2
+                  component={Link}
+                  to="/promotion/Paper"
+                  selected={selectedIndex2 === 1}
+                  onClick={() => {
+                    handleListItemClick2(1);
+                  }}
+                  className={classes.navButton2}
+                >
+                  <ListItemIcon>
+                    <StarBorder />
+                  </ListItemIcon>
+                  <ListItemText primary="Paper" />
                 </ListItem2>
               </List>
             </Collapse>
@@ -362,12 +398,13 @@ const SideBar = ({ open, toggleDrawer, user }) => {
             >
               <List component="div" disablePadding>
                 <ListItem2
+                  component={Link}
+                  to="/interview"
                   selected={selectedIndex2 === 0}
                   onClick={() => {
                     handleListItemClick2(0);
                   }}
                   className={classes.navButton2}
-                  
                 >
                   <ListItemIcon>
                     <StarBorder />
@@ -376,6 +413,8 @@ const SideBar = ({ open, toggleDrawer, user }) => {
                 </ListItem2>
 
                 <ListItem2
+                  component={Link}
+                  to="/candidate"
                   selected={selectedIndex2 === 1}
                   onClick={() => {
                     handleListItemClick2(1);
@@ -396,7 +435,7 @@ const SideBar = ({ open, toggleDrawer, user }) => {
         <Divider variant="middle" classes={{ root: classes.divider }} />
 
         <Grid>
-          <IconButton className={classes.logOutButton}>
+          <IconButton onClick={handleLogOut} className={classes.logOutButton}>
             <LogoutIcon />
           </IconButton>
         </Grid>

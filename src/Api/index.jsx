@@ -41,6 +41,8 @@ export const assignAsset = (assignAsset, employee) =>
 export const searchAssetCategory = (assetCategory) =>
   API.get("/assets/category/" + assetCategory);
 export const insertAsset = (asset) => API.post("/assets/add", asset);
+export const updateAsset = (id, asset) =>
+  API.patch("/assets/update/" + id, asset);
 
 //Current Salary API
 export const viewCurrentSalarySheet = () => API.get("/salary/currentSalary");

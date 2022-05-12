@@ -29,7 +29,9 @@ import RequestLeaves from "./Pages/LeaveManagementModule/RequestLeaves/RequestLe
 import CreateUpdateInterview from "./Pages/RecruitmentModule/Interviews/CreateUpdateInterview/CreateUpdateInterview";
 import LeaveHistory from "./Pages/LeaveManagementModule/RequestLeaves/LeaveHistory";
 import StartInterview from "./Pages/RecruitmentModule/StartInterview/StartInterview";
-
+import CountUpStack from "./Components/ReportersManagementModule/CountUps/CountUpStack";
+import OrganizationStructure from "./Components/ReportersManagementModule/OrganizationStructure/OrganizationStructure";
+import CustomizedTeamView from "./Components/ReportersManagementModule/CustomizedTemView/CustomizedTeamView";
 
 function App() {
   const [open, setOpen] = useState(true);
@@ -44,9 +46,11 @@ function App() {
     setOpen(!open);
   };
   return (
-    <Box sx={{ display: "flex", }}>
+    <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      {user && <SideBar open={open} toggleDrawer={toggleDrawer} setUser={user} />}
+      {user && (
+        <SideBar open={open} toggleDrawer={toggleDrawer} setUser={user} />
+      )}
       <Grid container>
         <Grid item sm={12} md={12}>
           {user && <NavBar open={open} toggleDrawer={toggleDrawer} />}
@@ -54,8 +58,7 @@ function App() {
         <Grid item sm={12} md={12}>
           <BrowserRouter>
             <Routes>
-             
-              <Route exact path="/" element={<Login setUser={setUser} />}/>
+              <Route exact path="/" element={<Login setUser={setUser} />} />
               <Route path="/dashboard" element={<DashBord />} />
               <Route path="/profile/update/" element={<EditEmployee />} />
               <Route path="dashboard/create" element={<CreateEmployeePage />} />
@@ -70,11 +73,18 @@ function App() {
               <Route path="/user" element={<UserProfile user={user} />} />
               <Route path="/products/update/:id" element={<EditProduct />} />
               <Route path="progress" element={<ProgressBar />} />
+              
 
               <Route path="/candidate" element={<CreateCandidate />} />
-              <Route path="/interview" element={<Interviews open={open}/>} />
-              <Route path="/interview/create" element={<CreateUpdateInterview />} />
-              <Route path="/interview/update" element={<CreateUpdateInterview />} />
+              <Route path="/interview" element={<Interviews open={open} />} />
+              <Route
+                path="/interview/create"
+                element={<CreateUpdateInterview />}
+              />
+              <Route
+                path="/interview/update"
+                element={<CreateUpdateInterview />}
+              />
               <Route path="/interview/start" element={<StartInterview />} />
 
               <Route path="/asset" element={<ViewAsset />} />
@@ -82,8 +92,6 @@ function App() {
 
               <Route path="/requestLeave" element={<RequestLeaves />} />
               <Route path="/myLeaveHistory" element={<LeaveHistory />} />
-
-
             </Routes>
           </BrowserRouter>
         </Grid>

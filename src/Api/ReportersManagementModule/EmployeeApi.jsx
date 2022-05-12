@@ -26,6 +26,7 @@ export const updateEmployee = async (employeeData) => {
       employeeID: employeeData.employeeID,
       employeeFirstName: employeeData.employeeFirstName,
       employeeLastName: employeeData.employeeLastName,
+      streetNo:employeeData.streetNo,
       phoneNumber: employeeData.phoneNumber,
       companyEmail: employeeData.companyEmail,
       profilePic: employeeData.profilePic,

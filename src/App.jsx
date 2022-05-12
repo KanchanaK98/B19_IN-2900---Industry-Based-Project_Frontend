@@ -25,6 +25,7 @@ import RequestLeaves from "./Pages/LeaveManagementModule/RequestLeaves/RequestLe
 import CreateUpdateInterview from "./Pages/RecruitmentModule/Interviews/CreateUpdateInterview/CreateUpdateInterview";
 import LeaveHistory from "./Pages/LeaveManagementModule/RequestLeaves/LeaveHistory";
 import StartInterview from "./Pages/RecruitmentModule/StartInterview/StartInterview";
+import CustomizedTeamView from "./Components/ReportersManagementModule/CustomizedTemView/CustomizedTeamView";
 import ViewCurruntSalary from "./Pages/SalaryPaymentModule/CurruntSalary/ViewCurruntSalary";
 import CreateCurruntSalary from "./Components/SalaryPaymentModule/CurruntSalary/CreateCurruntSalary";
 import UpdateCurruntSalary from "./Components/SalaryPaymentModule/CurruntSalary/UpdateCurruntSalary";
@@ -76,7 +77,10 @@ function App() {
               <Route path="/pro" element={<CreateProduct />} />
               <Route path="/user" element={<UserProfile user={user} />} />
               <Route path="/products/update/:id" element={<EditProduct />} />
-              <Route path="/progress" element={<ProgressBar />} />
+              <Route path="progress" element={<ProgressBar />} />
+              <Route path="tree" element={<CustomizedTeamView />} />
+              
+
               {/* Recruitment management */}
               <Route path="/candidate" element={<CreateCandidate />} />
               <Route path="/interview" element={<Interviews open={open} />} />

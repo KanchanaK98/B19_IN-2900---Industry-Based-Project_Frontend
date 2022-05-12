@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import {
   Card,
@@ -17,7 +17,7 @@ import { updateProduct } from "../../../Api/ReportersManagementModule/ProductApi
 function EditProduct() {
   const { id } = useParams();
   console.log(id);
-  const [teams, setTeams] = useState([]);
+  // const [teams, setTeams] = useState([]);
   const location = useLocation();
   const { product } = location.state;
 
@@ -57,6 +57,7 @@ function EditProduct() {
   console.log(product);
   return (
     <div>
+       <Box padding={4}>
       {products && (
         <form>
           <Box>
@@ -160,7 +161,9 @@ function EditProduct() {
             </Card>
           </Box>
         </form>
+
       )}
+      </Box>
     </div>
   );
 }

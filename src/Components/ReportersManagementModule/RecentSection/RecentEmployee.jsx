@@ -1,7 +1,6 @@
 
 import useStyles from "./RecentEmployeeSectionStyles";
-import { Typography, Button, Avatar, Card, Grid, Divider } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Typography, Avatar, Card, Grid, Divider } from "@mui/material";
 function RecentEmployee({ profile}) {
   // const handleUpdate = () => {
   //   setUpdateEmployee(profile);

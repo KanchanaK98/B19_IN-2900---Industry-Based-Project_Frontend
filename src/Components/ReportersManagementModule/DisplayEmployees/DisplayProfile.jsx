@@ -1,12 +1,11 @@
 // import useStyles from "./DisplayProfileCardStyles";
 import { Divider, Typography, Button, Avatar, Card, Grid } from "@mui/material";
 import { Link } from "react-router-dom";
-import moment from "moment";
+// import moment from "moment";
 import ProgressBar from "./ProgressBar";
 import ContactPhoneIcon from "@mui/icons-material/ContactPhone";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import ContactMailIcon from "@mui/icons-material/ContactMail";
-import SchoolIcon from "@mui/icons-material/School";
 import CakeIcon from "@mui/icons-material/Cake";
 import PlaceIcon from "@mui/icons-material/Place";
 

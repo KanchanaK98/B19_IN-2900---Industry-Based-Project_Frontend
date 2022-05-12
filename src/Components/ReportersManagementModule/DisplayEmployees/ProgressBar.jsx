@@ -17,37 +17,48 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
 }));
 
 function ProgressBar({ EmpWithProf, EmployeeWithAcc }) {
-  
   let count = 0,
     percentage = 0;
   if (
     EmployeeWithAcc[0].advancedLevelResults[0] === null ||
-    EmployeeWithAcc[0].advancedLevelResults[0] === " "
+    EmployeeWithAcc[0].advancedLevelResults[0] === " " ||
+    EmployeeWithAcc[0].advancedLevelResults[0] === ""
   ) {
     count++;
   }
   if (
     EmployeeWithAcc[0].ordinaryLevelResult[0] == null ||
-    EmployeeWithAcc[0].ordinaryLevelResult[0] === " "
+    EmployeeWithAcc[0].ordinaryLevelResult[0] === " " ||
+    EmployeeWithAcc[0].ordinaryLevelResult[0] === ""
   ) {
     count++;
   }
   if (
     EmployeeWithAcc[0].achievements[0] === null ||
-    EmployeeWithAcc[0].achievements[0] === " "
+    EmployeeWithAcc[0].achievements[0] === " " ||
+    EmployeeWithAcc[0].achievements[0] === ""
   ) {
     count++;
   }
   if (
     EmpWithProf[0].language[0] === null ||
-    EmpWithProf[0].language[0] === " "
+    EmpWithProf[0].language[0] === " " ||
+    EmpWithProf[0].language[0] === ""
   ) {
     count++;
   }
-  if (EmpWithProf[0].degree[0] === null || EmpWithProf[0].degree[0] === " ") {
+  if (
+    EmpWithProf[0].degree[0] === null ||
+    EmpWithProf[0].degree[0] === " " ||
+    EmpWithProf[0].degree[0] === ""
+  ) {
     count++;
   }
-  if (EmpWithProf[0].course[0] === null || EmpWithProf[0].course[0] === " ") {
+  if (
+    EmpWithProf[0].course[0] === null ||
+    EmpWithProf[0].course[0] === " " ||
+    EmpWithProf[0].course[0] === ""
+  ) {
     count++;
   }
   switch (count) {

@@ -73,6 +73,7 @@ function App() {
               <Route path="/user" element={<UserProfile user={user} />} />
               <Route path="/products/update/:id" element={<EditProduct />} />
               <Route path="progress" element={<ProgressBar />} />
+              <Route path="tree" element={<CustomizedTeamView />} />
               
 
               <Route path="/candidate" element={<CreateCandidate />} />

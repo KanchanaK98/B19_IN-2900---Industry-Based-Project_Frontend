@@ -63,22 +63,6 @@ function UserProfile({ user }) {
               value={50}
               sx={{ mb: 2, mt: 3 }}
             />
-            {/* <Card sx={{ mt: 4, padding: 2 }}>
-              <Grid container spacing={2} columns={12}>
-                <Grid item xs={3} textAlign="center">
-                  <FacebookIcon />
-                </Grid>
-                <Grid item xs={3} textAlign="center">
-                  <LinkedInIcon />
-                </Grid>
-                <Grid item xs={3} textAlign="center">
-                  <GitHubIcon />
-                </Grid>
-                <Grid item xs={3} textAlign="center">
-                  <InstagramIcon />
-                </Grid>
-              </Grid>
-            </Card> */}
             <Card sx={{ padding: 3, mt: 2 }}>
               <Divider sx={{ mt: 2, mb: 2 }}></Divider>
 
@@ -172,8 +156,16 @@ function UserProfile({ user }) {
               </Grid>
             </Card>
           </Grid>
-          <Grid item xs={4}></Grid>
-          <Grid item xs={8}></Grid>
+
+          <Grid item xs={12}>
+            <Card sx={{ padding: 3 }}>
+              <Typography variant="h6" sx={{ color: "#708bb8" }}>
+                <MenuBookIcon />
+                &nbsp;Products
+              </Typography>
+              <Divider sx={{ mt: 2, mb: 2 }}></Divider>
+            </Card>
+          </Grid>
         </Grid>
       </Box>
     </div>

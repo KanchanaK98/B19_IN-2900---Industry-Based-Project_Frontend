@@ -3,6 +3,7 @@ import React, { useState,useEffect } from 'react';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 import Modal from './AssignModel';
+import AssetUpdateModule from './AssetUpdateModule';
 import { availableAssetsApi,unavailableAssetsApi,allAssets,modelViewApi,unassignAsset,releaseFaultAsset, createFaultAsset, assignAssets, searchAssetCategory } from '../../Api/AssetManagementModule/assetViewApi';
 
 const  ViewAsset = () => {
@@ -45,6 +46,7 @@ const  ViewAsset = () => {
 
     const showModal = () =>
     {
+        
         setShow(true);
     }
     const hideModal = () =>
@@ -57,13 +59,16 @@ const  ViewAsset = () => {
         const response = await modelViewApi(id);
         setEachAsset(response);
         setShow2(true);
+        // console.log(eachAsset);
+       
         
         
     }
     const hideModalView = () =>
     {
         setShow2(false);
-        setEachAsset("")
+        setEachAsset("");
+        
     }
     
     const unassign = async (id) =>
@@ -165,6 +170,16 @@ const  ViewAsset = () => {
         
 
     }
+    const updateAssetFunction = async (id,asset) =>
+    {
+        const index = assets.findIndex((assets)=>assets._id===id)
+        const newAssets = [...assets]
+        newAssets[index].assetCategory=asset.assetCategory
+        newAssets[index].model=asset.model
+        newAssets[index].serialNumber=asset.serialNumber
+        newAssets[index].status=asset.status;
+        setAssets(newAssets)
+    }
     const rowStyle={
         color:"white"
     }
@@ -233,18 +248,18 @@ const  ViewAsset = () => {
                             (<td>
                                 <button className='btn btn-primary announce' onClick={()=>{showModal();setAssignAsset(asset._id);}}>Assign</button>
                                 <button className='btn btn-danger' onClick={()=>createFault(asset._id)} style={{ marginLeft:"5px" }}>Fault</button>
-                                <button className='btn btn-success' onClick={()=>{ShowModalView(asset._id)}} style={{ marginLeft:"5px" }}>View</button>
+                                <button className='btn btn-success' onClick={()=>{ShowModalView(asset._id)}} style={{ marginLeft:"5px" }}>Update</button>
                             </td>)
 
                             :asset.status === 'Fault'?
                             (<td>
                                 <button className='btn btn-danger' onClick={()=>releaseFault(asset._id)}>Release Fault</button>
-                                <button className='btn btn-success' onClick={()=>{ShowModalView(asset._id)}} style={{ marginLeft:"5px" }}>View</button>
+                                <button className='btn btn-success' onClick={()=>{ShowModalView(asset._id)}} style={{ marginLeft:"5px" }}>Update</button>
                             </td>):
                             (<td>
                                 <button className='btn btn-primary announce' onClick={()=>unassign(asset._id)}>Un-Assign</button>
                                 <button className='btn btn-danger' onClick={()=>createFault(asset._id)} style={{ marginLeft:"5px" }}>Fault</button>
-                                <button className='btn btn-success' onClick={()=>{ShowModalView(asset._id)}} style={{ marginLeft:"5px" }}>View</button>
+                                <button className='btn btn-success' onClick={()=>{ShowModalView(asset._id)}} style={{ marginLeft:"5px" }}>Update</button>
                             </td>)
                         }
                         
@@ -275,33 +290,14 @@ const  ViewAsset = () => {
             {/* modal end 
 
 
-            {/* modal for view asset */}
+            {/* modal for update asset */}
+            { show2===true?(<AssetUpdateModule data={eachAsset} show={true} handleClose={hideModalView} updateFun={updateAssetFunction}/>):null }
 
-            <Modal show={show2} handleClose={hideModalView}>
-            <div className='container'>
+            {/* <Modal show={show2} handleClose={hideModalView}>
+
+
+            </Modal> */}
             
-            <form id="form">
-                <div className="form-group">
-                    <h3>Asset ID
-                    <span className="badge badge-secondary" style={{ color:"blue" }}>{eachAsset.assetID}</span></h3>
-                    <h3>Asset Category
-                    <span className="badge badge-secondary" style={{ color:"blue" }}>{eachAsset.assetCategory}</span></h3>
-                    <h3>Model
-                    <span className="badge badge-secondary" style={{ color:"blue" }}>{eachAsset.model}</span></h3>
-                    <h3>Serial Number
-                    <span className="badge badge-secondary" style={{ color:"blue" }}>{eachAsset.serialNumber}</span></h3>
-                    <h3>Status
-                    <span className="badge badge-secondary" style={{ color:"blue" }}>{eachAsset.status}</span></h3>
-                </div><br/>
-                
-                
-                
-            </form>
-
-            </div>
-            </Modal>
-
-            {/* modal end  */}
         </div>
         </div>                
         

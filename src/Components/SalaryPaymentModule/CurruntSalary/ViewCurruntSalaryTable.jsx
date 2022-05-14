@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+//import axios from "axios";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -9,45 +9,28 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Button } from "@mui/material/";
 import { Grid } from "@mui/material";
-//import { viewCurruntSalaryApi } from "../../../Api/SalaryPaymentModule/CurruntSalaryApi/viewCurruntSalaryApi";
-// { createCurruntSalaryApi } from "../../../Api/SalaryPaymentModule/CurruntSalaryApi/createCurruntSalaryApi";
 
-// export default function ViewCurruntSalaryTable() {
-//   const [curruntSalaryList, setCurruntSalaryList] = useState([]);
+import { deleteCurrentSalaryApi } from "../../../Api/SalaryPaymentModule/CurruntSalaryApi/deleteCurrentSalaryApi";
+import { viewCurruntSalaryApi } from "../../../Api/SalaryPaymentModule/CurruntSalaryApi/viewCurruntSalaryApi";
 
-//   useEffect(() => {
-//     //react hook- calls it self when page reloads and displays
-//     axios
-//       .get("http://localhost:8070/salary/currentSalary")
-//       .then((allRecords) => {
-//         setCurruntSalaryList(allRecords.data);
-//       });
-//   }, []);
-
-//   return (
-//     <div>
-//       <h1>View Currunt SalaryTable component</h1>
-//     </div>
-//   );
-// }
-
-const ViewCurruntSalaryTable = () => {
+export default function ViewCurruntSalaryTable() {
   const [curruntSalaryList, setCurruntSalaryList] = useState([]); //
 
-  // const ViewCurruntSalaryTableFunc = () => {
-  //   viewCurruntSalaryApi(curruntSalaryList).then((response) => {
-  //     console.log(response);
-  //   });
-  // };
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost:8070/salary/currentSalary")
+  //     .then((allRecords) => {
+  //       setCurruntSalaryList(allRecords.data);
+  //       // console.log("data loaded from currunt salary list - frontend");
+  //       // console.log(allRecords.data);
+  //     });
+  // }, []);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8070/salary/currentSalary")
-      .then((allRecords) => {
-        setCurruntSalaryList(allRecords.data);
-        // console.log("data loaded from currunt salary list - frontend");
-        // console.log(allRecords.data);
-      });
+    async function fetchData() {
+      setCurruntSalaryList(await viewCurruntSalaryApi());
+    }
+    fetchData();
   }, []);
 
   return (
@@ -85,6 +68,8 @@ const ViewCurruntSalaryTable = () => {
                   <TableCell align="right">Net Salary</TableCell>
                   <TableCell align="right">Company EPF</TableCell>
                   <TableCell align="right">ETF</TableCell>
+                  <TableCell align="right"></TableCell>
+                  <TableCell align="right"></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -96,6 +81,7 @@ const ViewCurruntSalaryTable = () => {
                     <TableCell component="th" scope="row">
                       {salary.EmployeeID}
                     </TableCell>
+
                     <TableCell align="right">{salary.BasicSalary}</TableCell>
                     <TableCell align="right">
                       {salary.VehicleAllowance}
@@ -111,7 +97,10 @@ const ViewCurruntSalaryTable = () => {
                       <Button
                         variant="contained"
                         onClick={() =>
-                          window.open("/salary/currentSalary/update", "_self")
+                          window.open(
+                            `/salary/currentSalary/update/${salary.EmployeeID}`,
+                            "_self"
+                          )
                         }
                       >
                         Edit
@@ -120,7 +109,11 @@ const ViewCurruntSalaryTable = () => {
                     <TableCell align="right">
                       <Button
                         variant="contained"
-                        onClick={() => window.open("", "_self")}
+                        onClick={() => {
+                          deleteCurrentSalaryApi(salary.EmployeeID).then(() => {
+                            window.location.reload();
+                          });
+                        }}
                       >
                         Delete
                       </Button>
@@ -134,5 +127,4 @@ const ViewCurruntSalaryTable = () => {
       </Grid>
     </div>
   );
-};
-export default ViewCurruntSalaryTable;
+}

@@ -48,8 +48,13 @@ export const createCurrentSalarySheet = (newCurruntSalarySheet) =>
   API.post("/salary/currentSalary/create", newCurruntSalarySheet);
 export const findCurrentSalarySheet = (EmployeeID) =>
   API.get(`/salary/currentSalary/${EmployeeID}`);
-export const updateCurrentSalarySheet = (updatedData, EmployeeID) =>
-  API.patch(`/salary/currentSalary/update/${EmployeeID}`, updatedData);
+// export const updateCurrentSalarySheet = (updatedData, EmployeeID) =>
+//   API.patch(`/salary/currentSalary/update/${EmployeeID}`, updatedData);
+export const updateCurrentSalarySheet = (updatedData) =>
+  API.patch(
+    `/salary/currentSalary/update/${updatedData.EmployeeID}`,
+    updatedData
+  );
 export const deleteCurrentSalarySheet = (EmployeeID) =>
   API.delete(`/salary/currentSalary/delete/${EmployeeID}`);
 
@@ -72,13 +77,13 @@ export const createQuestions = (newQuestion) =>
 //Paper API
 export const viewAllPapersList = () => API.get("/promotion/Paper");
 export const createPaper = (newPaper) =>
-  API.post("/promotion/Paper/createPaper", newPaper); //check
+  API.post("/promotion/Paper/createPaper", newPaper);
 export const addMoreQuestions = (PaperID, [Questions]) =>
-  API.get(`/promotion/Paper/addMoreQuestions/${PaperID}`, [Questions]); //check
+  API.patch(`/promotion/Paper/addMoreQuestions/${PaperID}`, [Questions]);
 export const updatePaperDetails = (PaperID, updatedData) =>
-  API.get(`/promotion/Paper/updatePaperDetails/${PaperID}`, updatedData); //check
+  API.patch(`/promotion/Paper/updatePaperDetails/${PaperID}`, updatedData);
 export const deletePaper = (PaperID) =>
-  API.get(`/promotion/Paper/delete/${PaperID}`); //check
+  API.delete(`/promotion/Paper/delete/${PaperID}`);
 
 // employee's paper API
 export const displayPaper = (EmployeeID) =>
@@ -86,7 +91,7 @@ export const displayPaper = (EmployeeID) =>
 
 //ratings  for employee API
 export const submitPaper = (EmployeeID) =>
-  API.post(`/promotion/submitPaper/${EmployeeID}`); //check
+  API.post(`/promotion/submitPaper/${EmployeeID}`);
 export const displayFeedback = (EmployeeID) =>
   API.get(`/promotion/evaluation/mySubmissions/${EmployeeID}`);
 
@@ -96,7 +101,7 @@ export const allSubmissions = () =>
 export const displayTeamMemberSubmissions = (TeamLeadID) =>
   API.get(`/promotion//evaluation/allSubmissions/${TeamLeadID}`);
 export const evaluatePaper = (EmployeeID, PaperID) =>
-  API.patch(`/promotion/evaluation/evaluatePaper/${EmployeeID}/${PaperID}`); //check
+  API.patch(`/promotion/evaluation/evaluatePaper/${EmployeeID}/${PaperID}`);
 
 export const requestLeave = (leaveDetail) =>
   API.post("/leave/request", leaveDetail);

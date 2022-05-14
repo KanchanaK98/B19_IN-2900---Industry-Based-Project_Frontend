@@ -121,6 +121,7 @@ function App() {
                 path="/salary/currentSalary/create"
                 element={<CreateCurruntSalary />}
               />
+
               <Route
                 path="/salary/currentSalary/update/:EmployeeID"
                 element={<UpdateCurruntSalary />}

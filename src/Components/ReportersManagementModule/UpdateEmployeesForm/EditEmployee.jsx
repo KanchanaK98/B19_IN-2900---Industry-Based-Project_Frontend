@@ -62,6 +62,7 @@ function EditEmployee() {
       profile.EmpWithProf.length > 0 ? profile.EmpWithProf[0].course : " "
     ),
   });
+
   const handleChange = (e) => {
     setInputs((prevState) => ({
       ...prevState,

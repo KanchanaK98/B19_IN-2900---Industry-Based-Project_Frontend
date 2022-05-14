@@ -46,7 +46,7 @@ export const requestLeave = (leaveDetail) =>
   API.post("/leave/request", leaveDetail);
 export const getLeaveList = (employeeId) => API.get("/leave/" + employeeId);
 export const cancelLeave = (id, reason, employeeId) => API.post(`/leave/cancel/${id}`, {reason, employeeId});
-export const getRequestedleave = (employeeId) =>
+export const getRequestedLeave = (employeeId) =>
   API.get("/leave/requestedLeave/" + employeeId);
 export const responseRequestedLeave = (id) =>
   API.post("/leave/requestedLeave/response/" + id);

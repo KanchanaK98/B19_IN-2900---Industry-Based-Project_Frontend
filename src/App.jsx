@@ -15,6 +15,7 @@ import RequestLeaves from "./Pages/LeaveManagementModule/RequestLeaves/RequestLe
 
 import CreateUpdateInterview from "./Pages/RecruitmentModule/Interviews/CreateUpdateInterview/CreateUpdateInterview";
 import LeaveHistory from "./Pages/LeaveManagementModule/RequestLeaves/LeaveHistory";
+import RequestedLeaveList from "./Pages/LeaveManagementModule/RequestedLeavesTeamLead/RequestedLeaveList";
 
 
 function App() {
@@ -46,7 +47,8 @@ function App() {
               <Route path="/assetInsertion" element={<AssetInsertion />} />
 
               <Route path="/requestLeave" element={<RequestLeaves />} />
-              <Route path="/myLeaveHistory" element={<LeaveHistory />} />
+              <Route path="/leaveHistory" element={<LeaveHistory />} />
+              <Route path="/requestedLeaves" element={<RequestedLeaveList />} />
 
 
             </Routes>

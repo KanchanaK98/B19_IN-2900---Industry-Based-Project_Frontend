@@ -3,6 +3,7 @@ import React, { useState,useEffect } from 'react';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 import Modal from './AssignModel';
+import AssetUpdateModule from './AssetUpdateModule';
 import { availableAssetsApi,unavailableAssetsApi,allAssets,modelViewApi,unassignAsset,releaseFaultAsset, createFaultAsset, assignAssets, searchAssetCategory } from '../../Api/AssetManagementModule/assetViewApi';
 
 const  ViewAsset = () => {
@@ -12,9 +13,7 @@ const  ViewAsset = () => {
     const [show2,setShow2] = useState(false);
     const [empID, setEmployee] = useState("");
     const [assignAsset, setAssignAsset] = useState("");
-    const [assetCategory, setSearchCategory] = useState("");
     const [error,seterror] = useState(false);
-    const [blankCategory, setblankCategory] = useState(false);
     useEffect(()=>{
         axios.get("http://localhost:8070/assets/").then((res)=>{
             setAssets(res.data);
@@ -47,6 +46,7 @@ const  ViewAsset = () => {
 
     const showModal = () =>
     {
+        
         setShow(true);
     }
     const hideModal = () =>
@@ -59,13 +59,16 @@ const  ViewAsset = () => {
         const response = await modelViewApi(id);
         setEachAsset(response);
         setShow2(true);
+        // console.log(eachAsset);
+       
         
         
     }
     const hideModalView = () =>
     {
         setShow2(false);
-        setEachAsset("")
+        setEachAsset("");
+        
     }
     
     const unassign = async (id) =>
@@ -150,19 +153,10 @@ const  ViewAsset = () => {
        
         setEmployee("")
     }
-    const searchCategoryBar = async (e) =>
+    const searchCategoryBar = async (category) =>
     {
-        e.preventDefault();
-        if(assetCategory==="")
-        {
-            setblankCategory(true);
-            setTimeout(() => {
-                setblankCategory(false);
-            }, 2000);
-        }
-        else
-        {
-            const response = await searchAssetCategory(assetCategory);
+        
+            const response = await searchAssetCategory(category);
             if(response.success === true)
             {
                 setAssets(response.data);
@@ -173,8 +167,18 @@ const  ViewAsset = () => {
                     seterror(false);
                 }, 2000);
             }
-        }
+        
 
+    }
+    const updateAssetFunction = async (id,asset) =>
+    {
+        const index = assets.findIndex((assets)=>assets._id===id)
+        const newAssets = [...assets]
+        newAssets[index].assetCategory=asset.assetCategory
+        newAssets[index].model=asset.model
+        newAssets[index].serialNumber=asset.serialNumber
+        newAssets[index].status=asset.status;
+        setAssets(newAssets)
     }
     const rowStyle={
         color:"white"
@@ -184,29 +188,39 @@ const  ViewAsset = () => {
         
         <div className='container' >
         {/* dropdown must have scripts and link files to  work properly. there are in index.html file  */}
-        <div className="dropdown" style={{ marginTop:5 }}>
-            <button className="btn btn-secondary dropdown-toggle"  type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-            Status
-            </button>
-            <div className="dropdown-menu" labelled="dropdownMenu2">
-            <button className="dropdown-item" type="button" onClick={()=>{handleSearch("Available")}}>Available</button>
-            <button className="dropdown-item" type="button" onClick={()=>{handleSearch("Non-Available")}}>Non-Available</button>
-            <button className="dropdown-item" type="button" onClick={()=>{handleSearch("All")}}>All</button>
+        <div style={{ display:"flex",flexDirection:'row',justifyContent:"space-between" }}>
+            <div className="dropdown" style={{ marginTop:5}}>
+                <button className="btn btn-secondary dropdown-toggle"  type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                Status
+                </button>
+                <div className="dropdown-menu" labelled="dropdownMenu2">
+                <button className="dropdown-item" type="button" onClick={()=>{handleSearch("Available")}}>Available</button>
+                <button className="dropdown-item" type="button" onClick={()=>{handleSearch("Non-Available")}}>Non-Available</button>
+                <button className="dropdown-item" type="button" onClick={()=>{handleSearch("All")}}>All</button>
+                </div>
+            </div>
+            <div className="dropdown" style={{ marginTop:5 }}>
+                <button className="btn btn-secondary dropdown-toggle"  type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                Category
+                </button>
+                <div className="dropdown-menu" labelled="dropdownMenu2">
+                <button className="dropdown-item" type="button" onClick={()=>{searchCategoryBar("Laptop")}}>Laptop</button>
+                <button className="dropdown-item" type="button" onClick={()=>{searchCategoryBar("Mobile")}}>Mobile</button>
+                <button className="dropdown-item" type="button" onClick={()=>{searchCategoryBar("Tablet")}}>Tablet</button>
+                <button className="dropdown-item" type="button" onClick={()=>{searchCategoryBar("Keyboard")}}>Keyboard</button>
+                <button className="dropdown-item" type="button" onClick={()=>{searchCategoryBar("Router")}}>Router</button>
+                <button className="dropdown-item" type="button" onClick={()=>{searchCategoryBar("UPS")}}>UPS</button>
+                <button className="dropdown-item" type="button" onClick={()=>{searchCategoryBar("Printer")}}>Printer</button>
+                <button className="dropdown-item" type="button" onClick={()=>{searchCategoryBar("Monitor")}}>Monitor</button>
+                <button className="dropdown-item" type="button" onClick={()=>{searchCategoryBar("Headphone")}}>Headphone</button>
+                </div>
             </div>
         </div><br/>
         {error?(<Stack sx={{ width: '100%' }} spacing={2}><Alert variant="filled" severity="error">
                             Something was wrong! 
             </Alert></Stack>):null}
-        {blankCategory?(<Stack sx={{ width: '100%' }} spacing={2}><Alert variant="filled" severity="error">
-                            Please enter type of category! 
-            </Alert></Stack>):null}
-        <form className="form-inline my-2 my-lg-0" onSubmit={searchCategoryBar}>
-            <input className="form-control mr-sm-2" type="search" placeholder="Search by Category" aria-label="Search" onChange={(e)=>{setSearchCategory(e.target.value)}}/>
-            <div style={{ marginTop:5 }}>
-                <button className="btn btn-success my-2 my-sm-0" type="submit" >Search</button>
-            </div>
-            
-        </form>
+        
+        
         
                 <table className="table table-striped">
                     <thead>
@@ -234,18 +248,18 @@ const  ViewAsset = () => {
                             (<td>
                                 <button className='btn btn-primary announce' onClick={()=>{showModal();setAssignAsset(asset._id);}}>Assign</button>
                                 <button className='btn btn-danger' onClick={()=>createFault(asset._id)} style={{ marginLeft:"5px" }}>Fault</button>
-                                <button className='btn btn-success' onClick={()=>{ShowModalView(asset._id)}} style={{ marginLeft:"5px" }}>View</button>
+                                <button className='btn btn-success' onClick={()=>{ShowModalView(asset._id)}} style={{ marginLeft:"5px" }}>Update</button>
                             </td>)
 
                             :asset.status === 'Fault'?
                             (<td>
                                 <button className='btn btn-danger' onClick={()=>releaseFault(asset._id)}>Release Fault</button>
-                                <button className='btn btn-success' onClick={()=>{ShowModalView(asset._id)}} style={{ marginLeft:"5px" }}>View</button>
+                                <button className='btn btn-success' onClick={()=>{ShowModalView(asset._id)}} style={{ marginLeft:"5px" }}>Update</button>
                             </td>):
                             (<td>
                                 <button className='btn btn-primary announce' onClick={()=>unassign(asset._id)}>Un-Assign</button>
                                 <button className='btn btn-danger' onClick={()=>createFault(asset._id)} style={{ marginLeft:"5px" }}>Fault</button>
-                                <button className='btn btn-success' onClick={()=>{ShowModalView(asset._id)}} style={{ marginLeft:"5px" }}>View</button>
+                                <button className='btn btn-success' onClick={()=>{ShowModalView(asset._id)}} style={{ marginLeft:"5px" }}>Update</button>
                             </td>)
                         }
                         
@@ -276,33 +290,14 @@ const  ViewAsset = () => {
             {/* modal end 
 
 
-            {/* modal for view asset */}
+            {/* modal for update asset */}
+            { show2===true?(<AssetUpdateModule data={eachAsset} show={true} handleClose={hideModalView} updateFun={updateAssetFunction}/>):null }
 
-            <Modal show={show2} handleClose={hideModalView}>
-            <div className='container'>
+            {/* <Modal show={show2} handleClose={hideModalView}>
+
+
+            </Modal> */}
             
-            <form id="form">
-                <div className="form-group">
-                    <h3>Asset ID
-                    <span className="badge badge-secondary" style={{ color:"blue" }}>{eachAsset.assetID}</span></h3>
-                    <h3>Asset Category
-                    <span className="badge badge-secondary" style={{ color:"blue" }}>{eachAsset.assetCategory}</span></h3>
-                    <h3>Model
-                    <span className="badge badge-secondary" style={{ color:"blue" }}>{eachAsset.model}</span></h3>
-                    <h3>Serial Number
-                    <span className="badge badge-secondary" style={{ color:"blue" }}>{eachAsset.serialNumber}</span></h3>
-                    <h3>Status
-                    <span className="badge badge-secondary" style={{ color:"blue" }}>{eachAsset.status}</span></h3>
-                </div><br/>
-                
-                
-                
-            </form>
-
-            </div>
-            </Modal>
-
-            {/* modal end  */}
         </div>
         </div>                
         

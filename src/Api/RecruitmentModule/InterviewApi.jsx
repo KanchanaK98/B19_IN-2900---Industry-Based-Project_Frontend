@@ -88,8 +88,28 @@ export const updateInterview = async (interview, interviewID) => {
       InterviewTime: new Date(InterviewTime).toTimeString(),
       InterviewerID: interviewers,
     };
-    console.log(interviewData);
+    //console.log(interviewData);
      const { data } = await api.updateInterview(interviewData, interviewID);
+     
+     return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+export const cancelInterview = async (interviewID) => {
+  try {
+    const { data } = await api.cancelInterview(interviewID);
+     return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const markedCandidate = async (marks, interviewID) => {
+  try {
+    const {data} = await api.markedCandidate(marks, interviewID);
      return data;
   } catch (error) {
     console.log(error);

@@ -1,6 +1,133 @@
-import { makeStyles } from "@mui/styles";
+import { styled } from "@mui/material/styles";
+import { Badge, ListItemButton } from "@mui/material";
+import { makeStyles, withStyles } from "@mui/styles";
+import MuiDrawer from "@mui/material/Drawer";
 
-const useStyles = makeStyles((theme) => ({
+
+export const ListItem = withStyles({
+  root: {
+    "&$selected": {
+      backgroundColor: "rgba(0, 15, 130, 0.5)",
+      color: "white",
+      "& .MuiListItemIcon-root": {
+        color: "white"
+      }
+    },
+    "&$selected:hover": {
+      backgroundColor: "rgba(2, 8, 107, 1)",
+      color: "white",
+      "& .MuiListItemIcon-root": {
+        color: "white"
+      }
+    },
+    "&:hover": {
+      backgroundColor: "rgba(2, 8, 107, 1)",
+      color: "white",
+      "& .MuiListItemIcon-root": {
+        color: "white"
+      }
+    }
+  },
+  selected: {}
+})(ListItemButton);
+
+export const ListItem2 = withStyles({
+  root: {
+    "&$selected": {
+      backgroundColor: "rgba(31, 28, 245, 0.4)",
+      color: "white",
+      "& .MuiListItemIcon-root": {
+        color: "white"
+      }
+    },
+    "&$selected:hover": {
+      backgroundColor: "rgba(2, 8, 107, 1)",
+      color: "white",
+      "& .MuiListItemIcon-root": {
+        color: "white"
+      }
+    },
+    "&:hover": {
+      backgroundColor: "rgba(2, 8, 107, 0.3)",
+      color: "white",
+      "& .MuiListItemIcon-root": {
+        color: "white"
+      }
+    }
+  },
+  selected: {}
+})(ListItemButton);
+
+
+const openedMixin = (theme) => ({
+  width: drawerWidth,
+  transition: theme.transitions.create("width", {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.enteringScreen,
+  }),
+  overflowX: "hidden",
+});
+
+const drawerWidth = 260;
+const closedMixin = (theme) => ({
+  transition: theme.transitions.create("width", {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  overflowX: "hidden",
+  width: `calc(${theme.spacing(7)} + 1px)`,
+  [theme.breakpoints.up("sm")]: {
+    width: `calc(${theme.spacing(8)} + 1px)`,
+  },
+});
+
+export const Drawer = styled(MuiDrawer, {
+  shouldForwardProp: (prop) => prop !== "open",
+})(({ theme, open }) => ({
+  width: drawerWidth,
+  flexShrink: 0,
+  whiteSpace: "nowrap",
+  boxSizing: "border-box",
+  ...(open && {
+    ...openedMixin(theme),
+    "& .MuiDrawer-paper": openedMixin(theme),
+  }),
+  ...(!open && {
+    ...closedMixin(theme),
+    "& .MuiDrawer-paper": closedMixin(theme),
+  }),
+}));
+
+export const StyledBadge = styled(Badge)(({ theme }) => ({
+  "& .MuiBadge-badge": {
+    backgroundColor: "#44b700",
+    color: "#44b700",
+    boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
+    "&::after": {
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      borderRadius: "50%",
+      animation: "ripple 1.2s infinite ease-in-out",
+      border: "1px solid currentColor",
+      content: '""',
+    },
+  },
+  "@keyframes ripple": {
+    "0%": {
+      transform: "scale(.8)",
+      opacity: 1,
+    },
+    "100%": {
+      transform: "scale(2.4)",
+      opacity: 0,
+    },
+  },
+}));
+
+export const useStyles = makeStyles((theme) => ({
   profile: {
     display: "flex",
     alignItems: "center",
@@ -26,17 +153,28 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     backgroundColor: "rgb(0, 0, 0)",
   },
-  navList: {
-    marginTop: theme.spacing(2),
+  navItem: {
+    margin: theme.spacing(2, 2, 0, 1),
   },
-  item: {
-    display: "flex",
-    alignItems: "top",
-    padding: theme.spacing(1, 1.5),
-    color: "gray",
-    margin: theme.spacing(0, 1, 2, 1),
-    borderRadius: theme.spacing(1.5),
+  navButton: (props)=> ({
     backgroundColor: "rgb(255, 255, 255, 0.1)",
+    color: "rgb(255, 255, 255, 0.8)",
+    margin: theme.spacing(0.5, 0),
+    padding: theme.spacing(props.iconPadding),
+    borderRadius: theme.spacing(2),
+    "& .MuiSvgIcon-root" : {
+      color: "rgb(255, 255, 255)" 
+    }
+  }),
+  navButton2: {
+    backgroundColor: "rgb(255, 255, 255, 0.1)",
+    color: "rgb(255, 255, 255, 0.8)",
+    margin: theme.spacing(0.5, 0),
+    padding: theme.spacing(0.5, 0, 0.5, 4),
+    borderRadius: theme.spacing(2),
+    "& .MuiSvgIcon-root" : {
+      color: "rgb(255, 255, 255)" 
+    }
   },
   navText: (props) => ({
     display: props.display,
@@ -81,4 +219,4 @@ const useStyles = makeStyles((theme) => ({
   }),
 }));
 
-export default useStyles;
+

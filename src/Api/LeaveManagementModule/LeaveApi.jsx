@@ -10,7 +10,7 @@ export const requestLeave =async (leave) => {
       startDate,
       endDate : (leaveMethod !=="multiple Day") ? startDate : endDate,
       leaveMethod,
-      employeeId: "E002",
+      employeeId: "E003",
     };
    const response = await api.requestLeave(leaveData);
   return response.data;
@@ -47,3 +47,19 @@ export const cancelLeave = async (reason, leaveID, employeeID) => {
     console.log(error);
   }
 }
+
+
+export const getRequestedLeaves= async(employeeID) =>{
+  console.log("Hi");
+  const response =  await api.getRequestedLeave(employeeID);
+  console.log(response);
+  return response.data.requestedLeave;
+}
+
+
+
+
+
+
+
+

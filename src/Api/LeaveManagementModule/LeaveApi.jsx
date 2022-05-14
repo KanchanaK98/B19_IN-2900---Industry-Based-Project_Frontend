@@ -50,7 +50,7 @@ export const cancelLeave = async (reason, leaveID, employeeID) => {
 
 
 export const getRequestedLeaves= async(employeeID) =>{
-  console.log("Hi");
+ 
   const response =  await api.getRequestedLeave(employeeID);
   console.log(response);
   return response.data.requestedLeave;

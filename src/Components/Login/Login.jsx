@@ -31,7 +31,7 @@ function Copyright(props) {
   );
 }
 
-export default function Login() {
+export default function Login({ setUser }) {
   const [nonfill, setnonfill] = useState(false);
   const [invalid, setinvalid] = useState(false);
 
@@ -46,20 +46,9 @@ export default function Login() {
     if (data.get("uname") !== "" && data.get("password") !== "") {
       const response = await LoginApi(user);
       if (response.success === true) {
-        //console.log("user can sign in")
-        localStorage.setItem("apiData", JSON.stringify(response.user));
-        window.location.href = "/asset";
-      } else {
-        setinvalid(true);
-
-        setTimeout(() => {
-          setinvalid(false);
-        }, 2000);
-      }
-
-      if (response.success === true) {
-        //console.log("user can sign in")
-        window.location.href = "/asset";
+        setUser(response.user)
+        window.location.replace("/dashboard")
+        
       } else {
         setinvalid(true);
 

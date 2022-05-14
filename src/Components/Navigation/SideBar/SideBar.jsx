@@ -1,19 +1,18 @@
-import React from "react";
-import { styled } from "@mui/material/styles";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
-import MuiDrawer from "@mui/material/Drawer";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Avatar from "@mui/material/Avatar";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import useStyles from "./SideBarStyles";
-import photo from "../../../Resources/DSC_4340101.JPG";
-import TreeView from "@mui/lab/TreeView";
-import TreeItem from "@mui/lab/TreeItem";
+import {
+  useStyles,
+  ListItem,
+  ListItem2,
+  StyledBadge,
+  Drawer,
+} from "./SideBarStyles";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Home from "@mui/icons-material/Home";
 import DevicesIcon from "@mui/icons-material/Devices";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
@@ -22,84 +21,42 @@ import PaidIcon from "@mui/icons-material/Paid";
 import HowToRegIcon from "@mui/icons-material/HowToReg";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { Scrollbars } from "react-custom-scrollbars-2";
-import Badge from "@mui/material/Badge";
-const drawerWidth = 260;
+import List from "@mui/material/List";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import Collapse from "@mui/material/Collapse";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
+import StarBorder from "@mui/icons-material/StarBorder";
+import { GroupAdd } from "@mui/icons-material";
+import { Link } from "react-router-dom";
 
-const openedMixin = (theme) => ({
-  width: drawerWidth,
-  transition: theme.transitions.create("width", {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.enteringScreen,
-  }),
-  overflowX: "hidden",
-});
+const SideBar = ({ open, toggleDrawer, user, handleLogOut }) => {
+  const [openCollapse, setOpenCollapse] = useState({
+    Assets: false,
+    Leave: false,
+    PayRolls: false,
+    Promotion: false,
+    Recruitment: false,
+    Reporter: false,
+  });
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [selectedIndex2, setSelectedIndex2] = useState(null);
 
-const closedMixin = (theme) => ({
-  transition: theme.transitions.create("width", {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  overflowX: "hidden",
-  width: `calc(${theme.spacing(7)} + 1px)`,
-  [theme.breakpoints.up("sm")]: {
-    width: `calc(${theme.spacing(8)} + 1px)`,
-  },
-});
-
-const Drawer = styled(MuiDrawer, {
-  shouldForwardProp: (prop) => prop !== "open",
-})(({ theme, open }) => ({
-  width: drawerWidth,
-  flexShrink: 0,
-  whiteSpace: "nowrap",
-  boxSizing: "border-box",
-  ...(open && {
-    ...openedMixin(theme),
-    "& .MuiDrawer-paper": openedMixin(theme),
-  }),
-  ...(!open && {
-    ...closedMixin(theme),
-    "& .MuiDrawer-paper": closedMixin(theme),
-  }),
-}));
-
-const StyledBadge = styled(Badge)(({ theme }) => ({
-  "& .MuiBadge-badge": {
-    backgroundColor: "#44b700",
-    color: "#44b700",
-    boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
-    "&::after": {
-      position: "absolute",
-      top: 0,
-      left: 0,
-      width: "100%",
-      height: "100%",
-      borderRadius: "50%",
-      animation: "ripple 1.2s infinite ease-in-out",
-      border: "1px solid currentColor",
-      content: '""',
-    },
-  },
-  "@keyframes ripple": {
-    "0%": {
-      transform: "scale(.8)",
-      opacity: 1,
-    },
-    "100%": {
-      transform: "scale(2.4)",
-      opacity: 0,
-    },
-  },
-}));
-
-const SideBar = ({ open, toggleDrawer,setUser,image,jobRole }) => {
+  const handleListItemClick = (index) => {
+    setSelectedIndex(index);
+    setSelectedIndex2(null);
+  };
+  const handleListItemClick2 = (index) => {
+    setSelectedIndex2(index);
+  };
   const styleProps = {
     display: open ? "flex" : "none",
     displayLogOut: open ? "none" : "flex",
+    iconPadding: open ? 1 : 1,
   };
 
   const classes = useStyles(styleProps);
-
   return (
     <Box>
       <Drawer
@@ -107,33 +64,36 @@ const SideBar = ({ open, toggleDrawer,setUser,image,jobRole }) => {
         open={open}
         classes={{ paper: classes.paper }}
       >
-        <Grid className={classes.drawerHeader}>
-          <Grid className={classes.profile}>
-            <StyledBadge
-              overlap="circular"
-              anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-              variant="dot"
-            >
-              <Avatar
-                src={image}
-                sx={{ mt: 1, mb: 1, height: 50, width: 50 }}
-              />
-            </StyledBadge>
+        <Grid
+          component={Link}
+          to="/user"
+          sx={{ textDecoration: "none" }}
+          className={classes.profile}
+        >
+          <StyledBadge
+            overlap="circular"
+            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+            variant="dot"
+          >
+            <Avatar
+              src={user.profilePic}
+              sx={{ mt: 1, mb: 1, height: 50, width: 50 }}
+            />
+          </StyledBadge>
 
-            <Grid className={classes.profileName}>
-              <Typography color={"white"} variant="h6" sx={{ mb: -1 }}>
-                {setUser}
-              </Typography>
-              <Typography color={"white"} variant="caption">
-                HR manager
-              </Typography>
-            </Grid>
+          <Grid className={classes.profileName}>
+            <Typography color={"white"} variant="h6" sx={{ mb: -1 }}>
+              Welcome !
+            </Typography>
+            <Typography color={"white"} variant="caption">
+              {user.employeeFirstName + " " + user.employeeFirstName}
+            </Typography>
           </Grid>
-
-          <IconButton onClick={toggleDrawer} className={classes.icon}>
-            <ChevronLeftIcon />
-          </IconButton>
         </Grid>
+
+        <IconButton onClick={toggleDrawer} className={classes.icon}>
+          <ChevronLeftIcon />
+        </IconButton>
 
         <Grid className={classes.iconRow}>
           <IconButton className={classes.iconRowIcon}>
@@ -156,96 +116,318 @@ const SideBar = ({ open, toggleDrawer,setUser,image,jobRole }) => {
           </IconButton>
         </Grid>
         <Divider variant="middle" classes={{ root: classes.divider }} />
-        <Divider variant="middle" classes={{ root: classes.divider }} />
+        <Divider
+          variant="middle"
+          classes={{ root: classes.divider }}
+          sx={{ mb: 1 }}
+        />
 
         <Scrollbars sx={{ width: 260, height: 300 }}>
-          <Grid className={classes.navList}>
-            <Grid className={classes.item}>
-              <Home />
-              <Grid className={classes.navText}>
-                <TreeView
-                  defaultCollapseIcon={<ExpandMoreIcon />}
-                  defaultExpandIcon={<ChevronRightIcon />}
-                  multiSelect
-                >
-                  <TreeItem nodeId="1" label="Dashboard">
-                    <TreeItem nodeId="2" label="" />
-                  </TreeItem>
-                </TreeView>
-              </Grid>
-            </Grid>
+          <Grid className={classes.navItem}>
+            <ListItem
+              component={Link}
+              to="/dashboard"
+              selected={selectedIndex === 0}
+              onClick={() => {
+                handleListItemClick(0);
+                setOpenCollapse(false);
+              }}
+              className={classes.navButton}
+            >
+              <ListItemIcon>
+                <Home />
+              </ListItemIcon>
+              <ListItemText primary="Dashboard" />
+            </ListItem>
+          </Grid>
 
-            <Grid className={classes.item}>
-              <DevicesIcon />
-              <Grid className={classes.navText}>
-                <TreeView
-                  defaultCollapseIcon={<ExpandMoreIcon />}
-                  defaultExpandIcon={<ChevronRightIcon />}
+          <Grid className={classes.navItem}>
+            <ListItem
+              selected={selectedIndex === 1}
+              onClick={() => {
+                handleListItemClick(1);
+                setOpenCollapse({ Assets: !openCollapse.Assets });
+              }}
+              className={classes.navButton}
+            >
+              <ListItemIcon>
+                <DevicesIcon />
+              </ListItemIcon>
+              <ListItemText primary="Assets" />
+              {openCollapse.Assets ? <ExpandLess /> : <ExpandMore />}
+            </ListItem>
+            <Collapse in={openCollapse.Assets} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItem2
+                  component={Link}
+                  to="/assetInsertion"
+                  selected={selectedIndex2 === 0}
+                  onClick={() => {
+                    handleListItemClick2(0);
+                  }}
+                  className={classes.navButton2}
                 >
-                  <TreeItem nodeId="1" label="Assets">
-                    <TreeItem nodeId="2" label="add assets" />
-                    <TreeItem nodeId="3" label="create fault" />
-                  </TreeItem>
-                </TreeView>
-              </Grid>
-            </Grid>
+                  <ListItemIcon>
+                    <StarBorder />
+                  </ListItemIcon>
+                  <ListItemText primary="Asset Insertion" />
+                </ListItem2>
 
-            <Grid className={classes.item}>
-              <AccessTimeIcon />
-              <Grid className={classes.navText}>
-                <TreeView
-                  defaultCollapseIcon={<ExpandMoreIcon />}
-                  defaultExpandIcon={<ChevronRightIcon />}
+                <ListItem2
+                  component={Link}
+                  to="/asset"
+                  selected={selectedIndex2 === 1}
+                  onClick={() => {
+                    handleListItemClick2(1);
+                  }}
+                  className={classes.navButton2}
                 >
-                  <TreeItem nodeId="1" label="Leaves">
-                    <TreeItem nodeId="2" label="request leave" />
-                    <TreeItem nodeId="3" label="view leave" />
-                  </TreeItem>
-                </TreeView>
-              </Grid>
-            </Grid>
-            <Grid className={classes.item}>
-              <PaidIcon />
-              <Grid className={classes.navText}>
-                <TreeView
-                  defaultCollapseIcon={<ExpandMoreIcon />}
-                  defaultExpandIcon={<ChevronRightIcon />}
+                  <ListItemIcon>
+                    <StarBorder />
+                  </ListItemIcon>
+                  <ListItemText primary="Asset List" />
+                </ListItem2>
+              </List>
+            </Collapse>
+          </Grid>
+
+          <Grid className={classes.navItem}>
+            <ListItem
+              selected={selectedIndex === 2}
+              onClick={() => {
+                handleListItemClick(2);
+                setOpenCollapse({ Reporter: !openCollapse.Reporter });
+              }}
+              className={classes.navButton}
+            >
+              <ListItemIcon>
+                <GroupAdd />
+              </ListItemIcon>
+              <ListItemText primary="Reporter" />
+              {openCollapse.Reporter ? <ExpandLess /> : <ExpandMore />}
+            </ListItem>
+            <Collapse in={openCollapse.Reporter} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItem2
+                  component={Link}
+                  to="/teams"
+                  selected={selectedIndex2 === 0}
+                  onClick={() => {
+                    handleListItemClick2(0);
+                  }}
+                  className={classes.navButton2}
                 >
-                  <TreeItem nodeId="1" label="Payrolls">
-                    <TreeItem nodeId="2" label="view salary" />
-                    <TreeItem nodeId="3" label="find salary-sheet" />
-                  </TreeItem>
-                </TreeView>
-              </Grid>
-            </Grid>
-            <Grid className={classes.item}>
-              <PeopleAltIcon />
-              <Grid className={classes.navText}>
-                <TreeView
-                  defaultCollapseIcon={<ExpandMoreIcon />}
-                  defaultExpandIcon={<ChevronRightIcon />}
+                  <ListItemIcon>
+                    <StarBorder />
+                  </ListItemIcon>
+                  <ListItemText primary="Teams" />
+                </ListItem2>
+
+                <ListItem2
+                  component={Link}
+                  to="/products"
+                  selected={selectedIndex2 === 1}
+                  onClick={() => {
+                    handleListItemClick2(1);
+                  }}
+                  className={classes.navButton2}
                 >
-                  <TreeItem nodeId="1" label="Recruitment">
-                    <TreeItem nodeId="2" label="create interview" />
-                    <TreeItem nodeId="3" label="create candidate" />
-                  </TreeItem>
-                </TreeView>
-              </Grid>
-            </Grid>
-            <Grid className={classes.item}>
-              <HowToRegIcon />
-              <Grid className={classes.navText}>
-                <TreeView
-                  defaultCollapseIcon={<ExpandMoreIcon />}
-                  defaultExpandIcon={<ChevronRightIcon />}
+                  <ListItemIcon>
+                    <StarBorder />
+                  </ListItemIcon>
+                  <ListItemText primary="Products" />
+                </ListItem2>
+              </List>
+            </Collapse>
+          </Grid>
+
+          <Grid className={classes.navItem}>
+            <ListItem
+              selected={selectedIndex === 3}
+              onClick={() => {
+                handleListItemClick(3);
+                setOpenCollapse({ Leave: !openCollapse.Leave });
+              }}
+              className={classes.navButton}
+            >
+              <ListItemIcon>
+                <AccessTimeIcon />
+              </ListItemIcon>
+              <ListItemText primary="Leaves" />
+              {openCollapse.Leave ? <ExpandLess /> : <ExpandMore />}
+            </ListItem>
+            <Collapse in={openCollapse.Leave} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItem2
+                  component={Link}
+                  to="/leaveHistory"
+                  selected={selectedIndex2 === 0}
+                  onClick={() => {
+                    handleListItemClick2(0);
+                  }}
+                  className={classes.navButton2}
                 >
-                  <TreeItem nodeId="1" label="Promotion">
-                    <TreeItem nodeId="2" label="history" />
-                    <TreeItem nodeId="3" label="promote" />
-                  </TreeItem>
-                </TreeView>
-              </Grid>
-            </Grid>
+                  <ListItemIcon>
+                    <StarBorder />
+                  </ListItemIcon>
+                  <ListItemText primary="Leave History" />
+                </ListItem2>
+
+                <ListItem2
+                  component={Link}
+                  to="/requestLeave"
+                  selected={selectedIndex2 === 1}
+                  onClick={() => {
+                    handleListItemClick2(1);
+                  }}
+                  className={classes.navButton2}
+                >
+                  <ListItemIcon>
+                    <StarBorder />
+                  </ListItemIcon>
+                  <ListItemText primary="Request Leave" />
+                </ListItem2>
+              </List>
+            </Collapse>
+          </Grid>
+
+          <Grid className={classes.navItem}>
+            <ListItem
+              selected={selectedIndex === 4}
+              onClick={() => {
+                handleListItemClick(4);
+                setOpenCollapse({ PayRolls: !openCollapse.PayRolls });
+              }}
+              className={classes.navButton}
+            >
+              <ListItemIcon>
+                <PaidIcon />
+              </ListItemIcon>
+              <ListItemText primary="Payrolls" />
+              {openCollapse.PayRolls ? <ExpandLess /> : <ExpandMore />}
+            </ListItem>
+            <Collapse in={openCollapse.PayRolls} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItem2
+                  component={Link}
+                  to="/salary/summarySalary"
+                  selected={selectedIndex2 === 0}
+                  onClick={() => {
+                    handleListItemClick2(0);
+                  }}
+                  className={classes.navButton2}
+                >
+                  <ListItemIcon>
+                    <StarBorder />
+                  </ListItemIcon>
+                  <ListItemText primary="Salary Sheet" />
+                </ListItem2>
+              </List>
+            </Collapse>
+          </Grid>
+
+          <Grid className={classes.navItem}>
+            <ListItem
+              selected={selectedIndex === 5}
+              onClick={() => {
+                handleListItemClick(5);
+                setOpenCollapse({ Promotion: !openCollapse.Promotion });
+              }}
+              className={classes.navButton}
+            >
+              <ListItemIcon>
+                <HowToRegIcon />
+              </ListItemIcon>
+              <ListItemText primary="Promotion" />
+              {openCollapse.Promotion ? <ExpandLess /> : <ExpandMore />}
+            </ListItem>
+            <Collapse in={openCollapse.Promotion} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItem2
+                  component={Link}
+                  to="/promotion/Questions"
+                  selected={selectedIndex2 === 0}
+                  onClick={() => {
+                    handleListItemClick2(0);
+                  }}
+                  className={classes.navButton2}
+                >
+                  <ListItemIcon>
+                    <StarBorder />
+                  </ListItemIcon>
+                  <ListItemText primary="Question" />
+                </ListItem2>
+
+                <ListItem2
+                  component={Link}
+                  to="/promotion/Paper"
+                  selected={selectedIndex2 === 1}
+                  onClick={() => {
+                    handleListItemClick2(1);
+                  }}
+                  className={classes.navButton2}
+                >
+                  <ListItemIcon>
+                    <StarBorder />
+                  </ListItemIcon>
+                  <ListItemText primary="Paper" />
+                </ListItem2>
+              </List>
+            </Collapse>
+          </Grid>
+
+          <Grid className={classes.navItem}>
+            <ListItem
+              selected={selectedIndex === 6}
+              onClick={() => {
+                handleListItemClick(6);
+                setOpenCollapse({ Recruitment: !openCollapse.Recruitment });
+              }}
+              className={classes.navButton}
+            >
+              <ListItemIcon>
+                <PeopleAltIcon />
+              </ListItemIcon>
+              <ListItemText primary="Recruitment" />
+              {openCollapse.Recruitment ? <ExpandLess /> : <ExpandMore />}
+            </ListItem>
+            <Collapse
+              in={openCollapse.Recruitment}
+              timeout="auto"
+              unmountOnExit
+            >
+              <List component="div" disablePadding>
+                <ListItem2
+                  component={Link}
+                  to="/interview"
+                  selected={selectedIndex2 === 0}
+                  onClick={() => {
+                    handleListItemClick2(0);
+                  }}
+                  className={classes.navButton2}
+                >
+                  <ListItemIcon>
+                    <StarBorder />
+                  </ListItemIcon>
+                  <ListItemText primary="Interviews" />
+                </ListItem2>
+
+                <ListItem2
+                  component={Link}
+                  to="/candidate"
+                  selected={selectedIndex2 === 1}
+                  onClick={() => {
+                    handleListItemClick2(1);
+                  }}
+                  className={classes.navButton2}
+                >
+                  <ListItemIcon>
+                    <StarBorder />
+                  </ListItemIcon>
+                  <ListItemText primary="Candidates" />
+                </ListItem2>
+              </List>
+            </Collapse>
           </Grid>
         </Scrollbars>
 
@@ -253,7 +435,7 @@ const SideBar = ({ open, toggleDrawer,setUser,image,jobRole }) => {
         <Divider variant="middle" classes={{ root: classes.divider }} />
 
         <Grid>
-          <IconButton className={classes.logOutButton}>
+          <IconButton onClick={handleLogOut} className={classes.logOutButton}>
             <LogoutIcon />
           </IconButton>
         </Grid>

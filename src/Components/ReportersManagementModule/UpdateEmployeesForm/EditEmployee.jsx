@@ -179,7 +179,7 @@ function EditEmployee() {
                     <Grid item sm={12} md={6}>
                       <Button
                         LinkComponent={Link}
-                        to={`/`}
+                        to={`/dashboard`}
                         variant="contained"
                         fullWidth
                       >

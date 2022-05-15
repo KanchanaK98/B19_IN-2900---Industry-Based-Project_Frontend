@@ -24,6 +24,7 @@ import AssetInsertion from "./Components/AssetManagementModule/AssetInsertion";
 import RequestLeaves from "./Pages/LeaveManagementModule/RequestLeaves/RequestLeaves";
 import CreateUpdateInterview from "./Pages/RecruitmentModule/Interviews/CreateUpdateInterview/CreateUpdateInterview";
 import LeaveHistory from "./Pages/LeaveManagementModule/RequestLeaves/LeaveHistory";
+import RequestedLeaveList from "./Pages/LeaveManagementModule/RequestedLeavesTeamLead/RequestedLeaveList";
 import StartInterview from "./Pages/RecruitmentModule/StartInterview/StartInterview";
 import CustomizedTeamView from "./Components/ReportersManagementModule/CustomizedTemView/CustomizedTeamView";
 import ViewCurruntSalary from "./Pages/SalaryPaymentModule/CurruntSalary/ViewCurruntSalary";
@@ -113,6 +114,9 @@ function App() {
               {/* Leave management */}
               <Route path="/requestLeave" element={<RequestLeaves />} />
               <Route path="/leaveHistory" element={<LeaveHistory />} />
+              <Route path="/requestedLeaves" element={<RequestedLeaveList />} />
+
+
               {/* Payrolls management */}
               <Route
                 path="/salary/currentSalary"

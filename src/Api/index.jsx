@@ -107,16 +107,6 @@ export const displayTeamMemberSubmissions = (TeamLeadID) =>
 export const evaluatePaper = (EmployeeID, PaperID) =>
   API.patch(`/promotion/evaluation/evaluatePaper/${EmployeeID}/${PaperID}`);
 
-export const requestLeave = (leaveDetail) =>
-  API.post("/leave/request", leaveDetail);
-export const getLeaveList = (employeeId) => API.get("/leave/" + employeeId);
-export const cancelLeave = (id, reason, employeeId) =>
-  API.post(`/leave/cancel/${id}`, { reason, employeeId });
-export const getRequestedleave = (employeeId) =>
-  API.get("/leave/requestedLeave/" + employeeId);
-export const responseRequestedLeave = (id) =>
-  API.post("/leave/requestedLeave/response/" + id);
-
 //employee api
 export const createEmployee = (employee) =>
   API.post(`/employee/add/`, employee);
@@ -163,5 +153,16 @@ export const updateProduct = (updateProdData, id) => {
 export const viewPProducts = (viewproduct) => {
   return API.get(`/employee/viewProducts`);
 };
+
+// leave API
 export const getLeaveBalance = (employeeID) =>
   API.get(`/leave/leaveBalance/${employeeID}`);
+export const requestLeave = (leaveDetail) =>
+  API.post("/leave/request", leaveDetail);
+export const getLeaveList = (employeeId) => API.get("/leave/" + employeeId);
+export const cancelLeave = (id, reason, employeeId) =>
+  API.post(`/leave/cancel/${id}`, { reason, employeeId });
+export const getRequestedLeave = (employeeId) =>
+  API.get("/leave/requestedLeave/" + employeeId);
+export const responseRequestedLeave = (id) =>
+  API.post("/leave/requestedLeave/response/" + id);

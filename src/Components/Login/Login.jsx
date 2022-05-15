@@ -11,6 +11,13 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
+import IconButton from '@mui/material/IconButton';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
+import InputAdornment from '@mui/material/InputAdornment';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { LoginApi } from "../../Api/Login/LoginApi";
 
 function Copyright(props) {
@@ -34,6 +41,10 @@ function Copyright(props) {
 export default function Login({ setUser }) {
   const [nonfill, setnonfill] = useState(false);
   const [invalid, setinvalid] = useState(false);
+  const [values, setValues] = React.useState({
+    password: '',
+    showPassword: false,
+  });
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -41,9 +52,9 @@ export default function Login({ setUser }) {
 
     const user = {
       userName: data.get("uname"),
-      password: data.get("password"),
+      password: values.password,
     };
-    if (data.get("uname") !== "" && data.get("password") !== "") {
+    if (data.get("uname") !== "" && values.password !== "") {
       const response = await LoginApi(user);
       if (response.success === true) {
         setUser(response.user)
@@ -62,6 +73,20 @@ export default function Login({ setUser }) {
         setnonfill(false);
       }, 2000);
     }
+  };
+  const handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
+
+  const handleClickShowPassword = () => {
+    setValues({
+      ...values,
+      showPassword: !values.showPassword,
+    });
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
   };
   return (
     <Grid container component="main" sx={{ height: "100vh" }}>
@@ -104,17 +129,17 @@ export default function Login({ setUser }) {
             onSubmit={handleSubmit}
             sx={{ mt: 1 }}
           >
+          <FormControl  variant="outlined" fullWidth required>
             <TextField
               margin="normal"
-              required
-              fullWidth
               id="uname"
               label="User Name"
               name="uname"
               autoComplete="username"
               autoFocus
             />
-            <TextField
+            </FormControl><br/>
+            {/* <TextField
               margin="normal"
               required
               fullWidth
@@ -123,7 +148,31 @@ export default function Login({ setUser }) {
               type="password"
               id="password"
               autoComplete="current-password"
+            /> */}
+            <FormControl  variant="outlined" fullWidth required>
+            <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+            <OutlinedInput
+              id="outlined-adornment-password"
+              type={values.showPassword ? 'text' : 'password'}
+              value={values.password}
+              margin="normal"
+              label="Password"
+              onChange={handleChange('password')}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    edge="end"
+                  >
+                    {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+              
             />
+            </FormControl>
 
             <Button
               type="submit"
@@ -139,16 +188,12 @@ export default function Login({ setUser }) {
                     Forgot password?
                   </Link> */}
               </Grid>
-              <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't Have an account? Sign Up"}
-                </Link>
-              </Grid>
+              
             </Grid>
             {nonfill ? (
               <Stack sx={{ width: "100%" }} spacing={2}>
                 <Alert variant="filled" severity="error">
-                  Please input both user name and password!
+                  Please input both user name & password!
                 </Alert>
               </Stack>
             ) : null}

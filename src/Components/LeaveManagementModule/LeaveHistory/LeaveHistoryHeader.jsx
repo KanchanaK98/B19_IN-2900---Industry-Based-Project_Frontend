@@ -4,7 +4,7 @@ import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 
 const LeaveHistoryHeader = () => {
   return (
-    <Box>
+    <Box sx={{mb : 3}}>
       <Paper elevation={3} square sx={{ p: 2 }}>
         <Grid container>
           <Grid md={6} item sx={{display:"flex"}}>

@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     display: "flex",
-margin: theme.spacing(1, 0)
+margin: theme.spacing(1,0)
     //  color:"#560027",
     //  marginRight: theme.spacing(2),
     //  fontWeight: 500,

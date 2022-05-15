@@ -1,7 +1,5 @@
 import React from "react";
 import ViewCurruntSalaryTable from "../../../Components/SalaryPaymentModule/CurruntSalary/ViewCurruntSalaryTable";
-import FindCurruntSalary from "../../../Components/SalaryPaymentModule/CurruntSalary/FindCurruntSalary";
-//import CreateCurruntSalary from "../../../Components/SalaryPaymentModule/CurruntSalary/CreateCurruntSalary";
 
 import { Grid } from "@mui/material";
 
@@ -17,7 +15,6 @@ const ViewCurruntSalary = () => {
         }}
       >
         {" "}
-        <FindCurruntSalary />
         <ViewCurruntSalaryTable />
       </Grid>
     </Grid>

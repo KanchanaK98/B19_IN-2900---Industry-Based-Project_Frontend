@@ -1,12 +1,9 @@
 import * as api from "../../index";
 
-export const findEmployeeSalaryApi = async (EmployeeID, Month) => {
+export const findEmployeeSalaryApi = async (EmployeeID) => {
   try {
-    const { data } = await api.findEmployeeSalarySheetByMonth(
-      EmployeeID,
-      Month
-    );
-    return data;
+    const { data } = await api.findEmployeeSalarySheet(EmployeeID);
+        return data;
   } catch (error) {
     console.log(error);
   }

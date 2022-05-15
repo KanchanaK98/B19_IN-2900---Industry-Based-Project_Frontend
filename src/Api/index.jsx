@@ -63,13 +63,15 @@ export const deleteCurrentSalarySheet = (EmployeeID) =>
 //Summary salary payment API
 export const viewSummarySalarySheet = () => API.get("/salary/summarySalary");
 export const findSummarySalarySheetByEid = (EmployeeID) =>
-  API.get(`/salary/${EmployeeID}`);
+  API.get(`/salary/${EmployeeID}`); //
 
 //Employee salary sheet API
 export const viewCurrentEmployeeSalarySheet = (EmployeeID) =>
   API.get(`/salary/employeeSalary/${EmployeeID}`);
 export const findEmployeeSalarySheetByMonth = (EmployeeID, Month) =>
-  API.get(`/salary/employeeSalary/${EmployeeID}/${Month}`);
+  API.get(`/salary/employeeSalary/${EmployeeID}/${Month}`); //
+export const findEmployeeSalarySheet = (EmployeeID) =>
+  API.get(`/salary/employeeSalary/${EmployeeID}/previous`);
 
 //Questions API
 export const viewAllQuestions = () => API.get("/promotion/Questions/");
@@ -158,8 +160,8 @@ export const updateProduct = (updateProdData, id) => {
   API.put(`/employee/updateProduct/${id}`, updateProdData);
 };
 
-export const viewPProducts=(viewproduct)=>{
+export const viewPProducts = (viewproduct) => {
   return API.get(`/employee/viewProducts`);
-}
+};
 export const getLeaveBalance = (employeeID) =>
   API.get(`/leave/leaveBalance/${employeeID}`);

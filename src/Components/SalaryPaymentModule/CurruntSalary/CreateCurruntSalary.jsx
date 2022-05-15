@@ -11,16 +11,9 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 
-// import Dialog from "@mui/material/Dialog";
-// import DialogActions from "@mui/material/DialogActions";
-// import DialogContent from "@mui/material/DialogContent";
-// import DialogContentText from "@mui/material/DialogContentText";
-// import DialogTitle from "@mui/material/DialogTitle";
-
 import { createCurruntSalaryApi } from "../../../Api/SalaryPaymentModule/CurruntSalaryApi/createCurruntSalaryApi";
 import { viewCurruntSalaryApi } from "../../../Api/SalaryPaymentModule/CurruntSalaryApi/viewCurruntSalaryApi";
 import { viewAllEmployees } from "../../../Api/ReportersManagementModule/EmployeeApi";
-import { label } from "@mui/icons-material";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,7 +38,7 @@ export default function CreateCurruntSalary() {
 
   const [added, setadded] = useState(false);
   const [notadded, setnotadded] = useState(false);
-  const [isEmpty, setIsEmpty] = useState(false);
+  //const [isEmpty, setIsEmpty] = useState(false);
 
   const CreateCurruntSalaryFunc = async (e) => {
     e.preventDefault();
@@ -157,6 +150,31 @@ export default function CreateCurruntSalary() {
                           </option>
                         ))}
                       </select>
+                    </FormControl>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Employee ID*</TableCell>
+                  <TableCell align="center">
+                    <FormControl>
+                      <select
+                        label="demo-simple-select-label"
+                        onChange={(event) => {
+                          if (
+                            profiles.employeeID !== curruntSalaryList.EmployeeID
+                          ) {
+                            profiles.map((option, key) => (
+                              <option key={key} value={option.employeeID}>
+                                {option.employeeID}
+                              </option>
+                            ));
+                          }
+                          setRecord({
+                            ...record,
+                            EmployeeID: event.target.value,
+                          });
+                        }}
+                      ></select>
                     </FormControl>
                   </TableCell>
                 </TableRow>

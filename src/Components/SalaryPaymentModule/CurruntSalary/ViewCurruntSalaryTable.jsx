@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-//import axios from "axios";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -9,22 +8,15 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Button } from "@mui/material/";
 import { Grid } from "@mui/material";
-
 import { deleteCurrentSalaryApi } from "../../../Api/SalaryPaymentModule/CurruntSalaryApi/deleteCurrentSalaryApi";
 import { viewCurruntSalaryApi } from "../../../Api/SalaryPaymentModule/CurruntSalaryApi/viewCurruntSalaryApi";
+import Pagination from "@mui/material/Pagination";
+import usePagination from "./.././Pagination";
 
 export default function ViewCurruntSalaryTable() {
-  const [curruntSalaryList, setCurruntSalaryList] = useState([]); //
-
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:8070/salary/currentSalary")
-  //     .then((allRecords) => {
-  //       setCurruntSalaryList(allRecords.data);
-  //       // console.log("data loaded from currunt salary list - frontend");
-  //       // console.log(allRecords.data);
-  //     });
-  // }, []);
+  const [curruntSalaryList, setCurruntSalaryList] = useState([]);
+  const [search, setSearch] = useState("");
+  const [filteredRecords, setFilteredRecords] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -33,15 +25,40 @@ export default function ViewCurruntSalaryTable() {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    setFilteredRecords(
+      curruntSalaryList.filter((record) =>
+        record.EmployeeID.toLowerCase().includes(search.toLowerCase())
+      )
+    );
+  }, [search, curruntSalaryList]);
+
+  //----------------------------------pagination------------------------------
+  let [page, setPage] = useState(1);
+  const PER_PAGE = 5;
+
+  const count = Math.ceil(filteredRecords.length / PER_PAGE);
+  const _DATA = usePagination(filteredRecords, PER_PAGE);
+
+  const handleChange = (p) => {
+    setPage(p);
+    _DATA.jump(p);
+  };
+  //----------------------------------------------------------------
+
   return (
     <div>
-      <Button
-        align="center"
-        variant="contained"
-        onClick={() => window.open("currentSalary/create", "_self")}
-      >
-        Create New
-      </Button>
+      <div className="heading" align="center">
+        <h3>Currunt Salary Details - DirectFN Ltd.</h3>
+      </div>
+      <Pagination
+        count={count}
+        size="large"
+        page={page}
+        variant="outlined"
+        shape="rounded"
+        onChange={handleChange}
+      />
       <Grid container sx={{ p: 4 }}>
         <Grid
           item
@@ -51,7 +68,31 @@ export default function ViewCurruntSalaryTable() {
             mt: 2,
           }}
         >
-          <h3>Currunt Salary Of Employees</h3>
+          <Grid>
+            <div style={{ marginLeft: 10 }}>
+              <Button
+                align="center"
+                variant="contained"
+                onClick={() => window.open("currentSalary/create", "_self")}
+              >
+                Create New
+              </Button>
+              <input
+                type="text"
+                placeholder="Search by EmployeeID"
+                style={{
+                  marginLeft: 50,
+                  color: "primary",
+                  padding: 5,
+                  border: "2px solid #3f51b5",
+                  borderRadius: 5,
+                }}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </div>
+            <br />
+          </Grid>
+
           <TableContainer component={Paper}>
             <Table
               sx={{ minWidth: 650 }}
@@ -73,32 +114,33 @@ export default function ViewCurruntSalaryTable() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {curruntSalaryList.map((salary, key) => (
+                {/* {filteredRecords.map((record, idx) => ( */}
+                {_DATA.currentData().map((record, idx) => (
                   <TableRow
-                    key={key}
+                    key={idx}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
                     <TableCell component="th" scope="row">
-                      {salary.EmployeeID}
+                      {record.EmployeeID}
                     </TableCell>
 
-                    <TableCell align="right">{salary.BasicSalary}</TableCell>
+                    <TableCell align="right">{record.BasicSalary}</TableCell>
                     <TableCell align="right">
-                      {salary.VehicleAllowance}
+                      {record.VehicleAllowance}
                     </TableCell>
                     <TableCell align="right">
-                      {salary.InternetAllowance}
+                      {record.InternetAllowance}
                     </TableCell>
-                    <TableCell align="right">{salary.EmoloyeeEpf}</TableCell>
-                    <TableCell align="right">{salary.NetSalary}</TableCell>
-                    <TableCell align="right">{salary.CompanyEPF}</TableCell>
-                    <TableCell align="right">{salary.ETF}</TableCell>
+                    <TableCell align="right">{record.EmoloyeeEpf}</TableCell>
+                    <TableCell align="right">{record.NetSalary}</TableCell>
+                    <TableCell align="right">{record.CompanyEPF}</TableCell>
+                    <TableCell align="right">{record.ETF}</TableCell>
                     <TableCell align="right">
                       <Button
                         variant="contained"
                         onClick={() =>
                           window.open(
-                            `/salary/currentSalary/update/${salary.EmployeeID}`,
+                            `/salary/currentSalary/update/${record.EmployeeID}`,
                             "_self"
                           )
                         }
@@ -110,7 +152,7 @@ export default function ViewCurruntSalaryTable() {
                       <Button
                         variant="contained"
                         onClick={() => {
-                          deleteCurrentSalaryApi(salary.EmployeeID).then(() => {
+                          deleteCurrentSalaryApi(record.EmployeeID).then(() => {
                             window.location.reload();
                           });
                         }}

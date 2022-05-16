@@ -38,7 +38,7 @@ import ViewAllPapersDelete from "./Pages/PromotionModule/Paper/DisplayPaperAndDe
 import CreateNewPaper from "./Pages/PromotionModule/Paper/CreatePaper";
 import AllSubmissions from "./Pages/PromotionModule/AllSubmissions/AllSubmissions";
 import DisplayTeamMemberSubmissions from "./Pages/PromotionModule/Evaluations/TeamLead/DisplayTeamSubmissionsAndFeedback";
-
+import FindEmployeeSalary from "./Components/SalaryPaymentModule/EmployeeSalary/FindEmployeeSalary";
 function App() {
   const [open, setOpen] = useState(true);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
@@ -48,19 +48,31 @@ function App() {
   };
   const handleLogOut = () => {
     localStorage.clear();
-    window.location.replace("/")
-  }
+    window.location.replace("/");
+  };
 
   return (
     <Box sx={{ display: "flex", bgcolor: "rgba(231, 243, 238, 0.4)" }}>
       <CssBaseline />
       <BrowserRouter>
         {user && (
-          <SideBar open={open} toggleDrawer={toggleDrawer} user={user} handleLogOut={handleLogOut}/>
+          <SideBar
+            open={open}
+            toggleDrawer={toggleDrawer}
+            user={user}
+            handleLogOut={handleLogOut}
+          />
         )}
         <Grid container>
           <Grid item sm={12} md={12}>
-            {user && <NavBar open={open} user={user} toggleDrawer={toggleDrawer} handleLogOut={handleLogOut} />}
+            {user && (
+              <NavBar
+                open={open}
+                user={user}
+                toggleDrawer={toggleDrawer}
+                handleLogOut={handleLogOut}
+              />
+            )}
           </Grid>
           <Grid item sm={12} md={12}>
             <Routes>
@@ -69,7 +81,10 @@ function App() {
               {/* Reporter management */}
               <Route path="/dashboard" element={<DashBord />} />
               <Route path="/profile/update/" element={<EditEmployee />} />
-              <Route path="/dashboard/create" element={<CreateEmployeePage />} />
+              <Route
+                path="/dashboard/create"
+                element={<CreateEmployeePage />}
+              />
               <Route path="/teams" element={<TeamPage />} />
               <Route path="/teams/update/:id" element={<EditTeam />} />
               <Route path="/products" element={<ProductPage />} />
@@ -80,7 +95,6 @@ function App() {
               <Route path="/products/update/:id" element={<EditProduct />} />
               <Route path="progress" element={<ProgressBar />} />
               <Route path="tree" element={<CustomizedTeamView />} />
-              
 
               {/* Recruitment management */}
               <Route path="/candidate" element={<CreateCandidate />} />
@@ -112,6 +126,7 @@ function App() {
                 path="/salary/currentSalary/create"
                 element={<CreateCurruntSalary />}
               />
+
               <Route
                 path="/salary/currentSalary/update/:EmployeeID"
                 element={<UpdateCurruntSalary />}
@@ -124,6 +139,12 @@ function App() {
                 path="/salary/employeeSalary/:EmployeeID"
                 element={<ViewCurrentEmployeeSalary />}
               />
+
+              <Route
+                path="/salary/employeeSalary/:EmployeeID/previous"
+                element={<FindEmployeeSalary />}
+              />
+
               {/* Promotion management */}
               <Route
                 path="/promotion/Questions"

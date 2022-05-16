@@ -1,20 +1,19 @@
-// // import React from "react";
-// // import { createCurruntSalaryApi } from "../../../Api/SalaryPaymentModule/CurruntSalaryApi/createCurruntSalaryApi";
-
-// // export default function CreateCurruntSalary() {
-// //   return (
-// //     <div>
-// //       <h1>create Salary component</h1>
-// //     </div>
-// //   );
-// //}
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@mui/styles";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import { Button, Grid } from "@mui/material";
+import { Button, Grid, Alert, Stack } from "@mui/material";
+import FormControl from "@mui/material/FormControl";
+// import Select from "@mui/material/Select";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+
 import { createCurruntSalaryApi } from "../../../Api/SalaryPaymentModule/CurruntSalaryApi/createCurruntSalaryApi";
+import { viewCurruntSalaryApi } from "../../../Api/SalaryPaymentModule/CurruntSalaryApi/viewCurruntSalaryApi";
+import { viewAllEmployees } from "../../../Api/ReportersManagementModule/EmployeeApi";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,48 +28,87 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CreateCurruntSalary() {
   const classes = useStyles();
-  //const [employeeID, setEmployeeID] = useState("");
-  //   const [basicSalary, setBasicSalary] = useState("");
-  //   const [vehicleAllowance, setVehicleAllowance] = useState("");
-  //   const [internetAllowance, setInternetAllowance] = useState("");
-  //EmployeeID, BasicSalary, VehicleAllowance, InternetAllowance
+
   const [record, setRecord] = useState({
-    //use state react hook- updates data in textfield
     EmployeeID: "",
     BasicSalary: "",
     VehicleAllowance: "",
     InternetAllowance: "",
   });
-  //   const setData=(e)=>{
-  // if (value != null && value != "" && value != undefined){
-  //   setRecord({ ...record, EmployeeID: e.target.value });
-  // }
-  //   }
 
-  const CreateCurruntSalaryFunc = () => {
-    createCurruntSalaryApi(record).then((response) => {
-      console.log(response);
-    });
+  const [added, setadded] = useState(false);
+  const [notadded, setnotadded] = useState(false);
+  //const [isEmpty, setIsEmpty] = useState(false);
 
-    //install axios
-    // let obj = {
-    //   EmployeeID: "EE002",
-    //   BasicSalary: 100000,
-    //   VehicleAllowance: 5000,
-    //   InternetAllowance: 1000,
-    // };
-    // axios
-    //   .post("http://localhost:8070/salary/currentSalary/create", record)
-    //   .then((response) => {
-    //     console.log(response)}).error((err) => {
-    //       console.log(err);
-    //     });
-
-    // .then(() => {
-    //   window.location.reload(false); //do not need to refresh, auto realoads
-    // });
-    console.log(record);
+  const CreateCurruntSalaryFunc = async (e) => {
+    e.preventDefault();
+    // if (
+    //   record.EmployeeID == null ||
+    //   record.BasicSalary == null ||
+    //   record.InternetAllowance !== null ||
+    //   record.VehicleAllowance !== null
+    // ) {
+    //   setIsEmpty(true);
+    //   setTimeout(() => {
+    //     setIsEmpty(false);
+    //   }, 4000);
+    // } else
+    if (
+      record.EmployeeID !== null &&
+      record.BasicSalary !== null &&
+      record.InternetAllowance !== null &&
+      record.VehicleAllowance !== null
+    ) {
+      //createCurruntSalaryApi(record).then((response) => {
+      const response = await createCurruntSalaryApi(record);
+      if (response.success === true) {
+        record.EmployeeID = "";
+        record.BasicSalary = "";
+        record.VehicleAllowance = "";
+        record.InternetAllowance = "";
+        setadded(true);
+        setTimeout(() => {
+          setadded(false);
+        }, 4000);
+      }
+      if (response.success === false) {
+        setnotadded(true);
+        setTimeout(() => {
+          setnotadded(false);
+        }, 4000);
+      }
+    }
   };
+
+  const [curruntSalaryList, setCurruntSalaryList] = useState([]);
+  useEffect(() => {
+    async function fetchData() {
+      setCurruntSalaryList(await viewCurruntSalaryApi());
+    }
+    fetchData();
+  }, []);
+
+  const [profiles, setProfiles] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      setProfiles(await viewAllEmployees());
+    }
+    fetchData();
+  }, []);
+
+  //----------------------------------------------------------------
+  // const [open, setOpen] = useState(false);
+
+  // const handleClickOpen = () => {
+  //   setOpen(true);
+  // };
+
+  // const handleClose = () => {
+  //   setOpen(false);
+  // };
+
+  //----------------------------------------------------------------
 
   return (
     <Box>
@@ -86,9 +124,64 @@ export default function CreateCurruntSalary() {
         <div>
           <h3>Create current Salary</h3>
         </div>
-
         <form className={classes.root} noValidate autoComplete="off">
           <Grid>
+            <Table>
+              <TableHead>
+                <TableRow></TableRow>
+              </TableHead>
+              <TableBody>
+                <TableRow>
+                  <TableCell>Employee ID*</TableCell>
+                  <TableCell align="center">
+                    <FormControl>
+                      <select
+                        label="demo-simple-select-label"
+                        onChange={(event) => {
+                          setRecord({
+                            ...record,
+                            EmployeeID: event.target.value,
+                          });
+                        }}
+                      >
+                        {profiles.map((option, key) => (
+                          <option key={key} value={option.employeeID}>
+                            {option.employeeID}
+                          </option>
+                        ))}
+                      </select>
+                    </FormControl>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Employee ID*</TableCell>
+                  <TableCell align="center">
+                    <FormControl>
+                      <select
+                        label="demo-simple-select-label"
+                        onChange={(event) => {
+                          if (
+                            profiles.employeeID !== curruntSalaryList.EmployeeID
+                          ) {
+                            profiles.map((option, key) => (
+                              <option key={key} value={option.employeeID}>
+                                {option.employeeID}
+                              </option>
+                            ));
+                          }
+                          setRecord({
+                            ...record,
+                            EmployeeID: event.target.value,
+                          });
+                        }}
+                      ></select>
+                    </FormControl>
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </Grid>
+          {/* <Grid>
             <TextField
               label="Employee ID"
               variant="outlined"
@@ -98,31 +191,36 @@ export default function CreateCurruntSalary() {
                 setRecord({ ...record, EmployeeID: event.target.value });
               }}
             />
+          </Grid> */}
+          <Grid>
+            <TextField
+              id="outlined-basic"
+              label="BasicSalary"
+              variant="outlined"
+              required={true}
+              value={record.BasicSalary}
+              onChange={(event) => {
+                if (
+                  event.target.value !== null &&
+                  event.target.value !== undefined &&
+                  event.target.value !== "" &&
+                  !isNaN(event.target.value)
+                ) {
+                  setRecord({
+                    ...record,
+                    BasicSalary: parseInt(event.target.value),
+                  });
+                }
+              }}
+            />
           </Grid>
-          <TextField
-            id="outlined-basic"
-            label="BasicSalary"
-            variant="outlined"
-            value={record.BasicSalary}
-            onChange={(event) => {
-              if (
-                event.target.value != null &&
-                event.target.value !== undefined &&
-                event.target.value !== "" &&
-                !isNaN(event.target.value)
-              ) {
-                setRecord({
-                  ...record,
-                  BasicSalary: parseInt(event.target.value),
-                });
-              }
-            }}
-          />
           <Grid>
             <TextField
               id="outlined-basic"
               label="Vehicle Allowance"
               variant="outlined"
+              padding="45"
+              required={true}
               value={record.VehicleAllowance}
               onChange={(event) => {
                 if (
@@ -144,6 +242,7 @@ export default function CreateCurruntSalary() {
               id="outlined-basic"
               label="Internet Allowance"
               variant="outlined"
+              required={true}
               value={record.InternetAllowance}
               onChange={(event) => {
                 if (
@@ -160,6 +259,11 @@ export default function CreateCurruntSalary() {
               }}
             />
           </Grid>
+
+          <label style={{ color: "red", textAlign: "right", fontSize: 12 }}>
+            <em>*Required Filed</em>
+          </label>
+
           <Grid>
             <Button
               variant="contained"
@@ -171,6 +275,22 @@ export default function CreateCurruntSalary() {
             </Button>
           </Grid>
         </form>
+        <Grid>
+          {added ? (
+            <Stack sx={{ width: "100%" }} spacing={2}>
+              <Alert severity="success">
+                Currunt Salary record successfully added!
+              </Alert>{" "}
+            </Stack>
+          ) : null}
+          {notadded ? (
+            <Stack sx={{ width: "100%" }} spacing={2}>
+              <Alert severity="error">
+                Currunt Salary record not added! <strong>Try again</strong>
+              </Alert>{" "}
+            </Stack>
+          ) : null}
+        </Grid>
       </Grid>
     </Box>
   );

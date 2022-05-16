@@ -14,7 +14,7 @@ import {
   Chip,
 } from "@mui/material";
 import useStyles from "./CreateInterviewStyles";
-import { AddCircle,Edit } from "@mui/icons-material";
+import { AddCircle, Edit } from "@mui/icons-material";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import Stack from "@mui/material/Stack";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
@@ -38,10 +38,18 @@ const CreateInterviewForm = () => {
     InterviewTime: new Date(),
     Interviewers: [],
   });
+  const [interviewErrors, setInterviewErrors] = useState({
+    candidate: "",
+    InterviewType: "",
+    InterviewDate: "",
+    InterviewTime: "",
+    Interviewers: "",
+  });
   const [candidates, setCandidates] = useState([]);
   const [employees, setEmployees] = useState([]);
   const [interviewID, setInterviewID] = useState(null);
-  
+  let isError = false;
+
   const [openDialog, setOpenDialog] = useState(false);
 
   const location = useLocation();
@@ -68,22 +76,36 @@ const CreateInterviewForm = () => {
       setInterviewID(location.state.interview._id);
     }
   }, [location.state]);
+  const errorHandle = () => {
+    Object.keys(interview).map((property) => {
+      if (!interview[property] || interview[property].length === 0) {
+        interviewErrors[property] = "This field is required!";
+        isError = true;
+      }
+    });
+    if (
+      new Date(interview.InterviewDate).getTime() ==
+      new Date(interview.InterviewTime).getTime()
+    ) {
+      interviewErrors.InterviewDate = "Date has not selected!";
+      interviewErrors.InterviewTime = "Time has not selected!";
+    }
+    return isError;
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    var response = null;
-    if (interviewID) {
-       response = await updateInterview(interview, interviewID);
-      //if (response.success === true) setOpenSnackBar(true);
-    } else {
-       response = await createInterview(interview);
-      //if (response.success === true) setOpenSnackBar(true);
+    if (!errorHandle()) {
+      var response = null;
+      if (interviewID) {
+        response = await updateInterview(interview, interviewID);
+      } else {
+        response = await createInterview(interview, interviewErrors);
+      }
+      clearForm();
+      navigate("/interview", { state: response });
     }
-    clearForm();
-    
-    navigate("/interview", {state : response});
   };
-
   const clearForm = () => {
     setInterview({
       candidate: "",
@@ -97,6 +119,7 @@ const CreateInterviewForm = () => {
 
   const handleOnChange = (event) => {
     setInterview({ ...interview, [event.target.name]: event.target.value });
+    setInterviewErrors({ ...interviewErrors, [event.target.name]: "" });
   };
 
   const handleInterviewerClick = () => {
@@ -143,6 +166,8 @@ const CreateInterviewForm = () => {
                           variant="filled"
                           name="candidate"
                           select
+                          error={interviewErrors.candidate ? true : false}
+                          helperText={interviewErrors.candidate}
                           value={interview.candidate}
                           onChange={handleOnChange}
                           fullWidth
@@ -186,6 +211,8 @@ const CreateInterviewForm = () => {
                       <TextField
                         label="Select Interview Type"
                         select
+                        error={interviewErrors.InterviewType ? true : false}
+                        helperText={interviewErrors.InterviewType}
                         variant="filled"
                         name="InterviewType"
                         value={interview.InterviewType}
@@ -210,17 +237,30 @@ const CreateInterviewForm = () => {
                       md={8}
                       className={classes.interviewerIcons}
                     >
-                      <IconButton onClick={handleInterviewerClick}>
-                        <AddCircle fontSize="large" />
-                      </IconButton>
-                      <IconButton
-                        disabled={
-                          interview.Interviewers.length === 0 ? true : false
-                        }
-                        onClick={handleInterviewerClick}
-                      >
-                        <Edit fontSize="large" />
-                      </IconButton>
+                      <Grid container>
+                        <Grid item md={12}>
+                          <IconButton onClick={handleInterviewerClick}>
+                            <AddCircle fontSize="large" />
+                          </IconButton>
+                          <IconButton
+                            disabled={
+                              interview.Interviewers.length === 0 ? true : false
+                            }
+                            onClick={handleInterviewerClick}
+                          >
+                            <Edit fontSize="large" />
+                          </IconButton>
+                        </Grid>
+                        <Grid item md={12}>
+                          <Typography
+                            fontSize="0.75rem"
+                            sx={{ ml: 4, letterSpacing: "0.03333em" }}
+                            color="error"
+                          >
+                            {interviewErrors.Interviewers}
+                          </Typography>
+                        </Grid>
+                      </Grid>
 
                       <InterviewerDialog
                         setOpenDialog={setOpenDialog}
@@ -228,6 +268,7 @@ const CreateInterviewForm = () => {
                         setInterview={setInterview}
                         interview={interview}
                         employees={employees}
+                        setInterviewErrors={setInterviewErrors}
                       />
                     </Grid>
                   </Grid>
@@ -269,9 +310,20 @@ const CreateInterviewForm = () => {
                                 ...interview,
                                 InterviewDate: newValue,
                               });
+                              setInterviewErrors({
+                                ...interviewErrors,
+                                InterviewDate: "",
+                              });
                             }}
                             renderInput={(params) => (
-                              <TextField variant="filled" {...params} />
+                              <TextField
+                                variant="filled"
+                                {...params}
+                                error={
+                                  interviewErrors.InterviewDate ? true : false
+                                }
+                                helperText={interviewErrors.InterviewDate}
+                              />
                             )}
                           />
                         </Stack>
@@ -295,9 +347,20 @@ const CreateInterviewForm = () => {
                                 ...interview,
                                 InterviewTime: newValue,
                               });
+                              setInterviewErrors({
+                                ...interviewErrors,
+                                InterviewTime: "",
+                              });
                             }}
                             renderInput={(params) => (
-                              <TextField variant="filled" {...params} />
+                              <TextField
+                                variant="filled"
+                                {...params}
+                                error={
+                                  interviewErrors.InterviewTime ? true : false
+                                }
+                                helperText={interviewErrors.InterviewTime}
+                              />
                             )}
                           />
                         </Stack>
@@ -317,8 +380,6 @@ const CreateInterviewForm = () => {
                 </Button>
               </Grid>
             </form>
-
-           
           </Grid>
         </Grid>
       </Paper>

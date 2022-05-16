@@ -61,3 +61,13 @@ export const fetchCandidates = async () => {
     console.log(error);
   }
 };
+
+export const fetchRecentCandidates = async () => {
+  try {
+    const { data } = await api.fetchRecentCandidates();
+
+    return data.candidates;
+  } catch (error) {
+    console.log(error);
+  }
+};

@@ -9,26 +9,26 @@ const InterviewPageHead = () => {
 
   return (
     <Box className={classes.container}>
-      <Paper elevation={3} square sx={{ p: 2 }}>
+      
         <Grid container>
           <Grid md={6} item className={classes.header}>
-            <AppsIcon fontSize="large" sx={{ mr: 1 }} />
-            <Typography variant="h4" color="initial" fontWeight={500}>
-              Recent Interviews
+            <Typography variant="h5" >
+               Interviews List
             </Typography>
           </Grid>
           <Grid md={6} item className={classes.button}>
             <Button
+            
               component={Link}
               to={"/interview/create"}
               variant="contained"
-              color="secondary"
+              color="primary"
             >
               Create Interview
             </Button>
           </Grid>
         </Grid>
-      </Paper>
+     
     </Box>
   );
 };

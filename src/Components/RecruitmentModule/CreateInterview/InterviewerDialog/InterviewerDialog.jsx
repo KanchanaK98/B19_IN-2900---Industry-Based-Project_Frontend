@@ -22,6 +22,7 @@ const InterviewerDialog = ({
   setInterview,
   interview,
   employees,
+  setInterviewErrors,
 }) => {
   const [interviewers, setInterviewers] = useState([]);
 
@@ -32,6 +33,12 @@ const InterviewerDialog = ({
   const handleSave = () => {
     setInterview({ ...interview, Interviewers: interviewers });
     setOpenDialog(false);
+    if (interviewers.length !== 0) {
+      setInterviewErrors((prevState) => ({
+        ...prevState,
+        Interviewers: "",
+      }));
+    }
   };
 
   const handleDelete = (interviewer) => {

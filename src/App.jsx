@@ -52,7 +52,7 @@ function App() {
   };
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", bgcolor: "rgba(231, 243, 238, 0.4)" }}>
       <CssBaseline />
       <BrowserRouter>
         {user && (

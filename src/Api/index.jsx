@@ -9,12 +9,13 @@ export const searchCandidate = (NIC) =>
 export const updateCandidate = (candidateData, candidateId) =>
   API.put(`/recruitment/candidate/${candidateId}`, candidateData);
 export const fetchCandidates = () => API.get(`/recruitment/candidates`);
+export const fetchRecentCandidates = () =>
+  API.get(`/recruitment/candidates/recent`);
 
 // Interview API
 export const fetchEmployees = () => API.get(`/employee/`);
 export const createInterview = (interviewData) =>
   API.post(`/recruitment/interview/create`, interviewData);
-
 export const getInterviewList = (employeeID) =>
   API.get(`/recruitment/interview/${employeeID}`);
 export const updateInterview = (interview, interviewID) =>
@@ -105,7 +106,7 @@ export const allSubmissions = () =>
 export const displayTeamMemberSubmissions = (TeamLeadID) =>
   API.get(`/promotion//evaluation/allSubmissions/${TeamLeadID}`);
 export const evaluatePaper = (EmployeeID, PaperID) =>
-  API.patch(`/promotion/evaluation/evaluatePaper/${EmployeeID}/${PaperID}`);
+  API.patch(`/promotion/evaluation/evaluatePaper/${EmployeeID}/${PaperID}`); //check
 
 //employee api
 export const createEmployee = (employee) =>

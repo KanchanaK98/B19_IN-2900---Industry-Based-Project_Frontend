@@ -155,7 +155,6 @@ export default function Login({ setUser }) {
               id="outlined-adornment-password"
               type={values.showPassword ? 'text' : 'password'}
               value={values.password}
-              margin="normal"
               label="Password"
               onChange={handleChange('password')}
               endAdornment={

@@ -24,7 +24,7 @@ function CreateProduct() {
   const [teams, setTeams] = useState([]);
   //----------------------
 
-  // const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({});
   //------------------------------
   const handleChange = (e) => {
     setProducts((prevState) => ({
@@ -38,7 +38,7 @@ function CreateProduct() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    //  setErrors(createProductFormValidation(products))
+    // setErrors(createProductFormValidation(products))
     // sendRequest()
     createProduct(products)
       .then((res) => {})
@@ -75,7 +75,7 @@ function CreateProduct() {
   //   setErrors({ ...temp });
   //   return Object.products(temp).every((x) => x == "");
   // };
-
+//-------------------------------------------
   return (
     <div>
       <Box padding={1} sx={{mt:2}}>

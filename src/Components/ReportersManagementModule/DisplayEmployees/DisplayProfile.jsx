@@ -8,30 +8,40 @@ import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import ContactMailIcon from "@mui/icons-material/ContactMail";
 import CakeIcon from "@mui/icons-material/Cake";
 import PlaceIcon from "@mui/icons-material/Place";
+import { useEffect, useState } from "react";
+import { getAllTeams } from "../../../Api/ReportersManagementModule/TeamsApi";
 
 function DisplayProfile({ profile }) {
+  const [teams, setTeams] = useState();
   // const handleUpdate = () => {
   //   setUpdateEmployee(profile);
   //   setUpdateState(true);
   // };
   const {
-    employeeFirstName,
-    employeeLastName,
-    birthday,
-    streetNo,
-    city,
-    phoneNumber,
-    NIC,
-    companyEmail,
-    jobRole,
-    jobType,
-    lastSeen,
-    profilePic,
-    status,
-    teamID,
+    // employeeFirstName,
+    // employeeLastName,
+    // birthday,
+    // streetNo,
+    // city,
+    // phoneNumber,
+    // NIC,
+    // companyEmail,
+    // jobRole,
+    // jobType,
+    // lastSeen,
+    // profilePic,
+    // status,
+    // teamID,
+    user,
     EmployeeWithAcc,
     EmpWithProf,
   } = profile;
+  useEffect(() => {
+    async function fetchData() {
+      setTeams(await getAllTeams());
+    }
+    fetchData();
+  }, []);
   console.log(profile);
   // const classes = useStyles();
   return (
@@ -47,81 +57,101 @@ function DisplayProfile({ profile }) {
         }}
       >
         <Typography variant="h6" textAlign="center" sx={{ mb: 1 }}>
-          {employeeFirstName + " " + employeeLastName}
+          {user.employeeFirstName + " " + user.employeeLastName}
         </Typography>
         <Grid sx={{ justifyContent: "center", display: "flex" }}>
           <Avatar
             sx={{ width: 120, height: 120, border: "0.5px solid #1b529e" }}
-            src={profilePic}
-            alt={employeeFirstName + " " + employeeLastName}
+            src={user.profilePic}
+            alt={user.employeeFirstName + " " + user.employeeLastName}
           ></Avatar>
         </Grid>
+
         <ProgressBar
           EmployeeWithAcc={EmployeeWithAcc}
           EmpWithProf={EmpWithProf}
+          birthday={user.birthday}
+          streetNo={user.streetNo}
+          city={user.city}
+          phoneNumber={user.phoneNumber}
         />
+
         {/* <Typography>{moment("lastSeen", "YYYYMMDD").fromNow()}</Typography> */}
-        <Typography>{lastSeen}</Typography>
+        <Typography>{user.lastSeen}</Typography>
 
         <Divider sx={{ mt: 2, mb: 2 }}></Divider>
         <Grid>
-          <Typography>
-            <PlaceIcon />
-            &nbsp; {streetNo + "," + city}
-          </Typography>
-
-          <Typography>
-            <ContactPhoneIcon />
-            &nbsp; {phoneNumber}
-          </Typography>
+          {user.streetNo && (
+            <Typography>
+              <PlaceIcon />
+              &nbsp; {user.streetNo + " " + user.city}
+            </Typography>
+          )}
+          {user.phoneNumber && (
+            <Typography>
+              <ContactPhoneIcon />
+              &nbsp; {user.phoneNumber}
+            </Typography>
+          )}
           <Typography>
             <ContactMailIcon />
-            &nbsp;&nbsp;{companyEmail}
+            &nbsp;&nbsp;{user.companyEmail}
           </Typography>
           <Typography>
             <CakeIcon />
-            &nbsp; {new Date(birthday).toDateString()}
+            &nbsp; {new Date(user.birthday).toDateString()}
           </Typography>
           <Typography>
             <PermIdentityIcon />
-            &nbsp; {NIC}
+            &nbsp; {user.NIC}
           </Typography>
           <Divider sx={{ mt: 1, mb: 1 }}></Divider>
-          <Typography>Job Role : {jobRole}</Typography>
-          <Typography>Job Type : {jobType}</Typography>
-          <Typography>Status : {status}</Typography>
-          <Typography>Team : {teamID}</Typography>
+          <Typography>Job Role : {user.jobRole}</Typography>
+          <Typography>Job Type : {user.jobType}</Typography>
+          <Typography>Status : {user.status}</Typography>
+          {/* <Typography>Team : {user.teamID}</Typography> */}
+          {teams &&
+            teams.map((team) => {
+              if (team._id === user.teamID) {
+                return (
+                  <Typography textAlign="center" key={team._id}>
+                    {" "}
+                    {team.teamName}
+                  </Typography>
+                );
+              }
+            })}
           <Divider sx={{ mt: 2, mb: 2 }}></Divider>
         </Grid>
         <Typography>
           O/L Results :
-          {EmployeeWithAcc.length > 0 &&
-            EmployeeWithAcc[0].ordinaryLevelResult.map((result, i) => {
+          {EmployeeWithAcc &&
+            EmployeeWithAcc.ordinaryLevelResult.map((result, i) => {
               return (
                 <Typography component={"span"} key={i}>
-                  {result}
+                  {result + " "}
                 </Typography>
               );
             })}
         </Typography>
         <Typography>
           A/L Results :
-          {EmployeeWithAcc.length > 0 &&
-            EmployeeWithAcc[0].advancedLevelResults.map((result, i) => {
+          {EmployeeWithAcc &&
+            EmployeeWithAcc.advancedLevelResults.map((result, i) => {
               return (
                 <Typography component={"span"} key={i}>
-                  {result}
+                  {result + " "}
                 </Typography>
               );
             })}
         </Typography>
         <Typography>
           Achievements :
-          {EmployeeWithAcc.length > 0 &&
-            EmployeeWithAcc[0].achievements.map((result, i) => {
+          {EmployeeWithAcc &&
+            EmployeeWithAcc.achievements.map((result, i) => {
               return (
                 <Typography component={"span"} key={i}>
-                  {result}
+                  {result + " "}
                 </Typography>
               );
             })}
@@ -129,33 +159,33 @@ function DisplayProfile({ profile }) {
         <Divider sx={{ mt: 2, mb: 2 }}></Divider>
         <Typography>
           Degree :
-          {EmpWithProf.length > 0 &&
-            EmpWithProf[0].degree.map((result, i) => {
+          {EmpWithProf &&
+            EmpWithProf.degree.map((result, i) => {
               return (
                 <Typography component={"span"} key={i}>
-                  {result}
+                  {result + " "}
                 </Typography>
               );
             })}
         </Typography>
         <Typography>
           Courses :
-          {EmpWithProf.length > 0 &&
-            EmpWithProf[0].course.map((result, i) => {
+          {EmpWithProf &&
+            EmpWithProf.course.map((result, i) => {
               return (
                 <Typography component={"span"} key={i}>
-                  {result}
+                  {result + " "}
                 </Typography>
               );
             })}
         </Typography>
         <Typography>
           Languages :
-          {EmpWithProf.length > 0 &&
-            EmpWithProf[0].language.map((result, i) => {
+          {EmpWithProf &&
+            EmpWithProf.language.map((result, i) => {
               return (
                 <Typography component={"span"} key={i}>
-                  {result}
+                  {result + " "}
                 </Typography>
               );
             })}

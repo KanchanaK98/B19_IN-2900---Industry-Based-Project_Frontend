@@ -13,6 +13,7 @@ function OrganizationStructure() {
     }
     fetchData();
   }, []);
+  console.log("djnjf");
   console.log(profiles);
   const classes = useStyles();
   return (
@@ -26,24 +27,29 @@ function OrganizationStructure() {
           Organization Structure
         </Typography>
         <Paper className={classes.paper}>
-          <Typography className={classes.levelRole}  variant="h6">CTO</Typography>
+          <Typography className={classes.levelRole} variant="h6">
+            CTO
+          </Typography>
           <Divider sx={{ mt: 2, mb: 2 }}></Divider>
           <Grid container>
             {profiles &&
               profiles.map((employee) => {
-                if (employee.jobRole === "CTO") {
+                if (employee.user.jobRole === "CTO") {
                   return (
                     <Grid
                       item
                       md={3}
                       className={classes.levelGrid}
-                      key={employee._id}
+                      key={employee.user._id}
                     >
                       <Typography component="span">
-                        <Avatar className={classes.avatar} src={employee.profilePic} />
-                        {employee.employeeFirstName +
+                        <Avatar
+                          className={classes.avatar}
+                          src={employee.user.profilePic}
+                        />
+                        {employee.user.employeeFirstName +
                           " " +
-                          employee.employeeLastName}
+                          employee.user.employeeLastName}
                       </Typography>
                     </Grid>
                   );
@@ -52,26 +58,29 @@ function OrganizationStructure() {
           </Grid>
         </Paper>
         <Paper className={classes.paper}>
-          <Typography className={classes.levelRole}  variant="h6">
+          <Typography className={classes.levelRole} variant="h6">
             Senior Software Engineer
           </Typography>
           <Divider sx={{ mt: 2, mb: 2 }}></Divider>
           <Grid container>
             {profiles &&
               profiles.map((employee) => {
-                if (employee.jobRole === "SSE") {
+                if (employee.user.jobRole === "SSE") {
                   return (
                     <Grid
                       item
                       md={3}
                       className={classes.levelGrid}
-                      key={employee._id}
+                      key={employee.user._id}
                     >
                       <Typography component="span">
-                        <Avatar className={classes.avatar}  src={employee.profilePic} />
-                        {employee.employeeFirstName +
+                        <Avatar
+                          className={classes.avatar}
+                          src={employee.user.profilePic}
+                        />
+                        {employee.user.employeeFirstName +
                           " " +
-                          employee.employeeLastName}
+                          employee.user.employeeLastName}
                       </Typography>
                     </Grid>
                   );
@@ -80,26 +89,29 @@ function OrganizationStructure() {
           </Grid>
         </Paper>
         <Paper className={classes.paper}>
-          <Typography className={classes.levelRole}  variant="h6">
+          <Typography className={classes.levelRole} variant="h6">
             Software Engineer
           </Typography>
           <Divider sx={{ mt: 2, mb: 2 }}></Divider>
           <Grid container>
             {profiles &&
               profiles.map((employee) => {
-                if (employee.jobRole === "SE") {
+                if (employee.user.jobRole === "software engineer") {
                   return (
                     <Grid
                       item
                       md={3}
                       className={classes.levelGrid}
-                      key={employee._id}
+                      key={employee.user._id}
                     >
                       <Typography component="span">
-                        <Avatar className={classes.avatar} src={employee.profilePic} />
-                        {employee.employeeFirstName +
+                        <Avatar
+                          className={classes.avatar}
+                          src={employee.user.profilePic}
+                        />
+                        {employee.user.employeeFirstName +
                           " " +
-                          employee.employeeLastName}
+                          employee.user.employeeLastName}
                       </Typography>
                     </Grid>
                   );
@@ -108,24 +120,60 @@ function OrganizationStructure() {
           </Grid>
         </Paper>
         <Paper className={classes.paper}>
-          <Typography className={classes.levelRole}  variant="h6">HR Employee</Typography>
+          <Typography className={classes.levelRole} variant="h6">
+            HR Employee
+          </Typography>
           <Divider sx={{ mt: 2, mb: 2 }}></Divider>
           <Grid container>
             {profiles &&
               profiles.map((employee) => {
-                if (employee.jobRole === "HR") {
+                if (employee.user.jobRole === "HR") {
                   return (
                     <Grid
                       item
                       md={3}
                       className={classes.levelGrid}
-                      key={employee._id}
+                      key={employee.user._id}
                     >
                       <Typography component="span">
-                        <Avatar className={classes.avatar} src={employee.profilePic} />
-                        {employee.employeeFirstName +
+                        <Avatar
+                          className={classes.avatar}
+                          src={employee.user.profilePic}
+                        />
+                        {employee.user.employeeFirstName +
                           " " +
-                          employee.employeeLastName}
+                          employee.user.employeeLastName}
+                      </Typography>
+                    </Grid>
+                  );
+                }
+              })}
+          </Grid>
+        </Paper>
+        <Paper className={classes.paper}>
+          <Typography className={classes.levelRole} variant="h6">
+            UI/UX Designer
+          </Typography>
+          <Divider sx={{ mt: 2, mb: 2 }}></Divider>
+          <Grid container>
+            {profiles &&
+              profiles.map((employee) => {
+                if (employee.user.jobRole === "UI/UX designer") {
+                  return (
+                    <Grid
+                      item
+                      md={3}
+                      className={classes.levelGrid}
+                      key={employee.user._id}
+                    >
+                      <Typography component="span">
+                        <Avatar
+                          className={classes.avatar}
+                          src={employee.user.profilePic}
+                        />
+                        {employee.user.employeeFirstName +
+                          " " +
+                          employee.user.employeeLastName}
                       </Typography>
                     </Grid>
                   );

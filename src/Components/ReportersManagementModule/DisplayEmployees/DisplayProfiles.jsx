@@ -27,10 +27,10 @@ function DisplayProfiles() {
         
       >
         {profiles &&
-          profiles.map((prof) => {
+          profiles.map((prof,i) => {
             return (
               <div className="profile" key={prof._id} component="span">
-                <Grid item xs={12} sm={6} md={4} component="span" >
+                <Grid item xs={12} sm={6} md={4} component="span" key={i}>
                   <DisplayProfile profile={prof} />
                 </Grid>
               </div>

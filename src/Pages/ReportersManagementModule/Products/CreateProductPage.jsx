@@ -1,24 +1,23 @@
 import { Grid, Box } from "@mui/material";
 import React from "react";
-import Drawer from '@mui/material/Drawer';
 import ProductCountUp from "../../../Components/ReportersManagementModule/CountUps/CountUpStack";
 import CreateProduct from "../../../Components/ReportersManagementModule/ProductCreate/CreateProduct";
+import CustomizedTeamView from "../../../Components/ReportersManagementModule/CustomizedTemView/CustomizedTeamView";
 
 function CreateProductPage() {
   return (
     <div>
       <Grid container>
-      <Grid item md={9}>
-        <Box padding={3}>
-        
+        <Grid item md={8}>
+          <Box padding={2}>
             <ProductCountUp />
             <CreateProduct />
-        
-        </Box>
+          </Box>
         </Grid>
-        <Grid item md={3}>
-       
-
+        <Grid item md={4}>
+          <Box padding={2} sx={{mt:4}}>
+            <CustomizedTeamView />
+          </Box>
         </Grid>
       </Grid>
     </div>

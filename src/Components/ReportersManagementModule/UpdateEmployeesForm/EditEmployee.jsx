@@ -51,6 +51,7 @@ function EditEmployee() {
     language: profile.EmpWithProf ? profile.EmpWithProf.language : " ",
     course: profile.EmpWithProf ? profile.EmpWithProf.course : " ",
   });
+
   const handleChange = (e) => {
     setInputs((prevState) => ({
       ...prevState,

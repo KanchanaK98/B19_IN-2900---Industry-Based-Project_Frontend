@@ -24,6 +24,7 @@ import AssetInsertion from "./Components/AssetManagementModule/AssetInsertion";
 import RequestLeaves from "./Pages/LeaveManagementModule/RequestLeaves/RequestLeaves";
 import CreateUpdateInterview from "./Pages/RecruitmentModule/Interviews/CreateUpdateInterview/CreateUpdateInterview";
 import LeaveHistory from "./Pages/LeaveManagementModule/RequestLeaves/LeaveHistory";
+import RequestedLeaveList from "./Pages/LeaveManagementModule/RequestedLeavesTeamLead/RequestedLeaveList";
 import StartInterview from "./Pages/RecruitmentModule/StartInterview/StartInterview";
 import CustomizedTeamView from "./Components/ReportersManagementModule/CustomizedTemView/CustomizedTeamView";
 import ViewCurruntSalary from "./Pages/SalaryPaymentModule/CurruntSalary/ViewCurruntSalary";
@@ -39,6 +40,7 @@ import AllSubmissions from "./Pages/PromotionModule/AllSubmissions/AllSubmission
 import DisplayTeamMemberSubmissions from "./Pages/PromotionModule/Evaluations/TeamLead/DisplayTeamSubmissionsAndFeedback";
 import JobRoleDialogBox from "./Components/ReportersManagementModule/CreateEmployeeForm/JobRoleDialogBox";
 
+import FindEmployeeSalary from "./Components/SalaryPaymentModule/EmployeeSalary/FindEmployeeSalary";
 function App() {
   const [open, setOpen] = useState(true);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
@@ -48,19 +50,31 @@ function App() {
   };
   const handleLogOut = () => {
     localStorage.clear();
-    window.location.replace("/")
-  }
+    window.location.replace("/");
+  };
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", bgcolor: "rgba(231, 243, 238, 0.4)" }}>
       <CssBaseline />
       <BrowserRouter>
         {user && (
-          <SideBar open={open} toggleDrawer={toggleDrawer} user={user} handleLogOut={handleLogOut}/>
+          <SideBar
+            open={open}
+            toggleDrawer={toggleDrawer}
+            user={user}
+            handleLogOut={handleLogOut}
+          />
         )}
         <Grid container>
           <Grid item sm={12} md={12}>
-            {user && <NavBar open={open} user={user} toggleDrawer={toggleDrawer} handleLogOut={handleLogOut} />}
+            {user && (
+              <NavBar
+                open={open}
+                user={user}
+                toggleDrawer={toggleDrawer}
+                handleLogOut={handleLogOut}
+              />
+            )}
           </Grid>
           <Grid item sm={12} md={12}>
             <Routes>
@@ -69,7 +83,10 @@ function App() {
               {/* Reporter management */}
               <Route path="/dashboard" element={<DashBord />} />
               <Route path="/profile/update/" element={<EditEmployee />} />
-              <Route path="/dashboard/create" element={<CreateEmployeePage />} />
+              <Route
+                path="/dashboard/create"
+                element={<CreateEmployeePage />}
+              />
               <Route path="/teams" element={<TeamPage />} />
               <Route path="/teams/update/:id" element={<EditTeam />} />
               <Route path="/products" element={<ProductPage />} />
@@ -100,6 +117,9 @@ function App() {
               {/* Leave management */}
               <Route path="/requestLeave" element={<RequestLeaves />} />
               <Route path="/leaveHistory" element={<LeaveHistory />} />
+              <Route path="/requestedLeaves" element={<RequestedLeaveList />} />
+
+
               {/* Payrolls management */}
               <Route
                 path="/salary/currentSalary"
@@ -109,6 +129,7 @@ function App() {
                 path="/salary/currentSalary/create"
                 element={<CreateCurruntSalary />}
               />
+
               <Route
                 path="/salary/currentSalary/update/:EmployeeID"
                 element={<UpdateCurruntSalary />}
@@ -121,6 +142,12 @@ function App() {
                 path="/salary/employeeSalary/:EmployeeID"
                 element={<ViewCurrentEmployeeSalary />}
               />
+
+              <Route
+                path="/salary/employeeSalary/:EmployeeID/previous"
+                element={<FindEmployeeSalary />}
+              />
+
               {/* Promotion management */}
               <Route
                 path="/promotion/Questions"

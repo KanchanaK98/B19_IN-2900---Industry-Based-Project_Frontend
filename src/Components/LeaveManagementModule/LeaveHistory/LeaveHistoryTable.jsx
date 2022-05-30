@@ -10,20 +10,19 @@ import { getLeaveHistory } from "../../../Api/LeaveManagementModule/LeaveApi";
 
 import ViewMoreDialog from "./ViewDetailDialog";
 
-
-
 const LeaveHistoryTable = () => {
   const [leaveHistory, setLeaveHistory] = useState([]);
   const [open, setOpen] = React.useState(false);
   const [leave, setLeave] = React.useState(null);
-
+  const [cancel, setCancel] = useState(false);
   const handleClickOpen = (leave) => {
-    setLeave(leave)
+    setLeave(leave);
     setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
+    setCancel(false);
   };
   const fetchData = async () => {
     setLeaveHistory(await getLeaveHistory("E002"));
@@ -59,19 +58,28 @@ const LeaveHistoryTable = () => {
                 <TableCell>{leave.leaveHistory.leaveMethod}</TableCell>
                 <TableCell>{leave.leaveHistory.status}</TableCell>
                 <TableCell>
-                  <Button color="secondary" variant="contained" onClick={() => handleClickOpen(leave)}>
+                  <Button
+                    color="secondary"
+                    variant="contained"
+                    onClick={() => handleClickOpen(leave)}
+                  >
                     View Details
                   </Button>
                 </TableCell>
-
-               
               </TableRow>
             ))}
         </TableBody>
       </Table>
       {leave && (
-        <ViewMoreDialog open={open} handleClose={handleClose}leaveHistory={leaveHistory} setLeaveHistory={setLeaveHistory} leave={leave}/>
-
+        <ViewMoreDialog
+          open={open}
+          handleClose={handleClose}
+          leaveHistory={leaveHistory}
+          setLeaveHistory={setLeaveHistory}
+          leave={leave}
+          setCancel={setCancel}
+          cancel={cancel}
+        />
       )}
 
       {/* <TablePagination

@@ -15,15 +15,16 @@ import {  Close } from "@mui/icons-material";
 import useStyles from "./ViewDetailDialogStyles";
 import { cancelLeave } from "../../../Api/LeaveManagementModule/LeaveApi";
 
-const ViewMoreDialog = ({ open, handleClose, leave, leaveHistory, setLeaveHistory }) => {
+const ViewMoreDialog = ({ open, handleClose, leave, leaveHistory, setLeaveHistory,setCancel,cancel }) => {
   const classes = useStyles();
   const [reason, setReason] = useState();
-  const [cancel, setCancel] = useState(false);
-  
+ // const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+
   const handleSubmit = async()=> {
-   const response = await cancelLeave(reason, leave.leaveHistory._id, 'E002');
+  // const response =
+   await cancelLeave(reason, leave.leaveHistory._id, 'E002');
    setReason("")
-   setLeaveHistory(leaveHistory.filter((lev) => lev != leave))
+   setLeaveHistory(leaveHistory.filter((lev) => lev !== leave))
    handleClose();
   }
   return (
@@ -51,23 +52,23 @@ const ViewMoreDialog = ({ open, handleClose, leave, leaveHistory, setLeaveHistor
 
         <Grid container>
           <Grid item md={12} className={classes.content}>
-            <Typography>Leave type: </Typography>
+            <Typography sx={{mr : 2}}>Leave type: </Typography>
             <Typography>{leave.leaveHistory.leaveType}</Typography>
           </Grid>
           <Grid item md={12} className={classes.content}>
-            <Typography>Start date: </Typography>
+            <Typography sx={{mr : 2}}>Start date: </Typography>
             <Typography>
               {new Date(leave.leaveHistory.startDate).toDateString()}
             </Typography>
           </Grid>
           <Grid item md={12} className={classes.content}>
-            <Typography>End Date: </Typography>
+            <Typography sx={{mr : 2}}>End Date: </Typography>
             <Typography>
               {new Date(leave.leaveHistory.endDate).toDateString()}
             </Typography>
           </Grid>
           <Grid item md={12} className={classes.content}>
-            <Typography>Reason: </Typography>
+            <Typography sx={{mr : 2}}>Reason: </Typography>
             <Typography>{leave.leaveHistory.reason}</Typography>
           </Grid>
           <Grid item md={12} className={classes.content}></Grid>
@@ -93,7 +94,7 @@ const ViewMoreDialog = ({ open, handleClose, leave, leaveHistory, setLeaveHistor
         )}
         {
           cancel && (
-            <Button disabled={reason ? false: true} sx={{ mt: 2, mr: 3, mb: 2 }} variant="contained" color="success" onClick={handleSubmit}>
+            <Button disabled={reason ? false: true} sx={{ mt: 2, mr: 3, mb: 2 }} variant="contained" color="success" onClick={handleSubmit} >
             Submit
           </Button>
           )

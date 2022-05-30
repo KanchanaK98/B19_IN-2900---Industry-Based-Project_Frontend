@@ -9,12 +9,13 @@ export const searchCandidate = (NIC) =>
 export const updateCandidate = (candidateData, candidateId) =>
   API.put(`/recruitment/candidate/${candidateId}`, candidateData);
 export const fetchCandidates = () => API.get(`/recruitment/candidates`);
+export const fetchRecentCandidates = () =>
+  API.get(`/recruitment/candidates/recent`);
 
 // Interview API
 export const fetchEmployees = () => API.get(`/employee/`);
 export const createInterview = (interviewData) =>
   API.post(`/recruitment/interview/create`, interviewData);
-
 export const getInterviewList = (employeeID) =>
   API.get(`/recruitment/interview/${employeeID}`);
 export const updateInterview = (interview, interviewID) =>
@@ -50,21 +51,28 @@ export const createCurrentSalarySheet = (newCurruntSalarySheet) =>
   API.post("/salary/currentSalary/create", newCurruntSalarySheet);
 export const findCurrentSalarySheet = (EmployeeID) =>
   API.get(`/salary/currentSalary/${EmployeeID}`);
-export const updateCurrentSalarySheet = (updatedData, EmployeeID) =>
-  API.patch(`/salary/currentSalary/update/${EmployeeID}`, updatedData);
+// export const updateCurrentSalarySheet = (updatedData, EmployeeID) =>
+//   API.patch(`/salary/currentSalary/update/${EmployeeID}`, updatedData);
+export const updateCurrentSalarySheet = (updatedData) =>
+  API.patch(
+    `/salary/currentSalary/update/${updatedData.EmployeeID}`,
+    updatedData
+  );
 export const deleteCurrentSalarySheet = (EmployeeID) =>
   API.delete(`/salary/currentSalary/delete/${EmployeeID}`);
 
 //Summary salary payment API
 export const viewSummarySalarySheet = () => API.get("/salary/summarySalary");
 export const findSummarySalarySheetByEid = (EmployeeID) =>
-  API.get(`/salary/${EmployeeID}`);
+  API.get(`/salary/${EmployeeID}`); //
 
 //Employee salary sheet API
 export const viewCurrentEmployeeSalarySheet = (EmployeeID) =>
   API.get(`/salary/employeeSalary/${EmployeeID}`);
 export const findEmployeeSalarySheetByMonth = (EmployeeID, Month) =>
-  API.get(`/salary/employeeSalary/${EmployeeID}/${Month}`);
+  API.get(`/salary/employeeSalary/${EmployeeID}/${Month}`); //
+export const findEmployeeSalarySheet = (EmployeeID) =>
+  API.get(`/salary/employeeSalary/${EmployeeID}/previous`);
 
 //Questions API
 export const viewAllQuestions = () => API.get("/promotion/Questions/");
@@ -74,13 +82,13 @@ export const createQuestions = (newQuestion) =>
 //Paper API
 export const viewAllPapersList = () => API.get("/promotion/Paper");
 export const createPaper = (newPaper) =>
-  API.post("/promotion/Paper/createPaper", newPaper); //check
+  API.post("/promotion/Paper/createPaper", newPaper);
 export const addMoreQuestions = (PaperID, [Questions]) =>
-  API.get(`/promotion/Paper/addMoreQuestions/${PaperID}`, [Questions]); //check
+  API.patch(`/promotion/Paper/addMoreQuestions/${PaperID}`, [Questions]);
 export const updatePaperDetails = (PaperID, updatedData) =>
-  API.get(`/promotion/Paper/updatePaperDetails/${PaperID}`, updatedData); //check
+  API.patch(`/promotion/Paper/updatePaperDetails/${PaperID}`, updatedData);
 export const deletePaper = (PaperID) =>
-  API.get(`/promotion/Paper/delete/${PaperID}`); //check
+  API.delete(`/promotion/Paper/delete/${PaperID}`);
 
 // employee's paper API
 export const displayPaper = (EmployeeID) =>
@@ -88,7 +96,7 @@ export const displayPaper = (EmployeeID) =>
 
 //ratings  for employee API
 export const submitPaper = (EmployeeID) =>
-  API.post(`/promotion/submitPaper/${EmployeeID}`); //check
+  API.post(`/promotion/submitPaper/${EmployeeID}`);
 export const displayFeedback = (EmployeeID) =>
   API.get(`/promotion/evaluation/mySubmissions/${EmployeeID}`);
 
@@ -99,16 +107,6 @@ export const displayTeamMemberSubmissions = (TeamLeadID) =>
   API.get(`/promotion//evaluation/allSubmissions/${TeamLeadID}`);
 export const evaluatePaper = (EmployeeID, PaperID) =>
   API.patch(`/promotion/evaluation/evaluatePaper/${EmployeeID}/${PaperID}`); //check
-
-export const requestLeave = (leaveDetail) =>
-  API.post("/leave/request", leaveDetail);
-export const getLeaveList = (employeeId) => API.get("/leave/" + employeeId);
-export const cancelLeave = (id, reason, employeeId) =>
-  API.post(`/leave/cancel/${id}`, { reason, employeeId });
-export const getRequestedleave = (employeeId) =>
-  API.get("/leave/requestedLeave/" + employeeId);
-export const responseRequestedLeave = (id) =>
-  API.post("/leave/requestedLeave/response/" + id);
 
 //employee api
 export const createEmployee = (employee) =>
@@ -153,8 +151,19 @@ export const updateProduct = (updateProdData, id) => {
   API.put(`/employee/updateProduct/${id}`, updateProdData);
 };
 
-export const viewPProducts=(viewproduct)=>{
+export const viewPProducts = (viewproduct) => {
   return API.get(`/employee/viewProducts`);
-}
+};
+
+// leave API
 export const getLeaveBalance = (employeeID) =>
   API.get(`/leave/leaveBalance/${employeeID}`);
+export const requestLeave = (leaveDetail) =>
+  API.post("/leave/request", leaveDetail);
+export const getLeaveList = (employeeId) => API.get("/leave/" + employeeId);
+export const cancelLeave = (id, reason, employeeId) =>
+  API.post(`/leave/cancel/${id}`, { reason, employeeId });
+export const getRequestedLeave = (employeeId) =>
+  API.get("/leave/requestedLeave/" + employeeId);
+export const responseRequestedLeave = (id) =>
+  API.post("/leave/requestedLeave/response/" + id);

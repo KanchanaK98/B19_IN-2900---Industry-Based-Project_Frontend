@@ -25,42 +25,31 @@ function EditEmployee() {
   // console.log({ profile: profile, mes: "hi" });
   // const id = useParams().empID;
   const [inputs, setInputs] = useState({
-    employeeID: String(profile.employeeID),
-    employeeFirstName: String(profile.employeeFirstName),
-    employeeLastName: String(profile.employeeLastName),
-    streetNo: String(profile.streetNo),
-    phoneNumber: String(profile.phoneNumber),
-    companyEmail: String(profile.companyEmail),
-    profilePic: String(profile.profilePic),
-    NIC: String(profile.NIC),
-    city: String(profile.city),
-    birthday: new Date(profile.birthday),
+    employeeID: profile.user.employeeID,
+    employeeFirstName: profile.user.employeeFirstName,
+    employeeLastName: profile.user.employeeLastName,
+    streetNo: profile.user.streetNo ? profile.user.streetNo : "",
+    phoneNumber: profile.user.phoneNumber ? profile.user.phoneNumber : "",
+    companyEmail: profile.user.companyEmail,
+    profilePic: profile.user.profilePic,
+    NIC: profile.user.NIC ? profile.user.NIC : "",
+    city: profile.user.city ? profile.user.city : "",
+    birthday: new Date(profile.user.birthday)
+      ? new Date(profile.user.birthday)
+      : "",
     //-------------------------------------------------------------
-    ordinaryLevelResult: String(
-      profile.EmployeeWithAcc.length > 0
-        ? profile.EmployeeWithAcc[0].ordinaryLevelResult
-        : " "
-    ),
-
-    advancedLevelResults: String(
-      profile.EmployeeWithAcc.length > 0
-        ? profile.EmployeeWithAcc[0].advancedLevelResults
-        : " "
-    ),
-    achievements: String(
-      profile.EmployeeWithAcc.length > 0
-        ? profile.EmployeeWithAcc[0].achievements
-        : " "
-    ),
-    degree: String(
-      profile.EmpWithProf.length > 0 ? profile.EmpWithProf[0].degree : " "
-    ),
-    language: String(
-      profile.EmpWithProf.length > 0 ? profile.EmpWithProf[0].language : " "
-    ),
-    course: String(
-      profile.EmpWithProf.length > 0 ? profile.EmpWithProf[0].course : " "
-    ),
+    ordinaryLevelResult: profile.EmployeeWithAcc
+      ? profile.EmployeeWithAcc.ordinaryLevelResult
+      : " ",
+    advancedLevelResults: profile.EmployeeWithAcc
+      ? profile.EmployeeWithAcc.advancedLevelResults
+      : " ",
+    achievements: profile.EmployeeWithAcc
+      ? profile.EmployeeWithAcc.achievements
+      : " ",
+    degree: profile.EmpWithProf ? profile.EmpWithProf.degree : " ",
+    language: profile.EmpWithProf ? profile.EmpWithProf.language : " ",
+    course: profile.EmpWithProf ? profile.EmpWithProf.course : " ",
   });
   const handleChange = (e) => {
     setInputs((prevState) => ({

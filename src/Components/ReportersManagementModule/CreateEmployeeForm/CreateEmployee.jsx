@@ -9,7 +9,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import Paper from "@mui/material/Paper";
 import { createEmployee } from "../../../Api/ReportersManagementModule/EmployeeApi";
 import { Typography } from "@mui/material";
-
+import JobRoleDialogBox from './JobRoleDialogBox.jsx'
 function CreateEmployee() {
   const [inputs, setInputs] = useState({
     employeeID: "",
@@ -161,7 +161,7 @@ function CreateEmployee() {
                     </FormLabel>
                   </Grid>
                   <Grid item xs={6} md={9}>
-                    <TextField
+                    {/* <TextField
                       id="filled-basic"
                       label="Filled"
                       variant="filled"
@@ -169,7 +169,8 @@ function CreateEmployee() {
                       value={inputs.jobRole}
                       onChange={handleChange}
                       fullWidth
-                    />
+                    /> */}
+                    <JobRoleDialogBox/>
                   </Grid>
                 </Grid>
               </Grid>

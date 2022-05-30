@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useState, useEffect } from "react";
 import {
   Box,
   Grid,
@@ -18,8 +18,9 @@ import CakeIcon from "@mui/icons-material/Cake";
 import LinearProgress, {
   linearProgressClasses,
 } from "@mui/material/LinearProgress";
-
+import { Link } from "react-router-dom";
 import PlaceIcon from "@mui/icons-material/Place";
+import { viewAllEmployees } from "../../../Api/ReportersManagementModule/EmployeeApi";
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 10,
@@ -34,6 +35,35 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   },
 }));
 function UserProfile({ user }) {
+  const [profiles, setProfiles] = useState([]);
+  const [employee, setEmployee] = useState([]);
+  //const filterEmployee=setEmployee(profiles.filter((emp)=>(emp.employeeID===user.employeeID)))
+  //console.log(filterEmployee)
+
+  // useEffect(() => {
+  // setEmployee(profiles.filter((emp) => emp.employeeID === user.employeeID));
+  // profiles.map((emp) => {
+  //   if (emp.employeeID === user.employeeID) {
+  //     // setEmployee(emp);
+  //     console.log(emp.employeeFirstName)
+
+  //   }
+  // });
+  // }, []);
+
+  useEffect(() => {
+    let userInfo = [];
+    async function fetchData() {
+      userInfo = await viewAllEmployees();
+      setProfiles(userInfo);
+      setEmployee(
+        userInfo.filter((emp) => emp.user.employeeID === user.employeeID)
+      );
+      // const{empInfo:user,EmpWithProf:EmpWithProf,EmployeeWithAcc}=employee;
+    }
+    fetchData();
+  }, []);
+  console.log(employee);
   return (
     <div>
       <Box sx={{ width: "100%", backgroundColor: "#d7dde0", padding: 5 }}>
@@ -41,15 +71,23 @@ function UserProfile({ user }) {
           <Grid item xs={4}>
             <Grid container>
               <Grid item xs={3} textAlign="left">
-                <Button variant="contained" sx={{ backgroundColor: "#183d78" }}>
+                {/* <Link to="/profile/update"> */}
+                <Button
+                // component={Link}
+                // to={`/profile/update`}
+                // state={{ user }}
+                variant="contained"
+                sx={{ backgroundColor: "#183d78" }}
+                >
                   <EditIcon />
                   Edit
                 </Button>
+                {/* </Link> */}
               </Grid>
               <Grid item xs={3}>
                 <Avatar
                   alt="Remy Sharp"
-                  src=""
+                  src={user.profilePic}
                   sx={{
                     width: 150,
                     height: 150,
@@ -68,23 +106,26 @@ function UserProfile({ user }) {
 
               <Typography>
                 <PlaceIcon />
-                &nbsp;127/A/3, Benet Gunasekara Rd, Blabowa, Dewalapola
+                &nbsp;{user.streetNo + ", " + user.city}
               </Typography>
               <Typography sx={{ color: "blue" }}>
                 <ContactMailIcon />
-                &nbsp;&nbsp;nimaashamadhushani@gmail.com
+                &nbsp;&nbsp;{user.companyEmail}
               </Typography>
               <Typography>
                 <ContactPhoneIcon />
-                &nbsp;&nbsp;076 3768795
+                &nbsp;&nbsp;{user.phoneNumber}
               </Typography>
               <Typography>
                 <CakeIcon />
-                &nbsp;1998/05/15
+                &nbsp;{user.birthday}
               </Typography>
               <Divider sx={{ mt: 1, mb: 1 }}></Divider>
 
-              <Typography> White Colar | Permenent</Typography>
+              <Typography>
+                {" "}
+                {user.jobType} | {user.status}
+              </Typography>
             </Card>
           </Grid>
 
@@ -93,7 +134,8 @@ function UserProfile({ user }) {
               variant="h4"
               sx={{ mb: 2, fontWeight: "bold", color: "#183d78" }}
             >
-              Nimasha Madhushani | Software Engineer
+              {user.employeeFirstName + " " + user.employeeLastName}|{" "}
+              {user.jobRole}
             </Typography>
             <Card sx={{ padding: 3 }}>
               <Typography variant="h6" sx={{ color: "#708bb8" }}>
@@ -104,24 +146,33 @@ function UserProfile({ user }) {
               <Grid container spacing={2} columns={12}>
                 <Grid item xs={4}>
                   <Typography sx={{ fontWeight: "bold", color: "#9da1a6" }}>
-                    Degrees
-                  </Typography>
-                  <Divider sx={{ mt: 1, mb: 1 }}></Divider>
-                  <Typography>fffff</Typography>
-                </Grid>
-                <Grid item xs={4}>
-                  <Typography sx={{ fontWeight: "bold", color: "#9da1a6" }}>
                     Courses
                   </Typography>
                   <Divider sx={{ mt: 1, mb: 1 }}></Divider>
-                  <Typography>fffff</Typography>
+                  {employee.length > 0 &&
+                    employee[0].EmpWithProf.course.map((result, i) => {
+                      return <Typography key={i}>{result}</Typography>;
+                    })}
+                </Grid>
+                <Grid item xs={4}>
+                  <Typography sx={{ fontWeight: "bold", color: "#9da1a6" }}>
+                    Degrees
+                  </Typography>
+                  <Divider sx={{ mt: 1, mb: 1 }}></Divider>
+                  {employee.length > 0 &&
+                    employee[0].EmpWithProf.degree.map((result, i) => {
+                      return <Typography key={i}>{result}</Typography>;
+                    })}
                 </Grid>
                 <Grid item xs={4}>
                   <Typography sx={{ fontWeight: "bold", color: "#9da1a6" }}>
                     Languages
                   </Typography>
                   <Divider sx={{ mt: 1, mb: 1 }}></Divider>
-                  <Typography>fffff</Typography>
+                  {employee.length > 0 &&
+                    employee[0].EmpWithProf.language.map((result, i) => {
+                      return <Typography key={i}>{result}</Typography>;
+                    })}
                 </Grid>
               </Grid>
             </Card>
@@ -137,21 +188,36 @@ function UserProfile({ user }) {
                     O/L Results
                   </Typography>
                   <Divider sx={{ mt: 1, mb: 1 }}></Divider>
-                  <Typography>fffff</Typography>
+                  {employee.length > 0 &&
+                    employee[0].EmployeeWithAcc.ordinaryLevelResult.map(
+                      (result, i) => {
+                        return <Typography key={i}>{result}</Typography>;
+                      }
+                    )}
                 </Grid>
                 <Grid item xs={4}>
                   <Typography sx={{ fontWeight: "bold", color: "#9da1a6" }}>
                     A/L Results
                   </Typography>
                   <Divider sx={{ mt: 1, mb: 1 }}></Divider>
-                  <Typography>fffff</Typography>
+                  {employee.length > 0 &&
+                    employee[0].EmployeeWithAcc.advancedLevelResults.map(
+                      (result, i) => {
+                        return <Typography key={i}>{result}</Typography>;
+                      }
+                    )}
                 </Grid>
                 <Grid item xs={4}>
                   <Typography sx={{ fontWeight: "bold", color: "#9da1a6" }}>
                     Achievments
                   </Typography>
                   <Divider sx={{ mt: 1, mb: 1 }}></Divider>
-                  <Typography>fffff</Typography>
+                  {employee.length > 0 &&
+                    employee[0].EmployeeWithAcc.achievements.map(
+                      (result, i) => {
+                        return <Typography key={i}>{result}</Typography>;
+                      }
+                    )}
                 </Grid>
               </Grid>
             </Card>

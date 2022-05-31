@@ -20,8 +20,11 @@ import {
   createTeams,
   getEmployeesWithoutTeam,
 } from "../../../Api/ReportersManagementModule/TeamsApi";
+import SnackBar from "../../SnackBar/SnackBar";
 
 function CreateTeams() {
+  const [openSnackBar, setOpenSnackBar] = useState(false);
+
   const [teaminputs, setTeaminputs] = useState({
     teamName: "",
     teamLead: {},
@@ -39,12 +42,13 @@ function CreateTeams() {
       setMembers(members.filter((mem) => mem !== e.target.value));
     }
   };
+  let flag=false;
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log(teaminputs);
     createTeams(teaminputs);
-
+ flag=true;
     setTeaminputs({
       teamName: "",
       teamLead: {},
@@ -56,14 +60,7 @@ function CreateTeams() {
 
   const [members, setMembers] = useState([]);
 
-  // const handleAddMembers = async () => {
-  //   return await axios
-  //     .get("http://localhost:8070/employee/get")
-  //     .then((res) => res.data.data)
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
+
   useEffect(() => {
     async function fetchData() {
       setMembers(await getEmployeesWithoutTeam());
@@ -75,15 +72,16 @@ function CreateTeams() {
   //     mem.fullName = mem.employeeFirstName + " " + mem.employeeLastName;
   //   });
   // }
-  console.log(members);
-  //----------------------------------------------------
-  //----------------------------------------------------
 
   const [openDialog, setOpenDialog] = useState(false);
   const handleOpenDialog = () => {
     setOpenDialog(true);
   };
   //add snackbar-------------------------
+  const handleCloseSnackBar = () => {
+    setOpenSnackBar(false);
+  };
+
 
   //----------------------------------------
   return (
@@ -230,6 +228,17 @@ function CreateTeams() {
               Save New Team
             </Button>
           </Grid>
+  
+       {/* <SnackBar
+       handleCloseSnackBar={handleCloseSnackBar}
+       openSnackBar={openSnackBar}
+       message={
+         flag
+           ? "Team successfully created"
+           : "Team connot be created"
+       }
+     /> */}
+  
         </Paper>
       </Box>
     </div>

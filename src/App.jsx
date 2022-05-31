@@ -38,6 +38,8 @@ import ViewAllPapersDelete from "./Pages/PromotionModule/Paper/DisplayPaperAndDe
 import CreateNewPaper from "./Pages/PromotionModule/Paper/CreatePaper";
 import AllSubmissions from "./Pages/PromotionModule/AllSubmissions/AllSubmissions";
 import DisplayTeamMemberSubmissions from "./Pages/PromotionModule/Evaluations/TeamLead/DisplayTeamSubmissionsAndFeedback";
+import JobRoleDialogBox from "./Components/ReportersManagementModule/CreateEmployeeForm/JobRoleDialogBox";
+
 import FindEmployeeSalary from "./Components/SalaryPaymentModule/EmployeeSalary/FindEmployeeSalary";
 function App() {
   const [open, setOpen] = useState(true);
@@ -95,6 +97,7 @@ function App() {
               <Route path="/products/update/:id" element={<EditProduct />} />
               <Route path="progress" element={<ProgressBar />} />
               <Route path="tree" element={<CustomizedTeamView />} />
+              <Route path="job" element={<JobRoleDialogBox/>}/>
 
               {/* Recruitment management */}
               <Route path="/candidate" element={<CreateCandidate />} />

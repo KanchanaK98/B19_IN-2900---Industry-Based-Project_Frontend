@@ -18,40 +18,51 @@ function DashBord() {
   };
   return (
     <div>
-     <Box padding={4}>
-     <Grid item sm={12} md={12} sx={{ mb: 5 }}>
-        <Link to="/dashboard/create">
-          <Button type="button" variant="contained" startIcon={<AddBoxIcon />}>
-            CAREATE NEW EMPLOYEE
-          </Button>
-        </Link>
-      </Grid>
-      <Grid item sm={12} md={12}>
-        <Box sx={{ width: "100%", typography: "body1" }}>
-          <TabContext value={value}>
-            <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-              <TabList
-                onChange={handleChange}
-                aria-label="lab API tabs example"
-              >
-                  <Tab label="ORGANIZATION STRUCTURE" value="1" />
-                <Tab label="ALL EMPLOYEES" value="2" />
-                <Tab label="RECENT EMPLOYEE SECTION" value="3" />
-              </TabList>
-            </Box>
-            <TabPanel value="1" sx={{ mt: 3}}>
-            <OrganizationStructure/>
-            </TabPanel>
-            <TabPanel value="2" sx={{ mt: 3}}>
-              <DisplayProfiles />
-            </TabPanel>
-            <TabPanel value="3" sx={{ mt: 7 }}>
-              <AllRecentEmployees />
-            </TabPanel>
-          </TabContext>
-        </Box>
-      </Grid>
-     </Box>
+      <Box padding={4}>
+        <Grid item sm={12} md={12} sx={{ mb: 5 }}>
+          <Link to="/dashboard/create">
+            <Button
+              type="button"
+              variant="contained"
+              startIcon={<AddBoxIcon />}
+            >
+              CAREATE NEW EMPLOYEE
+            </Button>
+          </Link>
+        </Grid>
+        <Grid item sm={12} md={12}>
+          <Box sx={{ width: "100%", typography: "body1" }}>
+            <TabContext value={value}>
+              <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+                <TabList
+                  onChange={handleChange}
+                  aria-label="lab API tabs example"
+                >
+                  <Tab label="RECENT EMPLOYEE SECTION" value="1" />
+                  <Tab label="ALL EMPLOYEES" value="2" />
+                  <Tab label="ORGANIZATION STRUCTURE" value="3" />
+                </TabList>
+              </Box>
+              <TabPanel value="1" sx={{ mt: 7 }}>
+                <Box>
+                  <Grid container>
+                    <Grid item md={8}></Grid>
+                    <Grid item md={4}>
+                      <AllRecentEmployees />
+                    </Grid>
+                  </Grid>
+                </Box>
+              </TabPanel>
+              <TabPanel value="2" sx={{ mt: 3 }}>
+                <DisplayProfiles />
+              </TabPanel>
+              <TabPanel value="3" sx={{ mt: 3 }}>
+                <OrganizationStructure />
+              </TabPanel>
+            </TabContext>
+          </Box>
+        </Grid>
+      </Box>
     </div>
   );
 }

@@ -6,14 +6,20 @@ export const fetchEmployees = async () => {
     let employees = [];
     await Promise.all(
       data.data.map(async (employee) => {
-        const { employeeID, employeeFirstName, employeeLastName, NIC } =
-          employee;
-        employee = {
-          employeeID: employeeID,
+        const {
+          employeeID,
+          employeeFirstName,
+          employeeLastName,
+          NIC,
+          profilePic,
+        } = employee;
+
+        employees.push({
+          employeeID,
           employeeName: employeeFirstName + " " + employeeLastName,
-          NIC: NIC,
-        };
-        employees.push(employee);
+          NIC,
+          profilePic,
+        });
       })
     );
     //console.log(employees);
@@ -32,19 +38,20 @@ export const createInterview = async (interview) => {
       InterviewTime,
       Interviewers,
     } = interview;
-    let interviewers = [];
-    await Promise.all(
-      Interviewers.map((interviewer) => (
-        interviewers.push({ id: interviewer.employeeID })
-      ))
+    // let interviewers = [];
+    // await Promise.all(
+    //   Interviewers.map((interviewer) => (
+    //     interviewers.push({ id: interviewer.employeeID })
+    //   ))
 
-    )
+    // )
     const interviewData = {
       candidateID: candidate._id,
       InterviewType: InterviewType,
       InterviewDate: InterviewDate.toDateString(),
       InterviewTime: InterviewTime.toTimeString(),
-      InterviewerID: interviewers,
+      Interviewers,
+      //: interviewers,
     };
     console.log(interviewData);
     const response = await api.createInterview(interviewData);
@@ -63,7 +70,6 @@ export const getInterviewList = async (employeeID) => {
   }
 };
 
-
 export const updateInterview = async (interview, interviewID) => {
   try {
     console.log(interviewID);
@@ -76,11 +82,10 @@ export const updateInterview = async (interview, interviewID) => {
     } = interview;
     let interviewers = [];
     await Promise.all(
-      Interviewers.map((interviewer) => (
+      Interviewers.map((interviewer) =>
         interviewers.push({ id: interviewer.employeeID })
-      ))
-
-    )
+      )
+    );
     const interviewData = {
       candidateID,
       InterviewType: InterviewType,
@@ -89,19 +94,18 @@ export const updateInterview = async (interview, interviewID) => {
       InterviewerID: interviewers,
     };
     //console.log(interviewData);
-     const { data } = await api.updateInterview(interviewData, interviewID);
-     
-     return data;
+    const { data } = await api.updateInterview(interviewData, interviewID);
+
+    return data;
   } catch (error) {
     console.log(error);
   }
 };
 
-
 export const cancelInterview = async (interviewID) => {
   try {
     const { data } = await api.cancelInterview(interviewID);
-     return data;
+    return data;
   } catch (error) {
     console.log(error);
   }
@@ -109,8 +113,17 @@ export const cancelInterview = async (interviewID) => {
 
 export const markedCandidate = async (marks, interviewID) => {
   try {
-    const {data} = await api.markedCandidate(marks, interviewID);
-     return data;
+    const { data } = await api.markedCandidate(marks, interviewID);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getInterviewStats = async (employeeID) => {
+  try {
+    const { data } = await api.getInterviewStats(employeeID);
+    return data.InterviewStats;
   } catch (error) {
     console.log(error);
   }

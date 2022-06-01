@@ -25,6 +25,10 @@ export const cancelInterview = (interviewID) =>
 export const markedCandidate = (marks, interviewID) => {
   return API.put(`/recruitment/interview/start/${interviewID}`, marks);
 };
+export const getInterviewStats = (employeeID) => {
+  return API.get(`/recruitment/interview/InterviewStats/${employeeID}`);
+};
+
 // LogIn API
 export const userLogin = (user) => API.post("/login", user);
 

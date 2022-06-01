@@ -4,6 +4,7 @@ import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 import Modal from './AssignModel';
 import AssetUpdateModule from './AssetUpdateModule';
+import AssetAssignModel from './AssetAssignModel';
 import { availableAssetsApi,unavailableAssetsApi,allAssets,modelViewApi,unassignAsset,releaseFaultAsset, createFaultAsset, assignAssets, searchAssetCategory } from '../../Api/AssetManagementModule/assetViewApi';
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -59,9 +60,10 @@ const  ViewAsset = () => {
         }
     }
 
-    const showModal = () =>
+    const showModal = async (id) =>
     {
-        
+        const response = await modelViewApi(id);
+        setEachAsset(response);
         setShow(true);
     }
     const hideModal = () =>
@@ -149,28 +151,15 @@ const  ViewAsset = () => {
     }
     
 
-    const sendData = async (e) =>
+    const assignAssetFunction = async (id) =>
     {
-        e.preventDefault();
-        const employee = {empID}
-        const response = await assignAssets(assignAsset,employee);
-        if(response.success === true)
-        {
-            setShow(false);
-            const index = assets.findIndex((assets)=>assets._id===assignAsset)
-            const newAssets = [...assets]
-            newAssets[index].status="Non-Available";
-            setAssets(newAssets)
-            setNumber({available:--number.available,nonAvailable:++number.nonAvailable,fault:number.fault})
-        }else
-        {
-            seterror(true);
-            setTimeout(() => {
-                seterror(false);
-            }, 2000);
-        }
+        setShow(false);
+        const index = assets.findIndex((assets)=>assets._id===id)
+        const newAssets = [...assets]
+        newAssets[index].status="Non-Available";
+        setAssets(newAssets)
+        setNumber({available:--number.available,nonAvailable:++number.nonAvailable,fault:number.fault})
        
-        setEmployee("")
     }
     const searchCategoryBar = async (category) =>
     {
@@ -201,122 +190,6 @@ const  ViewAsset = () => {
     }
     const classes = useStyles();
     return (
-        // <div >
-        
-        // <div className='container' >
-        // {/* dropdown must have scripts and link files to  work properly. there are in index.html file  */}
-        // <div style={{ display:"flex",flexDirection:'row',justifyContent:"space-between" }}>
-        //     <div className="dropdown" style={{ marginTop:5}}>
-        //         <button className="btn btn-secondary dropdown-toggle"  type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-        //         Status
-        //         </button>
-        //         <div className="dropdown-menu" labelled="dropdownMenu2">
-        //         <button className="dropdown-item" type="button" onClick={()=>{handleSearch("Available")}}>Available</button>
-        //         <button className="dropdown-item" type="button" onClick={()=>{handleSearch("Non-Available")}}>Non-Available</button>
-        //         <button className="dropdown-item" type="button" onClick={()=>{handleSearch("All")}}>All</button>
-        //         </div>
-        //     </div>
-        //     <div className="dropdown" style={{ marginTop:5 }}>
-        //         <button className="btn btn-secondary dropdown-toggle"  type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-        //         Category
-        //         </button>
-        //         <div className="dropdown-menu" labelled="dropdownMenu2">
-        //         <button className="dropdown-item" type="button" onClick={()=>{searchCategoryBar("Laptop")}}>Laptop</button>
-        //         <button className="dropdown-item" type="button" onClick={()=>{searchCategoryBar("Mobile")}}>Mobile</button>
-        //         <button className="dropdown-item" type="button" onClick={()=>{searchCategoryBar("Tablet")}}>Tablet</button>
-        //         <button className="dropdown-item" type="button" onClick={()=>{searchCategoryBar("Keyboard")}}>Keyboard</button>
-        //         <button className="dropdown-item" type="button" onClick={()=>{searchCategoryBar("Router")}}>Router</button>
-        //         <button className="dropdown-item" type="button" onClick={()=>{searchCategoryBar("UPS")}}>UPS</button>
-        //         <button className="dropdown-item" type="button" onClick={()=>{searchCategoryBar("Printer")}}>Printer</button>
-        //         <button className="dropdown-item" type="button" onClick={()=>{searchCategoryBar("Monitor")}}>Monitor</button>
-        //         <button className="dropdown-item" type="button" onClick={()=>{searchCategoryBar("Headphone")}}>Headphone</button>
-        //         </div>
-        //     </div>
-        // </div><br/>
-        // {error?(<Stack sx={{ width: '100%' }} spacing={2}><Alert variant="filled" severity="error">
-        //                     Something was wrong! 
-        //     </Alert></Stack>):null}
-        
-        
-        
-        //         <table className="table table-striped">
-        //             <thead>
-        //                 <tr>
-        //                 <th scope="col">Asset ID</th>
-        //                 <th scope="col">Category</th>
-        //                 <th scope="col">Model</th>
-        //                 <th scope="col">Serial Number</th>
-        //                 <th scope="col">Status</th>
-        //                 <th scope="col">Action</th>
-        //                 </tr>
-        //             </thead>
-        //             {assets.map(asset=>
-                    
-        //             <tbody key={asset._id} style={{ color:"white" }}>
-        //                 {/* <tr style={asset.status==='Fault'?{backgroundColor:'red'}:{backgroundColor:'blue'}}> */}
-        //                 <tr style={asset.status==='Fault'?{background: "linear-gradient(#f54242, #f56f42)"}:{background: "linear-gradient(#7242f5, #426ff5)"}}>
-                        
-        //                 <th scope="row" style={rowStyle}>{asset.assetID}</th>
-        //                 <td style={rowStyle}>{asset.assetCategory}</td>
-        //                 <td style={rowStyle}>{asset.model}</td>
-        //                 <td style={rowStyle}>{asset.serialNumber}</td>
-        //                 <td style={rowStyle}>{asset.status}</td>
-        //                 {asset.status === 'Available'?
-        //                     (<td>
-        //                         <button className='btn btn-primary announce' onClick={()=>{showModal();setAssignAsset(asset._id);}}>Assign</button>
-        //                         <button className='btn btn-danger' onClick={()=>createFault(asset._id)} style={{ marginLeft:"5px" }}>Fault</button>
-        //                         <button className='btn btn-success' onClick={()=>{ShowModalView(asset._id)}} style={{ marginLeft:"5px" }}>Update</button>
-        //                     </td>)
-
-        //                     :asset.status === 'Fault'?
-        //                     (<td>
-        //                         <button className='btn btn-danger' onClick={()=>releaseFault(asset._id)}>Release Fault</button>
-        //                         <button className='btn btn-success' onClick={()=>{ShowModalView(asset._id)}} style={{ marginLeft:"5px" }}>Update</button>
-        //                     </td>):
-        //                     (<td>
-        //                         <button className='btn btn-primary announce' onClick={()=>unassign(asset._id)}>Un-Assign</button>
-        //                         <button className='btn btn-danger' onClick={()=>createFault(asset._id)} style={{ marginLeft:"5px" }}>Fault</button>
-        //                         <button className='btn btn-success' onClick={()=>{ShowModalView(asset._id)}} style={{ marginLeft:"5px" }}>Update</button>
-        //                     </td>)
-        //                 }
-                        
-        //                 </tr>
-                    
-        //             </tbody>
-                    
-        //             )}
-        //         </table>
-        //     {/* modal for assign asset */}
-            
-        //     <Modal show={show} handleClose={hideModal}>
-        //     <div className='container'>
-            
-        //     <form id="form" onSubmit={sendData}>
-        //         <div className="form-group">
-        //             <label htmlFor ="email">Employee ID</label>
-        //             <input type="text" className="form-control" id="empID" placeholder="Enter Employee ID" value={empID} onChange={(e)=>{setEmployee(e.target.value)}}/>
-        //         </div><br/>
-                
-                
-        //         <button type="submit" className="btn btn-primary">Assign</button>
-        //     </form>
-
-        //     </div>
-        //     </Modal> 
-
-        //     {/* modal end 
-
-
-        //     {/* modal for update asset */}
-        //     { show2===true?(<AssetUpdateModule data={eachAsset} show={true} handleClose={hideModalView} updateFun={updateAssetFunction}/>):null }
-
-        //     {/* <Modal show={show2} handleClose={hideModalView}>
-
-
-        //     </Modal> */}
-            
-        // </div>
-        // </div> 
         <>
         <AssetViewStats countAvailable={number.available} countNonAvailable={number.nonAvailable} countFault={number.fault}/>    
         <Paper elevation={6} className={classes.paper}>
@@ -400,7 +273,7 @@ const  ViewAsset = () => {
                 
                 {asset.status === 'Available'?
                            (<TableCell align="center">
-                               <button className='btn btn-primary announce' onClick={()=>{showModal();setAssignAsset(asset._id);}}>Assign</button>
+                               <button className='btn btn-primary announce' onClick={()=>{showModal(asset._id);setAssignAsset(asset._id);}}>Assign</button>
                                 <button className='btn btn-danger' onClick={()=>createFault(asset._id)} style={{ marginLeft:"5px" }}>Fault</button>
                                 <button className='btn btn-success' onClick={()=>{ShowModalView(asset._id)}} style={{ marginLeft:"5px" }}>Update</button>
                                 </TableCell>)
@@ -423,30 +296,11 @@ const  ViewAsset = () => {
             ))}
         </TableBody>
       </Table>
-           {/* modal for assign asset */}
-            
-                 <Modal show={show} handleClose={hideModal}>
-                 <div className='container'>
-                
-                 <form id="form" onSubmit={sendData}>
-                     <div className="form-group">
-                         <label htmlFor ="email">Employee ID</label>
-                         <input type="text" className="form-control" id="empID" placeholder="Enter Employee ID" value={empID} onChange={(e)=>{setEmployee(e.target.value)}}/>
-                     </div><br/>
-                    
-                    
-                     <button type="submit" className="btn btn-primary">Assign</button>
-                 </form>
-    
-                 </div>
-                 </Modal> 
-    
-                {/* modal end 
-    
     
                  {/* modal for update asset */}
                  { show2===true?(<AssetUpdateModule data={eachAsset} show={true} handleClose={hideModalView} updateFun={updateAssetFunction}/>):null }
-    
+                {/* modal for assign asset */}
+                 { show===true?(<AssetAssignModel data={eachAsset} show={true} handleClose={hideModal} assignFun={assignAssetFunction}/>):null }
     </Paper>
     </>           
         

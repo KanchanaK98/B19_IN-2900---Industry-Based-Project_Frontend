@@ -7,7 +7,7 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     borderRadius: theme.spacing(4),
-    padding: theme.spacing(1, 0, 2, 2),
+    padding: theme.spacing(1, 2, 2, 2),
   },
   candidate: {
     marginTop: theme.spacing(2),
@@ -26,12 +26,13 @@ const useStyles = makeStyles((theme) => ({
   },
   status: {
     display: "flex",
-    justifyContent: "flex-end",
+    justifyContent: "flex-start",
     alignItems: "center",
-    "& .MuiTypography-body" : {
-        fontFamily: "Rubik",
-        color: "rgba(30, 171, 0, 0.8)"
-    }
+    padding: theme.spacing(0)
+    // "& .MuiTypography-body" : {
+    //     fontFamily: "Rubik",
+    //     color: "rgba(30, 171, 0, 0.8)"
+    // }
   },
 }));
 

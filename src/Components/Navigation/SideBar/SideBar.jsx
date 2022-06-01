@@ -86,7 +86,7 @@ const SideBar = ({ open, toggleDrawer, user, handleLogOut }) => {
               Welcome !
             </Typography>
             <Typography color={"white"} variant="caption">
-              {user.employeeFirstName + " " + user.employeeFirstName}
+              {user.employeeFirstName + " " + user.employeeLastName}
             </Typography>
           </Grid>
         </Grid>

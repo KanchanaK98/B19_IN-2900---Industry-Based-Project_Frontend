@@ -25,7 +25,6 @@ const InterviewerDialog = ({
   setInterviewErrors,
 }) => {
   const [interviewers, setInterviewers] = useState([]);
-
   useEffect(() => {
     if (interview.Interviewers) setInterviewers(interview.Interviewers);
   }, [interview.Interviewers]);
@@ -118,9 +117,10 @@ const InterviewerDialog = ({
                   }}
                 >
                   <Grid item>
-                    <Avatar sx={{ height: 35, width: 35 }}>
-                      {employee.employeeName[0].toUpperCase()}
-                    </Avatar>
+                    <Avatar
+                      src={employee.profilePic}
+                      sx={{ height: 35, width: 35 }}
+                    />
                   </Grid>
                   <Grid item>
                     <Typography sx={{ mb: -0.7, ml: 1 }}>

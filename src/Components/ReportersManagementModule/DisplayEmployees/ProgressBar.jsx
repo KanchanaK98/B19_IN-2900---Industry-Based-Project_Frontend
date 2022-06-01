@@ -16,50 +16,63 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   },
 }));
 
-function ProgressBar({ EmpWithProf, EmployeeWithAcc }) {
+function ProgressBar({
+  EmpWithProf,
+  EmployeeWithAcc,
+  birthday,
+  streetNo,
+  city,
+  phoneNumber,
+}) {
+  // let acadamicQual=EmployeeWithAcc[0];
+
   let count = 0,
     percentage = 0;
-  if (
-    EmployeeWithAcc[0].advancedLevelResults[0] === null ||
-    EmployeeWithAcc[0].advancedLevelResults[0] === " " ||
-    EmployeeWithAcc[0].advancedLevelResults[0] === ""
-  ) {
-    count++;
+  if (EmployeeWithAcc) {
+    if (
+      EmployeeWithAcc.advancedLevelResults[0] === null ||
+      EmployeeWithAcc.advancedLevelResults[0] === " " ||
+      EmployeeWithAcc.advancedLevelResults[0] === ""
+    ) {
+      count++;
+    }
+    if (
+      EmployeeWithAcc.ordinaryLevelResult[0] == null ||
+      EmployeeWithAcc.ordinaryLevelResult[0] === " " ||
+      EmployeeWithAcc.ordinaryLevelResult[0] === ""
+    ) {
+      count++;
+    }
+    if (
+      EmployeeWithAcc.achievements[0] === null ||
+      EmployeeWithAcc.achievements[0] === " " ||
+      EmployeeWithAcc.achievements[0] === ""
+    ) {
+      count++;
+    }
   }
-  if (
-    EmployeeWithAcc[0].ordinaryLevelResult[0] == null ||
-    EmployeeWithAcc[0].ordinaryLevelResult[0] === " " ||
-    EmployeeWithAcc[0].ordinaryLevelResult[0] === ""
-  ) {
-    count++;
-  }
-  if (
-    EmployeeWithAcc[0].achievements[0] === null ||
-    EmployeeWithAcc[0].achievements[0] === " " ||
-    EmployeeWithAcc[0].achievements[0] === ""
-  ) {
-    count++;
-  }
-  if (
-    EmpWithProf[0].language[0] === null ||
-    EmpWithProf[0].language[0] === " " ||
-    EmpWithProf[0].language[0] === ""
-  ) {
-    count++;
-  }
-  if (
-    EmpWithProf[0].degree[0] === null ||
-    EmpWithProf[0].degree[0] === " " ||
-    EmpWithProf[0].degree[0] === ""
-  ) {
-    count++;
-  }
-  if (
-    EmpWithProf[0].course[0] === null ||
-    EmpWithProf[0].course[0] === " " ||
-    EmpWithProf[0].course[0] === ""
-  ) {
-    count++;
+  if (EmpWithProf) {
+    if (
+      EmpWithProf.language[0] === null ||
+      EmpWithProf.language[0] === " " ||
+      EmpWithProf.language[0] === ""
+    ) {
+      count++;
+    }
+    if (
+      EmpWithProf.degree[0] === null ||
+      EmpWithProf.degree[0] === " " ||
+      EmpWithProf.degree[0] === ""
+    ) {
+      count++;
+    }
+    if (
+      EmpWithProf.course[0] === null ||
+      EmpWithProf.course[0] === " " ||
+      EmpWithProf.course[0] === ""
+    ) {
+      count++;
+    }
   }
   switch (count) {
     case 1: {

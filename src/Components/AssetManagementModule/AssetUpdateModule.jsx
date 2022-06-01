@@ -179,6 +179,7 @@ export default function AssetUpdateModule({handleClose,data,show,updateFun}) {
                                 id="demo-simple-select-helper"
                                 value={status}
                                 label="Status"
+                                disabled
                                 onChange={(e)=>{setStatus(e.target.value)}}
                                 >
                                 <MenuItem value="">

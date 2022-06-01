@@ -20,12 +20,15 @@ import Select from '@mui/material/Select';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import { updateAssets } from '../../Api/AssetManagementModule/assetViewApi';
+import { assignAssets } from '../../Api/AssetManagementModule/assetViewApi';
 
-export default function AssetUpdateModule({handleClose,data,show,updateFun}) {
+export default function AssetAssignModel({handleClose,data,show,assignFun}) {
     const [assetID, setAssetID] = useState(data.assetID);
+    const [assignAsset, setAssignAsset] =useState(data._id);
     const [assetCategory, setAssetCategory] = useState(data.assetCategory);
     const [model, setModel] = useState(data.model);
     const [serialNumber, setSerialNumber] = useState(data.serialNumber);
+    const [empID, setEmpID] = useState("")
     const [status, setStatus] = useState(data.status);
     const [error, seterror] = useState(false);
     const [added, setadded] = useState(false);
@@ -33,23 +36,24 @@ export default function AssetUpdateModule({handleClose,data,show,updateFun}) {
  
     const open = show ? true : false;
 
-    const updateAsset = async (e) =>
+    const assignation = async (e) =>
     {
+        
         e.preventDefault();
-        const asset = {assetCategory, model, serialNumber, status }
-        if(assetID&&assetCategory&&model&&serialNumber)
+        const employee = {empID}
+        if(assetID&&assetCategory&&model&&serialNumber&&empID)
             {
-                
-                const response = await updateAssets(data._id,asset);
+                const response = await assignAssets(assignAsset,employee);
                 if(response.success === true)
                 {
                   setadded(true);
                   setTimeout(() => {
                       setadded(false);
                       handleClose();
+                      assignFun(data._id)
                   }, 1000);
                   
-                  updateFun(data._id,asset)
+                  
 
                 
               }else
@@ -85,13 +89,13 @@ export default function AssetUpdateModule({handleClose,data,show,updateFun}) {
               <Grid item sm={12} md={12} className={classes.formHeader}>
                 <LaptopChromebookIcon />
                 <Typography variant="h4">
-                  Asset Update
+                  Asset Assign
                 </Typography>
               </Grid>
                 
               {added?(<Stack sx={{ width: '100%' }} spacing={2}><Alert severity="success">
                         <AlertTitle>Success</AlertTitle>
-                                Asset has been successfully Updated! — <strong>check it out!</strong>
+                                Asset has been successfully Assigned! — <strong>check it out!</strong>
                         </Alert>  </Stack>):null}
           {error?(<Stack sx={{ width: '100%' }} spacing={2}><Alert variant="filled" severity="error">
                                 Please enter all the details! 
@@ -102,7 +106,7 @@ export default function AssetUpdateModule({handleClose,data,show,updateFun}) {
               </Grid>
 
               <Grid item sm={12} md={12}>
-              <form autoComplete="on" onSubmit={updateAsset}>
+              <form autoComplete="on" onSubmit={assignation}>
                   <Grid container>
                     <Grid item sm={12} md={6} className={classes.inputs}>
                       <Grid container>
@@ -146,11 +150,12 @@ export default function AssetUpdateModule({handleClose,data,show,updateFun}) {
                               variant="outlined"
                               name="model"
                               value={model}
+                              disabled
                               onChange={(e)=>{setModel(e.target.value)}}
                               fullWidth
                             />
                       </Grid>
-
+                    
                       <Grid container>
                         <Grid item sm={4} md={4} className={classes.texFieldLabel}>
                           <InputLabel>Serial Number</InputLabel>
@@ -160,6 +165,7 @@ export default function AssetUpdateModule({handleClose,data,show,updateFun}) {
                               variant="outlined"
                               name="serialNumber"
                               value={serialNumber}
+                              disabled
                               onChange={(e)=>{setSerialNumber(e.target.value)}}
                               fullWidth
                             />
@@ -167,32 +173,20 @@ export default function AssetUpdateModule({handleClose,data,show,updateFun}) {
 
                     </Grid>
                     <Grid item sm={12} md={6} className={classes.inputs}>
-
                     <Grid container>
-                        <Grid item sm={4} md={4} className={classes.texFieldLabel}>
-                          <InputLabel>Asset Status</InputLabel>
-                        </Grid>
-                            <FormControl sx={{ m: 2, minWidth: 120 }}>
-                                <InputLabel id="demo-simple-select-helper-label">Status</InputLabel>
-                                <Select
-                                labelId="demo-simple-select-helper-label"
-                                id="demo-simple-select-helper"
-                                value={status}
-                                label="Status"
-                                disabled
-                                onChange={(e)=>{setStatus(e.target.value)}}
-                                >
-                                <MenuItem value="">
-                                    <em>None</em>
-                                </MenuItem>
-                                <MenuItem value="Available">Available</MenuItem>
-                                <MenuItem value="Non-Available">Non-Available</MenuItem>
-                                <MenuItem value="Fault">Fault</MenuItem>
-                                </Select>
-                                
-                            </FormControl>
-                        </Grid>
+                            <Grid item sm={4} md={4} className={classes.texFieldLabel}>
+                            <InputLabel>Employee ID</InputLabel>
+                            </Grid>
+                                <TextField
+                                label="Employee ID"
+                                variant="outlined"
+                                name="empID"
+                                value={empID}
+                                onChange={(e)=>{setEmpID(e.target.value)}}
+                                fullWidth
+                                />
                     </Grid>
+                  </Grid>
                   </Grid>
                   <Grid item sm={12} md={12} className={classes.createButton}>
                     <Button
@@ -201,7 +195,7 @@ export default function AssetUpdateModule({handleClose,data,show,updateFun}) {
                       size="large"
                       type="submit"
                     >
-                      Update Asset
+                      Assign Asset
                     </Button>
                   </Grid>
                 </form>

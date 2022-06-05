@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -9,8 +9,10 @@ import TableRow from "@mui/material/TableRow";
 import { getLeaveHistory } from "../../../Api/LeaveManagementModule/LeaveApi";
 
 import ViewMoreDialog from "./ViewDetailDialog";
+import useStyles from "./RequestedLeavesTeamLead/RequestedLeavesStyles";
 
 const LeaveHistoryTable = () => {
+  const classes = useStyles();
   const [leaveHistory, setLeaveHistory] = useState([]);
   const [open, setOpen] = React.useState(false);
   const [leave, setLeave] = React.useState(null);
@@ -31,14 +33,14 @@ const LeaveHistoryTable = () => {
     fetchData();
   }, []);
   return (
-    <Paper elevation={4} sx={{ width: "100%", overflow: "hidden", p: 2 }}>
+    <Paper elevation={4} sx={{ width: "100%", overflow: "hidden", p: 2 }} className={classes.paper}>
       <Table>
-        <TableHead>
+        <TableHead className={classes.tableHead}>
           <TableRow>
-            <TableCell>Leave Type</TableCell>
-            <TableCell>Number of Days</TableCell>
-            <TableCell>Leave Method</TableCell>
-            <TableCell>Status</TableCell>
+            <TableCell><Typography>Leave Type</Typography></TableCell>
+            <TableCell><Typography>Number of Days</Typography></TableCell>
+            <TableCell><Typography>Leave Method</Typography></TableCell>
+            <TableCell><Typography>Status</Typography></TableCell>
             <TableCell> </TableCell>
           </TableRow>
           <TableRow>

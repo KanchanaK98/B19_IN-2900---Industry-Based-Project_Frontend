@@ -1,24 +1,28 @@
 import React, { useEffect, useState } from "react";
-import { Avatar, Button } from "@mui/material";
+import { Avatar, Button, Typography } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { getRequestedLeaves } from "../../../Api/LeaveManagementModule/LeaveApi";
-import ViewMoreDialog from "./ViewDetailDialog";
-import ViewDetailTeamLead from "./ViewDetailTeamLead";
+import { getRequestedLeaves } from "../../../../Api/LeaveManagementModule/LeaveApi";
+import ViewMoreDialog from "../ViewDetailDialog";
+import ViewDetailTeamLead from "../ViewDetailTeamLead";
+import { classNames } from "@react-pdf-viewer/core";
+import useStyles from "./RequestedLeavesStyles";
 
 const RequestedLeavesTeamLead = () => {
+  const classes = useStyles();
   const [requestedLeaves, setRequestedLeaves] = useState([]);
   const [open, setOpen] = useState(false);
   const [leave, setLeave] = useState(null);
-  // const [cancel, setCancel] = useState(false);
+  //const [cancel, setCancel] = useState(false);
   const [leaveDetail, setLeaveDetail]= useState(null);
+  const[approve, setApprove] = useState(false);
+  const[reject, setReject] = useState(false);
 
   
-
   const handleClickOpen = (Leave) => {
     setLeaveDetail(Leave);
     setOpen(true);
@@ -26,6 +30,8 @@ const RequestedLeavesTeamLead = () => {
 
   const onClose = () => {
     setOpen(false);
+    setApprove(false);
+    setReject(false);
   };
 
   
@@ -38,16 +44,16 @@ const RequestedLeavesTeamLead = () => {
   };
   
   return (
-    <Paper elevation={4} sx={{ width: "100%", overflow: "hidden", p: 2 }}>
-      <Table>
-        <TableHead>
+    <Paper elevation={4} sx={{ width: "100%", overflow: "hidden", p: 2 }} className={classes.paper}>
+      <Table >
+        <TableHead className={classes.tableHead}>
           <TableRow>
-            <TableCell>Employee</TableCell>
-            <TableCell>Leave Type</TableCell>
-            <TableCell>Leave Method</TableCell>
-            <TableCell>Start Date</TableCell>
-            <TableCell>End Date</TableCell>
-            <TableCell>Status</TableCell>
+            <TableCell><Typography>Employee</Typography></TableCell>
+            <TableCell><Typography>Leave Type</Typography></TableCell>
+            <TableCell><Typography>Leave Method</Typography></TableCell>
+            <TableCell><Typography>Start Date</Typography></TableCell>
+            <TableCell><Typography>End Date</Typography></TableCell>
+            <TableCell><Typography>Status</Typography></TableCell>
             <TableCell> </TableCell>
           </TableRow>
           <TableRow>
@@ -61,7 +67,7 @@ const RequestedLeavesTeamLead = () => {
         <TableBody>
           {requestedLeaves &&
             requestedLeaves.map((requestedLeave) => (
-              <TableRow key={requestedLeave.leave._id}>
+              <TableRow key={requestedLeave.leave._id} className={classes.tableRow}>
                 <TableCell sx={{display:"flex",alignItems:"center"}}><Avatar sx={{mr:1}} src ={requestedLeave.employee.profilePic}/>{requestedLeave.employee.employeeFirstName+" "+requestedLeave.employee.employeeLastName}</TableCell>
                 <TableCell>{requestedLeave.leave.leaveType}</TableCell>
                 <TableCell>{requestedLeave.leave.leaveMethod}</TableCell>
@@ -86,7 +92,14 @@ const RequestedLeavesTeamLead = () => {
         </TableBody>
       </Table>
       {leaveDetail && 
-      (<ViewDetailTeamLead open={open} onClose={onClose} leaveDetail={leaveDetail} />)
+      (<ViewDetailTeamLead open={open} onClose={onClose} 
+        leaveDetail={leaveDetail}
+        setApprove = {setApprove}
+        approve = {approve}
+        setReject = {setReject}
+        reject = {reject}
+
+        />)
       }
 
       {/* <TablePagination

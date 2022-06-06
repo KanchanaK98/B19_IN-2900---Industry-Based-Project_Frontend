@@ -167,7 +167,7 @@ import { viewAllQuestionsApi } from "../../../Api/PromotionModule/QuestionApi/vi
 import { addMoreQuestionsApi } from "../../../Api/PromotionModule/PaperApi/addMoreQuestionsApi";
 
 import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
+//import CardActions from "@mui/material/CardActions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -198,10 +198,9 @@ export default function UpdatePaperDetails() {
       const result = await viewOnePaperApi(PaperID);
       setRecord(result[0], record);
     }
-
     fetchData();
   }, []);
-  console.log("paper fetched", record);
+  // console.log("paper fetched", record);
 
   const [QuestionList, setQuestionList] = useState([]);
   const [selectedQuestions, setSelectedQuestions] = useState([]);
@@ -217,10 +216,10 @@ export default function UpdatePaperDetails() {
 
   const addMoreQues = async () => {
     addMoreQuestionsApi(PaperID, selectedQuestions);
-    console.log("addMoreQuestions executed");
+    //console.log("addMoreQuestions executed");
   };
 
-  console.log("selected Questions:", selectedQuestions);
+  //console.log("selected Questions:", selectedQuestions);
 
   //---------------------------------------------------------------------------------------------------------
   const UpdatePaperDetails = async (e) => {

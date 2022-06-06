@@ -52,16 +52,6 @@ export default function ViewOnePaper() {
     fetchData();
   }, [PaperID]);
 
-  // const updateAssetFunction = async (id, asset) => {
-  //   const index = Paper.findIndex((assets) => assets._id === id);
-  //   const newAssets = [...assets];
-  //   newAssets[index].assetCategory = asset.assetCategory;
-  //   newAssets[index].model = asset.model;
-  //   newAssets[index].serialNumber = asset.serialNumber;
-  //   newAssets[index].status = asset.status;
-  //   setAssets(newAssets);
-  // };
-
   return (
     <Box
       sx={{

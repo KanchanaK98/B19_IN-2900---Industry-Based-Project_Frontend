@@ -43,10 +43,12 @@ import DisplayTeamMemberSubmissions from "./Pages/PromotionModule/Evaluations/Te
 import DispalyAndSubmitPaper from "./Components/PromotionModule/Submit/DispalyAndSubmitPaper";
 import EvaluatePaper from "./Components/PromotionModule/Evaluation/EvaluatePaper";
 import DisplayMyFeedback from "./Components/PromotionModule/Submit/DisplayFeedback";
-
 import JobRoleDialogBox from "./Components/ReportersManagementModule/CreateEmployeeForm/JobRoleDialogBox";
-
 import FindEmployeeSalary from "./Components/SalaryPaymentModule/EmployeeSalary/FindEmployeeSalary";
+import ViewAllExamList from "./Components/PromotionModule/Exam/ViewAllExamList";
+import ScheduleExamForm from "./Components/PromotionModule/Exam/ScheduleExamForm";
+import UpdateExamForm from "./Components/PromotionModule/Exam/UpdateExamForm";
+
 function App() {
   const [open, setOpen] = useState(true);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
@@ -197,6 +199,19 @@ function App() {
               <Route
                 path="/promotion/evaluation/mySubmissions/:EmployeeID"
                 element={<DisplayMyFeedback />}
+              />
+              <Route
+                path="/promotion/evaluation/exam/viewExam/:EmployeeID"
+                element={<ViewAllExamList />}
+              />
+              <Route
+                path="/promotion/evaluation/exam/scheduleExam/:EmployeeID"
+                element={<ScheduleExamForm />}
+              />
+
+              <Route
+                path="/promotion/evaluation/exam/updateExam/:EmployeeID/:ExamID"
+                element={<UpdateExamForm />}
               />
             </Routes>
           </Grid>

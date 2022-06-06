@@ -21,6 +21,12 @@ const AllSubmissionsTable = () => {
         // console.log(allRecords.data);
       });
   }, []);
+  //useEffect(() => {
+  //   async function fetchData() {
+  //     setExamsList(await viewAllExamsApi());
+  //   }
+  //   fetchData();
+  // }, []);
 
   return (
     <div>

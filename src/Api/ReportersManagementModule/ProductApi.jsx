@@ -7,6 +7,7 @@ export const createProduct = async (productCreateData) => {
       description: productCreateData.description,
       teamNames: productCreateData.nameofTeam.teamName,
     };
+    
     const response = await api.createProduct(productcreate);
   } catch (err) {
     console.log(err);

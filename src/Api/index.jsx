@@ -9,12 +9,13 @@ export const searchCandidate = (NIC) =>
 export const updateCandidate = (candidateData, candidateId) =>
   API.put(`/recruitment/candidate/${candidateId}`, candidateData);
 export const fetchCandidates = () => API.get(`/recruitment/candidates`);
+export const fetchRecentCandidates = () =>
+  API.get(`/recruitment/candidates/recent`);
 
 // Interview API
 export const fetchEmployees = () => API.get(`/employee/`);
 export const createInterview = (interviewData) =>
   API.post(`/recruitment/interview/create`, interviewData);
-
 export const getInterviewList = (employeeID) =>
   API.get(`/recruitment/interview/${employeeID}`);
 export const updateInterview = (interview, interviewID) =>
@@ -24,6 +25,10 @@ export const cancelInterview = (interviewID) =>
 export const markedCandidate = (marks, interviewID) => {
   return API.put(`/recruitment/interview/start/${interviewID}`, marks);
 };
+export const getInterviewStats = (employeeID) => {
+  return API.get(`/recruitment/interview/InterviewStats/${employeeID}`);
+};
+
 // LogIn API
 export const userLogin = (user) => API.post("/login", user);
 

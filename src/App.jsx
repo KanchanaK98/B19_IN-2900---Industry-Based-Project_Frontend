@@ -32,7 +32,6 @@ import CreateCurruntSalary from "./Components/SalaryPaymentModule/CurruntSalary/
 import UpdateCurruntSalary from "./Components/SalaryPaymentModule/CurruntSalary/UpdateCurruntSalary";
 import ViewSummarySalary from "./Pages/SalaryPaymentModule/SummarySalary/ViewSummarySalary";
 import ViewCurrentEmployeeSalary from "./Pages/SalaryPaymentModule/EmployeeSalary/ViewCurrentEmployeeSalary";
-import FindEmployeeSalary from "./Components/SalaryPaymentModule/EmployeeSalary/FindEmployeeSalary";
 import ViewAllQuestions from "./Pages/PromotionModule/Questions/ViewAllQuestions";
 import CreateQuestions from "./Components/PromotionModule/Question/CreateQuestions";
 import ViewAllPapersDelete from "./Pages/PromotionModule/Paper/DisplayPaperAndDelete/ViewAllPapersDelete";
@@ -45,6 +44,9 @@ import DispalyAndSubmitPaper from "./Components/PromotionModule/Submit/DispalyAn
 import EvaluatePaper from "./Components/PromotionModule/Evaluation/EvaluatePaper";
 import DisplayMyFeedback from "./Components/PromotionModule/Submit/DisplayFeedback";
 
+import JobRoleDialogBox from "./Components/ReportersManagementModule/CreateEmployeeForm/JobRoleDialogBox";
+
+import FindEmployeeSalary from "./Components/SalaryPaymentModule/EmployeeSalary/FindEmployeeSalary";
 function App() {
   const [open, setOpen] = useState(true);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
@@ -58,7 +60,7 @@ function App() {
   };
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", bgcolor: "rgba(231, 243, 238, 0.4)" }}>
       <CssBaseline />
       <BrowserRouter>
         {user && (
@@ -101,6 +103,7 @@ function App() {
               <Route path="/products/update/:id" element={<EditProduct />} />
               <Route path="progress" element={<ProgressBar />} />
               <Route path="tree" element={<CustomizedTeamView />} />
+              <Route path="job" element={<JobRoleDialogBox />} />
 
               {/* Recruitment management */}
               <Route path="/candidate" element={<CreateCandidate />} />
@@ -185,7 +188,7 @@ function App() {
               />
               <Route
                 path="/promotion/Paper/:EmployeeID"
-                element={<DispalyAndSubmitPaper />}
+                element={<DispalyAndSubmitPaper />} //
               />
               <Route
                 path="/promotion/evaluation/evaluatePaper/:TeamLeadID/:EmployeeID/:PaperID"

@@ -33,12 +33,12 @@ export const updateEmployee = async (employeeData) => {
       NIC: employeeData.NIC,
       city: employeeData.city,
       birthday: employeeData.birthday,
-      ordinaryLevelResult: employeeData.ordinaryLevelResult.split(","),
-      advancedLevelResults: employeeData.advancedLevelResults.split(","),
-      achievements: employeeData.achievements.split(","),
-      degree: employeeData.degree.split(","),
-      language: employeeData.language.split(","),
-      course: employeeData.course.split(","),
+      ordinaryLevelResult:String( employeeData.ordinaryLevelResult).split(","),
+      advancedLevelResults: String(employeeData.advancedLevelResults).split(","),
+      achievements:String(employeeData.achievements).split(","),
+      degree: String(employeeData.degree).split(","),
+      language: String(employeeData.language).split(","),
+      course: String(employeeData.course).split(","),
     };
     const { data } = await api.updateEmployee(empData);
     return data;

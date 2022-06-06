@@ -10,18 +10,31 @@ import {
   cancelInterview,
   getInterviewList,
 } from "../../../Api/RecruitmentModule/InterviewApi";
-import { Avatar, AvatarGroup, Button } from "@mui/material";
+import {
+  Avatar,
+  AvatarGroup,
+  Button,
+  IconButton,
+  ListItemIcon,
+  Menu,
+  MenuItem,
+  Typography,
+} from "@mui/material";
 import InterviewDetailsDialog from "./InterviewDetailsDialog/InterviewDetailsDialog";
 import SnackBar from "../../SnackBar/SnackBar";
 import { useLocation } from "react-router-dom";
+import useStyles from "./InterviewListStyles";
+import { More, MoreVert } from "@mui/icons-material";
 
 const InterviewList = ({ open }) => {
   const [interviewList, setInterviewList] = useState([]);
   const [openDialog, setOpenDialog] = useState(false);
   const [interview, setInterview] = useState();
   const [openSnackBar, setOpenSnackBar] = useState(false);
-
+  const [anchorEl, setAnchorEl] = useState(null);
+  const openMenu = Boolean(anchorEl);
   const location = useLocation();
+
   const fetchData = async () => {
     setInterviewList(await getInterviewList("E001"));
   };
@@ -38,7 +51,7 @@ const InterviewList = ({ open }) => {
     );
     handleCloseDialog();
     location.state = response;
-      setOpenSnackBar(true);
+    setOpenSnackBar(true);
   };
   const handleCloseSnackBar = () => {
     setOpenSnackBar(false);
@@ -50,55 +63,112 @@ const InterviewList = ({ open }) => {
     setInterview(interview);
     setOpenDialog(true);
   };
+  const handleOpenMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const classes = useStyles();
   return (
-    <Paper elevation={4} sx={{ width: "100%", overflow: "hidden", p: 2 }}>
+    <Paper elevation={6} className={classes.paper}>
       <Table>
-        <TableHead>
+        <TableHead className={classes.tableHead}>
           <TableRow>
-            <TableCell>Candidate</TableCell>
-            <TableCell>Interview Type</TableCell>
-            <TableCell>Interview Date</TableCell>
-            <TableCell>Interview Time</TableCell>
-            <TableCell align="center">Interviewers</TableCell>
-            <TableCell></TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell></TableCell>
-            <TableCell></TableCell>
-            <TableCell></TableCell>
-            <TableCell></TableCell>
+            <TableCell>
+              <Typography>Candidate</Typography>
+            </TableCell>
+            <TableCell>
+              <Typography>Interview Type</Typography>
+            </TableCell>
+            <TableCell>
+              <Typography>Interview Date</Typography>
+            </TableCell>
+            <TableCell>
+              <Typography>Interview Time</Typography>
+            </TableCell>
+            <TableCell align="right">
+              <Typography>Interviewers</Typography>
+            </TableCell>
             <TableCell></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {interviewList &&
             interviewList.map((interview) => (
-              <TableRow key={interview._id}>
-                <TableCell>{interview.candidate.candidateName}</TableCell>
-                <TableCell>{interview.InterviewType}</TableCell>
+              <TableRow key={interview._id} className={classes.tableRow}>
                 <TableCell>
-                  {new Date(interview.InterviewDate).toDateString()}
+                  <Typography>{interview.candidate.candidateName}</Typography>
                 </TableCell>
-                <TableCell>{interview.InterviewTime}</TableCell>
+                <TableCell align="center">
+                  <Typography>{interview.InterviewType}</Typography>
+                </TableCell>
                 <TableCell>
+                  <Typography>
+                    {new Date(interview.InterviewDate).toDateString()}
+                  </Typography>
+                </TableCell>
+                <TableCell align="center">
+                  <Typography> {interview.InterviewTime}</Typography>
+                </TableCell>
+                <TableCell align="left">
                   <AvatarGroup total={interview.Interviewers.length}>
                     {interview.Interviewers &&
                       interview.Interviewers.map((interviewer) => (
                         <Avatar
+                          sizes="small"
                           key={interviewer._id}
                           src={interviewer.profilePic}
+                          className={classes.avatar}
                         />
                       ))}
                   </AvatarGroup>
                 </TableCell>
                 <TableCell>
-                  <Button
-                    onClick={() => handleViewDetails(interview)}
-                    size="small"
-                    variant="contained"
+                  <IconButton
+                    onClick={handleOpenMenu}
+                    aria-controls={openMenu ? "account-menu" : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={openMenu ? "true" : undefined}
                   >
-                    View
-                  </Button>
+                    <MoreVert />
+                  </IconButton>
+                  <Menu
+                    anchorEl={anchorEl}
+                    open={openMenu}
+                    onClose={handleClose}
+                    transformOrigin={{ horizontal: "right", vertical: "top" }}
+                    anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+                    PaperProps={{
+                      elevation: 0,
+                      sx: {
+                        overflow: "visible",
+                        filter: "drop-shadow(0px 1px 9px rgba(0,0,0,0.1))",
+                        "& .MuiAvatar-root": {
+                          width: 32,
+                          height: 32,
+                          ml: -0.5,
+                          mr: 1,
+                        },
+                        "&:before": {
+                          content: '""',
+                          display: "block",
+                          position: "absolute",
+                          top: 0,
+                          right: 14,
+                          width: 10,
+                          height: 10,
+                          bgcolor: "background.paper",
+                          transform: "translateY(-50%) rotate(45deg)",
+                          zIndex: 0,
+                        },
+                      },
+                    }}
+                  >
+                    <MenuItem onClick={() => handleViewDetails(interview)}>View more</MenuItem>
+                    <MenuItem>Update</MenuItem>
+                    <MenuItem>Cancel</MenuItem>
+                  </Menu>
                 </TableCell>
               </TableRow>
             ))}

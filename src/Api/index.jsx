@@ -109,6 +109,15 @@ export const scheduleExam = (EmployeeID, examDetails) =>
   );
 export const viewAllExams = (EmployeeID) =>
   API.get(`/promotion/evaluation/exam/viewExam/${EmployeeID}`);
+export const updateExamDetails = (EmployeeID, ExamID, examDetails) =>
+  API.patch(
+    `/promotion/evaluation/exam/updateExam/${EmployeeID}/${ExamID}`,
+    examDetails
+  );
+export const viewOneExam = (EmployeeID, ExamID) =>
+  API.get(`/promotion/evaluation/exam/viewOneExam/${EmployeeID}/${ExamID}`);
+export const deleteScheduledExam = (EmployeeID, ExamID) =>
+  API.delete(`/promotion/evaluation/exam/deleteExam/${EmployeeID}/${ExamID}`);
 
 //team leads API
 export const allSubmissions = () =>

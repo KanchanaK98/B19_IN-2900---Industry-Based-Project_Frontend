@@ -103,9 +103,12 @@ export const displayFeedback = (EmployeeID) =>
 
 //schedule exam by HR
 export const scheduleExam = (EmployeeID, examDetails) =>
-  API.post(`/promotion/evaluation/scheduleExam/${EmployeeID}`, examDetails);
-export const viewAllExams = () =>
-  API.get("/promotion/evaluation/exam/viewExam");
+  API.post(
+    `/promotion/evaluation/exam/scheduleExam/${EmployeeID}`,
+    examDetails
+  );
+export const viewAllExams = (EmployeeID) =>
+  API.get(`/promotion/evaluation/exam/viewExam/${EmployeeID}`);
 
 //team leads API
 export const allSubmissions = () =>

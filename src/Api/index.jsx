@@ -55,13 +55,6 @@ export const createCurrentSalarySheet = (newCurruntSalarySheet) =>
   API.post("/salary/currentSalary/create", newCurruntSalarySheet);
 export const findCurrentSalarySheet = (EmployeeID) =>
   API.get(`/salary/currentSalary/${EmployeeID}`);
-// export const updateCurrentSalarySheet = (updatedData, EmployeeID) =>
-//   API.patch(`/salary/currentSalary/update/${EmployeeID}`, updatedData);
-// export const updateCurrentSalarySheet = (updatedData) =>
-//   API.patch(
-//     `/salary/currentSalary/update/${updatedData.EmployeeID}`,
-//     updatedData
-//   );
 export const updateCurrentSalarySheet = (EmployeeID, updatedData) =>
   API.patch(`/salary/currentSalary/update/${EmployeeID}`, updatedData);
 export const deleteCurrentSalarySheet = (EmployeeID) =>
@@ -107,6 +100,12 @@ export const submitPaper = (EmployeeID, Answer) =>
   API.post(`/promotion/submitPaper/${EmployeeID}`, Answer);
 export const displayFeedback = (EmployeeID) =>
   API.get(`/promotion/evaluation/mySubmissions/${EmployeeID}`);
+
+//schedule exam by HR
+export const scheduleExam = (EmployeeID, examDetails) =>
+  API.post(`/promotion/evaluation/scheduleExam/${EmployeeID}`, examDetails);
+export const viewAllExams = () =>
+  API.get("/promotion/evaluation/exam/viewExam");
 
 //team leads API
 export const allSubmissions = () =>

@@ -47,6 +47,7 @@ import JobRoleDialogBox from "./Components/ReportersManagementModule/CreateEmplo
 import FindEmployeeSalary from "./Components/SalaryPaymentModule/EmployeeSalary/FindEmployeeSalary";
 import ViewAllExamList from "./Components/PromotionModule/Exam/ViewAllExamList";
 import ScheduleExamForm from "./Components/PromotionModule/Exam/ScheduleExamForm";
+import UpdateExamForm from "./Components/PromotionModule/Exam/UpdateExamForm";
 
 function App() {
   const [open, setOpen] = useState(true);
@@ -206,6 +207,11 @@ function App() {
               <Route
                 path="/promotion/evaluation/exam/scheduleExam/:EmployeeID"
                 element={<ScheduleExamForm />}
+              />
+
+              <Route
+                path="/promotion/evaluation/exam/updateExam/:EmployeeID/:ExamID"
+                element={<UpdateExamForm />}
               />
             </Routes>
           </Grid>

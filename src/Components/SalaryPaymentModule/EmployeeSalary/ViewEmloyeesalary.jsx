@@ -15,7 +15,8 @@ export default function ViewSummarySalaryTable() {
       setEmployeeSalaryList(await viewEmployeeSalaryApi(EmployeeID));
     }
     fetchData();
-  }, []);
+  }, [EmployeeID]);
+  console.log("--", employeeSalaryList);
 
   return (
     <div>

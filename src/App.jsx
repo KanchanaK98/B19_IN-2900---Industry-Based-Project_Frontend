@@ -36,8 +36,14 @@ import ViewAllQuestions from "./Pages/PromotionModule/Questions/ViewAllQuestions
 import CreateQuestions from "./Components/PromotionModule/Question/CreateQuestions";
 import ViewAllPapersDelete from "./Pages/PromotionModule/Paper/DisplayPaperAndDelete/ViewAllPapersDelete";
 import CreateNewPaper from "./Pages/PromotionModule/Paper/CreatePaper";
+import ViewOnePaper from "./Components/PromotionModule/Paper/ViewOnePaper";
+import UpdatePaperDetails from "./Components/PromotionModule/Paper/UpdatePaperDetails";
 import AllSubmissions from "./Pages/PromotionModule/AllSubmissions/AllSubmissions";
 import DisplayTeamMemberSubmissions from "./Pages/PromotionModule/Evaluations/TeamLead/DisplayTeamSubmissionsAndFeedback";
+import DispalyAndSubmitPaper from "./Components/PromotionModule/Submit/DispalyAndSubmitPaper";
+import EvaluatePaper from "./Components/PromotionModule/Evaluation/EvaluatePaper";
+import DisplayMyFeedback from "./Components/PromotionModule/Submit/DisplayFeedback";
+
 import JobRoleDialogBox from "./Components/ReportersManagementModule/CreateEmployeeForm/JobRoleDialogBox";
 
 import FindEmployeeSalary from "./Components/SalaryPaymentModule/EmployeeSalary/FindEmployeeSalary";
@@ -97,7 +103,7 @@ function App() {
               <Route path="/products/update/:id" element={<EditProduct />} />
               <Route path="progress" element={<ProgressBar />} />
               <Route path="tree" element={<CustomizedTeamView />} />
-              <Route path="job" element={<JobRoleDialogBox/>}/>
+              <Route path="job" element={<JobRoleDialogBox />} />
 
               {/* Recruitment management */}
               <Route path="/candidate" element={<CreateCandidate />} />
@@ -118,7 +124,6 @@ function App() {
               <Route path="/requestLeave" element={<RequestLeaves />} />
               <Route path="/leaveHistory" element={<LeaveHistory />} />
               <Route path="/requestedLeaves" element={<RequestedLeaveList />} />
-
 
               {/* Payrolls management */}
               <Route
@@ -166,12 +171,32 @@ function App() {
                 element={<CreateNewPaper />}
               />
               <Route
+                path="/promotion/Paper/display/:PaperID"
+                element={<ViewOnePaper />}
+              />
+              <Route
+                path="/promotion/Paper/updatePaperDetails/:PaperID"
+                element={<UpdatePaperDetails />}
+              />
+              <Route
                 path="/promotion/evaluation/allSubmissions"
                 element={<AllSubmissions />}
               />
               <Route
                 path="/promotion/evaluation/allSubmissions/:EmployeeID"
                 element={<DisplayTeamMemberSubmissions />}
+              />
+              <Route
+                path="/promotion/Paper/:EmployeeID"
+                element={<DispalyAndSubmitPaper />} //
+              />
+              <Route
+                path="/promotion/evaluation/evaluatePaper/:TeamLeadID/:EmployeeID/:PaperID"
+                element={<EvaluatePaper />}
+              />
+              <Route
+                path="/promotion/evaluation/mySubmissions/:EmployeeID"
+                element={<DisplayMyFeedback />}
               />
             </Routes>
           </Grid>

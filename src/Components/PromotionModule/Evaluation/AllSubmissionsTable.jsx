@@ -24,6 +24,7 @@ const AllSubmissionsTable = () => {
 
   return (
     <div>
+      <h1>All submissions</h1>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
@@ -52,6 +53,7 @@ const AllSubmissionsTable = () => {
                 <TableCell align="right">
                   {submission.DateOfEvaluation}
                 </TableCell>
+                {/* <Button>View Paper</Button> */}
               </TableRow>
             ))}
           </TableBody>

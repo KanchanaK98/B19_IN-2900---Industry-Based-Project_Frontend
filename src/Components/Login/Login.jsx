@@ -18,6 +18,7 @@ import FormControl from '@mui/material/FormControl';
 import InputAdornment from '@mui/material/InputAdornment';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import loginImg from './login.png'
 import { LoginApi } from "../../Api/Login/LoginApi";
 
 function Copyright(props) {
@@ -117,9 +118,13 @@ export default function Login({ setUser }) {
             alignItems: "center",
           }}
         >
+        
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
+          <div className="loginImage" >
+            <img src={loginImg} width="200" style={{position: 'relative'}} alt="login"/>
+          </div><br/>
           <Typography component="h1" variant="h5">
             Sign In
           </Typography>
@@ -139,16 +144,7 @@ export default function Login({ setUser }) {
               autoFocus
             />
             </FormControl><br/>
-            {/* <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            /> */}
+            
             <FormControl  variant="outlined" fullWidth required>
             <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
             <OutlinedInput
@@ -183,9 +179,7 @@ export default function Login({ setUser }) {
             </Button>
             <Grid container>
               <Grid item xs>
-                {/* <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link> */}
+                
               </Grid>
               
             </Grid>
@@ -204,6 +198,7 @@ export default function Login({ setUser }) {
               </Stack>
             ) : null}
             <Copyright sx={{ mt: 5 }} />
+            
           </Box>
         </Box>
       </Grid>

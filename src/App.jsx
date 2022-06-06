@@ -200,7 +200,7 @@ function App() {
                 element={<DisplayMyFeedback />}
               />
               <Route
-                path="/promotion/evaluation/exam/viewExam"
+                path="/promotion/evaluation/exam/viewExam/:EmployeeID"
                 element={<ViewAllExamList />}
               />
               <Route

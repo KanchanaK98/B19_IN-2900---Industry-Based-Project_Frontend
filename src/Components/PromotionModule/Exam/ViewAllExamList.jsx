@@ -9,6 +9,7 @@ import Paper from "@mui/material/Paper";
 import { Button } from "@mui/material/";
 import { useParams } from "react-router-dom";
 import { viewAllExamsApi } from "../../../Api/PromotionModule/ExamApi/viewAllExamsApi";
+import { deleteScheduledExamApi } from "../../../Api/PromotionModule/ExamApi/deleteScheduledExamApi";
 
 const ViewAllExamList = () => {
   const [ExamsList, setExamsList] = useState([]);
@@ -22,7 +23,9 @@ const ViewAllExamList = () => {
     }
     fetchData();
   }, []);
+
   console.log(ExamsList);
+
   return (
     <div>
       <Button
@@ -65,27 +68,28 @@ const ViewAllExamList = () => {
                 <Button
                   variant="contained"
                   sx={{ backgroundColor: "#183d78" }}
-                  //   onClick={() =>
-                  //     window.open(
-                  //       ` /promotion/evaluation/exam/scheduleExam/${EmployeeID}`,
-                  //       "_self"
-                  //     )
-                  //   }
+                  onClick={() =>
+                    window.open(
+                      ` /promotion/evaluation/exam/updateExam/${EmployeeID}/${element.ExamID}`,
+                      "_self"
+                    )
+                  }
                 >
                   Update&nbsp;
-                </Button>{" "}
+                </Button>
                 <Button
                   variant="contained"
                   sx={{ backgroundColor: "#183d78" }}
-                  //   onClick={() =>
-                  //     window.open(
-                  //       ` /promotion/evaluation/exam/scheduleExam/${EmployeeID}`,
-                  //       "_self"
-                  //     )
-                  //   }
+                  onClick={() => {
+                    deleteScheduledExamApi(EmployeeID, element.ExamID).then(
+                      () => {
+                        window.location.reload(false);
+                      }
+                    );
+                  }}
                 >
                   Delete&nbsp;
-                </Button>
+                </Button>{" "}
               </TableRow>
             ))}
           </TableBody>

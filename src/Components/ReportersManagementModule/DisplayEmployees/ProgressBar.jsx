@@ -19,10 +19,11 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
 function ProgressBar({
   EmpWithProf,
   EmployeeWithAcc,
-  birthday,
-  streetNo,
-  city,
-  phoneNumber,
+  user,
+  // birthday,
+  // streetNo,
+  // city,
+  // phoneNumber,
 }) {
   // let acadamicQual=EmployeeWithAcc[0];
 
@@ -74,6 +75,15 @@ function ProgressBar({
       count++;
     }
   }
+  if (user && user.phoneNumber === "") {
+    count++;
+  }
+  if (user && user.birthday === "") {
+    count++;
+  }
+  if (user && (user.city === "" && user.streetNo === "")) {
+    count++;
+  }
   switch (count) {
     case 1: {
       percentage = 90;
@@ -99,7 +109,18 @@ function ProgressBar({
       percentage = 40;
       break;
     }
-
+    case 7: {
+      percentage = 30;
+      break;
+    }
+    case 8: {
+      percentage = 20;
+      break;
+    }
+    case 9: {
+      percentage = 10;
+      break;
+    }
     default: {
       percentage = 100;
     }

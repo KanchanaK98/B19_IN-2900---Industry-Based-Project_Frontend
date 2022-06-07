@@ -1,4 +1,4 @@
-import { Avatar, Divider, Grid, Paper, Typography } from "@mui/material";
+import { Avatar, Card, Divider, Grid, Paper, Typography } from "@mui/material";
 import useStyles from "../OrganizationStructure/OrganizationStructureStyles";
 import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
@@ -88,37 +88,43 @@ function OrganizationStructure() {
               })}
           </Grid>
         </Paper>
-        <Paper className={classes.paper}>
-          <Typography className={classes.levelRole} variant="h6">
-            Software Engineer
-          </Typography>
-          <Divider sx={{ mt: 2, mb: 2 }}></Divider>
-          <Grid container>
-            {profiles &&
-              profiles.map((employee) => {
-                if (employee.user.jobRole === "software engineer") {
-                  return (
-                    <Grid
-                      item
-                      md={3}
-                      className={classes.levelGrid}
-                      key={employee.user._id}
+
+        <Typography className={classes.levelRole} variant="h6">
+          Software Engineer
+        </Typography>
+        <Divider sx={{ mt: 2, mb: 2 }}></Divider>
+        <Grid container>
+          {profiles &&
+            profiles.map((employee) => {
+              if (employee.user.jobRole === "software engineer") {
+                return (
+                  <Box padding={2}>
+                    <Card
+                      sx={{
+                        padding: 3,
+                        minWidth: 250,
+                        borderRadius: 5,
+                        textAlign: "center",
+                      }}
                     >
-                      <Typography component="span">
-                        <Avatar
-                          className={classes.avatar}
-                          src={employee.user.profilePic}
-                        />
-                        {employee.user.employeeFirstName +
+                      <Grid item md={3} key={employee.user._id}>
+                      
+                        <Typography
+                          component="span"
+                          sx={{ textAlign: "center" }}
+                        >  <Avatar src={employee.user.profilePic} />
+                          {employee.user.employeeFirstName +
                           " " +
                           employee.user.employeeLastName}
-                      </Typography>
-                    </Grid>
-                  );
-                }
-              })}
-          </Grid>
-        </Paper>
+                        </Typography>
+                      </Grid>
+                    </Card>
+                  </Box>
+                );
+              }
+            })}
+        </Grid>
+
         <Paper className={classes.paper}>
           <Typography className={classes.levelRole} variant="h6">
             HR Employee

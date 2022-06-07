@@ -3,8 +3,7 @@ import { Typography, Button, Card, Grid, Avatar, Divider } from "@mui/material";
 import { Link } from "react-router-dom";
 function DisplayTeam({ team }) {
   const { _id, teamName, teamLeadID, TeamWithEmp, ProductOfTeam } = team;
-  console.log(team);
-  //   console.log(ProductOfTeam)
+  const jobRole = JSON.parse(localStorage.getItem("profile")).jobRole; //profile should change to user
   return (
     <div>
       <Card
@@ -13,6 +12,7 @@ function DisplayTeam({ team }) {
           mb: 2,
           borderRadius: 5,
           padding: 3,
+          minHeight: 500,
           minWidth: 320,
           backgroundColor: "#e4ecf7",
         }}
@@ -61,7 +61,6 @@ function DisplayTeam({ team }) {
             })}
         </Grid>
 
-     
         <Divider sx={{ mt: 2, mb: 2 }}></Divider>
         <Grid>
           <Typography component={"span"}>
@@ -101,17 +100,24 @@ function DisplayTeam({ team }) {
             : "not assigned"}
         </Typography>
         <Divider sx={{ mt: 2, mb: 2 }}></Divider>
-        <Typography align="center">
-          <Button
-            variant="contained"
-            component={Link}
-            to={`/teams/update/${_id}`}
-            state={{ team }}
-          >
-            Update Team
-          </Button>
-        </Typography>
+        {jobRole === "HR" && (
+          <Typography align="center">
+            <Button
+              variant="contained"
+              component={Link}
+              to={`/teams/update/${_id}`}
+              state={{ team }}
+            >
+              Update Team
+            </Button>
+          </Typography>
+        )}
       </Card>
+      {/* <Grid container>
+      <Grid item md={12}>
+        
+      </Grid>
+      </Grid> */}
     </div>
   );
 }

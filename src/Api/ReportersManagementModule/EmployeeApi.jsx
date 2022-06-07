@@ -26,16 +26,21 @@ export const updateEmployee = async (employeeData) => {
       employeeID: employeeData.employeeID,
       employeeFirstName: employeeData.employeeFirstName,
       employeeLastName: employeeData.employeeLastName,
-      streetNo:employeeData.streetNo,
+      streetNo: employeeData.streetNo,
       phoneNumber: employeeData.phoneNumber,
       companyEmail: employeeData.companyEmail,
       profilePic: employeeData.profilePic,
       NIC: employeeData.NIC,
       city: employeeData.city,
       birthday: employeeData.birthday,
-      ordinaryLevelResult:String( employeeData.ordinaryLevelResult).split(","),
-      advancedLevelResults: String(employeeData.advancedLevelResults).split(","),
-      achievements:String(employeeData.achievements).split(","),
+      status: employeeData.status,
+      jobRole: employeeData.jobRole,
+      jobType: employeeData.jobType,
+      ordinaryLevelResult: String(employeeData.ordinaryLevelResult).split(","),
+      advancedLevelResults: String(employeeData.advancedLevelResults).split(
+        ","
+      ),
+      achievements: String(employeeData.achievements).split(","),
       degree: String(employeeData.degree).split(","),
       language: String(employeeData.language).split(","),
       course: String(employeeData.course).split(","),
@@ -47,9 +52,9 @@ export const updateEmployee = async (employeeData) => {
   }
 };
 
-export const viewAllEmployees = async (viewemployees) => {
+export const viewAllEmployees = async () => {
   try {
-    const { data } = await api.viewAllEmployees(viewemployees);
+    const { data } = await api.viewAllEmployees();
     return data.data;
   } catch (error) {
     console.log(error);
@@ -60,6 +65,16 @@ export const recentEmployees = async (recentemployees) => {
   try {
     const { data } = await api.recentEmployees(recentemployees);
     return data.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const getUser = async () => {
+  try {
+    console.log("hi");
+    const { data } = await api.getUser(JSON.parse(localStorage.getItem("profile")).employeeID);
+    return data.userInfo;
   } catch (err) {
     console.log(err);
   }

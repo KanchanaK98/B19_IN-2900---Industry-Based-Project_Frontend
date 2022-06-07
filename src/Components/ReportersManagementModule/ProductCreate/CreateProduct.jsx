@@ -61,26 +61,11 @@ function CreateProduct() {
     fetchData();
   }, []);
 
-  //-----------------validation---------------------------
-
-  // const createProductFormValidation = (values) => {
-  //   const formErrors={}
-  //   if(!values.productID){
-  //     formErrors.productID="ProductID is required"
-  //     return formErrors
-
-  //   }
-  //   let temp = {};
-  //   temp.productID = products.productID ? "" : "this filed is required";
-  //   setErrors({ ...temp });
-  //   return Object.products(temp).every((x) => x == "");
-  // };
-//-------------------------------------------
   return (
     <div>
-      <Box padding={1} sx={{mt:2}}>
+      <Box padding={1} sx={{ mt: 2 }}>
         <form onSubmit={handleSubmit}>
-          <Card sx={{ padding: 5 ,backgroundColor:"#aec9d1"}}>
+          <Card sx={{ padding: 5, backgroundColor: "#aec9d1" }}>
             <Typography variant="h5">
               <InventoryIcon /> Create Product
             </Typography>

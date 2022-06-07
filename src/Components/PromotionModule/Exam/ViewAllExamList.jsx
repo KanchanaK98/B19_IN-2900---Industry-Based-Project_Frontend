@@ -14,6 +14,7 @@ import { deleteScheduledExamApi } from "../../../Api/PromotionModule/ExamApi/del
 const ViewAllExamList = () => {
   const [ExamsList, setExamsList] = useState([]);
 
+  console.log(Date);
   const { EmployeeID } = useParams();
   console.log(EmployeeID);
 
@@ -50,6 +51,7 @@ const ViewAllExamList = () => {
               <TableCell align="right">DateScheduled</TableCell>
               <TableCell align="right">JobRole</TableCell>
               <TableCell align="right">PaperID</TableCell>
+              <TableCell align="right">Exam Status</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -65,31 +67,52 @@ const ViewAllExamList = () => {
                 <TableCell align="right">{element.DateScheduled}</TableCell>
                 <TableCell align="right">{element.JobRole}</TableCell>
                 <TableCell align="right">{element.PaperID}</TableCell>
-                <Button
-                  variant="contained"
-                  sx={{ backgroundColor: "#183d78" }}
-                  onClick={() =>
-                    window.open(
-                      ` /promotion/evaluation/exam/updateExam/${EmployeeID}/${element.ExamID}`,
-                      "_self"
-                    )
-                  }
-                >
-                  Update&nbsp;
-                </Button>
-                <Button
-                  variant="contained"
-                  sx={{ backgroundColor: "#183d78" }}
-                  onClick={() => {
-                    deleteScheduledExamApi(EmployeeID, element.ExamID).then(
-                      () => {
-                        window.location.reload(false);
+                <TableCell align="right">{element.Status}</TableCell>
+                {element.Status === "Pending" ? (
+                  <TableCell align="center">
+                    <Button
+                      variant="contained"
+                      sx={{ backgroundColor: "#183d78" }}
+                      onClick={() =>
+                        window.open(
+                          ` /promotion/evaluation/exam/updateExam/${EmployeeID}/${element.ExamID}`,
+                          "_self"
+                        )
                       }
-                    );
-                  }}
-                >
-                  Delete&nbsp;
-                </Button>{" "}
+                    >
+                      Update&nbsp;
+                    </Button>
+                    <Button
+                      variant="contained"
+                      sx={{ backgroundColor: "#183d78" }}
+                      onClick={() => {
+                        deleteScheduledExamApi(EmployeeID, element.ExamID).then(
+                          () => {
+                            window.location.reload(false);
+                          }
+                        );
+                      }}
+                    >
+                      Delete&nbsp;
+                    </Button>
+                  </TableCell>
+                ) : (
+                  <TableCell align="center">
+                    <Button
+                      variant="contained"
+                      sx={{ backgroundColor: "#183d78" }}
+                      onClick={() => {
+                        deleteScheduledExamApi(EmployeeID, element.ExamID).then(
+                          () => {
+                            window.location.reload(false);
+                          }
+                        );
+                      }}
+                    >
+                      Delete&nbsp;
+                    </Button>
+                  </TableCell>
+                )}
               </TableRow>
             ))}
           </TableBody>

@@ -99,6 +99,7 @@ function ScheduleExamForm() {
   const [PaperID, setPaperID] = useState("");
   const [error, seterror] = useState(false);
   const [added, setadded] = useState(false);
+  const [Status, setStatus] = useState([]);
 
   const [PaperList, setPaperList] = useState([]);
 
@@ -117,8 +118,15 @@ function ScheduleExamForm() {
     e.preventDefault();
     //ExamID, ExamName, DateScheduled, JobRole, PaperID
 
-    const examDetails = { ExamID, ExamName, DateScheduled, JobRole, PaperID };
-    if (ExamID && ExamName && DateScheduled && JobRole && PaperID) {
+    const examDetails = {
+      ExamID,
+      ExamName,
+      DateScheduled,
+      JobRole,
+      PaperID,
+      Status,
+    };
+    if (ExamID && ExamName && DateScheduled && JobRole && PaperID && Status) {
       const response = await scheduleExamApi(EmployeeID, examDetails);
       if (response.success === true) {
         setExamID("");
@@ -126,6 +134,7 @@ function ScheduleExamForm() {
         setDateScheduled("");
         setJobRole("");
         setPaperID("");
+        setStatus("");
         setadded(true);
         setTimeout(() => {
           setadded(false);
@@ -219,6 +228,31 @@ function ScheduleExamForm() {
                       </FormHelperText>
                     </FormControl>
                   </Grid>
+                  <Grid container>
+                    <Grid item sm={4} md={4} className={classes.texFieldLabel}>
+                      <InputLabel>Paper ID</InputLabel>
+                    </Grid>
+                    <FormControl sx={{ m: 2, minWidth: 120 }}>
+                      <InputLabel id="demo-simple-select-helper-label">
+                        PaperID
+                      </InputLabel>
+                      <Select
+                        labelId="demo-simple-select-helper-label"
+                        id="demo-simple-select-helper"
+                        value={PaperID}
+                        label="PaperID"
+                        onChange={(e) => {
+                          setPaperID(e.target.value);
+                        }}
+                      >
+                        {PaperList.map((option, key) => (
+                          <MenuItem value={option.PaperID} key={key}>
+                            {option.PaperID}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </Grid>
                 </Grid>
 
                 <Grid item sm={12} md={6} className={classes.inputs}>
@@ -265,32 +299,18 @@ function ScheduleExamForm() {
                       fullWidth
                     />
                   </Grid>
-                </Grid>
-                <Grid item sm={12} md={6} className={classes.inputs}>
                   <Grid container>
                     <Grid item sm={4} md={4} className={classes.texFieldLabel}>
-                      <InputLabel>Paper ID</InputLabel>
+                      <InputLabel>Exam Status</InputLabel>
                     </Grid>
-                    <FormControl sx={{ m: 2, minWidth: 120 }}>
-                      <InputLabel id="demo-simple-select-helper-label">
-                        PaperID
-                      </InputLabel>
-                      <Select
-                        labelId="demo-simple-select-helper-label"
-                        id="demo-simple-select-helper"
-                        value={PaperID}
-                        label="PaperID"
-                        onChange={(e) => {
-                          setPaperID(e.target.value);
-                        }}
-                      >
-                        {PaperList.map((option, key) => (
-                          <MenuItem value={option.PaperID} key={key}>
-                            {option.PaperID}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
+                    <TextField
+                      label="Exam Status"
+                      variant="outlined"
+                      name="ExamName"
+                      value="Pending"
+                      disabled
+                      fullWidth
+                    />
                   </Grid>
                 </Grid>
               </Grid>

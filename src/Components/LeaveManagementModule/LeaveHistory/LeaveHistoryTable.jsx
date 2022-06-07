@@ -27,7 +27,7 @@ const LeaveHistoryTable = () => {
     setCancel(false);
   };
   const fetchData = async () => {
-    setLeaveHistory(await getLeaveHistory("E002"));
+    setLeaveHistory(await getLeaveHistory());
   };
   useEffect(() => {
     fetchData();

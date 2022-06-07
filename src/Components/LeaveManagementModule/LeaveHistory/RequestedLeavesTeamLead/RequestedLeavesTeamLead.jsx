@@ -7,17 +7,13 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { getRequestedLeaves } from "../../../../Api/LeaveManagementModule/LeaveApi";
-import ViewMoreDialog from "../ViewDetailDialog";
-import ViewDetailTeamLead from "../ViewDetailTeamLead";
-import { classNames } from "@react-pdf-viewer/core";
+import ViewDetailTeamLead from "./ViewDetailTeamLead";
 import useStyles from "./RequestedLeavesStyles";
 
 const RequestedLeavesTeamLead = () => {
   const classes = useStyles();
   const [requestedLeaves, setRequestedLeaves] = useState([]);
   const [open, setOpen] = useState(false);
-  const [leave, setLeave] = useState(null);
-  //const [cancel, setCancel] = useState(false);
   const [leaveDetail, setLeaveDetail]= useState(null);
   const[approve, setApprove] = useState(false);
   const[reject, setReject] = useState(false);
@@ -26,6 +22,7 @@ const RequestedLeavesTeamLead = () => {
   const handleClickOpen = (Leave) => {
     setLeaveDetail(Leave);
     setOpen(true);
+    
   };
 
   const onClose = () => {
@@ -37,10 +34,10 @@ const RequestedLeavesTeamLead = () => {
   
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [open]);
 
   const fetchData = async () => {
-    setRequestedLeaves(await getRequestedLeaves("E001"));
+    setRequestedLeaves(await getRequestedLeaves());
   };
   
   return (
@@ -98,7 +95,8 @@ const RequestedLeavesTeamLead = () => {
         approve = {approve}
         setReject = {setReject}
         reject = {reject}
-
+       requestedLeaves={requestedLeaves}
+       setRequestedLeaves = {setRequestedLeaves}
         />)
       }
 

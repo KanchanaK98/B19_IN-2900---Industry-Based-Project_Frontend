@@ -169,5 +169,6 @@ export const cancelLeave = (id, reason, employeeId) =>
   API.post(`/leave/cancel/${id}`, { reason, employeeId });
 export const getRequestedLeave = (employeeId) =>
   API.get("/leave/requestedLeave/" + employeeId);
-export const responseRequestedLeave = (id) =>
-  API.post("/leave/requestedLeave/response/" + id);
+
+  export const responseRequestedLeave = (id,reason) =>
+  API.post(`/leave/requestedLeave/response/${id}`,reason);

@@ -3,7 +3,7 @@ import { Typography, Button, Card, Grid, Avatar, Divider } from "@mui/material";
 import { Link } from "react-router-dom";
 function DisplayTeam({ team }) {
   const { _id, teamName, teamLeadID, TeamWithEmp, ProductOfTeam } = team;
-  const jobRole = JSON.parse(localStorage.getItem("profile")).jobRole; //profile should change to user
+  const jobRole = JSON.parse(localStorage.getItem("user")).jobRole; //profile should change to user
   return (
     <div>
       <Card

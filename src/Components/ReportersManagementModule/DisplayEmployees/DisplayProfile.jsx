@@ -22,7 +22,7 @@ import ViewProfileInfo from "./ViewProfileInfo";
 
 function DisplayProfile({ employee }) {
   const [teams, setTeams] = useState();
-  const jobRole = JSON.parse(localStorage.getItem("profile")).jobRole; //profile should change to user
+  const jobRole = JSON.parse(localStorage.getItem("user")).jobRole; //profile should change to user
   // const handleUpdate = () => {
   //   setUpdateEmployee(profile);
   //   setUpdateState(true);

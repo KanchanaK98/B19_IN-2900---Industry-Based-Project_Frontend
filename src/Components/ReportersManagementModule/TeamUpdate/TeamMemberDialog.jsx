@@ -24,7 +24,6 @@ const TeamMemberDialog = ({
   employees,
 }) => {
   const [members, setMembers] = useState(editTeam.teamMembers);
-  // console.log(editTeam.TeamWithEmp[0]);
 
   const handleSave = () => {
     setEditTeam({ ...editTeam, teamMembers: members });
@@ -32,12 +31,7 @@ const TeamMemberDialog = ({
   };
 
   const handleDelete = (member) => {
-    setMembers(members.filter((membr) => membr !== member)) 
-      // editTeam.TeamWithEmp[0].map((mem) => {
-      //   if (mem !== member) {
-      //     setEditTeam(member);
-      //   }
-      // });
+    setMembers(members.filter((membr) => membr !== member));
   };
 
   return (
@@ -82,24 +76,6 @@ const TeamMemberDialog = ({
                 }}
               />
             ))}
-          
-          {/* {members &&
-            members.map((member) => (
-              <Chip
-                label={member.employeeFirstName + " " + member.employeeLastName}
-                key={member.employeeID}
-                onDelete={() => handleDelete(member)}
-                sx={{
-                  mr: 0.5,
-                  mt: 1,
-                  bgcolor: "rgba(49, 24, 62, 1)",
-                  color: "white",
-                  "& .MuiSvgIcon-root": {
-                    color: "white",
-                  },
-                }}
-              />
-            ))} */}
         </Grid>
 
         <TextField

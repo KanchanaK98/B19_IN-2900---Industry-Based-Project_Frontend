@@ -64,15 +64,6 @@ const ViewAllPapersList = () => {
             Evaluation Papers
           </Typography>
         </Grid>
-        <Grid item xs={6} align="right">
-          <Button
-            variant="contained"
-            sx={{ backgroundColor: "#183d78" }}
-            onClick={() => window.open("previous", "_self")}
-          >
-            Schedule Exam&nbsp;
-          </Button>
-        </Grid>{" "}
       </Grid>{" "}
       <Grid
         container

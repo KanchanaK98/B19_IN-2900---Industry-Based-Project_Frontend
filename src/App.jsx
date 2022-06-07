@@ -43,7 +43,6 @@ import JobRoleDialogBox from "./Components/ReportersManagementModule/CreateEmplo
 import FindEmployeeSalary from "./Components/SalaryPaymentModule/EmployeeSalary/FindEmployeeSalary";
 import DisplayAllEmployees from "./Pages/ReportersManagementModule/DashBoard/DisplayAllEmployees";
 import ViewProfileInfo from "./Components/ReportersManagementModule/DisplayEmployees/ViewProfileInfo";
-import SlideShow from "./Components/ReportersManagementModule/SlideShow/SlideShow";
 function App() {
   const [open, setOpen] = useState(true);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
@@ -91,10 +90,8 @@ function App() {
                 path="/dashboard/create"
                 element={<CreateEmployeePage />}
               />
-              <Route
-                path="/slideshow"
-                element={<SlideShow />}
-              />
+         
+            
               <Route path="/teams" element={<TeamPage />} />
               <Route path="/teams/update/:id" element={<EditTeam />} />
               <Route path="/products" element={<ProductPage />} />

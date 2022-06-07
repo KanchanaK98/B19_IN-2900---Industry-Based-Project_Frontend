@@ -122,6 +122,10 @@ export const viewAllEmployees = () => {
 export const recentEmployees = () => {
   return API.get(`/employee/recentSection`);
 };
+
+export const getUser = (id) => {
+  return API.get(`/employee/user/${id}`);
+};
 //teams api
 export const createTeams = (teamcreate) =>
   API.post(`/employee/teamAdd`, teamcreate);

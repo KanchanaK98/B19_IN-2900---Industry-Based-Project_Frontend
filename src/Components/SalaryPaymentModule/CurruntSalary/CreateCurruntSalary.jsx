@@ -97,6 +97,17 @@ export default function CreateCurruntSalary() {
     fetchData();
   }, []);
 
+  //------------------------------------------------------
+  // console.log("----------------------------------------");
+
+  // let result = profiles.filter(
+  //   ({ number: employeeID }) =>
+  //     !curruntSalaryList.includes({ number: EmployeeID })
+  // );
+  // console.log("result", result);
+  // console.log("----------------------------------------", curruntSalaryList);
+  //------------------------------------------------------
+
   //----------------------------------------------------------------
   // const [open, setOpen] = useState(false);
 
@@ -161,6 +172,7 @@ export default function CreateCurruntSalary() {
                         label="demo-simple-select-label"
                         onChange={(event) => {
                           if (
+                            // let result = initialWithMoreNumbers.filter(number => !initialNumbers.includes(number))
                             profiles.employeeID !== curruntSalaryList.EmployeeID
                           ) {
                             profiles.map((option, key) => (

@@ -1,6 +1,62 @@
 import axios from "axios";
 
-const API = axios.create({ baseURL: "http://localhost:8070" });
+const API = axios.create({
+  baseURL: "http://localhost:8070",
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
+API.interceptors.request.use(
+  (config) => {
+    if (!config.headers["Authorization"]) {
+      config.headers["Authorization"] = `Bearer ${
+        JSON.parse(localStorage.getItem("user")).accessToken
+      }`;
+    }
+    return config;
+  },
+  async (error) => {
+    return Promise.reject(error);
+  }
+);
+
+const refreshTheAccessToken = async () => {
+  const response = await axios.post("http://localhost:8070/refresh", {
+    token: JSON.parse(localStorage.getItem("user")).refreshToken,
+  });
+
+  let existsUser = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {};
+
+  existsUser["accessToken"] = response.data.accessToken;
+  existsUser["refreshToken"] = response.data.refreshToken;
+  localStorage.setItem("user", JSON.stringify(existsUser));
+};
+
+API.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  async (error) => {
+    const previousRequest = error.config;
+
+    if (error.response.status === 403 && !previousRequest._retry) {
+      previousRequest._retry = true;
+      try {
+        await refreshTheAccessToken();
+        previousRequest.headers["Authorization"] = `Bearer ${
+          JSON.parse(localStorage.getItem("user")).accessToken
+        }`;
+        return API(previousRequest);
+      } catch (error) {
+        return Promise.reject(error);
+      }
+    }
+
+    return Promise.reject(error);
+  }
+);
+
 // candidate API
 export const createCandidate = (candidateData) =>
   API.post("/recruitment/candidate/create", candidateData);
@@ -13,7 +69,7 @@ export const fetchRecentCandidates = () =>
   API.get(`/recruitment/candidates/recent`);
 
 // Interview API
-export const fetchEmployees = () => API.get(`/employee/`);
+export const fetchEmployees = () => API.get(`/employee/getall`);
 export const createInterview = (interviewData) =>
   API.post(`/recruitment/interview/create`, interviewData);
 export const getInterviewList = (employeeID) =>
@@ -30,7 +86,7 @@ export const getInterviewStats = (employeeID) => {
 };
 
 // LogIn API
-export const userLogin = (user) => API.post("/login", user);
+//export const userLogin = (user) => API.post("/login", user);
 
 // Assets API
 
@@ -55,13 +111,8 @@ export const createCurrentSalarySheet = (newCurruntSalarySheet) =>
   API.post("/salary/currentSalary/create", newCurruntSalarySheet);
 export const findCurrentSalarySheet = (EmployeeID) =>
   API.get(`/salary/currentSalary/${EmployeeID}`);
-// export const updateCurrentSalarySheet = (updatedData, EmployeeID) =>
-//   API.patch(`/salary/currentSalary/update/${EmployeeID}`, updatedData);
-export const updateCurrentSalarySheet = (updatedData) =>
-  API.patch(
-    `/salary/currentSalary/update/${updatedData.EmployeeID}`,
-    updatedData
-  );
+export const updateCurrentSalarySheet = (EmployeeID, updatedData) =>
+  API.patch(`/salary/currentSalary/update/${EmployeeID}`, updatedData);
 export const deleteCurrentSalarySheet = (EmployeeID) =>
   API.delete(`/salary/currentSalary/delete/${EmployeeID}`);
 
@@ -87,30 +138,64 @@ export const createQuestions = (newQuestion) =>
 export const viewAllPapersList = () => API.get("/promotion/Paper");
 export const createPaper = (newPaper) =>
   API.post("/promotion/Paper/createPaper", newPaper);
-export const addMoreQuestions = (PaperID, [Questions]) =>
-  API.patch(`/promotion/Paper/addMoreQuestions/${PaperID}`, [Questions]);
+export const addMoreQuestions = (PaperID, Questions) =>
+  API.patch(`/promotion/Paper/addMoreQuestions/${PaperID}`, Questions);
 export const updatePaperDetails = (PaperID, updatedData) =>
   API.patch(`/promotion/Paper/updatePaperDetails/${PaperID}`, updatedData);
 export const deletePaper = (PaperID) =>
   API.delete(`/promotion/Paper/delete/${PaperID}`);
+export const viewOnePaper = (PaperID) =>
+  API.get(`/promotion/Paper/display/${PaperID}`);
 
 // employee's paper API
 export const displayPaper = (EmployeeID) =>
   API.get(`/promotion/Paper/${EmployeeID}`);
 
 //ratings  for employee API
-export const submitPaper = (EmployeeID) =>
-  API.post(`/promotion/submitPaper/${EmployeeID}`);
+export const submitPaper = (EmployeeID, Answer) =>
+  API.post(`/promotion/submitPaper/${EmployeeID}`, Answer);
 export const displayFeedback = (EmployeeID) =>
   API.get(`/promotion/evaluation/mySubmissions/${EmployeeID}`);
+
+//schedule exam by HR
+export const scheduleExam = (EmployeeID, examDetails) =>
+  API.post(
+    `/promotion/evaluation/exam/scheduleExam/${EmployeeID}`,
+    examDetails
+  );
+export const viewAllExams = (EmployeeID) =>
+  API.get(`/promotion/evaluation/exam/viewExam/${EmployeeID}`);
+export const updateExamDetails = (EmployeeID, ExamID, examDetails) =>
+  API.patch(
+    `/promotion/evaluation/exam/updateExam/${EmployeeID}/${ExamID}`,
+    examDetails
+  );
+export const viewOneExam = (EmployeeID, ExamID) =>
+  API.get(`/promotion/evaluation/exam/viewOneExam/${EmployeeID}/${ExamID}`);
+export const deleteScheduledExam = (EmployeeID, ExamID) =>
+  API.delete(`/promotion/evaluation/exam/deleteExam/${EmployeeID}/${ExamID}`);
 
 //team leads API
 export const allSubmissions = () =>
   API.get("/promotion/evaluation/allSubmissions");
 export const displayTeamMemberSubmissions = (TeamLeadID) =>
-  API.get(`/promotion//evaluation/allSubmissions/${TeamLeadID}`);
-export const evaluatePaper = (EmployeeID, PaperID) =>
-  API.patch(`/promotion/evaluation/evaluatePaper/${EmployeeID}/${PaperID}`); //check
+  API.get(`/promotion/evaluation/allSubmissions/${TeamLeadID}`);
+export const evaluatePaper = (
+  TeamLeadID,
+  EmployeeID,
+  PaperID,
+  Curruntdata,
+  Feedback
+) =>
+  API.patch(
+    `/promotion/evaluation/evaluatePaper/${TeamLeadID}/${EmployeeID}/${PaperID}`,
+    Curruntdata,
+    Feedback
+  );
+export const displayAnsweredPaperToTeamlead = (EmployeeID, PaperID) =>
+  API.get(
+    `/promotion/evaluation/allSubmissions/displayOne/${EmployeeID}/${PaperID}`
+  );
 
 //employee api
 export const createEmployee = (employee) =>
@@ -125,6 +210,10 @@ export const viewAllEmployees = () => {
 
 export const recentEmployees = () => {
   return API.get(`/employee/recentSection`);
+};
+
+export const getUser = (id) => {
+  return API.get(`/employee/user/${id}`);
 };
 //teams api
 export const createTeams = (teamcreate) =>

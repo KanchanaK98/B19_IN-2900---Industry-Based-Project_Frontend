@@ -35,7 +35,7 @@ function ProductCountUp() {
           display: "flex",
           "& > :not(style)": {
             m: 1,
-            width: 220,
+            width: 300,
             height: 130,
             mt: 4,
           },
@@ -43,10 +43,14 @@ function ProductCountUp() {
       >
         <Paper
           elevation={1}
-          sx={{ backgroundColor: "#16c45b", padding: 5, textAlign: "center" }}
+          sx={{
+            backgroundImage: `linear-gradient(to right, rgba(0, 224, 255, 1), rgba(0, 133, 255, 1))`,
+            padding: 5,
+            textAlign: "center",
+            borderRadius:5
+          }}
         >
-          <Typography variant="h5" sx={{ fontWeight: "bold", color: "white" }}>
-            {" "}
+          <Typography variant="h6" sx={{ fontWeight: "bold", color: "white" }}>
             PRODUCTS
           </Typography>
           <Typography variant="h3" sx={{ fontWeight: "bold", color: "white" }}>
@@ -55,9 +59,14 @@ function ProductCountUp() {
         </Paper>
         <Paper
           elevation={1}
-          sx={{ backgroundColor: "#c23a70", padding: 5, textAlign: "center" }}
+          sx={{
+            backgroundImage: `linear-gradient(to right, rgba(0, 224, 255, 1), rgba(0, 133, 255, 1))`,
+            padding: 5,
+            textAlign: "center",
+            borderRadius:5
+          }}
         >
-          <Typography variant="h5" sx={{ fontWeight: "bold", color: "white" }}>
+          <Typography variant="h6" sx={{ fontWeight: "bold", color: "white" }}>
             TEAMS
           </Typography>
           <Typography variant="h3" sx={{ fontWeight: "bold", color: "white" }}>
@@ -66,26 +75,18 @@ function ProductCountUp() {
         </Paper>
         <Paper
           elevation={1}
-          sx={{ backgroundColor: "#edeb53", padding: 5, textAlign: "center" }}
+          sx={{
+            backgroundImage: `linear-gradient(to right, rgba(0, 224, 255, 1), rgba(0, 133, 255, 1))`,
+            padding: 5,
+            textAlign: "center",
+            borderRadius:5
+          }}
         >
-          {" "}
-          <Typography variant="h5" sx={{ fontWeight: "bold", color: "white" }}>
+          <Typography variant="h6" sx={{ fontWeight: "bold", color: "white" }}>
             EMPLOYEES
           </Typography>
           <Typography variant="h3" sx={{ fontWeight: "bold", color: "white" }}>
             <CountUp end={employees.length} duration={2} />
-          </Typography>
-        </Paper>
-        <Paper
-          elevation={1}
-          sx={{ backgroundColor: "#903ac2", padding: 5, textAlign: "center" }}
-        >
-          {" "}
-          <Typography variant="h5" sx={{ fontWeight: "bold", color: "white" }}>
-            *
-          </Typography>
-          <Typography variant="h2" sx={{ fontWeight: "bold", color: "white" }}>
-            5
           </Typography>
         </Paper>
       </Box>

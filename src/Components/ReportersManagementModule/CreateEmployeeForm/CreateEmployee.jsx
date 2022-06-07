@@ -1,4 +1,3 @@
-//982111765V
 import { React, useState } from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -8,8 +7,14 @@ import Grid from "@mui/material/Grid";
 import PersonIcon from "@mui/icons-material/Person";
 import Paper from "@mui/material/Paper";
 import { createEmployee } from "../../../Api/ReportersManagementModule/EmployeeApi";
-import { Typography } from "@mui/material";
-import JobRoleDialogBox from './JobRoleDialogBox.jsx'
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Typography,
+} from "@mui/material";
+import JobRoleDialogBox from "./JobRoleDialogBox.jsx";
 function CreateEmployee() {
   const [inputs, setInputs] = useState({
     employeeID: "",
@@ -48,6 +53,7 @@ function CreateEmployee() {
         <Box>
           <Paper elevation={3} style={{ marginInlineEnd: 2, padding: 30 }}>
             <Grid>
+            <Grid>
               <Typography variant="h5">
                 <PersonIcon sx={{ width: 50, height: 50 }} />
                 CREATE EMPLOYEE
@@ -67,7 +73,7 @@ function CreateEmployee() {
                   <Grid item xs={6} md={9}>
                     <TextField
                       id="filled-basic"
-                      label="Filled"
+                      label="employeeID"
                       variant="filled"
                       name="employeeID"
                       value={inputs.employeeID}
@@ -87,7 +93,7 @@ function CreateEmployee() {
                   <Grid item xs={6} md={9}>
                     <TextField
                       id="filled-basic"
-                      label="Filled"
+                      label="NIC"
                       variant="filled"
                       name="NIC"
                       value={inputs.NIC}
@@ -105,7 +111,7 @@ function CreateEmployee() {
                   <Grid item xs={6} md={9}>
                     <TextField
                       id="filled-basic"
-                      label="Filled"
+                      label="First Name"
                       variant="filled"
                       name="employeeFirstName"
                       value={inputs.employeeFirstName}
@@ -125,7 +131,7 @@ function CreateEmployee() {
                   <Grid item xs={6} md={9}>
                     <TextField
                       id="filled-basic"
-                      label="Filled"
+                      label="Last Name"
                       variant="filled"
                       name="employeeLastName"
                       value={inputs.employeeLastName}
@@ -143,7 +149,7 @@ function CreateEmployee() {
                   <Grid item xs={6} md={9}>
                     <TextField
                       id="filled-basic"
-                      label="Filled"
+                      label="Company Email"
                       variant="filled"
                       name="companyEmail"
                       value={inputs.companyEmail}
@@ -170,7 +176,7 @@ function CreateEmployee() {
                       onChange={handleChange}
                       fullWidth
                     /> */}
-                    <JobRoleDialogBox/>
+                    <JobRoleDialogBox />
                   </Grid>
                 </Grid>
               </Grid>
@@ -180,7 +186,7 @@ function CreateEmployee() {
                     <FormLabel className="label">Job Type :</FormLabel>
                   </Grid>
                   <Grid item xs={6} md={9}>
-                    <TextField
+                    {/* <TextField
                       id="filled-basic"
                       label="Filled"
                       variant="filled"
@@ -188,7 +194,23 @@ function CreateEmployee() {
                       value={inputs.jobType}
                       onChange={handleChange}
                       fullWidth
-                    />
+                    /> */}
+
+                    <FormControl fullWidth>
+                      <InputLabel id="demo-simple-select-label">
+                        Job Type
+                      </InputLabel>
+                      <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={inputs.jobType}
+                        label="Job Type"
+                        onChange={handleChange}
+                        SelectProps={{ renderValue: inputs.jobType }}
+                      >
+                        <MenuItem value={1}>White Collar</MenuItem>
+                      </Select>
+                    </FormControl>
                   </Grid>
                 </Grid>
               </Grid>
@@ -205,7 +227,7 @@ function CreateEmployee() {
                     </FormLabel>
                   </Grid>
                   <Grid item xs={6} md={9}>
-                    <TextField
+                    {/* <TextField
                       id="filled-basic"
                       label="Filled"
                       variant="filled"
@@ -213,23 +235,42 @@ function CreateEmployee() {
                       value={inputs.status}
                       onChange={handleChange}
                       fullWidth
-                    />
+                    
+                    /> */}
+                     <FormControl fullWidth>
+                      <InputLabel id="demo-simple-select-label">
+                     Status
+                      </InputLabel>
+                      <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={inputs.status}
+                        label="Status"
+                        onChange={handleChange}
+                        SelectProps={{ renderValue: inputs.status }}
+                      >
+                        <MenuItem value={1}>Probationary</MenuItem>
+                       
+                      </Select>
+                    </FormControl>
                   </Grid>
                 </Grid>
               </Grid>
 
-              <Grid></Grid>
+             
               <Button
                 variant="contained"
-                style={{
-                  padding: "10px 555px",
+               sx={{
+             
                   marginBottom: "20px",
-                  marginLeft: "10px",
+                
                 }}
+                fullWidth
                 type="submit"
               >
                 CREATE
               </Button>
+            </Grid>
             </Grid>
           </Paper>
         </Box>

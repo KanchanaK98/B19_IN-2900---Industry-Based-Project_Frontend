@@ -1,67 +1,133 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import { Button } from "@mui/material/";
-//import { viewAllQuestionsApi } from "../../../Api/PromotionModule/QuestionApi/viewAllQuestionsApi";
-import { createPaperApi } from "../../../Api/PromotionModule/PaperApi/createPaperApi";
+import { Box, Grid, Card, Typography, Button } from "@mui/material";
+import CardContent from "@mui/material/CardContent";
+import CardActions from "@mui/material/CardActions";
+import { makeStyles } from "@mui/styles";
+import { viewAllPapersListApi } from "../../../Api/PromotionModule/PaperApi/viewAllPapersListApi";
 
+const useStyles = makeStyles({
+  root: {
+    minWidth: 200,
+    boxShadow: "1px 1px #9da1a6",
+    "&:hover": {
+      backgroundColor: "#eceff1",
+    },
+  },
+  text: {
+    fontSize: 14,
+  },
+  pos: {
+    marginBottom: 12,
+    justifyContent: "center",
+  },
+  gridContainer: {
+    paddingLeft: "40px",
+    paddingRight: "40px",
+    shadow: "red",
+  },
+  button_eval: {
+    justifyContent: "left",
+  },
+});
 const ViewAllPapersList = () => {
-  const [PaperList, setPaperList] = useState([]); //
+  const classes = useStyles();
+  const [PaperList, setPaperList] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:8070/promotion/Paper").then((allRecords) => {
-      setPaperList(allRecords.data);
-      console.log("data loaded from View All PaperList - frontend");
-      // console.log(allRecords.data);
-    });
+    async function fetchData() {
+      setPaperList(await viewAllPapersListApi());
+    }
+    fetchData();
   }, []);
 
   return (
-    <div>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>PaperID</TableCell>
-              <TableCell align="right">PaperName</TableCell>
-              <TableCell align="right">PaperType</TableCell>
-              <TableCell align="right">DateCreated</TableCell>
-              <TableCell align="right">Questions</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {PaperList.map((paper, key) => (
-              <TableRow
-                key={key}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {paper.PaperID}
-                </TableCell>
-                <TableCell align="right">{paper.PaperName}</TableCell>
-                <TableCell align="right">{paper.PaperType}</TableCell>
-                <TableCell align="right">{paper.DateCreated}</TableCell>
-                <TableCell align="right">{paper.Questions}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() => window.open("/promotion/Paper/createPaper", "_self")}
+    <Box
+      sx={{
+        width: "100%",
+        backgroundColor: "#d7dde0",
+        padding: 3,
+        marginTop: false,
+      }}
+    >
+      <Grid container spacing={2} columns={12}>
+        <Grid item xs={6}>
+          <Typography
+            variant="h4"
+            sx={{
+              m1: 2,
+              fontWeight: "Bold",
+              color: "#183d78",
+              mb: 2,
+              ml: 2,
+            }}
+          >
+            Evaluation Papers
+          </Typography>
+        </Grid>
+      </Grid>{" "}
+      <Grid
+        container
+        spacing={4}
+        className={classes.gridContainer}
+        justify="center"
       >
         {" "}
-        Create New
-      </Button>
-    </div>
+        {PaperList.map((paper, key) => (
+          <Grid item xs={12} sm={6} md={4} key={key}>
+            <Card className={classes.root} variant="outlined">
+              <CardContent>
+                <Typography sx={{ fontWeight: "bold", color: "#546e7a" }}>
+                  Paper ID :
+                </Typography>
+                <Typography
+                  className={classes.text}
+                  color="textSecondary"
+                  gutterBottom
+                >
+                  {paper.PaperID}
+                </Typography>
+                <Typography sx={{ fontWeight: "bold", color: "#546e7a" }}>
+                  Paper Name :
+                </Typography>
+                <Typography
+                  className={classes.text}
+                  color="textSecondary"
+                  gutterBottom
+                >
+                  {paper.PaperName}
+                </Typography>
+                <Typography sx={{ fontWeight: "bold", color: "#546e7a" }}>
+                  Paper Type :
+                </Typography>
+                <Typography className={classes.text} color="textSecondary">
+                  {paper.PaperType}
+                </Typography>
+                <Typography sx={{ fontWeight: "bold", color: "#546e7a" }}>
+                  Date Created :
+                </Typography>
+                <Typography className={classes.text} color="textSecondary">
+                  {paper.DateCreated}
+                </Typography>
+              </CardContent>
+              <CardActions className={classes.pos}>
+                <Button
+                  variant="contained"
+                  sx={{ backgroundColor: "#183d78" }}
+                  onClick={() =>
+                    window.open(
+                      `/promotion/Paper/display/${paper.PaperID}`,
+                      "_self"
+                    )
+                  }
+                >
+                  View Paper&nbsp;
+                </Button>
+              </CardActions>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+    </Box>
   );
 };
 export default ViewAllPapersList;

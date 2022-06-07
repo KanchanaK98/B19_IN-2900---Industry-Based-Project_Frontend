@@ -36,11 +36,21 @@ import ViewAllQuestions from "./Pages/PromotionModule/Questions/ViewAllQuestions
 import CreateQuestions from "./Components/PromotionModule/Question/CreateQuestions";
 import ViewAllPapersDelete from "./Pages/PromotionModule/Paper/DisplayPaperAndDelete/ViewAllPapersDelete";
 import CreateNewPaper from "./Pages/PromotionModule/Paper/CreatePaper";
+import ViewOnePaper from "./Components/PromotionModule/Paper/ViewOnePaper";
+import UpdatePaperDetails from "./Components/PromotionModule/Paper/UpdatePaperDetails";
 import AllSubmissions from "./Pages/PromotionModule/AllSubmissions/AllSubmissions";
 import DisplayTeamMemberSubmissions from "./Pages/PromotionModule/Evaluations/TeamLead/DisplayTeamSubmissionsAndFeedback";
+import DispalyAndSubmitPaper from "./Components/PromotionModule/Submit/DispalyAndSubmitPaper";
+import EvaluatePaper from "./Components/PromotionModule/Evaluation/EvaluatePaper";
+import DisplayMyFeedback from "./Components/PromotionModule/Submit/DisplayFeedback";
 import JobRoleDialogBox from "./Components/ReportersManagementModule/CreateEmployeeForm/JobRoleDialogBox";
-
 import FindEmployeeSalary from "./Components/SalaryPaymentModule/EmployeeSalary/FindEmployeeSalary";
+import DisplayAllEmployees from "./Pages/ReportersManagementModule/DashBoard/DisplayAllEmployees";
+import ViewProfileInfo from "./Components/ReportersManagementModule/DisplayEmployees/ViewProfileInfo";
+import ViewAllExamList from "./Components/PromotionModule/Exam/ViewAllExamList";
+import ScheduleExamForm from "./Components/PromotionModule/Exam/ScheduleExamForm";
+import UpdateExamForm from "./Components/PromotionModule/Exam/UpdateExamForm";
+
 function App() {
   const [open, setOpen] = useState(true);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
@@ -83,21 +93,26 @@ function App() {
               {/* Reporter management */}
               <Route path="/dashboard" element={<DashBord />} />
               <Route path="/profile/update/" element={<EditEmployee />} />
+              <Route path="/user/update/" element={<EditEmployee />} />
               <Route
                 path="/dashboard/create"
                 element={<CreateEmployeePage />}
               />
+         
+            
               <Route path="/teams" element={<TeamPage />} />
               <Route path="/teams/update/:id" element={<EditTeam />} />
               <Route path="/products" element={<ProductPage />} />
               <Route path="/products/create" element={<CreateProductPage />} />
               <Route path="/teams/create" element={<CreateTeamPage />} />
               <Route path="/pro" element={<CreateProduct />} />
-              <Route path="/user" element={<UserProfile user={user} />} />
+              <Route path="/user" element={<UserProfile user={user} />}/>
               <Route path="/products/update/:id" element={<EditProduct />} />
               <Route path="progress" element={<ProgressBar />} />
               <Route path="tree" element={<CustomizedTeamView />} />
               <Route path="job" element={<JobRoleDialogBox/>}/>
+              <Route path="display" element={<ViewProfileInfo/>}/>
+              
 
               {/* Recruitment management */}
               <Route path="/candidate" element={<CreateCandidate />} />
@@ -118,7 +133,6 @@ function App() {
               <Route path="/requestLeave" element={<RequestLeaves />} />
               <Route path="/leaveHistory" element={<LeaveHistory />} />
               <Route path="/requestedLeaves" element={<RequestedLeaveList />} />
-
 
               {/* Payrolls management */}
               <Route
@@ -166,12 +180,45 @@ function App() {
                 element={<CreateNewPaper />}
               />
               <Route
+                path="/promotion/Paper/display/:PaperID"
+                element={<ViewOnePaper />}
+              />
+              <Route
+                path="/promotion/Paper/updatePaperDetails/:PaperID"
+                element={<UpdatePaperDetails />}
+              />
+              <Route
                 path="/promotion/evaluation/allSubmissions"
                 element={<AllSubmissions />}
               />
               <Route
                 path="/promotion/evaluation/allSubmissions/:EmployeeID"
                 element={<DisplayTeamMemberSubmissions />}
+              />
+              <Route
+                path="/promotion/Paper/:EmployeeID"
+                element={<DispalyAndSubmitPaper />} //
+              />
+              <Route
+                path="/promotion/evaluation/evaluatePaper/:TeamLeadID/:EmployeeID/:PaperID"
+                element={<EvaluatePaper />}
+              />
+              <Route
+                path="/promotion/evaluation/mySubmissions/:EmployeeID"
+                element={<DisplayMyFeedback />}
+              />
+              <Route
+                path="/promotion/evaluation/exam/viewExam/:EmployeeID"
+                element={<ViewAllExamList />}
+              />
+              <Route
+                path="/promotion/evaluation/exam/scheduleExam/:EmployeeID"
+                element={<ScheduleExamForm />}
+              />
+
+              <Route
+                path="/promotion/evaluation/exam/updateExam/:EmployeeID/:ExamID"
+                element={<UpdateExamForm />}
               />
             </Routes>
           </Grid>

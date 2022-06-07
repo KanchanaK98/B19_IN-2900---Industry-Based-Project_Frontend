@@ -11,9 +11,6 @@ import { Grid } from "@mui/material";
 import GroupsIcon from "@mui/icons-material/Groups";
 import { Box } from "@mui/system";
 
-// web.cjs is required for IE11 support
-// import { useSpring, animated } from 'react-spring/web.cjs';
-
 function MinusSquare(props) {
   return (
     <SvgIcon fontSize="inherit" style={{ width: 14, height: 14 }} {...props}>
@@ -106,7 +103,16 @@ export default function CustomizedTeamView() {
       defaultCollapseIcon={<MinusSquare />}
       // defaultExpandIcon={<PlusSquare />}
       defaultExpandIcon={
-    <Box>    <GroupsIcon sx={{ width: 40, height: 40, backgroundColor: "blue" ,borderRadius:1}} /></Box>
+        <Box >
+          <GroupsIcon
+            sx={{
+              width: 40,
+              height: 40,
+              backgroundColor: "blue",
+              borderRadius: 1,
+            }}
+          />
+        </Box>
       }
       defaultEndIcon={<CloseSquare />}
       sx={{ height: 740, flexGrow: 1, maxWidth: 400, overflowY: "auto" }}
@@ -116,51 +122,37 @@ export default function CustomizedTeamView() {
           teams.map((team, i) => {
             return (
               <Card sx={{ mt: 2, padding: 3 }}>
-              <Box sx={{m:1}}>
-              <StyledTreeItem nodeId={i + 1} label={team.teamName}>
-                  <TreeView defaultExpanded={["0"]}>
-                    {team.TeamWithEmp.map((member, j) => {
-                      return (
-                        <>
-                          <Card sx={{ padding: 1, mb: 2 }}>
-                            <Grid container sx={{ mb: 2 }} key={team._id}>
-                              <Grid item md={1}>
-                                <Avatar src={member.profilePic} />
+                <Box sx={{ m: 1 }}>
+                  <StyledTreeItem nodeId={i + 1} label={team.teamName}>
+                    <TreeView defaultExpanded={["0"]}>
+                      {team.TeamWithEmp.map((member, j) => {
+                        return (
+                          <>
+                            <Card sx={{ padding: 1, mb: 2 }}>
+                              <Grid container sx={{ mb: 2 }} key={team._id}>
+                                <Grid item md={1}>
+                                  <Avatar src={member.profilePic} />
+                                </Grid>
+                                <Grid item md={11}>
+                                  <StyledTreeItem
+                                    nodeId={j}
+                                    label={member.employeeName}
+                                  />
+                                </Grid>
                               </Grid>
-                              <Grid item md={11}>
-                                <StyledTreeItem
-                                  nodeId={j}
-                                  label={member.employeeName}
-                                />
-                              </Grid>
-                            </Grid>
-                          </Card>
-                        </>
-                      );
+                            </Card>
+                          </>
+                        );
 
-                      //  console.log(++flag)
-                    })}
-                  </TreeView>
-                </StyledTreeItem>
-              </Box>
+                        //  console.log(++flag)
+                      })}
+                    </TreeView>
+                  </StyledTreeItem>
+                </Box>
               </Card>
             );
           })}
       </StyledTreeItem>
-      {/* <StyledTreeItem nodeId="1" label="Main">
-        <StyledTreeItem nodeId="2" label="Hello" />
-        <StyledTreeItem nodeId="3" label="Subtree with children">
-          <StyledTreeItem nodeId="6" label="Hello" />
-          <StyledTreeItem nodeId="7" label="Sub-subtree with children">
-            <StyledTreeItem nodeId="9" label="Child 1" />
-            <StyledTreeItem nodeId="10" label="Child 2" />
-            <StyledTreeItem nodeId="11" label="Child 3" />
-          </StyledTreeItem>
-          <StyledTreeItem nodeId="8" label="Hello" />
-        </StyledTreeItem>
-        <StyledTreeItem nodeId="4" label="World" />
-        <StyledTreeItem nodeId="5" label="Something something" />
-      </StyledTreeItem> */}
     </TreeView>
   );
 }

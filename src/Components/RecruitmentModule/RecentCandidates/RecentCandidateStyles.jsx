@@ -34,6 +34,15 @@ const useStyles = makeStyles((theme) => ({
     //     color: "rgba(30, 171, 0, 0.8)"
     // }
   },
+  skeleton : {
+    display: "flex",
+    alignItems: "center",
+    flexDirection: "column",
+    "& .MuiSkeleton-root" : {
+      margin: theme.spacing(1, 0),
+      borderRadius: theme.spacing(2),
+    }
+  }
 }));
 
 export default useStyles;

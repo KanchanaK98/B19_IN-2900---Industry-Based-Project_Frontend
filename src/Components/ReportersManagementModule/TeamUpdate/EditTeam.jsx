@@ -64,18 +64,11 @@ function EditTeam() {
     fetchData();
   }, []);
 
-  console.log(members);
-  // team.TeamWithEmp.map((tm, i) => {
-  //   if (tm.employeeID === team.teamLeadID) {
-  //     tm.teamLeder = tm.employeeFirstName + " " + tm.employeeLastName;
-  //   }
-  // });
-  //-------------------------
   const [openDialog, setOpenDialog] = useState(false);
   const handleOpenDialog = () => {
     setOpenDialog(true);
   };
-  //-----------------------------------
+
   return (
     <div>
       <Paper sx={{ padding: 4 }}>
@@ -158,13 +151,6 @@ function EditTeam() {
               <Grid item sm={8} md={8}>
                 <TextField
                   id="data"
-                  // placeholder={team.TeamWithEmp.map((tm, i) => {
-                  //   if (tm.employeeID === team.teamLeadID) {
-                  //     tm.teamLeder =
-                  //       tm.employeeFirstName + " " + tm.employeeLastName;
-                  //     return tm.teamLeder;
-                  //   }
-                  // })}
                   variant="filled"
                   name="teamLeader"
                   select

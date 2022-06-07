@@ -20,36 +20,43 @@ import { Typography } from "@mui/material";
 import { updateEmployee } from "../../../Api/ReportersManagementModule/EmployeeApi";
 
 function EditEmployee() {
+  const jobRole = JSON.parse(localStorage.getItem("profile")).jobRole; //profile should change to user
   const location = useLocation();
-  const { profile } = location.state;
-  // console.log({ profile: profile, mes: "hi" });
+  const { employee } = location.state;
+  console.log({ employee: employee, mes: "hi" });
   // const id = useParams().empID;
   const [inputs, setInputs] = useState({
-    employeeID: profile.user.employeeID,
-    employeeFirstName: profile.user.employeeFirstName,
-    employeeLastName: profile.user.employeeLastName,
-    streetNo: profile.user.streetNo ? profile.user.streetNo : "",
-    phoneNumber: profile.user.phoneNumber ? profile.user.phoneNumber : "",
-    companyEmail: profile.user.companyEmail,
-    profilePic: profile.user.profilePic,
-    NIC: profile.user.NIC ? profile.user.NIC : "",
-    city: profile.user.city ? profile.user.city : "",
-    birthday: new Date(profile.user.birthday)
-      ? new Date(profile.user.birthday)
+    // employeeID: employee.user.employeeID,
+    employeeFirstName: employee.user.employeeFirstName,
+    employeeLastName: employee.user.employeeLastName,
+    streetNo: employee.user.streetNo ? employee.user.streetNo : "",
+    phoneNumber: employee.user.phoneNumber ? employee.user.phoneNumber : "",
+    companyEmail: employee.user.companyEmail,
+    profilePic: employee.user.profilePic,
+    NIC: employee.user.NIC ? employee.user.NIC : "",
+    city: employee.user.city ? employee.user.city : "",
+    birthday: new Date(employee.user.birthday)
+      ? new Date(employee.user.birthday)
       : "",
+    //------------------------------------
+    status: employee.user.status ? employee.user.status : "",
+    employeeID: employee.user.employeeID ? employee.user.employeeID : "",
+    jobRole: employee.user.jobRole ? employee.user.jobRole : "",
+    jobType: employee.user.jobType ? employee.user.jobType : "",
+
     //-------------------------------------------------------------
-    ordinaryLevelResult: profile.EmployeeWithAcc
-      ? profile.EmployeeWithAcc.ordinaryLevelResult
+    ordinaryLevelResult: employee.EmployeeWithAcc
+      ? employee.EmployeeWithAcc.ordinaryLevelResult
       : " ",
-    advancedLevelResults: profile.EmployeeWithAcc
-      ? profile.EmployeeWithAcc.advancedLevelResults
+    advancedLevelResults: employee.EmployeeWithAcc
+      ? employee.EmployeeWithAcc.advancedLevelResults
       : " ",
-    achievements: profile.EmployeeWithAcc
-      ? profile.EmployeeWithAcc.achievements
+    achievements: employee.EmployeeWithAcc
+      ? employee.EmployeeWithAcc.achievements
       : " ",
-    degree: profile.EmpWithProf ? profile.EmpWithProf.degree : " ",
-    language: profile.EmpWithProf ? profile.EmpWithProf.language : " ",
-    course: profile.EmpWithProf ? profile.EmpWithProf.course : " ",
+    degree: employee.EmpWithProf ? employee.EmpWithProf.degree : " ",
+    language: employee.EmpWithProf ? employee.EmpWithProf.language : " ",
+    course: employee.EmpWithProf ? employee.EmpWithProf.course : " ",
   });
 
   const handleChange = (e) => {
@@ -70,21 +77,6 @@ function EditEmployee() {
     display: "none",
   });
 
-  //-----------------------------------
-  // const showPreview = (event) => {
-  //   if (event.target.files && event.target.files[0]) {
-  //     let imgFile = event.target.files[0];
-  //     const reader = new FileReader();
-  //     reader.onload = (x) => {
-  //       setProImg(imgFile);
-  //       setProPicSrc(x.target.result);
-  //       console.log(x.target.value);
-  //     };
-  //     reader.readAsDataURL(imgFile);
-  //   }
-  // };
-
-  //-----------------------------------
   const uploadProfilePhoto = (event) => {
     const fileType = ["image/png"];
     let selectedFile = event.target.files[0];
@@ -252,15 +244,26 @@ function EditEmployee() {
                           </FormLabel>
                         </Grid>
                         <Grid item xs={6} md={9}>
-                          <TextField
-                            disabled
-                            id="outlined-disabled"
-                            variant="filled"
-                            name="NIC"
-                            value={inputs.NIC}
-                            onChange={handleChange}
-                            fullWidth
-                          />
+                          {jobRole === "HR" ? (
+                            <TextField
+                              id="filled-basic"
+                              variant="filled"
+                              name="NIC"
+                              value={inputs.NIC}
+                              onChange={handleChange}
+                              fullWidth
+                            />
+                          ) : (
+                            <TextField
+                              disabled
+                              id="outlined-disabled"
+                              variant="filled"
+                              name="NIC"
+                              value={inputs.NIC}
+                              onChange={handleChange}
+                              fullWidth
+                            />
+                          )}
                         </Grid>
                       </Grid>
                     </Grid>
@@ -351,6 +354,102 @@ function EditEmployee() {
                             onChange={handleChange}
                             fullWidth
                           />
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Grid container spacing={2}>
+                        <Grid item xs={6} md={3}>
+                          {jobRole === "HR" && (
+                            <FormLabel sx={{ ml: 1, mt: 2 }} className="label">
+                              Employee ID :
+                            </FormLabel>
+                          )}
+                        </Grid>
+                        <Grid item xs={6} md={9}>
+                          {jobRole === "HR" && (
+                            <TextField
+                              id="filled-basic"
+                              label=" Employee ID"
+                              variant="filled"
+                              name="employeeID"
+                              value={inputs.employeeID}
+                              onChange={handleChange}
+                              fullWidth
+                            />
+                          )}
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Grid container spacing={2}>
+                        <Grid item xs={6} md={3}>
+                          {jobRole === "HR" && (
+                            <FormLabel sx={{ ml: 1, mt: 2 }} className="label">
+                              Job Type:
+                            </FormLabel>
+                          )}
+                        </Grid>
+                        <Grid item xs={6} md={9}>
+                          {jobRole === "HR" && (
+                            <TextField
+                              id="filled-basic"
+                              label=" Job Type"
+                              variant="filled"
+                              name="jobType"
+                              value={inputs.jobType}
+                              onChange={handleChange}
+                              fullWidth
+                            />
+                          )}
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Grid container spacing={2}>
+                        <Grid item xs={6} md={3}>
+                          {jobRole === "HR" && (
+                            <FormLabel sx={{ ml: 1, mt: 2 }} className="label">
+                              Status :
+                            </FormLabel>
+                          )}
+                        </Grid>
+                        <Grid item xs={6} md={9}>
+                          {jobRole === "HR" && (
+                            <TextField
+                              id="filled-basic"
+                              label=" Status"
+                              variant="filled"
+                              name="Status"
+                              value={inputs.status}
+                              onChange={handleChange}
+                              fullWidth
+                            />
+                          )}
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                    <Grid item xs={6} sx={{ mb: 1 }}>
+                      <Grid container spacing={2}>
+                        <Grid item xs={6} md={3}>
+                          {jobRole === "HR" && (
+                            <FormLabel sx={{ ml: 1, mt: 2 }} className="label">
+                              Job Role :
+                            </FormLabel>
+                          )}
+                        </Grid>
+                        <Grid item xs={6} md={9}>
+                          {jobRole === "HR" && (
+                            <TextField
+                              id="filled-basic"
+                              label="Job Role"
+                              variant="filled"
+                              name="city"
+                              value={inputs.jobRole}
+                              onChange={handleChange}
+                              fullWidth
+                            />
+                          )}
                         </Grid>
                       </Grid>
                     </Grid>
@@ -475,27 +574,14 @@ function EditEmployee() {
                           </FormLabel>
                         </Grid>
                         <Grid item xs={6} md={9}>
-                          {/* {inputs.ordinaryLevelResult[0][0].length > 0 &&
-                            inputs.ordinaryLevelResult[0][0].map((ol, i) => {
-                              return (
-                                <TextField
-                                  key={i}
-                                  id="filled-basic"
-                                  label="  "
-                                  variant="filled"
-                                  name="ordinaryLevelResult"
-                                  value={ol || " "}
-                                  onChange={handleChange}
-                                />
-                              );
-                            })} */}
                           <TextField
                             id="filled-basic"
-                            label=""
+                            label="O/L Results"
                             variant="filled"
                             name="ordinaryLevelResult"
                             value={inputs.ordinaryLevelResult || " "}
                             onChange={handleChange}
+                            fullWidth
                           />
                         </Grid>
                       </Grid>

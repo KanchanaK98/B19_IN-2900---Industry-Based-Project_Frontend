@@ -112,21 +112,21 @@ function JobRoleDialogBox() {
   };
 
   return (
-    <Box sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
-      <List component="div" role="group" sx={{width:440, height:20}}>
+    <Box sx={{  bgcolor: "background.paper" }}>
+      <List component="div" role="group" sx={{ height: 20 }}>
         <ListItem
           button
           divider
           aria-haspopup="true"
-          aria-controls="ringtone-menu"
-          aria-label="phone ringtone"
+          aria-controls="job role menu"
+          aria-label="job role"
           onClick={handleClickListItem}
         >
-          <ListItemText  secondary={value} />
+          <ListItemText secondary={value} />
         </ListItem>
 
         <ConfirmationDialogRaw
-          id="ringtone-menu"
+          id="jobRole-menu"
           keepMounted
           open={open}
           onClose={handleClose}

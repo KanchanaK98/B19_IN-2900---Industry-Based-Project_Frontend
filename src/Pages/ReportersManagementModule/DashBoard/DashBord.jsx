@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import DisplayProfiles from "../../../Components/ReportersManagementModule/DisplayEmployees/DisplayProfiles";
 import { Grid, Button } from "@mui/material";
 import AddBoxIcon from "@mui/icons-material/AddBox";
@@ -10,26 +10,37 @@ import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import { Link } from "react-router-dom";
 import OrganizationStructure from "../../../Components/ReportersManagementModule/OrganizationStructure/OrganizationStructure";
+import DisplayAllEmployees from "./DisplayAllEmployees";
+import { viewAllEmployees } from "../../../Api/ReportersManagementModule/EmployeeApi";
 function DashBord() {
   const [value, setValue] = React.useState("1");
-
+  const [profiles, setProfiles] = useState([]);
+  const jobRole = JSON.parse(localStorage.getItem("profile")).jobRole; //profile should change to user
+  useEffect(() => {
+    async function fetchData() {
+      setProfiles(await viewAllEmployees());
+    }
+    fetchData();
+  }, []);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
   return (
     <div>
       <Box padding={4}>
-        <Grid item sm={12} md={12} sx={{ mb: 5 }}>
-          <Link to="/dashboard/create">
-            <Button
-              type="button"
-              variant="contained"
-              startIcon={<AddBoxIcon />}
-            >
-              CAREATE NEW EMPLOYEE
-            </Button>
-          </Link>
-        </Grid>
+        {jobRole === "HR" && (
+          <Grid item sm={12} md={12} sx={{ mb: 5 }}>
+            <Link to="/dashboard/create">
+              <Button
+                type="button"
+                variant="contained"
+                startIcon={<AddBoxIcon />}
+              >
+                CAREATE NEW EMPLOYEE
+              </Button>
+            </Link>
+          </Grid>
+        )}
         <Grid item sm={12} md={12}>
           <Box sx={{ width: "100%", typography: "body1" }}>
             <TabContext value={value}>
@@ -54,7 +65,7 @@ function DashBord() {
                 </Box>
               </TabPanel>
               <TabPanel value="2" sx={{ mt: 3 }}>
-                <DisplayProfiles />
+                <DisplayAllEmployees profiles={profiles} />
               </TabPanel>
               <TabPanel value="3" sx={{ mt: 3 }}>
                 <OrganizationStructure />

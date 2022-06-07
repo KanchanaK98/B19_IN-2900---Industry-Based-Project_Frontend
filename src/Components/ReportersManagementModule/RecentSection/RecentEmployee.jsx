@@ -52,7 +52,7 @@ function RecentEmployee({ profile }) {
               teams.map((team) => {
                 if (team._id === teamID) {
                   return (
-                    <Typography textAlign="center"> {team.teamName}</Typography>
+                    <Typography textAlign="center" key={team._id}> {team.teamName}</Typography>
                   );
                 }
               })}

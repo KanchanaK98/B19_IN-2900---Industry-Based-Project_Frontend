@@ -45,6 +45,8 @@ import EvaluatePaper from "./Components/PromotionModule/Evaluation/EvaluatePaper
 import DisplayMyFeedback from "./Components/PromotionModule/Submit/DisplayFeedback";
 import JobRoleDialogBox from "./Components/ReportersManagementModule/CreateEmployeeForm/JobRoleDialogBox";
 import FindEmployeeSalary from "./Components/SalaryPaymentModule/EmployeeSalary/FindEmployeeSalary";
+import DisplayAllEmployees from "./Pages/ReportersManagementModule/DashBoard/DisplayAllEmployees";
+import ViewProfileInfo from "./Components/ReportersManagementModule/DisplayEmployees/ViewProfileInfo";
 import ViewAllExamList from "./Components/PromotionModule/Exam/ViewAllExamList";
 import ScheduleExamForm from "./Components/PromotionModule/Exam/ScheduleExamForm";
 import UpdateExamForm from "./Components/PromotionModule/Exam/UpdateExamForm";
@@ -91,21 +93,26 @@ function App() {
               {/* Reporter management */}
               <Route path="/dashboard" element={<DashBord />} />
               <Route path="/profile/update/" element={<EditEmployee />} />
+              <Route path="/user/update/" element={<EditEmployee />} />
               <Route
                 path="/dashboard/create"
                 element={<CreateEmployeePage />}
               />
+         
+            
               <Route path="/teams" element={<TeamPage />} />
               <Route path="/teams/update/:id" element={<EditTeam />} />
               <Route path="/products" element={<ProductPage />} />
               <Route path="/products/create" element={<CreateProductPage />} />
               <Route path="/teams/create" element={<CreateTeamPage />} />
               <Route path="/pro" element={<CreateProduct />} />
-              <Route path="/user" element={<UserProfile user={user} />} />
+              <Route path="/user" element={<UserProfile user={user} />}/>
               <Route path="/products/update/:id" element={<EditProduct />} />
               <Route path="progress" element={<ProgressBar />} />
               <Route path="tree" element={<CustomizedTeamView />} />
-              <Route path="job" element={<JobRoleDialogBox />} />
+              <Route path="job" element={<JobRoleDialogBox/>}/>
+              <Route path="display" element={<ViewProfileInfo/>}/>
+              
 
               {/* Recruitment management */}
               <Route path="/candidate" element={<CreateCandidate />} />

@@ -255,16 +255,6 @@ function UpdateExamForm() {
                     <Grid item sm={4} md={4} className={classes.texFieldLabel}>
                       <InputLabel>Date Scheduled</InputLabel>
                     </Grid>
-                    {/* <TextField
-                      label="Date Scheduled"
-
-                      name="DateScheduled"
-                      value={DateScheduled}
-                      onChange={(e) => {
-                        setDateScheduled(e.target.value);
-                      }}
-                      fullWidth
-                    /> */}
                     <LocalizationProvider dateAdapter={AdapterDateFns}>
                       <DatePicker
                         label="Schedule date"

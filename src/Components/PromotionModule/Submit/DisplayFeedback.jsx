@@ -51,17 +51,8 @@ const DisplayMyFeedback = () => {
           window.open(` /promotion/Paper/${EmployeeID}`, "_blank", "Popup")
         }
       >
-        Paper&nbsp;
+        Evaluation Test&nbsp;
       </Button>
-      {/* <Button
-        variant="contained"
-        sx={{ backgroundColor: "#183d78" }}
-        disabled={disabled}
-        onClick={handleButton}
-
-      >
-        Disabe&nbsp;
-      </Button> */}
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>

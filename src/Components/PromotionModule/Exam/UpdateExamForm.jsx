@@ -83,6 +83,7 @@ function UpdateExamForm() {
   const [error, seterror] = useState(false);
   const [added, setadded] = useState(false);
   const [PaperList, setPaperList] = useState([]);
+  const [Status, setStatus] = useState([]);
 
   const { EmployeeID } = useParams();
   const { ExamID } = useParams();
@@ -102,6 +103,7 @@ function UpdateExamForm() {
     DateScheduled: "",
     PaperID: "",
     JobRole: "",
+    Status: "",
   });
 
   useEffect(() => {
@@ -113,6 +115,7 @@ function UpdateExamForm() {
       setDateScheduled(result.DateScheduled, DateScheduled);
       setJobRole(result.JobRole, JobRole);
       setPaperID(result.PaperID, PaperID);
+      setStatus(result.Status, Status);
     }
     fetchData();
   }, []);
@@ -121,8 +124,15 @@ function UpdateExamForm() {
   const sendData = async (e) => {
     e.preventDefault();
 
-    const examDetails = { ExamID, ExamName, DateScheduled, JobRole, PaperID };
-    if (ExamID && ExamName && DateScheduled && JobRole && PaperID) {
+    const examDetails = {
+      ExamID,
+      ExamName,
+      DateScheduled,
+      JobRole,
+      PaperID,
+      Status,
+    };
+    if (ExamID && ExamName && DateScheduled && JobRole && PaperID && Status) {
       const response = await updateExamDetailsApi(
         EmployeeID,
         ExamID,
@@ -196,7 +206,7 @@ function UpdateExamForm() {
                   </Grid>
                   <Grid container>
                     <Grid item sm={4} md={4} className={classes.texFieldLabel}>
-                      <InputLabel>organizer ID</InputLabel>
+                      <InputLabel>Organizer ID</InputLabel>
                     </Grid>
                     <TextField
                       label="ID"
@@ -268,7 +278,6 @@ function UpdateExamForm() {
                     </LocalizationProvider>
                     {/* value.format("YYYY-MM-DD HH:mm:ss"), "Asia/Singapore" */}
                   </Grid>
-
                   <Grid container>
                     <Grid item sm={4} md={4} className={classes.texFieldLabel}>
                       <InputLabel>Exam Name</InputLabel>
@@ -283,6 +292,40 @@ function UpdateExamForm() {
                       }}
                       fullWidth
                     />
+                  </Grid>
+
+                  <Grid container>
+                    <Grid item sm={4} md={4} className={classes.texFieldLabel}>
+                      <InputLabel>Exam Status</InputLabel>
+                    </Grid>
+                    <FormControl sx={{ m: 2, minWidth: 120 }}>
+                      <InputLabel id="demo-simple-select-helper-label">
+                        Exam Status
+                      </InputLabel>
+
+                      <Select
+                        labelId="demo-simple-select-helper-label"
+                        id="demo-simple-select-helper"
+                        value={Status}
+                        label="Exam Status"
+                        onChange={(e) => {
+                          setStatus(e.target.value);
+                        }}
+                      >
+                        <MenuItem
+                          value="Completed"
+                          sx={{ backgroundColor: "#ffc1e3" }}
+                        >
+                          Completed
+                        </MenuItem>
+                        <MenuItem
+                          value="Pending"
+                          sx={{ backgroundColor: "##9162e4" }}
+                        >
+                          Pending
+                        </MenuItem>
+                      </Select>
+                    </FormControl>
                   </Grid>
                 </Grid>
                 <Grid item sm={12} md={6} className={classes.inputs}>
@@ -320,7 +363,7 @@ function UpdateExamForm() {
                   size="large"
                   type="submit"
                 >
-                  Schedule
+                  Update
                 </Button>
               </Grid>
             </form>

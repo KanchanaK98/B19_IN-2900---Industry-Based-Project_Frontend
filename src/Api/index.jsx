@@ -25,6 +25,10 @@ export const cancelInterview = (interviewID) =>
 export const markedCandidate = (marks, interviewID) => {
   return API.put(`/recruitment/interview/start/${interviewID}`, marks);
 };
+export const getInterviewStats = (employeeID) => {
+  return API.get(`/recruitment/interview/InterviewStats/${employeeID}`);
+};
+
 // LogIn API
 export const userLogin = (user) => API.post("/login", user);
 
@@ -51,13 +55,8 @@ export const createCurrentSalarySheet = (newCurruntSalarySheet) =>
   API.post("/salary/currentSalary/create", newCurruntSalarySheet);
 export const findCurrentSalarySheet = (EmployeeID) =>
   API.get(`/salary/currentSalary/${EmployeeID}`);
-// export const updateCurrentSalarySheet = (updatedData, EmployeeID) =>
-//   API.patch(`/salary/currentSalary/update/${EmployeeID}`, updatedData);
-export const updateCurrentSalarySheet = (updatedData) =>
-  API.patch(
-    `/salary/currentSalary/update/${updatedData.EmployeeID}`,
-    updatedData
-  );
+export const updateCurrentSalarySheet = (EmployeeID, updatedData) =>
+  API.patch(`/salary/currentSalary/update/${EmployeeID}`, updatedData);
 export const deleteCurrentSalarySheet = (EmployeeID) =>
   API.delete(`/salary/currentSalary/delete/${EmployeeID}`);
 
@@ -83,30 +82,64 @@ export const createQuestions = (newQuestion) =>
 export const viewAllPapersList = () => API.get("/promotion/Paper");
 export const createPaper = (newPaper) =>
   API.post("/promotion/Paper/createPaper", newPaper);
-export const addMoreQuestions = (PaperID, [Questions]) =>
-  API.patch(`/promotion/Paper/addMoreQuestions/${PaperID}`, [Questions]);
+export const addMoreQuestions = (PaperID, Questions) =>
+  API.patch(`/promotion/Paper/addMoreQuestions/${PaperID}`, Questions);
 export const updatePaperDetails = (PaperID, updatedData) =>
   API.patch(`/promotion/Paper/updatePaperDetails/${PaperID}`, updatedData);
 export const deletePaper = (PaperID) =>
   API.delete(`/promotion/Paper/delete/${PaperID}`);
+export const viewOnePaper = (PaperID) =>
+  API.get(`/promotion/Paper/display/${PaperID}`);
 
 // employee's paper API
 export const displayPaper = (EmployeeID) =>
   API.get(`/promotion/Paper/${EmployeeID}`);
 
 //ratings  for employee API
-export const submitPaper = (EmployeeID) =>
-  API.post(`/promotion/submitPaper/${EmployeeID}`);
+export const submitPaper = (EmployeeID, Answer) =>
+  API.post(`/promotion/submitPaper/${EmployeeID}`, Answer);
 export const displayFeedback = (EmployeeID) =>
   API.get(`/promotion/evaluation/mySubmissions/${EmployeeID}`);
+
+//schedule exam by HR
+export const scheduleExam = (EmployeeID, examDetails) =>
+  API.post(
+    `/promotion/evaluation/exam/scheduleExam/${EmployeeID}`,
+    examDetails
+  );
+export const viewAllExams = (EmployeeID) =>
+  API.get(`/promotion/evaluation/exam/viewExam/${EmployeeID}`);
+export const updateExamDetails = (EmployeeID, ExamID, examDetails) =>
+  API.patch(
+    `/promotion/evaluation/exam/updateExam/${EmployeeID}/${ExamID}`,
+    examDetails
+  );
+export const viewOneExam = (EmployeeID, ExamID) =>
+  API.get(`/promotion/evaluation/exam/viewOneExam/${EmployeeID}/${ExamID}`);
+export const deleteScheduledExam = (EmployeeID, ExamID) =>
+  API.delete(`/promotion/evaluation/exam/deleteExam/${EmployeeID}/${ExamID}`);
 
 //team leads API
 export const allSubmissions = () =>
   API.get("/promotion/evaluation/allSubmissions");
 export const displayTeamMemberSubmissions = (TeamLeadID) =>
-  API.get(`/promotion//evaluation/allSubmissions/${TeamLeadID}`);
-export const evaluatePaper = (EmployeeID, PaperID) =>
-  API.patch(`/promotion/evaluation/evaluatePaper/${EmployeeID}/${PaperID}`); //check
+  API.get(`/promotion/evaluation/allSubmissions/${TeamLeadID}`);
+export const evaluatePaper = (
+  TeamLeadID,
+  EmployeeID,
+  PaperID,
+  Curruntdata,
+  Feedback
+) =>
+  API.patch(
+    `/promotion/evaluation/evaluatePaper/${TeamLeadID}/${EmployeeID}/${PaperID}`,
+    Curruntdata,
+    Feedback
+  );
+export const displayAnsweredPaperToTeamlead = (EmployeeID, PaperID) =>
+  API.get(
+    `/promotion/evaluation/allSubmissions/displayOne/${EmployeeID}/${PaperID}`
+  );
 
 //employee api
 export const createEmployee = (employee) =>

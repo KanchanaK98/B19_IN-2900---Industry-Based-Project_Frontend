@@ -1,6 +1,5 @@
 import React from "react";
 import ViewAllPapersList from "../../../../Components/PromotionModule/Paper/ViewAllPapersList";
-import DeletePaper from "../../../../Components/PromotionModule/Paper/DeletePaper";
 import { Grid } from "@mui/material";
 
 const ViewAllPapersDelete = () => {
@@ -20,7 +19,6 @@ const ViewAllPapersDelete = () => {
       >
         {" "}
         <ViewAllPapersList />
-        <DeletePaper />
       </Grid>
     </Grid>
   );

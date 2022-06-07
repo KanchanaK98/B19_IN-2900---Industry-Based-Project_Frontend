@@ -108,7 +108,7 @@ function AssetInsertion() {
                     <Grid item sm={4} md={4} className={classes.texFieldLabel}>
                       <InputLabel>Asset Category</InputLabel>
                     </Grid>
-                    <FormControl sx={{ m: 1, minWidth: 120 }}>
+                    <FormControl sx={{ m: 2, minWidth: 120 }}>
                         <InputLabel id="demo-simple-select-helper-label">Category</InputLabel>
                         <Select
                         labelId="demo-simple-select-helper-label"
@@ -169,7 +169,7 @@ function AssetInsertion() {
                     <Grid item sm={4} md={4} className={classes.texFieldLabel}>
                       <InputLabel>Asset Status</InputLabel>
                     </Grid>
-                        <FormControl sx={{ m: 1, minWidth: 120 }}>
+                        <FormControl sx={{ m: 2, minWidth: 120 }}>
                             <InputLabel id="demo-simple-select-helper-label">Status</InputLabel>
                             <Select
                             labelId="demo-simple-select-helper-label"

@@ -5,6 +5,7 @@ import {
   Grid,
   IconButton,
   Paper,
+  Skeleton,
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
@@ -12,7 +13,7 @@ import { fetchRecentCandidates } from "../../../Api/RecruitmentModule/CandidateA
 import useStyles from "./RecentCandidateStyles";
 
 const RecentCandidate = () => {
-  const [candidates, setCandidates] = useState([]);
+  const [candidates, setCandidates] = useState(null);
   const fetchData = async () => {
     setCandidates(await fetchRecentCandidates());
   };
@@ -28,30 +29,58 @@ const RecentCandidate = () => {
         Recent Candidates
       </Typography>
       <Paper elevation={5} className={classes.paper}>
-        {candidates &&
+        {!candidates ? (
+          <Grid>
+            <Skeleton variant="text" />
+            <Skeleton variant="circular" width={40} height={40} />
+            <Skeleton variant="rectangular" width={210} height={118} />
+          </Grid>
+        ) : candidates.length === 0 ? (
+          <Typography sx={{mt: 1}}>Candidate not available</Typography>
+        ) : (
           candidates.map((candidate) => (
             <Grid container className={classes.candidate}>
-              <Grid item className={classes.name} md={7}>
+              <Grid item className={classes.name} md={8}>
                 <Typography variant="title">
                   {candidate.candidateName}
                 </Typography>
                 <Typography variant="body">{candidate.NIC}</Typography>
               </Grid>
-              <Grid item className={classes.status} md={5}>
+              <Grid item className={classes.status} md={3}>
                 <Badge
                   sx={{ mr: 1 }}
-                  color="success"
+                  color={
+                    candidate.status === "Recruited"
+                      ? "success"
+                      : candidate.status === "Failed"
+                      ? "error"
+                      : "primary"
+                  }
+                  var
                   overlap="circular"
                   variant="dot"
-                ></Badge>
-                <Typography variant="body" >Selected</Typography>
+                />
+                <Typography
+                  color={
+                    candidate.status === "Recruited"
+                      ? "green"
+                      : candidate.status === "Failed"
+                      ? "error"
+                      : "primary"
+                  }
+                  variant="body"
+                >
+                  {candidate.status}
+                </Typography>
+              </Grid>
+              <Grid item md={1}>
                 <IconButton>
                   <MoreVert />
                 </IconButton>
               </Grid>
             </Grid>
-          ))}
-        
+          ))
+        )}
       </Paper>
     </Box>
   );

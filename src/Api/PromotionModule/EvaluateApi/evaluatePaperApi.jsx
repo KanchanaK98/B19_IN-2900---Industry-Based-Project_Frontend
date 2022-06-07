@@ -1,13 +1,22 @@
 import * as api from "../../index";
 
-export const evaluatePaperApi = async (EmployeeID, PaperID) => {
+export const evaluatePaperApi = async (
+  TeamLeadID,
+  EmployeeID,
+  PaperID,
+  Curruntdata,
+  Feedback
+) => {
   try {
-    const { data } = await api.displayTeamMemberSubmissions(
+    const content = { Feedback: Feedback, Questions: Curruntdata };
+    const { data } = await api.evaluatePaper(
+      TeamLeadID,
       EmployeeID,
-      PaperID
+      PaperID,
+      content
     );
     return data;
   } catch (error) {
-    console.log(error);
+    console.log("eror from evaluatePaperApi:", error);
   }
 };

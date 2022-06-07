@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+// import axios from "axios";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -8,20 +8,27 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Button } from "@mui/material/";
-//import { viewAllQuestionsApi } from "../../../Api/PromotionModule/QuestionApi/viewAllQuestionsApi";
+import { viewAllQuestionsApi } from "../../../Api/PromotionModule/QuestionApi/viewAllQuestionsApi";
 
-import { createQuestionApi } from "../../../Api/PromotionModule/QuestionApi/createQuestionApi";
+//import { createQuestionApi } from "../../../Api/PromotionModule/QuestionApi/createQuestionApi";
 const ViewAllQuestionsTable = () => {
   const [QuestionList, setQuestionList] = useState([]); //
 
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost:8070/promotion/Questions/")
+  //     .then((allRecords) => {
+  //       setQuestionList(allRecords.data);
+  //       console.log("data loaded from View All QuestionList - frontend");
+  //       // console.log(allRecords.data);
+  //     });
+  // }, []);
+
   useEffect(() => {
-    axios
-      .get("http://localhost:8070/promotion/Questions/")
-      .then((allRecords) => {
-        setQuestionList(allRecords.data);
-        console.log("data loaded from View All QuestionList - frontend");
-        // console.log(allRecords.data);
-      });
+    async function fetchData() {
+      setQuestionList(await viewAllQuestionsApi());
+    }
+    fetchData();
   }, []);
 
   return (

@@ -24,6 +24,10 @@ margin: theme.spacing(1,0)
     //  fontWeight: 500,
     //  fontSize: 20
   },
+  large: {
+    width: theme.spacing(9),
+    height: theme.spacing(9),
+  }
 }));
 
 export default useStyles;

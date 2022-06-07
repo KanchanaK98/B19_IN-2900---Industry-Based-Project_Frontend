@@ -7,23 +7,38 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { useParams } from "react-router-dom";
 import { Button } from "@mui/material/";
+import { displayTeamMemberSubmissionsApi } from "../../../Api/PromotionModule/EvaluateApi/displayTeamMemberSubmissionsApi";
 
 const DisplayTeamMemberSubmissions = () => {
-  const [mysubmissionList, setmysubmissionList] = useState([]); //
+  const [mysubmissionList, setmysubmissionList] = useState([]);
+
+  const { EmployeeID } = useParams();
+
+  // useEffect(() => {
+  //   axios
+  //     .get(
+  //       `http://localhost:8070/promotion/evaluation/allSubmissions/${EmployeeID}`
+  //     ) //edit this
+  //     .then((allRecords) => {
+  //       setmysubmissionList(allRecords.data);
+  //       console.log("data loaded from TeamLead submissions - frontend");
+  //       // console.log(allRecords.data);
+  //     });
+  // }, []);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8070/promotion/evaluation/allSubmissions/E001") //edit this
-      .then((allRecords) => {
-        setmysubmissionList(allRecords.data);
-        console.log("data loaded from TeamLead submissions - frontend");
-        // console.log(allRecords.data);
-      });
-  }, []);
+    async function fetchData() {
+      setmysubmissionList(await displayTeamMemberSubmissionsApi(EmployeeID));
+      console.log("data loaded from TeamLead submissions - frontend");
+    }
+    fetchData();
+  }, [EmployeeID]);
 
   return (
     <div>
+      <h1>Team member submissions</h1>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
@@ -53,6 +68,18 @@ const DisplayTeamMemberSubmissions = () => {
                 <TableCell align="right">
                   {submission.DateOfEvaluation}
                 </TableCell>
+                <Button
+                  variant="contained"
+                  sx={{ backgroundColor: "#183d78" }}
+                  onClick={() =>
+                    window.open(
+                      ` /promotion/evaluation/evaluatePaper/${EmployeeID}/${submission.EmployeeID}/${submission.PaperID}`,
+                      "_self"
+                    )
+                  }
+                >
+                  Evaluate&nbsp;
+                </Button>
               </TableRow>
             ))}
           </TableBody>

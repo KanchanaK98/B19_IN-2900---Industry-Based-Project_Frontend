@@ -30,16 +30,17 @@ const RecentCandidate = () => {
       </Typography>
       <Paper elevation={5} className={classes.paper}>
         {!candidates ? (
-          <Grid>
-            <Skeleton variant="text" />
-            <Skeleton variant="circular" width={40} height={40} />
-            <Skeleton variant="rectangular" width={210} height={118} />
+          <Grid  className={classes.skeleton}>
+            <Skeleton variant="rectangular" width={310} height={60} />
+            <Skeleton variant="rectangular" width={310} height={60} />
+            <Skeleton variant="rectangular" width={310} height={60} />
+            <Skeleton variant="rectangular" width={310} height={60} />
           </Grid>
         ) : candidates.length === 0 ? (
           <Typography sx={{mt: 1}}>Candidate not available</Typography>
         ) : (
           candidates.map((candidate) => (
-            <Grid container className={classes.candidate}>
+            <Grid key={candidate._id} container className={classes.candidate}>
               <Grid item className={classes.name} md={8}>
                 <Typography variant="title">
                   {candidate.candidateName}

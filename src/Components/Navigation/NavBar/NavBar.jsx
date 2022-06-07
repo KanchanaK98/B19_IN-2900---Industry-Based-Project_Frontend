@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
-import Link from "@mui/material/Link";
+import { Link } from "react-router-dom";
+import { Link as Links } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import useStyles from "./NavBarStyles";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { ArrowDropDown, Home, Logout } from "@mui/icons-material";
 import { Avatar, Grid, ListItemIcon, Menu, MenuItem } from "@mui/material";
-
+import { useLocation } from "react-router-dom";
 const NavBar = ({ open, toggleDrawer, user, handleLogOut }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const openMenu = Boolean(anchorEl);
@@ -19,7 +20,12 @@ const NavBar = ({ open, toggleDrawer, user, handleLogOut }) => {
     setAnchorEl(null);
   };
 
+  const location = useLocation();
+  let paths = location.pathname.split("/");
+  paths.shift();
+  const currentPath = paths.pop();
   const classes = useStyles();
+  
   return (
     <>
       <Paper elevation={0} variant="outlined" square className={classes.root}>
@@ -29,17 +35,16 @@ const NavBar = ({ open, toggleDrawer, user, handleLogOut }) => {
               <IconButton className={classes.arrowIcon} onClick={toggleDrawer}>
                 {open ? <Home /> : <ChevronRightIcon />}
               </IconButton>
-              <Link underline="hover" color="inherit" href="/">
-                MUI
-              </Link>
-              <Link
-                underline="hover"
-                color="inherit"
-                href="/getting-started/installation/"
-              >
-                Core
-              </Link>
-              <Typography color="text.primary">Breadcrumbs</Typography>
+              {paths.map((path) => (
+                <Link
+                  key={path}
+                  className={classes.breadcrumbLink}
+                  to={`/${path}`}
+                >
+                  {path}
+                </Link>
+              ))}
+              <Typography color="text.primary">{currentPath}</Typography>
             </Breadcrumbs>
           </Grid>
           <Grid item md={1} className={classes.avatar}>
@@ -84,14 +89,14 @@ const NavBar = ({ open, toggleDrawer, user, handleLogOut }) => {
                 },
               }}
             >
-              <Link href="/user" sx={{ textDecoration: "none" }}>
+              <Links href="/user" sx={{ textDecoration: "none" }}>
                 <MenuItem sx={{ color: "black" }}>
                   <ListItemIcon>
                     <Avatar src={user.profilePic} sizes="small" />
                   </ListItemIcon>
                   Profile
                 </MenuItem>
-              </Link>
+              </Links>
 
               <MenuItem onClick={handleLogOut}>
                 <ListItemIcon>

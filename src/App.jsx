@@ -53,7 +53,7 @@ import UpdateExamForm from "./Components/PromotionModule/Exam/UpdateExamForm";
 
 function App() {
   const [open, setOpen] = useState(true);
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
 
   const toggleDrawer = () => {
     setOpen(!open);

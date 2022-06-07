@@ -3,6 +3,7 @@ import * as api from "../index";
 export const fetchEmployees = async () => {
   try {
     const { data } = await api.fetchEmployees();
+    console.log(data.data);
     let employees = [];
     await Promise.all(
       data.data.map(async (employee) => {
@@ -22,7 +23,7 @@ export const fetchEmployees = async () => {
         });
       })
     );
-    //console.log(employees);
+    console.log(employees);
     return employees;
   } catch (error) {
     console.log(error);
@@ -61,8 +62,9 @@ export const createInterview = async (interview) => {
   }
 };
 
-export const getInterviewList = async (employeeID) => {
+export const getInterviewList = async () => {
   try {
+    const employeeID = JSON.parse(localStorage.getItem("user")).employeeID;
     const { data } = await api.getInterviewList(employeeID);
     return data.Interviews;
   } catch (error) {
@@ -120,9 +122,11 @@ export const markedCandidate = async (marks, interviewID) => {
   }
 };
 
-export const getInterviewStats = async (employeeID) => {
+export const getInterviewStats = async () => {
   try {
-    const { data } = await api.getInterviewStats(employeeID);
+    const { data } = await api.getInterviewStats(
+      JSON.parse(localStorage.getItem("user")).employeeID
+    );
     return data.InterviewStats;
   } catch (error) {
     console.log(error);

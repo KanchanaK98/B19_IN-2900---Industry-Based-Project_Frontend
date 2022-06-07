@@ -1,6 +1,62 @@
 import axios from "axios";
 
-const API = axios.create({ baseURL: "http://localhost:8070" });
+const API = axios.create({
+  baseURL: "http://localhost:8070",
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
+API.interceptors.request.use(
+  (config) => {
+    if (!config.headers["Authorization"]) {
+      config.headers["Authorization"] = `Bearer ${
+        JSON.parse(localStorage.getItem("user")).accessToken
+      }`;
+    }
+    return config;
+  },
+  async (error) => {
+    return Promise.reject(error);
+  }
+);
+
+const refreshTheAccessToken = async () => {
+  const response = await axios.post("http://localhost:8070/refresh", {
+    token: JSON.parse(localStorage.getItem("user")).refreshToken,
+  });
+
+  let existsUser = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {};
+
+  existsUser["accessToken"] = response.data.accessToken;
+  existsUser["refreshToken"] = response.data.refreshToken;
+  localStorage.setItem("user", JSON.stringify(existsUser));
+};
+
+API.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  async (error) => {
+    const previousRequest = error.config;
+
+    if (error.response.status === 403 && !previousRequest._retry) {
+      previousRequest._retry = true;
+      try {
+        await refreshTheAccessToken();
+        previousRequest.headers["Authorization"] = `Bearer ${
+          JSON.parse(localStorage.getItem("user")).accessToken
+        }`;
+        return API(previousRequest);
+      } catch (error) {
+        return Promise.reject(error);
+      }
+    }
+
+    return Promise.reject(error);
+  }
+);
+
 // candidate API
 export const createCandidate = (candidateData) =>
   API.post("/recruitment/candidate/create", candidateData);
@@ -13,7 +69,7 @@ export const fetchRecentCandidates = () =>
   API.get(`/recruitment/candidates/recent`);
 
 // Interview API
-export const fetchEmployees = () => API.get(`/employee/`);
+export const fetchEmployees = () => API.get(`/employee/getall`);
 export const createInterview = (interviewData) =>
   API.post(`/recruitment/interview/create`, interviewData);
 export const getInterviewList = (employeeID) =>
@@ -30,7 +86,7 @@ export const getInterviewStats = (employeeID) => {
 };
 
 // LogIn API
-export const userLogin = (user) => API.post("/login", user);
+//export const userLogin = (user) => API.post("/login", user);
 
 // Assets API
 

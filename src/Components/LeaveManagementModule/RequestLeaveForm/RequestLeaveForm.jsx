@@ -27,7 +27,6 @@ const RequestLeaveForm = () => {
     startDate: new Date(),
     endDate: new Date(),
     leaveMethod: "",
-    employeeID: "",
   });
   const [openSnackBar, setOpenSnackBar] = useState(false);
   const handleOnChange = (event) => {
@@ -52,7 +51,6 @@ const RequestLeaveForm = () => {
         startDate: new Date(),
         endDate: new Date(),
         leaveMethod: "",
-        employeeID: ""
       })
   }
  

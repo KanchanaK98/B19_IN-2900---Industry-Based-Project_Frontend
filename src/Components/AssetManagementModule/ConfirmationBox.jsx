@@ -12,7 +12,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function ConfirmationBox({opens,id,func1,func2,handleClosed,typed}) {
+export default function ConfirmationBox({opens,id,func1,func2,func3,handleClosed,typed}) {
   const [open, setOpen] = React.useState(opens);
 
 
@@ -27,6 +27,10 @@ export default function ConfirmationBox({opens,id,func1,func2,handleClosed,typed
       if(typed === "fault")
       {
         func1(id);
+      }else if(typed === "unassign")
+      {
+        func3(id);
+        
       }else
       {
         func2(id);
@@ -60,9 +64,12 @@ export default function ConfirmationBox({opens,id,func1,func2,handleClosed,typed
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-            <Typography variant="h6">
+            {/* <Typography variant="h6">
                 Are you sure want to {typed === "fault"?<b>create </b>:<b>release </b>}a Fault?<br/>
-            </Typography> 
+            </Typography>  */}
+            {typed === "fault"?<Typography variant="h6">Are you sure want to <b>create </b> a Fault?</Typography>:null}
+            {typed === "release-fault"?<Typography variant="h6">Are you sure want to <b>release </b> a Fault?</Typography>:null}
+            {typed === "unassign"?<Typography variant="h6">Are you sure want to <b>unassign </b> asset?</Typography>:null}
           </DialogContentText>
         </DialogContent>
         <DialogActions>

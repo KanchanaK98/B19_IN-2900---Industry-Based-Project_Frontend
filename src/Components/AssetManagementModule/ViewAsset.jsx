@@ -299,7 +299,7 @@ const  ViewAsset = () => {
                                <button className='btn btn-success' onClick={()=>{ShowModalView(asset._id)}} style={{ marginLeft:"5px" }}>Update</button>
                                </TableCell>):
                            (<TableCell align="center">
-                                <button className='btn btn-primary announce' onClick={()=>unassign(asset._id)}>Un-Assign</button>
+                                <button className='btn btn-primary announce' onClick={()=>{confirmBox(asset._id);setType("unassign");}}>Un-Assign</button>
                                 <button className='btn btn-danger' onClick={()=>{confirmBox(asset._id);setType("fault");}} style={{ marginLeft:"5px" }}>Fault</button>
                                 <button className='btn btn-success' onClick={()=>{ShowModalView(asset._id)}} style={{ marginLeft:"5px" }}>Update</button>
                             </TableCell>)
@@ -316,7 +316,7 @@ const  ViewAsset = () => {
                  { show2===true?(<AssetUpdateModule data={eachAsset} show={true} handleClose={hideModalView} updateFun={updateAssetFunction}/>):null }
                 {/* modal for assign asset */}
                  { show===true?(<AssetAssignModel data={eachAsset} show={true} handleClose={hideModal} assignFun={assignAssetFunction}/>):null }
-                {showConfirmation === true?(<ConfirmationBox opens={true} typed={type} func1={createFault} func2={releaseFault} id={assetID} handleClosed={hideConfirmationBox}/>):null}
+                {showConfirmation === true?(<ConfirmationBox opens={true} typed={type} func1={createFault} func2={releaseFault} func3={unassign} id={assetID} handleClosed={hideConfirmationBox}/>):null}
     </Paper>
     </>           
         

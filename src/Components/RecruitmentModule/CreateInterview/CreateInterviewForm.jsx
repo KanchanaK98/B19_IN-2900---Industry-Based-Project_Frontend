@@ -76,23 +76,36 @@ const CreateInterviewForm = () => {
       setInterviewID(location.state.interview._id);
     }
   }, [location.state]);
+  // const errorHandle = () => {
+  //   Object.keys(interview).map((property) => {
+  //     if (!interview[property] || interview[property].length === 0) {
+  //       interviewErrors[property] = "This field is required!";
+  //       isError = true;
+  //     }
+  //   });
+  //   if (
+  //     new Date(interview.InterviewDate).getTime() ===
+  //     new Date(interview.InterviewTime).getTime()
+  //   ) {
+  //     interviewErrors.InterviewDate = "Date has not selected!";
+  //     interviewErrors.InterviewTime = "Time has not selected!";
+  //   }
+  //   return isError;
+  // };
+
   const errorHandle = () => {
+    let isError = false;
     Object.keys(interview).map((property) => {
       if (!interview[property] || interview[property].length === 0) {
-        interviewErrors[property] = "This field is required!";
+        setInterviewErrors((prevState)=>({...prevState, [property]: property + " is required!"}));
         isError = true;
       }
+      return;
     });
-    if (
-      new Date(interview.InterviewDate).getTime() ==
-      new Date(interview.InterviewTime).getTime()
-    ) {
-      interviewErrors.InterviewDate = "Date has not selected!";
-      interviewErrors.InterviewTime = "Time has not selected!";
-    }
     return isError;
   };
 
+  
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (!errorHandle()) {
@@ -145,7 +158,10 @@ const CreateInterviewForm = () => {
           <Grid item sm={12} md={12}>
             <form autoComplete="off" onSubmit={handleSubmit}>
               <Grid container>
+
                 <Grid item sm={12} md={6} className={classes.inputs}>
+
+
                   <Grid container>
                     <Grid item sm={4} md={4} className={classes.texFieldLabel}>
                       <InputLabel>Candidate</InputLabel>

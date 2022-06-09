@@ -7,8 +7,9 @@ import {
   TextField,
   Typography,
   MenuItem,
+  InputLabel,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useStyles from "./CreateCandidateFormStyles";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import MuiPhoneNumber from "material-ui-phone-number";
@@ -41,6 +42,15 @@ const CreateCandidateForm = ({
 }) => {
   const [openDialog, setOpenDialog] = useState(false);
   const [openSnackBar, setOpenSnackBar] = useState(false);
+  const [candidateErrors, setCandidateErrors] = useState({
+    firstName: "",
+    lastName: "",
+    NIC: "",
+    appliedPosition: "",
+    phoneNumber: "",
+    email: "",
+    cv: "",
+  });
 
   const handleOpenDialog = () => {
     setOpenDialog(true);
@@ -54,6 +64,14 @@ const CreateCandidateForm = ({
     setOpenSnackBar(false);
   };
 
+  const handleOnChange = (event) => {
+    setCandidateData({
+      ...candidateData,
+      [event.target.name]: event.target.value,
+    });
+    setCandidateErrors({ ...candidateErrors, [event.target.name]: "" });
+  };
+
   const handleClear = () => {
     setCandidateData({
       firstName: "",
@@ -65,20 +83,37 @@ const CreateCandidateForm = ({
       cv: "",
     });
   };
+  
+  const errorHandle = () => {
+    let isError = false;
+    Object.keys(candidateData).map((property) => {
+      if (!candidateData[property]) {
+        setCandidateErrors((prevState)=>({...prevState, [property]: property + " is required!"}));
+        isError = true;
+      }
+      return;
+    });
+    return isError;
+  };
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (!candidateId) {
-      const createResponse = await createCandidate(candidateData);
-      if (createResponse.success === true) {
-        setOpenSnackBar(true);
+    if (!errorHandle()) {
+      if (!candidateId) {
+        const createResponse = await createCandidate(candidateData);
+        if (createResponse.success === true) {
+          setOpenSnackBar(true);
+        }
+      } else {
+        const updateResponse = await updateCandidate(
+          candidateData,
+          candidateId
+        );
+        if (updateResponse.success === true) {
+          setOpenSnackBar(true);
+        }
       }
-    } else {
-      const updateResponse = await updateCandidate(candidateData, candidateId);
-      if (updateResponse.success === true) {
-        setOpenSnackBar(true);
-      }
+      handleClear();
     }
-    handleClear();
   };
   const handlePDFUpload = (event) => {
     const fileType = ["application/pdf"];
@@ -118,105 +153,149 @@ const CreateCandidateForm = ({
             <form autoComplete="off" onSubmit={handleSubmit}>
               <Grid container>
                 <Grid item sm={12} md={6} className={classes.inputs}>
-                  <TextField
-                    label="First name"
-                    variant="outlined"
-                    name="firstName"
-                    value={candidateData.firstName}
-                    onChange={(event) =>
-                      setCandidateData({
-                        ...candidateData,
-                        firstName: event.target.value,
-                      })
-                    }
-                    fullWidth
-                  />
-                  <TextField
-                    label="NIC"
-                    variant="outlined"
-                    name="NIC"
-                    value={candidateData.NIC}
-                    onChange={(event) =>
-                      setCandidateData({
-                        ...candidateData,
-                        NIC: event.target.value,
-                      })
-                    }
-                    fullWidth
-                  />
-                  {/* <TextField label="Phone number" variant="outlined" /> */}
-                  <MuiPhoneNumber
-                    label="Phone number"
-                    defaultCountry={"lk"}
-                    variant="outlined"
-                    name="phoneNumber"
-                    value={candidateData.phoneNumber}
-                    fullWidth
-                    onChange={(value) =>
-                      setCandidateData({
-                        ...candidateData,
-                        phoneNumber: value,
-                      })
-                    }
-                  />
-                  <TextField
-                    label="Applied Position"
-                    variant="outlined"
-                    name="appliedPosition"
-                    select
-                    value={candidateData.appliedPosition}
-                    onChange={(event) =>
-                      setCandidateData({
-                        ...candidateData,
-                        appliedPosition: event.target.value,
-                      })
-                    }
-                    fullWidth
-                  >
-                    {jobPositions.map((jobPosition) => (
-                      <MenuItem value={jobPosition} key={jobPosition}>
-                        {jobPosition}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                </Grid>
-                <Grid item sm={12} md={6} className={classes.inputs}>
-                  <TextField
-                    label="Last name"
-                    variant="outlined"
-                    name="lastName"
-                    value={candidateData.lastName}
-                    onChange={(event) =>
-                      setCandidateData({
-                        ...candidateData,
-                        lastName: event.target.value,
-                      })
-                    }
-                    fullWidth
-                  />
-                  <TextField
-                    label="Email"
-                    variant="outlined"
-                    name="email"
-                    value={candidateData.email}
-                    onChange={(event) =>
-                      setCandidateData({
-                        ...candidateData,
-                        email: event.target.value,
-                      })
-                    }
-                    fullWidth
-                  />
+                  <Grid container>
+                    <Grid item sm={4} md={4} className={classes.texFieldLabel}>
+                      <InputLabel>First Name</InputLabel>
+                    </Grid>
+                    <Grid item sm={8} md={8}>
+                      <TextField
+                        label="Enter First Name"
+                        variant="outlined"
+                        name="firstName"
+                        value={candidateData.firstName}
+                        error={candidateErrors.firstName ? true : false}
+                        helperText={candidateErrors.firstName}
+                        onChange={handleOnChange}
+                        fullWidth
+                      />
+                    </Grid>
+                  </Grid>
 
-                  <TextField
-                    label="CV"
-                    variant="outlined"
-                    name="cv"
-                    type={"file"}
-                    InputLabelProps={{ shrink: true }}
-                    onChange={handlePDFUpload}
-                    fullWidth
-                  />
+                  <Grid container>
+                    <Grid item sm={4} md={4} className={classes.texFieldLabel}>
+                      <InputLabel>NIC</InputLabel>
+                    </Grid>
+                    <Grid item sm={8} md={8}>
+                      <TextField
+                        label="Enter valid NIC"
+                        variant="outlined"
+                        name="NIC"
+                        value={candidateData.NIC}
+                        error={candidateErrors.NIC ? true : false}
+                        helperText={candidateErrors.NIC}
+                        onChange={handleOnChange}
+                        fullWidth
+                      />
+                    </Grid>
+                  </Grid>
+                  <Grid container>
+                    <Grid item sm={4} md={4} className={classes.texFieldLabel}>
+                      <InputLabel>Phone Number</InputLabel>
+                    </Grid>
+                    <Grid item sm={8} md={8}>
+                      <MuiPhoneNumber
+                        label="Enter Phone number"
+                        defaultCountry={"lk"}
+                        variant="outlined"
+                        name="phoneNumber"
+                        value={candidateData.phoneNumber}
+                        error={candidateErrors.phoneNumber ? true : false}
+                        helperText={candidateErrors.phoneNumber}
+                        fullWidth
+                        onChange={(value) =>{
+                          setCandidateData({
+                            ...candidateData,
+                            phoneNumber: value,
+                          })
+                          setCandidateErrors({ ...candidateErrors, phoneNumber: "" })
+                        }
+                          
+                        }
+                      />
+                    </Grid>
+                  </Grid>
+
+                  <Grid container>
+                    <Grid item sm={4} md={4} className={classes.texFieldLabel}>
+                      <InputLabel>Applied Position</InputLabel>
+                    </Grid>
+                    <Grid item sm={8} md={8}>
+                      <TextField
+                        label="Select Applied Position"
+                        variant="outlined"
+                        name="appliedPosition"
+                        select
+                        value={candidateData.appliedPosition}
+                        error={candidateErrors.appliedPosition ? true : false}
+                        helperText={candidateErrors.appliedPosition}
+                        onChange={handleOnChange}
+                        fullWidth
+                      >
+                        {jobPositions.map((jobPosition) => (
+                          <MenuItem value={jobPosition} key={jobPosition}>
+                            {jobPosition}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                    </Grid>
+                  </Grid>
+                </Grid>
+
+                <Grid item sm={12} md={6} className={classes.inputs}>
+                  <Grid container>
+                    <Grid item sm={4} md={4} className={classes.texFieldLabel}>
+                      <InputLabel>Last Name</InputLabel>
+                    </Grid>
+                    <Grid item sm={8} md={8}>
+                      <TextField
+                        label="Enter Last name"
+                        variant="outlined"
+                        name="lastName"
+                        value={candidateData.lastName}
+                        error={candidateErrors.lastName ? true : false}
+                        helperText={candidateErrors.lastName}
+                        onChange={handleOnChange}
+                        fullWidth
+                      />
+                    </Grid>
+                  </Grid>
+
+                  <Grid container>
+                    <Grid item sm={4} md={4} className={classes.texFieldLabel}>
+                      <InputLabel>Email</InputLabel>
+                    </Grid>
+                    <Grid item sm={8} md={8}>
+                      <TextField
+                        label="Enter Valid Email"
+                        variant="outlined"
+                        name="email"
+                        value={candidateData.email}
+                        error={candidateErrors.email ? true : false}
+                        helperText={candidateErrors.email}
+                        onChange={handleOnChange}
+                        fullWidth
+                      />
+                    </Grid>
+                  </Grid>
+
+                  <Grid container>
+                    <Grid item sm={4} md={4} className={classes.texFieldLabel}>
+                      <InputLabel>CV</InputLabel>
+                    </Grid>
+                    <Grid item sm={8} md={8}>
+                      <TextField
+                        label="Upload Your CV"
+                        variant="outlined"
+                        name="cv"
+                        type={"file"}
+                        error={candidateErrors.cv ? true : false}
+                        helperText={candidateErrors.cv}
+                        InputLabelProps={{ shrink: true }}
+                        onChange={handlePDFUpload}
+                        fullWidth
+                      />
+                    </Grid>
+                  </Grid>
                 </Grid>
               </Grid>
               <Grid item sm={12} md={12} className={classes.createButton}>

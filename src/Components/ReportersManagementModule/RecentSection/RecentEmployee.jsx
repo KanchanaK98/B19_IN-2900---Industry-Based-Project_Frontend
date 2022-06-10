@@ -39,7 +39,7 @@ function RecentEmployee({ profile }) {
         <Grid container spacing={2}>
           <Grid item md={4} sx={{ justifyContent: "center", display: "flex" }}>
             <Avatar
-              sx={{ width: 100, height: 100 }}
+              sx={{ width: 80, height: 80 }}
               src={profilePic}
               alt={employeeFirstName + " " + employeeLastName}
             ></Avatar>

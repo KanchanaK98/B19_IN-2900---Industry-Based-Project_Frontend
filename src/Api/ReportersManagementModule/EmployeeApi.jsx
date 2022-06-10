@@ -9,12 +9,13 @@ export const createEmployee = async (employeesData) => {
       jobRole: String(employeesData.jobRole),
       NIC: String(employeesData.NIC),
       companyEmail: String(employeesData.companyEmail),
-      status: String(employeesData.status),
-      jobType: String(employeesData.jobType),
+      // status: String(employeesData.status),
+      // jobType: String(employeesData.jobType),
     };
 
-    const response = await api.createEmployee(employee);
-    //return response.data;
+    const {data} = await api.createEmployee(employee);
+    return data;
+    
   } catch (error) {
     console.log(error);
   }

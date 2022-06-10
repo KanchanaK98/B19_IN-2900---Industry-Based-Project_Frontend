@@ -1,5 +1,5 @@
 import React from "react";
-import { Typography, Grid, Card, CardActionArea } from "@mui/material";
+import { Typography, Grid, Card } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import { IconButton } from "@mui/material";
 import { Link } from "react-router-dom";
@@ -19,6 +19,15 @@ function DisplayProduct({ product }) {
   console.log(product);
   return (
     <div>
+     
+
+
+
+
+
+
+
+
       <Grid container>
         <Grid item md={3}>
           <IconButton

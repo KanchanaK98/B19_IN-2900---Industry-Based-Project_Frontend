@@ -16,9 +16,9 @@ function DisplayAllEmployees({ profiles }) {
   //   }
   //   fetchData();
   // }, []);
-  console.log("Hi 2");
+  // console.log("Hi 2");
   return (
-    <Box>
+    <Box sx={{backgroundColor:"#d7dde0",padding:2}}>
       <Grid container>
         <Grid item md={4} xs={12}>
           <AllEmployees setEmployee={setEmployee} profiles={profiles}/>

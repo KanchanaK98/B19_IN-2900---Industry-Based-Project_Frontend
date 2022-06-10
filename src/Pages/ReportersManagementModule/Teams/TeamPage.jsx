@@ -8,7 +8,7 @@ function TeamPage({ teamcreate }) {
   return (
     <div>
       <Box padding={4}>
-        {jobRole==="HR"&&(<Grid item sm={12} md={12}>
+        {jobRole==="HR Manager"&&(<Grid item sm={12} md={12}>
           <Link to="/teams/create">
             <Button type="button" variant="contained">
               Create Team

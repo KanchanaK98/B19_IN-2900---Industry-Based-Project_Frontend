@@ -14,7 +14,6 @@ import ProductPage from "./Pages/ReportersManagementModule/Products/ProductPage"
 import CreateProduct from "./Components/ReportersManagementModule/ProductCreate/CreateProduct";
 import UserProfile from "./Components/ReportersManagementModule/UserProfile/UserProfile";
 import EditProduct from "./Components/ReportersManagementModule/ProductUpdate/EditProduct";
-import ProgressBar from "./Components/ReportersManagementModule/DisplayEmployees/ProgressBar";
 import EditTeam from "./Components/ReportersManagementModule/TeamUpdate/EditTeam";
 import CreateTeamPage from "./Pages/ReportersManagementModule/Teams/CreateTeamPage";
 import CreateProductPage from "./Pages/ReportersManagementModule/Products/CreateProductPage";
@@ -26,7 +25,6 @@ import CreateUpdateInterview from "./Pages/RecruitmentModule/Interviews/CreateUp
 import LeaveHistory from "./Pages/LeaveManagementModule/RequestLeaves/LeaveHistory";
 import RequestedLeaveList from "./Pages/LeaveManagementModule/RequestedLeavesTeamLead/RequestedLeaveList";
 import StartInterview from "./Pages/RecruitmentModule/StartInterview/StartInterview";
-import CustomizedTeamView from "./Components/ReportersManagementModule/CustomizedTemView/CustomizedTeamView";
 import ViewCurruntSalary from "./Pages/SalaryPaymentModule/CurruntSalary/ViewCurruntSalary";
 import CreateCurruntSalary from "./Components/SalaryPaymentModule/CurruntSalary/CreateCurruntSalary";
 import UpdateCurruntSalary from "./Components/SalaryPaymentModule/CurruntSalary/UpdateCurruntSalary";
@@ -50,6 +48,7 @@ import ViewProfileInfo from "./Components/ReportersManagementModule/DisplayEmplo
 import ViewAllExamList from "./Components/PromotionModule/Exam/ViewAllExamList";
 import ScheduleExamForm from "./Components/PromotionModule/Exam/ScheduleExamForm";
 import UpdateExamForm from "./Components/PromotionModule/Exam/UpdateExamForm";
+import RecentSection from "./Pages/ReportersManagementModule/DashBoard/RecentSection";
 
 function App() {
   const [open, setOpen] = useState(true);
@@ -108,10 +107,9 @@ function App() {
               <Route path="/pro" element={<CreateProduct />} />
               <Route path="/user" element={<UserProfile user={user} />}/>
               <Route path="/products/update/:id" element={<EditProduct />} />
-              <Route path="progress" element={<ProgressBar />} />
-              <Route path="tree" element={<CustomizedTeamView />} />
-              <Route path="job" element={<JobRoleDialogBox/>}/>
+              
               <Route path="display" element={<ViewProfileInfo/>}/>
+              <Route path="recent" element={<RecentSection/>}/>
               
 
               {/* Recruitment management */}

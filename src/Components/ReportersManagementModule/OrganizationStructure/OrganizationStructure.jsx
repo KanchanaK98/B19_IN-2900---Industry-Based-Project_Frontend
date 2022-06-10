@@ -108,14 +108,14 @@ function OrganizationStructure() {
                       }}
                     >
                       <Grid item md={3} key={employee.user._id}>
-                      
                         <Typography
                           component="span"
                           sx={{ textAlign: "center" }}
-                        >  <Avatar src={employee.user.profilePic} />
+                        >
+                          <Avatar src={employee.user.profilePic} />
                           {employee.user.employeeFirstName +
-                          " " +
-                          employee.user.employeeLastName}
+                            " " +
+                            employee.user.employeeLastName}
                         </Typography>
                       </Grid>
                     </Card>

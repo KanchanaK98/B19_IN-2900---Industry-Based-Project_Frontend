@@ -1,86 +1,81 @@
-import {
-
-Divider,
-Grid,
-
-Paper,
-
-Typography,
-} from "@mui/material";
-import { PendingActions } from "@mui/icons-material";
+import { Box, Grid, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
+import Card from "@mui/material/Card";
 import { getLeaveBalance } from "../../../Api/LeaveManagementModule/LeaveApi";
-
+import useStyles from "./RemainingLeavesStyle";
+import TimeToLeaveIcon from "@mui/icons-material/TimeToLeave";
+import MedicalServicesIcon from "@mui/icons-material/MedicalServices";
+import LuggageIcon from "@mui/icons-material/Luggage";
 
 const RemaningLeaves = () => {
   const [leaveBalance, setLeaveBalance] = useState({});
+  const classes = useStyles();
 
-  const fetchData = async()=> {
-  setLeaveBalance(await getLeaveBalance('E001'));
-  }
-  useEffect(()=> {
+  const fetchData = async () => {
+    setLeaveBalance(await getLeaveBalance("E001"));
+  };
+  useEffect(() => {
     fetchData();
-  }, [])
- // console.log(leaveBalance.rema);
+  }, []);
+
   return (
-    <Paper sx={{mr:4,ml:4, pb : 2}}>
-      <Grid container>
-
-      <Grid item sm={12} md={12} sx={{display:"flex", mt:4}}>
-          <PendingActions fontSize="large" sx={{mr:4, ml:4}} />
-          <Typography fontWeight={700} variant="h4">
-            Remaining Leaves
-          </Typography>
+    <Box>
+      <Typography className={classes.title} variant="h5">
+        Remaining Leaves
+      </Typography>
+      <Grid container spacing={3} sx={{ ml: 1, mr: 8, mb: 3 }}>
+        <Grid item md={3.9}>
+          <Card elevation={6} className={classes.card1}>
+            <Grid container>
+              <Grid item md={8} className={classes.cardText}>
+                <Typography variant="h2">
+                  {leaveBalance.remainingAnnual &&
+                  leaveBalance.remainingAnnual < 10
+                    ? "0" + leaveBalance.remainingAnnual
+                    : leaveBalance.remainingAnnual}
+                </Typography>
+                <Typography>Annual Leave</Typography>
+              </Grid>
+              <Grid item md={4} className={classes.cardIcon}>
+                <LuggageIcon />
+              </Grid>
+            </Grid>
+          </Card>
         </Grid>
-
-        <Grid item sm={12} md={12} sx={{mt:2}}>
-          <Divider variant="middle" />
-          <Divider variant="middle" />
+        <Grid item md={3.9}>
+          <Card elevation={6} className={classes.card2}>
+            <Grid container>
+              <Grid item md={8}>
+                <Typography variant="h2">
+                  {leaveBalance.remainingCasual && leaveBalance.remainingCasual<10 ? "0"+leaveBalance.remainingCasual:leaveBalance.remainingCasual}
+                </Typography>
+                <Typography>Casual Leave</Typography>
+              </Grid>
+              <Grid item md={4} className={classes.cardIcon}>
+                <TimeToLeaveIcon />
+              </Grid>
+            </Grid>
+          </Card>
         </Grid>
-
+        <Grid item md={3.9}>
+          <Card elevation={6} className={classes.card3}>
+            <Grid container>
+              <Grid item md={8}>
+                <Typography variant="h2">
+                  {leaveBalance.remainingMedical &&
+                    leaveBalance.remainingMedical<10 ? "0"+leaveBalance.remainingMedical:leaveBalance.remainingMedical}
+                </Typography>
+                <Typography>Medical Leave</Typography>
+              </Grid>
+              <Grid item md={4} className={classes.cardIcon}>
+                <MedicalServicesIcon />
+              </Grid>
+            </Grid>
+          </Card>
+        </Grid>
       </Grid>
-       
-      <Card sx={{ minWidth: 275, backgroundColor: "#af8eb5", m:5}}>
-      <CardContent sx={{display : 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
-        <Typography fontWeight={500} sx={{ fontSize: 20}} color="text.secondary" gutterBottom>
-          Annual Leave
-        </Typography>
-        <Typography variant="h5">
-         {leaveBalance.remainingAnnual &&  (leaveBalance.remainingAnnual)}
-        </Typography>
-      
-      </CardContent>
-      
-    </Card>
+    </Box>
+  );
+};
 
-    <Card sx={{ minWidth: 275, backgroundColor: "#ffcc80", m:5}}>
-      <CardContent sx={{display : 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
-        <Typography fontWeight={500} sx={{ fontSize: 20}} color="text.secondary" gutterBottom>
-          Casual Leave
-        </Typography>
-        <Typography variant="h5">
-         {leaveBalance.remainingCasual &&  (leaveBalance.remainingCasual)}
-        </Typography>
-      </CardContent>
-      
-    </Card>
-
-    <Card sx={{ minWidth: 275, backgroundColor: "pink", m:5}}>
-      <CardContent sx={{display : 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
-        <Typography fontWeight={500} sx={{ fontSize: 20}} color="text.secondary" gutterBottom>
-          Medical Leave
-        </Typography>
-        <Typography variant="h5">
-         {leaveBalance.remainingMedical &&  (leaveBalance.remainingMedical)}
-        </Typography>
-      </CardContent>
-      
-    </Card>
-
-    </Paper>
-  )
-}
-
-export default RemaningLeaves
+export default RemaningLeaves;

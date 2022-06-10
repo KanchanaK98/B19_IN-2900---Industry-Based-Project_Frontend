@@ -9,7 +9,7 @@ import {
   MenuItem,
   InputLabel,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import useStyles from "./CreateCandidateFormStyles";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import MuiPhoneNumber from "material-ui-phone-number";
@@ -24,7 +24,7 @@ import ViewCandidateCV from "../ViewCandidateCV/ViewCandidateCV";
 const jobPositions = [
   "Software engineer",
   "Business analyst",
-  "Human resources manager",
+  "HR Manager",
   "Chief technology officer (CTO)",
   "IT director",
   "IT manager",
@@ -86,13 +86,18 @@ const CreateCandidateForm = ({
   
   const errorHandle = () => {
     let isError = false;
-    Object.keys(candidateData).map((property) => {
+    Object.keys(candidateData).forEach((property) => {
       if (!candidateData[property]) {
         setCandidateErrors((prevState)=>({...prevState, [property]: property + " is required!"}));
         isError = true;
       }
       return;
     });
+    const emailFormat = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    if(candidateData.email && !candidateData.email.match(emailFormat)) {
+      setCandidateErrors((prevState)=>({...prevState, email: "Invalid Email address"}));
+        isError = true;
+    }
     return isError;
   };
   const handleSubmit = async (event) => {

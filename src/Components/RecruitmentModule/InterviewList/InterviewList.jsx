@@ -4,7 +4,6 @@ import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
-//import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import {
   cancelInterview,
@@ -13,9 +12,7 @@ import {
 import {
   Avatar,
   AvatarGroup,
-  Button,
   IconButton,
-  ListItemIcon,
   Menu,
   MenuItem,
   Typography,
@@ -24,12 +21,12 @@ import InterviewDetailsDialog from "./InterviewDetailsDialog/InterviewDetailsDia
 import SnackBar from "../../SnackBar/SnackBar";
 import { useLocation } from "react-router-dom";
 import useStyles from "./InterviewListStyles";
-import { More, MoreVert } from "@mui/icons-material";
+import { MoreVert } from "@mui/icons-material";
 
 const InterviewList = ({ open }) => {
   const [interviewList, setInterviewList] = useState([]);
   const [openDialog, setOpenDialog] = useState(false);
-  const [interview, setInterview] = useState();
+  const [selectedInterview, setSelectedInterview] = useState(null);
   const [openSnackBar, setOpenSnackBar] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const openMenu = Boolean(anchorEl);
@@ -45,9 +42,9 @@ const InterviewList = ({ open }) => {
   }, [location]);
 
   const handleCancelInterview = async () => {
-    const response = await cancelInterview(interview._id);
+    const response = await cancelInterview(selectedInterview._id);
     setInterviewList(
-      interviewList.filter((Interview) => interview !== Interview)
+      interviewList.filter((Interview) => selectedInterview !== Interview)
     );
     handleCloseDialog();
     location.state = response;
@@ -59,11 +56,11 @@ const InterviewList = ({ open }) => {
   const handleCloseDialog = () => {
     setOpenDialog(false);
   };
-  const handleViewDetails = (interview) => {
-    setInterview(interview);
+  const handleViewDetails = () => {
     setOpenDialog(true);
   };
-  const handleOpenMenu = (event) => {
+  const handleOpenMenu = (event, interview) => {
+    setSelectedInterview(interview);
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
@@ -126,7 +123,11 @@ const InterviewList = ({ open }) => {
                 </TableCell>
                 <TableCell>
                   <IconButton
-                    onClick={handleOpenMenu}
+                    onClick={(event) => {
+          
+                      handleOpenMenu(event, interview);
+                      
+                    }}
                     aria-controls={openMenu ? "account-menu" : undefined}
                     aria-haspopup="true"
                     aria-expanded={openMenu ? "true" : undefined}
@@ -137,6 +138,7 @@ const InterviewList = ({ open }) => {
                     anchorEl={anchorEl}
                     open={openMenu}
                     onClose={handleClose}
+                    onClick={handleClose}
                     transformOrigin={{ horizontal: "right", vertical: "top" }}
                     anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
                     PaperProps={{
@@ -165,7 +167,7 @@ const InterviewList = ({ open }) => {
                       },
                     }}
                   >
-                    <MenuItem onClick={() => handleViewDetails(interview)}>View more</MenuItem>
+                    <MenuItem onClick={handleViewDetails}>View more</MenuItem>
                     <MenuItem>Update</MenuItem>
                     <MenuItem>Cancel</MenuItem>
                   </Menu>
@@ -177,7 +179,7 @@ const InterviewList = ({ open }) => {
       <InterviewDetailsDialog
         openDialog={openDialog}
         handleCloseDialog={handleCloseDialog}
-        interview={interview}
+        interview={selectedInterview}
         handleCancelInterview={handleCancelInterview}
       />
 

@@ -34,8 +34,8 @@ const CreateInterviewForm = () => {
   const [interview, setInterview] = useState({
     candidate: "",
     InterviewType: "",
-    InterviewDate: new Date(),
-    InterviewTime: new Date(),
+    InterviewDate: "",
+    InterviewTime: "",
     Interviewers: [],
   });
   const [interviewErrors, setInterviewErrors] = useState({
@@ -48,7 +48,6 @@ const CreateInterviewForm = () => {
   const [candidates, setCandidates] = useState([]);
   const [employees, setEmployees] = useState([]);
   const [interviewID, setInterviewID] = useState(null);
-  let isError = false;
 
   const [openDialog, setOpenDialog] = useState(false);
 
@@ -76,28 +75,15 @@ const CreateInterviewForm = () => {
       setInterviewID(location.state.interview._id);
     }
   }, [location.state]);
-  // const errorHandle = () => {
-  //   Object.keys(interview).map((property) => {
-  //     if (!interview[property] || interview[property].length === 0) {
-  //       interviewErrors[property] = "This field is required!";
-  //       isError = true;
-  //     }
-  //   });
-  //   if (
-  //     new Date(interview.InterviewDate).getTime() ===
-  //     new Date(interview.InterviewTime).getTime()
-  //   ) {
-  //     interviewErrors.InterviewDate = "Date has not selected!";
-  //     interviewErrors.InterviewTime = "Time has not selected!";
-  //   }
-  //   return isError;
-  // };
-
+ 
   const errorHandle = () => {
     let isError = false;
-    Object.keys(interview).map((property) => {
+    Object.keys(interview).forEach((property) => {
       if (!interview[property] || interview[property].length === 0) {
-        setInterviewErrors((prevState)=>({...prevState, [property]: property + " is required!"}));
+        setInterviewErrors((prevState) => ({
+          ...prevState,
+          [property]: property + " is required!",
+        }));
         isError = true;
       }
       return;
@@ -105,7 +91,6 @@ const CreateInterviewForm = () => {
     return isError;
   };
 
-  
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (!errorHandle()) {
@@ -158,10 +143,7 @@ const CreateInterviewForm = () => {
           <Grid item sm={12} md={12}>
             <form autoComplete="off" onSubmit={handleSubmit}>
               <Grid container>
-
                 <Grid item sm={12} md={6} className={classes.inputs}>
-
-
                   <Grid container>
                     <Grid item sm={4} md={4} className={classes.texFieldLabel}>
                       <InputLabel>Candidate</InputLabel>

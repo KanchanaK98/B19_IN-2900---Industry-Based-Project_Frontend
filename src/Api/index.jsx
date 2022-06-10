@@ -261,3 +261,6 @@ export const getRequestedLeave = (employeeId) =>
 
   export const responseRequestedLeave = (id,reason) =>
   API.post(`/leave/requestedLeave/response/${id}`,reason);
+
+  export const getTeamLead = (employeeId) =>
+  API.get("/leave/request/teamLead/" + employeeId);

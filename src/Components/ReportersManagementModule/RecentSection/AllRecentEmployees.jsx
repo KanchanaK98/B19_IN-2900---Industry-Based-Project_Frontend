@@ -3,9 +3,10 @@ import { Box, Grid } from "@mui/material";
 import RecentEmployee from "./RecentEmployee";
 import { recentEmployees } from "../../../Api/ReportersManagementModule/EmployeeApi";
 
-// import Carousel from '@brainhubeu/react-carousel';
-// import '@brainhubeu/react-carousel/lib/style.css';
-
+import Carousel, { autoplayPlugin } from "@brainhubeu/react-carousel";
+import "@brainhubeu/react-carousel/lib/style.css";
+import Scrollbars from "react-custom-scrollbars";
+// import Carousel from 'react-material-ui-carousel'
 function AllRecentEmployees() {
   const [profiles, setProfiles] = useState([]);
 
@@ -18,8 +19,8 @@ function AllRecentEmployees() {
 
   return (
     <div>
-        {/* <Carousel> */}
-      <Box maxWidth={400}>
+        <Scrollbars style={{ height: 480 ,width:400}}>
+      <Box maxWidth={400} sx={{mt:5}} >
         <Grid
           container
           spacing={4}
@@ -28,19 +29,32 @@ function AllRecentEmployees() {
             display: "flex",
           }}
         >
-          {profiles &&
-            profiles.map((prof) => {
-              return (
-                <div key={prof._id}>
-                  <Grid item xs={12} sm={6} md={4} component="span" >
-                    <RecentEmployee profile={prof} />
-                  </Grid>
-                </div>
-              );
-            })}
+          {/* <Carousel
+            plugins={[
+              "infinite",
+              {
+                resolve: autoplayPlugin,
+                options: {
+                  interval: 2000,
+                },
+              },
+            ]}
+            animationSpeed={1000}
+          > */}
+            {profiles &&
+              profiles.map((prof) => {
+                return (
+                  <div key={prof._id}>
+                    <Grid item xs={12} sm={6} md={4} component="span">
+                      <RecentEmployee profile={prof} />
+                    </Grid>
+                  </div>
+                );
+              })}
+          {/* </Carousel> */}
         </Grid>
       </Box>
-      {/* </Carousel> */}
+      </Scrollbars>
     </div>
   );
 }

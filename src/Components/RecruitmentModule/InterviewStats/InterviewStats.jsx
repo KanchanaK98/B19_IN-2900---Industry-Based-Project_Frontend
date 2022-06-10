@@ -15,8 +15,7 @@ const InterviewStats = () => {
 
   const classes = useStyles();
   const fetchData = async () => {
-    const interviewStats = await getInterviewStats("E001");
-    console.log(interviewStats);
+    const interviewStats = await getInterviewStats();
     setCompletedInterview(interviewStats.completedInterviews);
     setRemainingInterview(interviewStats.remainingInterviews);
     setCandidates(interviewStats.candidates)

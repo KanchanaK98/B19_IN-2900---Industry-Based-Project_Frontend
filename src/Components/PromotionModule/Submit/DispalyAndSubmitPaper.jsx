@@ -72,7 +72,8 @@ export default function DispalyAndSubmitPaper() {
     }
     fetchData();
   }, [EmployeeID]);
-  console.log("here paper:", Paper);
+
+  //console.log("here paper:", Paper);
 
   const [Questions, setQuestions] = useState([]);
   const [open, setOpen] = useState(false);
@@ -88,7 +89,6 @@ export default function DispalyAndSubmitPaper() {
     await submitPaperApi(EmployeeID, Questions, Paper[0].PaperID).then(() => {
       window.close();
     });
-
     console.log("submitted");
   };
 
@@ -101,155 +101,204 @@ export default function DispalyAndSubmitPaper() {
         marginTop: false,
       }}
     >
-      <Grid item xs={12} md={12}>
-        <Grid
-          container
-          className={classes.gridContainer}
-          justify="center"
-          spacing={2}
-          columns={12}
-        >
-          <Grid item xs={6}>
-            <Typography
-              variant="h4"
-              sx={{
-                m1: 2,
-                fontWeight: "Bold",
-                color: "#183d78",
-                mb: 2,
-                ml: 2,
-              }}
-            >
-              Employee : {EmployeeID}
-            </Typography>
-          </Grid>
-        </Grid>
-      </Grid>
-
-      <Grid container className={classes.gridContainer} justify="center">
-        {" "}
-        {Paper.map((p, key) => (
-          <Grid item xs={12} md={12} key={key}>
-            <Card className={classes.root} variant="outlined">
-              <CardContent>
-                <Typography
-                  sx={{
-                    fontWeight: "bold",
-                    color: "#546e7a",
-                    marginLeft: "20px",
-                  }}
-                  value={p.PaperID}
-                >
-                  Paper ID : {p.PaperID}
-                </Typography>
-                <Typography
-                  sx={{
-                    fontWeight: "bold",
-                    color: "#546e7a",
-                    marginLeft: "20px",
-                  }}
-                >
-                  Paper Name : {p.PaperName}
-                </Typography>
-                <Typography
-                  sx={{
-                    fontWeight: "bold",
-                    color: "#546e7a",
-                    marginLeft: "20px",
-                  }}
-                >
-                  Paper Type : {p.PaperType}
-                </Typography>
-                <Typography
-                  sx={{
-                    fontWeight: "bold",
-                    color: "#546e7a",
-                    marginLeft: "20px",
-                  }}
-                >
-                  Date Created : {p.DateCreated}
-                </Typography>
-                <Divider sx={{ mt: 2, mb: 2 }}></Divider>
-                <Typography
-                  sx={{
-                    fontWeight: "bold",
-                    color: "#546e7a",
-                    marginLeft: "20px",
-                  }}
-                >
-                  Questions :
-                </Typography>
-
-                {p.questions.map((item, key) => (
-                  <Card className={classes.card1} key={key}>
-                    <Typography
-                      className={classes.text}
-                      value={item.QuestionID}
-                    >
-                      Question ID : {item.QuestionID}
-                    </Typography>
-                    <Typography className={classes.text}>
-                      Question Catogory : {item.QuestionCatogory}
-                    </Typography>
-                    <Typography className={classes.text}>
-                      QuestionBody : {item.QuestionBody}
-                    </Typography>
-
-                    <div
-                      onChange={(event) => {
-                        setQuestions(
-                          Questions.concat({
-                            QuestionID: item.QuestionID,
-                            QuestionBody: item.QuestionBody,
-                            EmployeeRating: event.target.value,
-                          })
-                        );
-                        console.log(Questions);
-                      }}
-                    >
-                      <input type="radio" value="weak" name="response" /> Weak
-                      <input type="radio" value="average" name="response" />
-                      Average
-                      <input type="radio" value="good" name="response" /> Good
-                      <input
-                        type="radio"
-                        value="very good"
-                        name="response"
-                      />{" "}
-                      Very good
-                    </div>
-                  </Card>
-                ))}
-              </CardContent>
+      {Paper == null ? (
+        <Grid item xs={12} md={12}>
+          <Grid
+            container
+            className={classes.gridContainer}
+            justify="center"
+            spacing={2}
+            columns={12}
+          >
+            <Grid item xs={6}>
+              <Typography
+                variant="h4"
+                sx={{
+                  m1: 2,
+                  fontWeight: "Bold",
+                  color: "#183d78",
+                  mb: 2,
+                  ml: 2,
+                }}
+              >
+                You Have NO Evaluation Test today!
+              </Typography>
               <Button
                 variant="contained"
                 color="primary"
-                onClick={handleClickOpen}
+                onClick={() => window.close()}
               >
-                Submit
+                OK
               </Button>
-            </Card>
+            </Grid>
           </Grid>
-        ))}
-      </Grid>
+        </Grid>
+      ) : (
+        <Grid>
+          <Grid item xs={12} md={12}>
+            <Grid
+              container
+              className={classes.gridContainer}
+              justify="center"
+              spacing={2}
+              columns={12}
+            >
+              <Grid item xs={6}>
+                <Typography
+                  variant="h4"
+                  sx={{
+                    m1: 2,
+                    fontWeight: "Bold",
+                    color: "#183d78",
+                    mb: 2,
+                    ml: 2,
+                  }}
+                >
+                  Employee : {EmployeeID}
+                </Typography>
+              </Grid>
+            </Grid>
+          </Grid>
 
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="form-dialog-title"
-      >
-        <DialogTitle id="form-dialog-title" className={classes.dialogBoxTopic}>
-          Submit
-        </DialogTitle>
-        <DialogActions>
-          <Button variant="contained" color="primary" onClick={SubmitPaperFunc}>
-            Confirm
-          </Button>
-          <Button variant="contained" color="primary" onClick={handleClose}>
-            Return to Attempt
-          </Button>
-        </DialogActions>
-      </Dialog>
+          <Grid container className={classes.gridContainer} justify="center">
+            {" "}
+            {Paper.map((p, key) => (
+              <Grid item xs={12} md={12} key={key}>
+                <Card className={classes.root} variant="outlined">
+                  <CardContent>
+                    <Typography
+                      sx={{
+                        fontWeight: "bold",
+                        color: "#546e7a",
+                        marginLeft: "20px",
+                      }}
+                      value={p.PaperID}
+                    >
+                      Paper ID : {p.PaperID}
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontWeight: "bold",
+                        color: "#546e7a",
+                        marginLeft: "20px",
+                      }}
+                    >
+                      Paper Name : {p.PaperName}
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontWeight: "bold",
+                        color: "#546e7a",
+                        marginLeft: "20px",
+                      }}
+                    >
+                      Paper Type : {p.PaperType}
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontWeight: "bold",
+                        color: "#546e7a",
+                        marginLeft: "20px",
+                      }}
+                    >
+                      Date Created : {p.DateCreated}
+                    </Typography>
+                    <Divider sx={{ mt: 2, mb: 2 }}></Divider>
+                    <Typography
+                      sx={{
+                        fontWeight: "bold",
+                        color: "#546e7a",
+                        marginLeft: "20px",
+                      }}
+                    >
+                      Questions :
+                    </Typography>
+
+                    {p.questions.map((item, key) => (
+                      <Card className={classes.card1} key={key}>
+                        <Typography
+                          className={classes.text}
+                          value={item.QuestionID}
+                        >
+                          Question ID : {item.QuestionID}
+                        </Typography>
+                        <Typography className={classes.text}>
+                          Question Catogory : {item.QuestionCatogory}
+                        </Typography>
+                        <Typography className={classes.text}>
+                          QuestionBody : {item.QuestionBody}
+                        </Typography>
+
+                        <div
+                          onChange={(event) => {
+                            setQuestions(
+                              Questions.concat({
+                                QuestionID: item.QuestionID,
+                                QuestionBody: item.QuestionBody,
+                                EmployeeRating: event.target.value,
+                              })
+                            );
+                            console.log(Questions);
+                          }}
+                        >
+                          <input type="radio" value="weak" name="response" />{" "}
+                          Weak
+                          <input type="radio" value="average" name="response" />
+                          Average
+                          <input
+                            type="radio"
+                            value="good"
+                            name="response"
+                          />{" "}
+                          Good
+                          <input
+                            type="radio"
+                            value="very good"
+                            name="response"
+                          />{" "}
+                          Very good
+                        </div>
+                      </Card>
+                    ))}
+                  </CardContent>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleClickOpen}
+                  >
+                    Submit
+                  </Button>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="form-dialog-title"
+          >
+            <DialogTitle
+              id="form-dialog-title"
+              className={classes.dialogBoxTopic}
+            >
+              Submit
+            </DialogTitle>
+            <DialogActions>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={SubmitPaperFunc}
+              >
+                Confirm
+              </Button>
+              <Button variant="contained" color="primary" onClick={handleClose}>
+                Return to Attempt
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </Grid>
+      )}
     </Box>
   );
 }

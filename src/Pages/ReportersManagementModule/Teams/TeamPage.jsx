@@ -4,7 +4,7 @@ import { Grid, Button, Box } from "@mui/material";
 import { Link } from "react-router-dom";
 
 function TeamPage({ teamcreate }) {
-  const jobRole = JSON.parse(localStorage.getItem("profile")).jobRole; //profile should change to user
+  const jobRole = JSON.parse(localStorage.getItem("user")).jobRole; //profile should change to user
   return (
     <div>
       <Box padding={4}>

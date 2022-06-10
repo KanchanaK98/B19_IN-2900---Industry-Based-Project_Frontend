@@ -16,16 +16,20 @@ import TableRow from "@mui/material/TableRow";
 import {Typography} from "@mui/material";
 import useStyles from "./AssetViewListStyles";
 import AssetViewStats from './AssetViewStats';
+import ConfirmationBox from './ConfirmationBox';
 
 const  ViewAsset = () => {
     const [assets,setAssets] = useState([]);
     const [eachAsset, setEachAsset] = useState([]);
     const [show,setShow] = useState(false);
     const [show2,setShow2] = useState(false);
+    const [ assetID, setAssetID ] = useState("");
+    const [type, setType ] = useState(""); //type of confirmation box whether fault or release fault
     const [empID, setEmployee] = useState("");
     const [assignAsset, setAssignAsset] = useState("");
     const [error,seterror] = useState(false);
     const [number,setNumber] = useState({available:0,nonAvailable:0,fault:0})
+    const [showConfirmation, setShowConfirmation] = useState(false);
     useEffect(()=>{
         axios.get("http://localhost:8070/assets/").then((res)=>{
             // console.log(res)
@@ -87,6 +91,7 @@ const  ViewAsset = () => {
         setEachAsset("");
         
     }
+    
     
     const unassign = async (id) =>
     {
@@ -188,6 +193,16 @@ const  ViewAsset = () => {
         newAssets[index].status=asset.status;
         setAssets(newAssets)
     }
+    const confirmBox = async (id) =>
+    {
+        setAssetID(id);
+       setShowConfirmation(true);
+    }
+    const hideConfirmationBox = () =>
+    {
+        setAssetID("");
+       setShowConfirmation(false);
+    }
     const classes = useStyles();
     return (
         <>
@@ -274,18 +289,18 @@ const  ViewAsset = () => {
                 {asset.status === 'Available'?
                            (<TableCell align="center">
                                <button className='btn btn-primary announce' onClick={()=>{showModal(asset._id);setAssignAsset(asset._id);}}>Assign</button>
-                                <button className='btn btn-danger' onClick={()=>createFault(asset._id)} style={{ marginLeft:"5px" }}>Fault</button>
+                                <button className='btn btn-danger' onClick={()=>{confirmBox(asset._id);setType("fault");}} style={{ marginLeft:"5px" }}>Fault</button>
                                 <button className='btn btn-success' onClick={()=>{ShowModalView(asset._id)}} style={{ marginLeft:"5px" }}>Update</button>
                                 </TableCell>)
 
                            :asset.status === 'Fault'?
                            (<TableCell align="center">
-                               <button className='btn btn-danger' onClick={()=>releaseFault(asset._id)}>Release Fault</button>
+                               <button className='btn btn-danger' onClick={()=>{confirmBox(asset._id);setType("release-fault");}}>Release Fault</button>
                                <button className='btn btn-success' onClick={()=>{ShowModalView(asset._id)}} style={{ marginLeft:"5px" }}>Update</button>
                                </TableCell>):
                            (<TableCell align="center">
-                                <button className='btn btn-primary announce' onClick={()=>unassign(asset._id)}>Un-Assign</button>
-                                <button className='btn btn-danger' onClick={()=>createFault(asset._id)} style={{ marginLeft:"5px" }}>Fault</button>
+                                <button className='btn btn-primary announce' onClick={()=>{confirmBox(asset._id);setType("unassign");}}>Un-Assign</button>
+                                <button className='btn btn-danger' onClick={()=>{confirmBox(asset._id);setType("fault");}} style={{ marginLeft:"5px" }}>Fault</button>
                                 <button className='btn btn-success' onClick={()=>{ShowModalView(asset._id)}} style={{ marginLeft:"5px" }}>Update</button>
                             </TableCell>)
                 }
@@ -301,6 +316,7 @@ const  ViewAsset = () => {
                  { show2===true?(<AssetUpdateModule data={eachAsset} show={true} handleClose={hideModalView} updateFun={updateAssetFunction}/>):null }
                 {/* modal for assign asset */}
                  { show===true?(<AssetAssignModel data={eachAsset} show={true} handleClose={hideModal} assignFun={assignAssetFunction}/>):null }
+                {showConfirmation === true?(<ConfirmationBox opens={true} typed={type} func1={createFault} func2={releaseFault} func3={unassign} id={assetID} handleClosed={hideConfirmationBox}/>):null}
     </Paper>
     </>           
         

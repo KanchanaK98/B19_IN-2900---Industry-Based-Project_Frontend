@@ -69,6 +69,13 @@ export const responseRequestedLeave = async(id,reason) =>{
     console.log(error);
   }
 }
+export const getTeamLead= async() =>{
+ 
+  const response =  await api.getTeamLead(JSON.parse(localStorage.getItem("user")).employeeID);
+  console.log(response);
+  return response.data.teamLeader; 
+}
+
 
 
 

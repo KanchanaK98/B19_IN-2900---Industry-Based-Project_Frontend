@@ -1,22 +1,28 @@
-import { Box, Grid } from '@mui/material'
+import {Grid} from '@mui/material'
 import React from 'react'
 import RemaningLeaves from '../../../Components/LeaveManagementModule/RemaningLeaves/RemaningLeaves'
 import RequestLeaveForm from '../../../Components/LeaveManagementModule/RequestLeaveForm/RequestLeaveForm'
+import TeamLead from '../../../Components/LeaveManagementModule/TeamLead/TeamLead'
 
 const RequestLeaves = () => {
   return (
-    <Box>
-        <Grid container>
-            <Grid item sm={8} md={8} >
-                <RequestLeaveForm />
+    
+      <Grid container>
+        <Grid item sm={8} md={8}>
+          <Grid container>
+            <Grid item sm={12} md={12}>
+              <RemaningLeaves />
             </Grid>
-            <Grid item sm={4} md={4} >
-                <RemaningLeaves />
+            <Grid item sm={12} md={12}>
+              <RequestLeaveForm />
             </Grid>
-
+          </Grid>
         </Grid>
-        
-    </Box>
+        <Grid item sm={4} md={4}>
+          <TeamLead/>
+        </Grid>
+      </Grid>
+    
   )
 }
 

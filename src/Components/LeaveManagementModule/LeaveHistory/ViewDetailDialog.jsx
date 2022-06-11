@@ -34,7 +34,7 @@ const ViewMoreDialog = ({ open, handleClose, leave, leaveHistory, setLeaveHistor
       ia-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title" className={classes.title}>
+      <DialogTitle id="alert-dialog-title" className={classes.title} sx={{ backgroundColor: "rgb(243, 229, 245)" }}>
         <Grid container>
           <Grid item md={8} sx={{ mt: 1 }}>
             <Typography variant="h5">Leave Details</Typography>
@@ -46,7 +46,7 @@ const ViewMoreDialog = ({ open, handleClose, leave, leaveHistory, setLeaveHistor
           </Grid>
         </Grid>
       </DialogTitle>
-      <DialogContent className={classes.root}>
+      <DialogContent className={classes.root} sx={{ backgroundColor: "rgb(243, 229, 245)" }}>
         <Divider />
         <Divider sx={{ mb: 2 }} />
 

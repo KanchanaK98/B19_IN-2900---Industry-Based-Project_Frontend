@@ -2,7 +2,7 @@ import * as api from '../index';
 
 export const requestLeave =async (leave) => {
   try {
-    const { leaveType, reason, startDate, endDate, leaveMethod, employeeID } =
+    const { leaveType, reason, startDate, endDate, leaveMethod } =
       leave;
     const leaveData = {
       leaveType,
@@ -10,7 +10,7 @@ export const requestLeave =async (leave) => {
       startDate,
       endDate : (leaveMethod !=="multiple Day") ? startDate : endDate,
       leaveMethod,
-      employeeId: "E003",
+      employeeId: JSON.parse(localStorage.getItem("user")).employeeID
     };
    const response = await api.requestLeave(leaveData);
   return response.data;
@@ -28,9 +28,9 @@ export const getLeaveBalance = async (employeeID) => {
   }
 };
 
-export const getLeaveHistory = async (employeeID) => {
+export const getLeaveHistory = async () => {
   try {
-    const {data} = await api.getLeaveList(employeeID);
+    const {data} = await api.getLeaveList(JSON.parse(localStorage.getItem("user")).employeeID);
     //console.log(data.leaveHistory);
     return data.leaveHistory;
   } catch (error) {
@@ -49,12 +49,33 @@ export const cancelLeave = async (reason, leaveID, employeeID) => {
 }
 
 
-export const getRequestedLeaves= async(employeeID) =>{
+export const getRequestedLeaves= async() =>{
  
-  const response =  await api.getRequestedLeave(employeeID);
-  console.log(response);
+  const response =  await api.getRequestedLeave(JSON.parse(localStorage.getItem("user")).employeeID);
+  //console.log(response);
   return response.data.requestedLeave;
 }
+
+export const responseRequestedLeave = async(id,reason) =>{
+  try{
+    const response = await api.responseRequestedLeave(id,{reason:reason});
+    
+    console.log(response);
+
+    }
+
+  
+  catch(error){
+    console.log(error);
+  }
+}
+export const getTeamLead= async() =>{
+ 
+  const response =  await api.getTeamLead(JSON.parse(localStorage.getItem("user")).employeeID);
+  console.log(response);
+  return response.data.teamLeader; 
+}
+
 
 
 

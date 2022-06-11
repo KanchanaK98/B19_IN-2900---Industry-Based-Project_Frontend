@@ -121,15 +121,15 @@ export default function CustomizedTeamView() {
         {teams &&
           teams.map((team, i) => {
             return (
-              <Card sx={{ mt: 2, padding: 3 }}>
-                <Box sx={{ m: 1 }}>
-                  <StyledTreeItem nodeId={i + 1} label={team.teamName}>
+              <Card sx={{ mt: 2, padding: 3 }} key={team._id}>
+                <Box sx={{ m: 1 }} key={team._id}>
+                  <StyledTreeItem nodeId={`${i} + 1`} label={team.teamName} >
                     <TreeView defaultExpanded={["0"]}>
                       {team.TeamWithEmp.map((member, j) => {
                         return (
-                          <>
-                            <Card sx={{ padding: 1, mb: 2 }}>
-                              <Grid container sx={{ mb: 2 }} key={team._id}>
+                        
+                            <Card sx={{ padding: 1, mb: 2 }} key={team._id}>
+                              <Grid container sx={{ mb: 2 }} >
                                 <Grid item md={1}>
                                   <Avatar src={member.profilePic} />
                                 </Grid>
@@ -141,7 +141,7 @@ export default function CustomizedTeamView() {
                                 </Grid>
                               </Grid>
                             </Card>
-                          </>
+                         
                         );
 
                         //  console.log(++flag)

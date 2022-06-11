@@ -3,7 +3,7 @@ import { Typography, Button, Card, Grid, Avatar, Divider } from "@mui/material";
 import { Link } from "react-router-dom";
 function DisplayTeam({ team }) {
   const { _id, teamName, teamLeadID, TeamWithEmp, ProductOfTeam } = team;
-  const jobRole = JSON.parse(localStorage.getItem("profile")).jobRole; //profile should change to user
+  const jobRole = JSON.parse(localStorage.getItem("user")).jobRole; //profile should change to user
   return (
     <div>
       <Card
@@ -32,7 +32,7 @@ function DisplayTeam({ team }) {
             TeamWithEmp.map((result, i, j, k) => {
               if (TeamWithEmp[i].employeeID === teamLeadID) {
                 return (
-                  <Grid sx={{ mb: 1, mt: 1 }}>
+                  <Grid sx={{ mb: 1, mt: 1 }}key={i}>
                     <Grid
                       sx={{ justifyContent: "center", display: "flex", mb: 1 }}
                     >
@@ -46,7 +46,7 @@ function DisplayTeam({ team }) {
                         component={"span"}
                       />
                     </Grid>
-                    <Typography component={"span"} key={j} align="center">
+                    <Typography component={"span"}  align="center">
                       {TeamWithEmp[i].employeeID}
                       &nbsp;
                       {
@@ -100,7 +100,7 @@ function DisplayTeam({ team }) {
             : "not assigned"}
         </Typography>
         <Divider sx={{ mt: 2, mb: 2 }}></Divider>
-        {jobRole === "HR" && (
+        {jobRole === "HR Manager" && (
           <Typography align="center">
             <Button
               variant="contained"

@@ -8,13 +8,13 @@ function AllEmployees({ setEmployee,profiles }) {
 
   const handleClick = (profile) => {
     setEmployee(profile);
-    console.log(profile)
+    // console.log(profile)
   };
 
   return (
     <Grid container>
       {/* <Grid item md={4}> */}
-      <Scrollbars style={{ height: 650 }}>
+      <Scrollbars style={{ height: 580 }}>
         <Box sx={{ mt: 0, padding: 2 }}>
           {profiles &&
             profiles.map((profile) => (

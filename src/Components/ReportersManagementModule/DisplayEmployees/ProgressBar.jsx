@@ -85,6 +85,10 @@ function ProgressBar({
     count++;
   }
   switch (count) {
+    case 0:{
+      percentage=0
+      break;
+    }
     case 1: {
       percentage = 90;
       break;

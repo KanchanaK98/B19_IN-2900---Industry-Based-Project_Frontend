@@ -36,7 +36,7 @@ const InterviewList = ({ open }) => {
   const location = useLocation();
 
   const fetchData = async () => {
-    setInterviewList(await getInterviewList("E001"));
+    setInterviewList(await getInterviewList());
   };
   useEffect(() => {
     fetchData();

@@ -6,7 +6,8 @@ const useStyles = makeStyles((theme) => ({
     }, 
     breadcrumb: {
         display: "flex",
-        alignItems: "center"
+        alignItems: "center",
+        paddingLeft: theme.spacing(3)
     },
     arrowIcon : {
         display : 'flex',
@@ -17,6 +18,10 @@ const useStyles = makeStyles((theme) => ({
     avatar : {
         display: "flex",
         justifyContent: "center"
+    },
+    breadcrumbLink : {
+        color: "rgb(0, 0, 0, 0.5)",
+        textDecoration: 'none'
     }
 }))
 

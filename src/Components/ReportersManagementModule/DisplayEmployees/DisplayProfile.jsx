@@ -22,7 +22,7 @@ import ViewProfileInfo from "./ViewProfileInfo";
 
 function DisplayProfile({ employee }) {
   const [teams, setTeams] = useState();
-  const jobRole = JSON.parse(localStorage.getItem("profile")).jobRole; //profile should change to user
+  const jobRole = JSON.parse(localStorage.getItem("user")).jobRole; //profile should change to user
   // const handleUpdate = () => {
   //   setUpdateEmployee(profile);
   //   setUpdateState(true);
@@ -57,7 +57,12 @@ function DisplayProfile({ employee }) {
             <Typography
               variant="h6"
               textAlign="left"
-              sx={{ mb: 1, fontWeight: "bold" }}
+              sx={{
+                mb: 1,
+                fontWeight: "bold",
+                color: "#183d78",
+                fontFamily: "Kdam Thmor Pro",
+              }}
             >
               {user &&
                 user.employeeFirstName[0].toUpperCase() +
@@ -77,7 +82,12 @@ function DisplayProfile({ employee }) {
               teams.map((team) => {
                 if (team._id === user.teamID) {
                   return (
-                    <Typography variant="h6" textAlign="center" key={team._id}>
+                    <Typography
+                      variant="h6"
+                      textAlign="center"
+                      key={team._id}
+                      sx={{ color: "#8385a8" }}
+                    >
                       {team.teamName}
                     </Typography>
                   );
@@ -110,37 +120,37 @@ function DisplayProfile({ employee }) {
               {moment(user.lastSeen).format("ddd MMM DD YYYY hh:mm:ss")}
             </Typography>
             <Divider sx={{ mt: 2, mb: 2 }}></Divider>
-            <Typography sx={{ fontWeight: "bold", mb: 1 }}>
+            <Typography sx={{ fontWeight: "bold", mb: 1, color: "#183d78" }}>
               Profile Info
             </Typography>
             <Grid>
               {user.streetNo && (
                 <Typography>
-                  <PlaceIcon />
+                  <PlaceIcon sx={{ color: "#183d78" }} />
                   &nbsp; {user.streetNo + " " + user.city}
                 </Typography>
               )}
               {user.phoneNumber && (
                 <Typography>
-                  <ContactPhoneIcon />
+                  <ContactPhoneIcon sx={{ color: "#183d78" }} />
                   &nbsp; {user.phoneNumber}
                 </Typography>
               )}
               <Typography>
-                <ContactMailIcon />
+                <ContactMailIcon sx={{ color: "#183d78" }} />
                 &nbsp;&nbsp;{user.companyEmail}
               </Typography>
               {jobRole === "HR" && (
                 <Grid>
                   {user.birthday && (
                     <Typography>
-                      <CakeIcon />
+                      <CakeIcon sx={{ color: "#183d78" }} />
                       &nbsp; {new Date(user.birthday).toDateString()}
                       {/* {momen{user.birthday).format("MMM DD YYYY")} */}
                     </Typography>
                   )}
                   <Typography>
-                    <PermIdentityIcon />
+                    <PermIdentityIcon sx={{ color: "#183d78" }} />
                     &nbsp;{user.NIC}
                   </Typography>
                 </Grid>
@@ -164,7 +174,7 @@ function DisplayProfile({ employee }) {
 
             {/* <Typography>Team :{user.teamID}</Typography> */}
             <Divider sx={{ mt: 2, mb: 2 }}></Divider>
-            <Typography sx={{ fontWeight: "bold", mb: 1 }}>
+            <Typography sx={{ fontWeight: "bold", mb: 1, color: "#183d78" }}>
               Accademic Qulaifications
             </Typography>
             <Typography>
@@ -182,8 +192,12 @@ function DisplayProfile({ employee }) {
                 })}
             </Typography>
             <Typography>
+              <Grid cotainter>
+                <Grid item md={5}></Grid>
+                <Grid item md={7}></Grid>
+              </Grid>
               <FormLabel sx={{ color: "#9098a6", fontWeight: "bold" }}>
-                A/L Results :&nbsp;{" "}
+                A/L Results :&nbsp;
               </FormLabel>
               {EmployeeWithAcc &&
                 EmployeeWithAcc.advancedLevelResults.map((result, i) => {
@@ -196,7 +210,6 @@ function DisplayProfile({ employee }) {
             </Typography>
             <Typography>
               <FormLabel sx={{ color: "#9098a6", fontWeight: "bold" }}>
-                {" "}
                 Achievements :&nbsp;
               </FormLabel>
 
@@ -210,7 +223,7 @@ function DisplayProfile({ employee }) {
                 })}
             </Typography>
             <Divider sx={{ mt: 2, mb: 2 }}></Divider>
-            <Typography sx={{ fontWeight: "bold", mb: 1 }}>
+            <Typography sx={{ fontWeight: "bold", mb: 1, color: "#183d78" }}>
               Professional Qualifications
             </Typography>
             <Typography>
@@ -262,12 +275,12 @@ function DisplayProfile({ employee }) {
         {/* <Button onClick={handleUpdate} sx={{ mt: 5 }} fullWidth  variant="contained" size="medium">
           Update
         </Button> */}
-        {jobRole === "HR" && (
+        {jobRole === "HR Manager" && (
           <Button
             component={Link}
             to={`/profile/update`}
             state={{ employee }}
-            sx={{ mt: 5, backgroundColor: "#1b529e" }}
+            sx={{ mt: 5, backgroundColor: "#183d78" }}
             fullWidth
             variant="contained"
             size="medium"

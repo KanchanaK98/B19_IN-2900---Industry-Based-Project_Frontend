@@ -19,7 +19,6 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
-import { updateAssets } from '../../Api/AssetManagementModule/assetViewApi';
 import { assignAssets } from '../../Api/AssetManagementModule/assetViewApi';
 
 export default function AssetAssignModel({handleClose,data,show,assignFun}) {

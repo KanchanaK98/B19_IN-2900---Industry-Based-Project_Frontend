@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CssBaseline, Grid } from "@mui/material";
 import Box from "@mui/material/Box";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -50,18 +50,40 @@ import ViewProfileInfo from "./Components/ReportersManagementModule/DisplayEmplo
 import ViewAllExamList from "./Components/PromotionModule/Exam/ViewAllExamList";
 import ScheduleExamForm from "./Components/PromotionModule/Exam/ScheduleExamForm";
 import UpdateExamForm from "./Components/PromotionModule/Exam/UpdateExamForm";
+import SessionExpiryDialog from "./Components/SessionExpiry/SessionExpiryDialog";
+import { LogoutApi } from "./Api/Login/LogoutApi";
 
 function App() {
   const [open, setOpen] = useState(true);
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
+  const [user, setUser] = useState(JSON.parse(sessionStorage.getItem("user")));
+  let timer;
 
   const toggleDrawer = () => {
     setOpen(!open);
   };
   const handleLogOut = () => {
-    localStorage.clear();
+    LogoutApi();
+    sessionStorage.clear();
     window.location.replace("/");
   };
+  if (user) {
+    const action = () => {
+      window.location.replace("/sessionExpired");
+    };
+
+    const resetTimer = () => {
+      clearTimeout(timer);
+      timer = setTimeout(action, 1000 * 9 * 1);
+    };
+
+    window.onload = resetTimer;
+    window.onclick = resetTimer;
+    window.onkeypress = resetTimer;
+    window.ontouchstart = resetTimer;
+    window.onmousemove = resetTimer;
+    window.onmousedown = resetTimer;
+    window.addEventListener("scroll", resetTimer, true);
+  }
 
   return (
     <Box sx={{ display: "flex", bgcolor: "rgba(231, 243, 238, 0.4)" }}>
@@ -89,7 +111,17 @@ function App() {
           <Grid item sm={12} md={12}>
             <Routes>
               {/* LogIn */}
-              <Route exact path="/" element={<Login setUser={setUser} />} />
+
+              <Route
+                exact
+                path="/"
+                element={<Login setUser={setUser} user={user} />}
+              />
+              <Route
+                exact
+                path="/sessionExpired"
+                element={<SessionExpiryDialog />}
+              />
               {/* Reporter management */}
               <Route path="/dashboard" element={<DashBord />} />
               <Route path="/profile/update/" element={<EditEmployee />} />
@@ -98,21 +130,19 @@ function App() {
                 path="/dashboard/create"
                 element={<CreateEmployeePage />}
               />
-         
-            
+
               <Route path="/teams" element={<TeamPage />} />
               <Route path="/teams/update/:id" element={<EditTeam />} />
               <Route path="/products" element={<ProductPage />} />
               <Route path="/products/create" element={<CreateProductPage />} />
               <Route path="/teams/create" element={<CreateTeamPage />} />
               <Route path="/pro" element={<CreateProduct />} />
-              <Route path="/user" element={<UserProfile user={user} />}/>
+              <Route path="/user" element={<UserProfile user={user} />} />
               <Route path="/products/update/:id" element={<EditProduct />} />
               <Route path="progress" element={<ProgressBar />} />
               <Route path="tree" element={<CustomizedTeamView />} />
-              <Route path="job" element={<JobRoleDialogBox/>}/>
-              <Route path="display" element={<ViewProfileInfo/>}/>
-              
+              <Route path="job" element={<JobRoleDialogBox />} />
+              <Route path="display" element={<ViewProfileInfo />} />
 
               {/* Recruitment management */}
               <Route path="/candidate" element={<CreateCandidate />} />

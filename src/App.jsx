@@ -107,10 +107,9 @@ function App() {
               <Route path="/pro" element={<CreateProduct />} />
               <Route path="/user" element={<UserProfile user={user} />} />
               <Route path="/products/update/:id" element={<EditProduct />} />
-              
-              <Route path="display" element={<ViewProfileInfo/>}/>
-              <Route path="recent" element={<RecentSection/>}/>
-              
+
+              <Route path="display" element={<ViewProfileInfo />} />
+              <Route path="recent" element={<RecentSection />} />
 
               {/* Recruitment management */}
               <Route path="/candidate" element={<CreateCandidate />} />

@@ -50,7 +50,7 @@ export default function ConfirmationBox({opens,id,func1,func2,func3,handleClosed
         fullWidth={true}
         PaperProps={{
             style: {
-                backgroundColor: '#EDEADE',
+                backgroundColor: '#e1f5fe',
                 borderRadius:15
             },
         }}
@@ -72,8 +72,8 @@ export default function ConfirmationBox({opens,id,func1,func2,func3,handleClosed
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="warning" variant="contained">No</Button>
-          <Button onClick={handleAgreed} color="success" variant="contained">Yes</Button>
+          <Button onClick={handleClose} color="warning" variant="contained" size="small">No</Button>
+          <Button onClick={handleAgreed} color="success" variant="contained" size="small">Yes</Button>
         </DialogActions>
       </Dialog>
     </div>

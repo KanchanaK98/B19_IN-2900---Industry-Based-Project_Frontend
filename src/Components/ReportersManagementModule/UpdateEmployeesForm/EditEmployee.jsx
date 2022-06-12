@@ -20,11 +20,21 @@ import { Typography } from "@mui/material";
 import { updateEmployee } from "../../../Api/ReportersManagementModule/EmployeeApi";
 
 function EditEmployee() {
-  const jobRole = JSON.parse(localStorage.getItem("profile")).jobRole; //profile should change to user
+  const [inputErrors, setInputErrors] = useState({
+    employeeFirstName: "",
+    employeeLastName: "",
+    NIC: "",
+    companyEmail: "",
+    status: "",
+    jobRole: "",
+    jobType: "",
+    employeeID: "",
+  });
+  const jobRole = JSON.parse(localStorage.getItem("user")).jobRole; //profile should change to user
   const location = useLocation();
   const { employee } = location.state;
   console.log({ employee: employee, mes: "hi" });
-  // const id = useParams().empID;
+
   const [inputs, setInputs] = useState({
     // employeeID: employee.user.employeeID,
     employeeFirstName: employee.user.employeeFirstName,
@@ -38,13 +48,10 @@ function EditEmployee() {
     birthday: new Date(employee.user.birthday)
       ? new Date(employee.user.birthday)
       : "",
-    //------------------------------------
     status: employee.user.status ? employee.user.status : "",
     employeeID: employee.user.employeeID ? employee.user.employeeID : "",
     jobRole: employee.user.jobRole ? employee.user.jobRole : "",
     jobType: employee.user.jobType ? employee.user.jobType : "",
-
-    //-------------------------------------------------------------
     ordinaryLevelResult: employee.EmployeeWithAcc
       ? employee.EmployeeWithAcc.ordinaryLevelResult
       : " ",
@@ -65,12 +72,89 @@ function EditEmployee() {
       [e.target.name]: e.target.value,
     }));
   };
-
+  //----------validation-----------------------------
+  const errorHandle = () => {
+    let isError = false;
+    if (!inputs.employeeFirstName) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        employeeFirstName: "Employee First Name is required",
+      }));
+      isError = true;
+    }
+    if (!inputs.employeeLastName) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        employeeLastName: "Employee Last Name is required",
+      }));
+      isError = true;
+    }
+    if (!inputs.employeeID) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        employeeID: "Employee ID is required",
+      }));
+      isError = true;
+    }
+    if (!inputs.status) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        status: "Status is required",
+      }));
+      isError = true;
+    }
+    if (!inputs.jobType) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        jobType: "Job Type is required",
+      }));
+      isError = true;
+    }
+    if (!inputs.jobRole) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        jobRole: "Job Role is required",
+      }));
+      isError = true;
+    }
+    if (!inputs.NIC) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        NIC: "NIC is required",
+      }));
+      isError = true;
+    }
+    if (!inputs.companyEmail) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        companyEmail: "Email is required",
+      }));
+      isError = true;
+    }
+    const emailFormat = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    if (inputs.companyEmail && !inputs.companyEmail.match(emailFormat)) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        companyEmail: "Invalid Email address",
+      }));
+      isError = true;
+    }
+    const phoneNumberFormat =
+      "^(?:0|94|\\+94)?(?:(11|21|23|24|25|26|27|31|32|33|34|35|36|37|38|41|45|47|51|52|54|55|57|63|65|66|67|81|912)(0|2|3|4|5|7|9)|7(0|1|2|5|6|7|8)\\d)\\d{6}$";
+    if (inputs.phoneNumber && !inputs.phoneNumber.match(phoneNumberFormat)) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        phoneNumber: "Invalid Phone Number",
+      }));
+      isError = true;
+    }
+    return isError;
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const response = await updateEmployee(inputs);
-    console.log(response);
+    if (!errorHandle()) {
+      const response = await updateEmployee(inputs);
+    }
   };
 
   const Input = styled("input")({
@@ -98,7 +182,7 @@ function EditEmployee() {
     <div>
       {inputs && (
         <form>
-          <Box>
+          <Box padding={6}>
             <Paper elevation={3} style={{ padding: 20 }}>
               <Grid container>
                 <Grid item sm={12} md={12}>
@@ -140,7 +224,9 @@ function EditEmployee() {
                       aria-label="upload picture"
                       component="span"
                     >
-                      <PhotoCamera sx={{ mt: 10, width: 30, height: 30 }} />
+                      <PhotoCamera
+                        sx={{ mt: 10, width: 30, height: 30, color: "#183d78" }}
+                      />
                     </IconButton>
                   </label>
 
@@ -152,6 +238,7 @@ function EditEmployee() {
                       <Button
                         onClick={handleSubmit}
                         variant="contained"
+                        sx={{ backgroundColor: "#183d78" }}
                         fullWidth
                       >
                         UPDATE
@@ -161,7 +248,9 @@ function EditEmployee() {
                       <Button
                         LinkComponent={Link}
                         to={`/dashboard`}
+                        state={{allEmployees:true}}
                         variant="contained"
+                        sx={{ backgroundColor: "#183d78" }}
                         fullWidth
                       >
                         CANCEL
@@ -191,6 +280,8 @@ function EditEmployee() {
                             name="employeeFirstName"
                             value={inputs.employeeFirstName}
                             onChange={handleChange}
+                            error={inputErrors.employeeFirstName ? true : false}
+                            helperText={inputErrors.employeeFirstName}
                             fullWidth
                           />
                         </Grid>
@@ -211,6 +302,8 @@ function EditEmployee() {
                             name="employeeLastName"
                             value={inputs.employeeLastName}
                             onChange={handleChange}
+                            error={inputErrors.employeeLastName ? true : false}
+                            helperText={inputErrors.employeeLastName}
                             fullWidth
                           />
                         </Grid>
@@ -231,6 +324,8 @@ function EditEmployee() {
                             name="companyEmail"
                             value={inputs.companyEmail}
                             onChange={handleChange}
+                            error={inputErrors.companyEmail ? true : false}
+                            helperText={inputErrors.companyEmail}
                             fullWidth
                           />
                         </Grid>
@@ -244,13 +339,15 @@ function EditEmployee() {
                           </FormLabel>
                         </Grid>
                         <Grid item xs={6} md={9}>
-                          {jobRole === "HR" ? (
+                          {jobRole === "HR Manager" ? (
                             <TextField
                               id="filled-basic"
                               variant="filled"
                               name="NIC"
                               value={inputs.NIC}
                               onChange={handleChange}
+                              error={inputErrors.NIC ? true : false}
+                              helperText={inputErrors.NIC}
                               fullWidth
                             />
                           ) : (
@@ -261,6 +358,8 @@ function EditEmployee() {
                               name="NIC"
                               value={inputs.NIC}
                               onChange={handleChange}
+                              error={inputErrors.NIC ? true : false}
+                              helperText={inputErrors.NIC}
                               fullWidth
                             />
                           )}
@@ -282,6 +381,8 @@ function EditEmployee() {
                             name="phoneNumber"
                             value={inputs.phoneNumber}
                             onChange={handleChange}
+                            error={inputErrors.phoneNumber ? true : false}
+                            helperText={inputErrors.phoneNumber}
                             fullWidth
                           />
                         </Grid>
@@ -360,14 +461,14 @@ function EditEmployee() {
                     <Grid item xs={6}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={3}>
-                          {jobRole === "HR" && (
+                          {jobRole === "HR Manager" && (
                             <FormLabel sx={{ ml: 1, mt: 2 }} className="label">
                               Employee ID :
                             </FormLabel>
                           )}
                         </Grid>
                         <Grid item xs={6} md={9}>
-                          {jobRole === "HR" && (
+                          {jobRole === "HR Manager" && (
                             <TextField
                               id="filled-basic"
                               label=" Employee ID"
@@ -375,6 +476,8 @@ function EditEmployee() {
                               name="employeeID"
                               value={inputs.employeeID}
                               onChange={handleChange}
+                              error={inputErrors.employeeID ? true : false}
+                              helperText={inputErrors.employeeID}
                               fullWidth
                             />
                           )}
@@ -391,7 +494,7 @@ function EditEmployee() {
                           )}
                         </Grid>
                         <Grid item xs={6} md={9}>
-                          {jobRole === "HR" && (
+                          {jobRole === "HR Manager" && (
                             <TextField
                               id="filled-basic"
                               label=" Job Type"
@@ -399,6 +502,8 @@ function EditEmployee() {
                               name="jobType"
                               value={inputs.jobType}
                               onChange={handleChange}
+                              error={inputErrors.jobType ? true : false}
+                              helperText={inputErrors.jobType}
                               fullWidth
                             />
                           )}
@@ -408,14 +513,14 @@ function EditEmployee() {
                     <Grid item xs={6}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={3}>
-                          {jobRole === "HR" && (
+                          {jobRole === "HR Manager" && (
                             <FormLabel sx={{ ml: 1, mt: 2 }} className="label">
                               Status :
                             </FormLabel>
                           )}
                         </Grid>
                         <Grid item xs={6} md={9}>
-                          {jobRole === "HR" && (
+                          {jobRole === "HR Manager" && (
                             <TextField
                               id="filled-basic"
                               label=" Status"
@@ -432,14 +537,14 @@ function EditEmployee() {
                     <Grid item xs={6} sx={{ mb: 1 }}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={3}>
-                          {jobRole === "HR" && (
+                          {jobRole === "HR Manager" && (
                             <FormLabel sx={{ ml: 1, mt: 2 }} className="label">
                               Job Role :
                             </FormLabel>
                           )}
                         </Grid>
                         <Grid item xs={6} md={9}>
-                          {jobRole === "HR" && (
+                          {jobRole === "HR Manager" && (
                             <TextField
                               id="filled-basic"
                               label="Job Role"

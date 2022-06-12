@@ -8,16 +8,29 @@ import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import OrganizationStructure from "../../../Components/ReportersManagementModule/OrganizationStructure/OrganizationStructure";
 import DisplayAllEmployees from "./DisplayAllEmployees";
 import { viewAllEmployees } from "../../../Api/ReportersManagementModule/EmployeeApi";
 import RecentSection from "./RecentSection";
+import { WindowSharp } from "@mui/icons-material";
 function DashBord() {
+  const location = useLocation();
+  //const { allEmployees } = location.state;
   const [value, setValue] = React.useState("1");
   const [profiles, setProfiles] = useState([]);
   const jobRole = JSON.parse(localStorage.getItem("user")).jobRole; //profile should change to user
+
   useEffect(() => {
+    console.log(location.state)
+    if (location.state ) {
+      setValue(location.state.allEmployees === true ? "2" :" 1");
+      
+      window.history.replaceState({}, document.title)
+
+      console.log(location.state)
+    }
+ 
     async function fetchData() {
       setProfiles(await viewAllEmployees());
     }
@@ -26,6 +39,7 @@ function DashBord() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
   return (
     <div>
       <Box padding={2}>
@@ -55,7 +69,7 @@ function DashBord() {
                   <Tab label="ORGANIZATION STRUCTURE" value="3" />
                 </TabList>
               </Box>
-              <TabPanel value="1" >
+              <TabPanel value="1">
                 <Box>
                   {/* <Grid container>
                     <Grid item md={8}></Grid>

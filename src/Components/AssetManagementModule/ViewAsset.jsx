@@ -1,5 +1,9 @@
 import axios from 'axios';
 import React, { useState,useEffect } from 'react';
+import { Grid } from "@mui/material";
+import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import { Button, Box } from "@mui/material/";
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 import Modal from './AssignModel';
@@ -9,14 +13,39 @@ import { availableAssetsApi,unavailableAssetsApi,allAssets,modelViewApi,unassign
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
-//import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import {Typography} from "@mui/material";
 import useStyles from "./AssetViewListStyles";
 import AssetViewStats from './AssetViewStats';
 import ConfirmationBox from './ConfirmationBox';
+import { styled } from "@mui/material/styles";
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+      backgroundColor: theme.palette.primary.light,
+      color: theme.palette.common.white,
+    },
+    [`&.${tableCellClasses.body}`]: {
+      fontSize: 14,
+    },
+  }));
+  
+  const StyledTableRow = styled(TableRow)(() => ({
+    "&:nth-of-type(odd)": {
+      backgroundColor: "#e0e0e0",
+    },
+    "&:nth-of-type(even)": {
+      backgroundColor: "#e1f5fe",
+    },
+    "&:hover": {
+      backgroundColor: "#fafafa",
+    },
+    // hide last border
+    "&:last-child td, &:last-child th": {
+      border: 0,
+    },
+  }));
 
 const  ViewAsset = () => {
     const [assets,setAssets] = useState([]);
@@ -205,120 +234,122 @@ const  ViewAsset = () => {
     }
     const classes = useStyles();
     return (
-        <>
-        <AssetViewStats countAvailable={number.available} countNonAvailable={number.nonAvailable} countFault={number.fault}/>    
-        <Paper elevation={6} className={classes.paper}>
-        <div style={{ display:"flex",flexDirection:'row',justifyContent:"space-between" }} className={classes.topics}>
-             <div className="dropdown" style={{ marginTop:5}}>
-                 <button className="btn btn-secondary dropdown-toggle" style={{ borderRadius:15}}  type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-                 Status
-                 </button>
-                 <div className="dropdown-menu" labelled="dropdownMenu2">
-                 <button className="dropdown-item" type="button" onClick={()=>{handleSearch("Available")}}>Available</button>
-                 <button className="dropdown-item" type="button" onClick={()=>{handleSearch("Non-Available")}}>Non-Available</button>
-                 <button className="dropdown-item" type="button" onClick={()=>{handleSearch("All")}}>All</button>
-                 </div>
-          </div>
-            <div className="dropdown" style={{ marginTop:5 }}>
-               <button className="btn btn-secondary dropdown-toggle" style={{ borderRadius:15}}  type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-                 Category
-                 </button>
-                 <div className="dropdown-menu" labelled="dropdownMenu2">
-                 <button className="dropdown-item" type="button" onClick={()=>{searchCategoryBar("Laptop")}}>Laptop</button>
-                 <button className="dropdown-item" type="button" onClick={()=>{searchCategoryBar("Mobile")}}>Mobile</button>
-                 <button className="dropdown-item" type="button" onClick={()=>{searchCategoryBar("Tablet")}}>Tablet</button>
-                 <button className="dropdown-item" type="button" onClick={()=>{searchCategoryBar("Keyboard")}}>Keyboard</button>
-                 <button className="dropdown-item" type="button" onClick={()=>{searchCategoryBar("Router")}}>Router</button>
-                 <button className="dropdown-item" type="button" onClick={()=>{searchCategoryBar("UPS")}}>UPS</button>
-                 <button className="dropdown-item" type="button" onClick={()=>{searchCategoryBar("Printer")}}>Printer</button>
-                 <button className="dropdown-item" type="button" onClick={()=>{searchCategoryBar("Monitor")}}>Monitor</button>
-                 <button className="dropdown-item" type="button" onClick={()=>{searchCategoryBar("Headphone")}}>Headphone</button>
-                 </div>
-            </div>
-        </div><br/>
-         {error?(<Stack sx={{ width: '100%' }} spacing={2}><Alert variant="filled" severity="error">
+    <div>
+      <Box className={classes.Box}>
+        
+        <Grid container sx={{ p: 4 }}>
+          <Grid
+            item
+            sm={12}
+            md={12}
+            sx={{
+              mt: 2,
+            }}
+          >
+            <Grid>
+            <AssetViewStats countAvailable={number.available} countNonAvailable={number.nonAvailable} countFault={number.fault}/>    
+              <br />
+            </Grid>
+            <Grid>
+            <div style={{ display:"flex",flexDirection:'row',justifyContent:"space-between" }} className={classes.topics}>
+                <div className="dropdown" style={{ marginTop:5}}>
+                  <button className="btn btn-secondary dropdown-toggle" style={{ borderRadius:15}}  type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                  Status
+                  </button>
+                  <div className="dropdown-menu" labelled="dropdownMenu2">
+                  <button className="dropdown-item" type="button" onClick={()=>{handleSearch("Available")}}>Available</button>
+                  <button className="dropdown-item" type="button" onClick={()=>{handleSearch("Non-Available")}}>Non-Available</button>
+                  <button className="dropdown-item" type="button" onClick={()=>{handleSearch("All")}}>All</button>
+                  </div>
+                </div>
+                <div className="dropdown" style={{ marginTop:5 }}>
+                    <button className="btn btn-secondary dropdown-toggle" style={{ borderRadius:15}}  type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                    Category
+                    </button>
+                    <div className="dropdown-menu" labelled="dropdownMenu2">
+                    <button className="dropdown-item" type="button" onClick={()=>{searchCategoryBar("Laptop")}}>Laptop</button>
+                    <button className="dropdown-item" type="button" onClick={()=>{searchCategoryBar("Mobile")}}>Mobile</button>
+                    <button className="dropdown-item" type="button" onClick={()=>{searchCategoryBar("Tablet")}}>Tablet</button>
+                    <button className="dropdown-item" type="button" onClick={()=>{searchCategoryBar("Keyboard")}}>Keyboard</button>
+                    <button className="dropdown-item" type="button" onClick={()=>{searchCategoryBar("Router")}}>Router</button>
+                    <button className="dropdown-item" type="button" onClick={()=>{searchCategoryBar("UPS")}}>UPS</button>
+                    <button className="dropdown-item" type="button" onClick={()=>{searchCategoryBar("Printer")}}>Printer</button>
+                    <button className="dropdown-item" type="button" onClick={()=>{searchCategoryBar("Monitor")}}>Monitor</button>
+                    <button className="dropdown-item" type="button" onClick={()=>{searchCategoryBar("Headphone")}}>Headphone</button>
+                    </div>
+                </div>
+            </div><br/>
+            {error?(<Stack sx={{ width: '100%' }} spacing={2}><Alert variant="filled" severity="error">
                              Something was wrong! 
-            </Alert></Stack>):null}
-      <Table>
-        <TableHead className={classes.tableHead}>
-          <TableRow>
-            <TableCell align="center">
-              <Typography variant='button'>Asset ID</Typography>
-            </TableCell>
-            <TableCell align="center">
-              <Typography variant='button'>Category</Typography>
-            </TableCell>
-            <TableCell align="center">
-              <Typography variant='button'>Model</Typography>
-            </TableCell>
-            <TableCell align="center">
-              <Typography variant='button'>Serial Number</Typography>
-            </TableCell>
-            <TableCell align="center">
-              <Typography variant='button'>Status</Typography>
-            </TableCell>
-            <TableCell align="center">
-                <Typography variant='button'>Action</Typography>
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-        {assets.map(asset=>
-            (
-              <TableRow key={asset._id} className={classes.tableRow} >
-                <TableCell align="center">
-                  <Typography style={{ color:'black' }}>{asset.assetID}</Typography>
-                </TableCell>
-                <TableCell align="center">
-                  <Typography style={{ color:'black' }}>{asset.assetCategory}</Typography>
-                </TableCell>
-                <TableCell align="center">
-                  <Typography style={{ color:'black' }}>
-                    {asset.model}
-                  </Typography>
-                </TableCell>
-                <TableCell align="center">
-                  <Typography style={{ color:'black' }}> {asset.serialNumber}</Typography>
-                </TableCell>
-                <TableCell align="center">
-                { asset.status === 'Fault'?(<Typography style={{ color:'red' }}> {asset.status}</Typography>):null} 
-                {asset.status === 'Available'?(<Typography style={{ color:'blue' }}> {asset.status}</Typography>):null}
-                {asset.status === 'Non-Available'?(<Typography style={{ color:'green' }}> {asset.status}</Typography>):null}
-                </TableCell>
-                
-                {asset.status === 'Available'?
-                           (<TableCell align="center">
-                               <button className='btn btn-primary announce' onClick={()=>{showModal(asset._id);setAssignAsset(asset._id);}}>Assign</button>
-                                <button className='btn btn-danger' onClick={()=>{confirmBox(asset._id);setType("fault");}} style={{ marginLeft:"5px" }}>Fault</button>
-                                <button className='btn btn-success' onClick={()=>{ShowModalView(asset._id)}} style={{ marginLeft:"5px" }}>Update</button>
-                                </TableCell>)
+             </Alert></Stack>):null}
+            </Grid>
+            <TableContainer component={Paper}>
+              <Table className={classes.table} aria-label="customized table">
+                <TableHead>
+                  <TableRow>
+                    <StyledTableCell align="center">Asset ID</StyledTableCell>
+                    <StyledTableCell align="center">CATEGORY</StyledTableCell>
+                    <StyledTableCell align="center">MODEL</StyledTableCell>
+                    <StyledTableCell align="center">SERIAL NUMBER</StyledTableCell>
+                    <StyledTableCell align="center">STATUS</StyledTableCell>
+                    <StyledTableCell align="center">ACTION</StyledTableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {assets.map(asset => (
+                    <StyledTableRow key={asset._id}>
+                      <StyledTableCell align="center">
+                        {asset.assetID}
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        {asset.assetCategory}
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        {asset.model}
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        {asset.serialNumber}
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        { asset.status === 'Fault'&&(<Typography style={{ color:'red' }}> Fault</Typography>)} 
+                        {asset.status === 'Available'&&(<Typography style={{ color:'blue' }}>Available</Typography>)}
+                        {asset.status === 'Non-Available'&&(<Typography style={{ color:'green' }}> Not-Available</Typography>)}
+                      </StyledTableCell>
+                      
+                      {asset.status === 'Available'?
+                            (<TableCell align="center">
+                                <button className='btn btn-primary announce' onClick={()=>{showModal(asset._id);setAssignAsset(asset._id);}}>Assign</button>
+                                 <button className='btn btn-danger' onClick={()=>{confirmBox(asset._id);setType("fault");}} style={{ marginLeft:"5px" }}>Fault</button>
+                                 <button className='btn btn-success' onClick={()=>{ShowModalView(asset._id)}} style={{ marginLeft:"5px" }}>Update</button>
+                                 </TableCell>)
 
-                           :asset.status === 'Fault'?
-                           (<TableCell align="center">
-                               <button className='btn btn-danger' onClick={()=>{confirmBox(asset._id);setType("release-fault");}}>Release Fault</button>
-                               <button className='btn btn-success' onClick={()=>{ShowModalView(asset._id)}} style={{ marginLeft:"5px" }}>Update</button>
-                               </TableCell>):
-                           (<TableCell align="center">
-                                <button className='btn btn-primary announce' onClick={()=>{confirmBox(asset._id);setType("unassign");}}>Un-Assign</button>
-                                <button className='btn btn-danger' onClick={()=>{confirmBox(asset._id);setType("fault");}} style={{ marginLeft:"5px" }}>Fault</button>
-                                <button className='btn btn-success' onClick={()=>{ShowModalView(asset._id)}} style={{ marginLeft:"5px" }}>Update</button>
-                            </TableCell>)
-                }
-                
-               
-                
-              </TableRow>
-            ))}
-        </TableBody>
-      </Table>
-    
-                 {/* modal for update asset */}
-                 { show2===true?(<AssetUpdateModule data={eachAsset} show={true} handleClose={hideModalView} updateFun={updateAssetFunction}/>):null }
-                {/* modal for assign asset */}
-                 { show===true?(<AssetAssignModel data={eachAsset} show={true} handleClose={hideModal} assignFun={assignAssetFunction}/>):null }
-                {showConfirmation === true?(<ConfirmationBox opens={true} typed={type} func1={createFault} func2={releaseFault} func3={unassign} id={assetID} handleClosed={hideConfirmationBox}/>):null}
-    </Paper>
-    </>           
+                            :asset.status === 'Fault'?
+                        (<TableCell align="center">
+                                <button className='btn btn-danger' onClick={()=>{confirmBox(asset._id);setType("release-fault");}} style={{ width:140 }}>Release Fault</button>
+                                <button className='btn btn-success' onClick={()=>{ShowModalView(asset._id)}} style={{ marginLeft:"6px" }}>Update</button>
+                                </TableCell>):
+                            (<TableCell align="center">
+                                 <button className='btn btn-warning btn-block' onClick={()=>{confirmBox(asset._id);setType("unassign");}}>Release</button>
+                                 <button className='btn btn-danger btn-block' onClick={()=>{confirmBox(asset._id);setType("fault");}} style={{ marginLeft:"5px" }}>Fault</button>
+                                 <button className='btn btn-success btn-block' onClick={()=>{ShowModalView(asset._id)}} style={{ marginLeft:"5px" }}>Update</button>
+                             </TableCell>)
+                 }
+                      
+                      
+                    </StyledTableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Grid>
+        </Grid>
+                  {/* modal for update asset */}
+                  { show2===true&&(<AssetUpdateModule data={eachAsset} show={true} handleClose={hideModalView} updateFun={updateAssetFunction}/>)}
+                 {/* modal for assign asset */}
+                  { show===true&&(<AssetAssignModel data={eachAsset} show={true} handleClose={hideModal} assignFun={assignAssetFunction}/>)}
+                 {showConfirmation === true&&(<ConfirmationBox opens={true} typed={type} func1={createFault} func2={releaseFault} func3={unassign} id={assetID} handleClosed={hideConfirmationBox}/>)}
+      </Box>
+    </div>
         
     );
 

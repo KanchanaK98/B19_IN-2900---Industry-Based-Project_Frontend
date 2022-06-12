@@ -1,14 +1,14 @@
 import React from "react";
-import { Box } from "@mui/material";
 import ViewSummarySalaryTable from "../../../Components/SalaryPaymentModule/SummarySalary/ViewSummarySalaryTable";
+import { Grid } from "@mui/material";
 
 const ViewSummarySalary = () => {
   return (
-    <div>
-      <Box sx={{ p: 4 }}>
+    <Grid container>
+      <Grid item sm={12} md={12} mt={0}>
         <ViewSummarySalaryTable />
-      </Box>
-    </div>
+      </Grid>
+    </Grid>
   );
 };
 

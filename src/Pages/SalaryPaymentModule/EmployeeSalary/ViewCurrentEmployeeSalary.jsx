@@ -1,6 +1,5 @@
 import React from "react";
-//import FindEmployeeSalary from "../../../Components/SalaryPaymentModule/EmployeeSalary/FindEmployeeSalary";
-import ViewEmloyeesalary from "../../../Components/SalaryPaymentModule/EmployeeSalary/ViewEmloyeesalary";
+import ViewEmloyeesalary from "../../../Components/SalaryPaymentModule/EmployeeSalary/ViewEmloyeesalary/ViewEmloyeesalary";
 
 const ViewCurrentEmployeeSalary = () => {
   return (

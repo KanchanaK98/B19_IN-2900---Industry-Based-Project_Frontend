@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { CssBaseline, Grid } from "@mui/material";
+import { AvatarGroup, CssBaseline, Grid } from "@mui/material";
 import Box from "@mui/material/Box";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import NavBar from "./Components/Navigation/NavBar/NavBar";
@@ -41,9 +41,7 @@ import DisplayTeamMemberSubmissions from "./Pages/PromotionModule/Evaluations/Te
 import DispalyAndSubmitPaper from "./Components/PromotionModule/Submit/DispalyAndSubmitPaper";
 import EvaluatePaper from "./Components/PromotionModule/Evaluation/EvaluatePaper";
 import DisplayMyFeedback from "./Components/PromotionModule/Submit/DisplayFeedback";
-import JobRoleDialogBox from "./Components/ReportersManagementModule/CreateEmployeeForm/JobRoleDialogBox";
 import FindEmployeeSalary from "./Components/SalaryPaymentModule/EmployeeSalary/FindEmployeeSalary";
-import DisplayAllEmployees from "./Pages/ReportersManagementModule/DashBoard/DisplayAllEmployees";
 import ViewProfileInfo from "./Components/ReportersManagementModule/DisplayEmployees/ViewProfileInfo";
 import ViewAllExamList from "./Components/PromotionModule/Exam/ViewAllExamList";
 import ScheduleExamForm from "./Components/PromotionModule/Exam/ScheduleExamForm";
@@ -97,20 +95,18 @@ function App() {
                 path="/dashboard/create"
                 element={<CreateEmployeePage />}
               />
-         
-            
               <Route path="/teams" element={<TeamPage />} />
               <Route path="/teams/update/:id" element={<EditTeam />} />
               <Route path="/products" element={<ProductPage />} />
               <Route path="/products/create" element={<CreateProductPage />} />
               <Route path="/teams/create" element={<CreateTeamPage />} />
               <Route path="/pro" element={<CreateProduct />} />
-              <Route path="/user" element={<UserProfile user={user} />}/>
+              <Route path="/user" element={<UserProfile user={user} />} />
               <Route path="/products/update/:id" element={<EditProduct />} />
+              <Route path="display" element={<ViewProfileInfo />} />
+              <Route path="recent" element={<RecentSection />} />
               
-              <Route path="display" element={<ViewProfileInfo/>}/>
-              <Route path="recent" element={<RecentSection/>}/>
-              
+
 
               {/* Recruitment management */}
               <Route path="/candidate" element={<CreateCandidate />} />

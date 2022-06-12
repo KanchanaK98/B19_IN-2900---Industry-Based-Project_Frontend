@@ -27,12 +27,12 @@ import {
   createTeams,
   getEmployeesWithoutTeam,
 } from "../../../Api/ReportersManagementModule/TeamsApi";
-import SnackBar from "../../SnackBar/SnackBar";
+import { Link } from "react-router-dom";
 
 function CreateTeams() {
   const [addSuccessfully, setAddSuccessfully] = useState(false);
   const [notAdded, setnotAdded] = useState(false);
-  const [openSnackBar, setOpenSnackBar] = useState(false);
+  
 
   const [teaminputs, setTeaminputs] = useState({
     teamName: "",
@@ -42,10 +42,9 @@ function CreateTeams() {
   const [teaminputErrors, setTeaminputErrors] = useState({
     teamName: "",
     teamLead: "",
-    teamMembers: "",
+    // teamMembers: "",
   });
-  //const filterMembers=setMembers(members.filter((mem)=>(mem.name==='teamLead')))
-  // console.log(teaminputs)
+  
   const handleChange = (e) => {
     setTeaminputs((prevState) => ({
       ...prevState,
@@ -63,20 +62,29 @@ function CreateTeams() {
       teamMembers: [],
     });
   };
+  //-----------validation--------------
   const errorHandle = () => {
     let isError = false;
-    Object.keys(teaminputs).map((property) => {
-      if (!teaminputs[property] || teaminputs[property].length === 0) {
-        setTeaminputErrors((prevState) => ({
-          ...prevState,
-          [property]: property + " is required",
-        }));
-        isError = true;
-      }
-      return;
-    });
+
+    if (!teaminputs.teamName) {
+      setTeaminputErrors((prevState) => ({
+        ...prevState,
+        teamName: "Team Name is required",
+      }));
+      isError = true;
+    }
+
+    if (!teaminputs.teamLead) {
+      setTeaminputErrors((prevState) => ({
+        ...prevState,
+        teamLead: "Team Lead is required",
+      }));
+      isError = true;
+    }
+    console.log(teaminputErrors);
     return isError;
   };
+  //console.log(teaminputErrors)
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!errorHandle()) {
@@ -108,11 +116,6 @@ function CreateTeams() {
     }
     fetchData();
   }, []);
-  // if (members.length > 0) {
-  //   members.map((mem) => {
-  //     mem.fullName = mem.employeeFirstName + " " + mem.employeeLastName;
-  //   });
-  // }
 
   const [openDialog, setOpenDialog] = useState(false);
   const handleOpenDialog = () => {
@@ -124,9 +127,9 @@ function CreateTeams() {
       <Box padding={4}>
         <Paper sx={{ padding: 4 }}>
           <form onSubmit={handleSubmit}>
-            <Typography variant="h5" sx={{ mb: 5 }}>
-              <GroupAddIcon />
-              Create Team
+            <Typography variant="h5" sx={{ mb: 5, fontWeight: "bold" }}>
+              <GroupAddIcon sx={{ height: 40, width: 40 }} />
+              &nbsp; Create Team
             </Typography>
             <Divider sx={{ mb: 5, mt: 2 }}></Divider>
             <Grid container spacing={3}>
@@ -166,7 +169,7 @@ function CreateTeams() {
                       <EditIcon sx={{ color: "gray" }} fontSize="large" />
                     </IconButton>
                   </Grid>
-                  <Grid item md={12}>
+                  {/* <Grid item md={12}>
                     <Typography
                       fontSize="0.75rem"
                       sx={{ ml: 4, letterSpacing: "0.03333em" }}
@@ -174,7 +177,7 @@ function CreateTeams() {
                     >
                       {teaminputErrors.teamMembers}
                     </Typography>
-                  </Grid>
+                  </Grid> */}
                 </Grid>
                 <TeamMemberDialog
                   openDialog={openDialog}
@@ -272,15 +275,28 @@ function CreateTeams() {
           Team Members :
           <Multiselect options={members} displayValue="fullName"></Multiselect>
         </FormLabel> */}
-            <Grid sx={{ textAlign: "right" }}>
-              <Button
-                onClick={handleSubmit}
-                variant="contained"
-                color="secondary"
-                sx={{ mt: 2 }}
-              >
-                Save New Team
-              </Button>
+            <Grid container>
+              <Grid item md={6} sx={{ textAlign: "left" }}>
+                {/* <Link to="/teams" sx={{TextDecoder:"inherit"}}> */}
+                <Button
+                  component={Link}
+                  to="/teams"
+                  variant="contained"
+                  sx={{ mt: 2, backgroundColor: "#183d78" }}
+                >
+                  View Teams
+                </Button>
+                {/* </Link> */}
+              </Grid>
+              <Grid item md={6} sx={{ textAlign: "right" }}>
+                <Button
+                  onClick={handleSubmit}
+                  variant="contained"
+                  sx={{ mt: 2, backgroundColor: "#183d78" }}
+                >
+                  Save New Team
+                </Button>
+              </Grid>
             </Grid>
 
             {/* <SnackBar

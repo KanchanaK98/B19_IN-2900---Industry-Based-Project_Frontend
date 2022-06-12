@@ -25,11 +25,6 @@ export default function CreatePaper() {
     DateCreated: "",
     questions: [],
   });
-  //   const setData=(e)=>{
-  // if (value != null && value != "" && value != undefined){
-  //   setRecord({ ...record, EmployeeID: e.target.value });
-  // }
-  //   }
 
   const CreatePaperFunc = () => {
     console.log("call CreatePaperFunc");

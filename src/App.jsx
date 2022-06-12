@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { CssBaseline, Grid } from "@mui/material";
+import { AvatarGroup, CssBaseline, Grid } from "@mui/material";
 import Box from "@mui/material/Box";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import NavBar from "./Components/Navigation/NavBar/NavBar";
@@ -107,10 +107,10 @@ function App() {
               <Route path="/pro" element={<CreateProduct />} />
               <Route path="/user" element={<UserProfile user={user} />} />
               <Route path="/products/update/:id" element={<EditProduct />} />
+              <Route path="display" element={<ViewProfileInfo />} />
+              <Route path="recent" element={<RecentSection />} />
               
-              <Route path="display" element={<ViewProfileInfo/>}/>
-              <Route path="recent" element={<RecentSection/>}/>
-              
+
 
               {/* Recruitment management */}
               <Route path="/candidate" element={<CreateCandidate />} />

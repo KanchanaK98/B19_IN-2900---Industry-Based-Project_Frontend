@@ -8,7 +8,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import Paper from "@mui/material/Paper";
 import { createEmployee } from "../../../Api/ReportersManagementModule/EmployeeApi";
 import { Alert, AlertTitle, MenuItem, Stack, Typography } from "@mui/material";
-import JobRoleDialogBox from "./JobRoleDialogBox.jsx";
+import CredentialCard from "./CredentialCard";
 const jobRoles = [
   "Software Engineer",
   "Senior Software Engineer",
@@ -24,9 +24,13 @@ const jobRoles = [
   "Product Manager",
 ];
 function CreateEmployee() {
+  const [credentials, setCredentials] = useState({
+    username: "",
+    password: "",
+  });
+  const[isDisable,setIsDisable]=useState(true)
   const [addSuccessfully, setAddSuccessfully] = useState(false);
   const [notAdded, setnotAdded] = useState(false);
-  const [validateEmail, setValidateEmail] = useState("");
   const [inputErrors, setInputErrors] = useState({
     employeeID: "",
     employeeFirstName: "",
@@ -65,49 +69,18 @@ function CreateEmployee() {
       // jobType: "",
     });
   };
-  
-  // const errorHandle = () => {
-  //   let isError = false;
-  //   Object.keys(candidateData).map((property) => {
-  //     if (!candidateData[property]) {
-  //       setCandidateErrors((prevState)=>({...prevState, [property]: property + " is required!"}));
-  //       isError = true;
-  //     }
-  //     return;
-  //   });
-  //   const emailFormat = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-  //   if(candidateData.email && !candidateData.email.match(emailFormat)) {
-  //     setCandidateErrors((prevState)=>({...prevState, email: "Invalid Email address"}));
-  //       isError = true;
-  //   }
-  //   return isError;
-  // };
- 
-
-  // const emailValidation = () => {
-  //   let isEmail = false;
-  //   let regexEmail =
-  //     /[a-zA-Z0-9]+[\.]?([a-zA-Z0-9]+)?[\@][a-z]{3,9}[\.][a-z]{2,5}/g;
-  //   if (!regexEmail.test(inputs.companyEmail)) {
-  //     setValidateEmail("Invalid Email");
-  //   } else {
-  //     isEmail = true;
-  //     setValidateEmail("Valid Email");
-  //   }
-  //   return isEmail;
-  // };
 
   //let regexPhoneNumber = "^(?:0|94|\\+94)?(?:(11|21|23|24|25|26|27|31|32|33|34|35|36|37|38|41|45|47|51|52|54|55|57|63|65|66|67|81|912)(0|2|3|4|5|7|9)|7(0|1|2|5|6|7|8)\\d)\\d{6}$";
   // 0771234567
 
   // 771234567
-  
+
   // +94771234567
-  
+
   // 94771234567
-  
+
   // 0111234567(local codes)
-  
+  //--------------validation-----------------------
   const errorHandle = () => {
     let isError = false;
     Object.keys(inputs).map((property) => {
@@ -118,12 +91,14 @@ function CreateEmployee() {
         }));
         isError = true;
       }
-      return;
     });
     const emailFormat = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-    if(inputs.companyEmail && !inputs.companyEmail.match(emailFormat)) {
-      setInputErrors((prevState)=>({...prevState, companyEmail: "Invalid Email address"}));
-        isError = true;
+    if (inputs.companyEmail && !inputs.companyEmail.match(emailFormat)) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        companyEmail: "Invalid Email address",
+      }));
+      isError = true;
     }
     return isError;
   };
@@ -133,6 +108,12 @@ function CreateEmployee() {
 
     if (!errorHandle()) {
       const response = await createEmployee(inputs);
+   
+      if (response.success === true) {
+        setCredentials(response.employeeCredentials);
+        setIsDisable(false)
+      }
+
       setAddSuccessfully(true);
       setTimeout(() => {
         setAddSuccessfully(false);
@@ -156,15 +137,28 @@ function CreateEmployee() {
       }, 2000);
     }
   };
+
   return (
     <div>
       <form onSubmit={handleSubmit}>
         <Box>
-          <Paper elevation={3} style={{ marginInlineEnd: 2, padding: 30 }}>
+          <Paper
+            elevation={3}
+            style={{
+              marginInlineEnd: 2,
+              padding: 30,
+              backgroundColor: "#c7cad1",
+            }}
+          >
             <Grid>
               <Grid>
-                <Typography variant="h5" fontWeight="bold">
-                  <PersonIcon sx={{ width: 50, height: 50 }} />
+                <Typography
+                  variant="h5"
+                  sx={{ fontWeight: "bold", color: "#183d78" }}
+                >
+                  <PersonIcon
+                    sx={{ width: 50, height: 50, color: "#183d78" }}
+                  />
                   CREATE EMPLOYEE
                 </Typography>
               </Grid>
@@ -405,18 +399,30 @@ function CreateEmployee() {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid textAlign="right">
-              {" "}
-              <Button
-                variant="contained"
-                sx={{
-                  marginBottom: "20px",
-                }}
-                color="secondary"
-                type="submit"
-              >
-                CREATE NEW EMPLOYEE
-              </Button>
+            <Grid container>
+              <Grid item md={6} textalign="left">
+                {credentials && (
+                  <CredentialCard
+                    credentials={credentials}
+                   
+                    isDisable={isDisable}
+                    setIsDisable={setIsDisable}
+                  />
+                )}
+              </Grid>
+              <Grid item md={6} textalign="right">
+                <Button
+                  variant="contained"
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    backgroundColor: "#183d78",
+                  }}
+                  type="submit"
+                >
+                  CREATE EMPLOYEE
+                </Button>
+              </Grid>
             </Grid>
           </Paper>
           {addSuccessfully ? (

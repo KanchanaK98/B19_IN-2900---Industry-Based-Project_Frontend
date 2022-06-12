@@ -7,6 +7,7 @@ import { viewAllTeams } from "../../../Api/ReportersManagementModule/TeamsApi";
 import { viewAllEmployees } from "../../../Api/ReportersManagementModule/EmployeeApi";
 import GroupsIcon from "@mui/icons-material/Groups";
 import GroupIcon from "@mui/icons-material/Group";
+import ProductionQuantityLimitsIcon from "@mui/icons-material/ProductionQuantityLimits";
 function ProductCountUp() {
   const [products, setProducts] = useState([]);
   const [teams, setTeams] = useState([]);
@@ -29,7 +30,7 @@ function ProductCountUp() {
     }
     fetchData();
   }, []);
-  console.log(products);
+  
   return (
     <div>
       <Box
@@ -47,35 +48,44 @@ function ProductCountUp() {
           elevation={1}
           sx={{
             backgroundImage: `linear-gradient(to right, rgba(0, 224, 255, 1), rgba(0, 133, 255, 1))`,
-            padding: 5,
+            padding: 2,
             textAlign: "center",
             borderRadius: 5,
           }}
         >
-          <Typography variant="h6" sx={{ fontWeight: "bold", color: "white" }}>
-            PRODUCTS
-          </Typography>
-          <Typography variant="h3" sx={{ fontWeight: "bold", color: "white" }}>
-            <CountUp end={products.length} duration={2} />
-          </Typography>
+          <Grid container>
+            <Grid item md={6}>
+              {" "}
+              <Typography
+                variant="h3"
+                sx={{ fontWeight: "bold", color: "white" }}
+              >
+                <CountUp end={products.length} duration={2} />
+              </Typography>
+              <Typography
+                variant="h6"
+                sx={{ fontWeight: "bold", color: "white" }}
+              >
+                PRODUCTS
+              </Typography>
+            </Grid>
+            <Grid item md={6}>
+              <ProductionQuantityLimitsIcon
+                sx={{ color: "white", width: 90, height: 90 }}
+              />
+            </Grid>
+          </Grid>
         </Paper>
         <Paper
           elevation={1}
           sx={{
             backgroundImage: `linear-gradient(to right, rgba(234, 237, 194), rgba(222, 194, 13))`,
-            padding: 5,
+            padding: 2,
             textAlign: "center",
             borderRadius: 5,
           }}
         >
-          <Typography variant="h6" sx={{ fontWeight: "bold", color: "white" }}>
-            TEAMS
-          </Typography>
-
           <Grid container>
-            <Grid item md={6}>
-              <GroupsIcon sx={{ color: "white", width: 55, height: 55 }} />
-            </Grid>
             <Grid item md={6}>
               <Typography
                 variant="h3"
@@ -83,6 +93,15 @@ function ProductCountUp() {
               >
                 <CountUp end={teams.length} duration={2} />
               </Typography>
+              <Typography
+                variant="h6"
+                sx={{ fontWeight: "bold", color: "white" }}
+              >
+                TEAMS
+              </Typography>
+            </Grid>
+            <Grid item md={6}>
+              <GroupsIcon sx={{ color: "white", width: 100, height: 100 }} />
             </Grid>
           </Grid>
         </Paper>
@@ -90,17 +109,31 @@ function ProductCountUp() {
           elevation={1}
           sx={{
             backgroundImage: `linear-gradient(to right, rgba(63, 235, 182), rgba(5, 156, 110))`,
-            padding: 5,
+            padding: 2,
             textAlign: "center",
             borderRadius: 5,
           }}
         >
-          <Typography variant="h6" sx={{ fontWeight: "bold", color: "white" }}>
-            EMPLOYEES
-          </Typography>
-          <Typography variant="h3" sx={{ fontWeight: "bold", color: "white" }}>
-            <CountUp end={employees.length} duration={2} />
-          </Typography>
+          <Grid container>
+            <Grid item md={6}>
+              {" "}
+              <Typography
+                variant="h3"
+                sx={{ fontWeight: "bold", color: "white" }}
+              >
+                <CountUp end={employees.length} duration={2} />
+              </Typography>{" "}
+              <Typography
+                variant="h6"
+                sx={{ fontWeight: "bold", color: "white" }}
+              >
+                EMPLOYEES
+              </Typography>
+            </Grid>
+            <Grid item md={6}>
+              <GroupIcon sx={{ color: "white", width: 100, height: 100 }} />
+            </Grid>
+          </Grid>
         </Paper>
       </Box>
     </div>

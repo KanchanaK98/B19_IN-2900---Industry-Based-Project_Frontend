@@ -7,14 +7,15 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import { Grid, Box } from "@mui/material";
-import { viewSummarySalaryApi } from "../../../Api/SalaryPaymentModule/SummarySalaryApi/viewSummarySalaryApi";
+import { Button, Box, Grid } from "@mui/material/";
+import { useParams } from "react-router-dom";
+import { findEmployeeSalaryApi } from "../../../../Api/SalaryPaymentModule/EmployeeSalaryApi/findEmployeeSalaryApi";
 import { styled } from "@mui/material/styles";
-import useStyles from "./ViewSummarySalaryTableStyles";
+import useStyles from "./FindEmployeeSalaryStyles";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: "#ab47bc",
+    backgroundColor: "#26a69a",
     color: theme.palette.common.white,
   },
   [`&.${tableCellClasses.body}`]: {
@@ -22,12 +23,12 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 
-const StyledTableRow = styled(TableRow)(() => ({
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:nth-of-type(odd)": {
-    backgroundColor: "#f9fbe7",
+    backgroundColor: "#e0f2f1",
   },
   "&:nth-of-type(even)": {
-    backgroundColor: "#c5cae9",
+    backgroundColor: "#b2ebf2",
   },
   "&:hover": {
     backgroundColor: "#fafafa",
@@ -38,35 +39,36 @@ const StyledTableRow = styled(TableRow)(() => ({
   },
 }));
 
-export default function ViewCurruntSalaryTable() {
+export default function FindEmployeeSalary() {
   const classes = useStyles();
-  const [summarySalaryList, setSummarySalaryList] = useState([]);
+  const [employeeSalaryList, setEmployeeSalaryList] = useState([]);
   const [search, setSearch] = useState("");
   const [filteredRecords, setFilteredRecords] = useState([]);
+  const { EmployeeID } = useParams();
 
   useEffect(() => {
     async function fetchData() {
-      setSummarySalaryList(await viewSummarySalaryApi());
+      setEmployeeSalaryList(await findEmployeeSalaryApi(EmployeeID));
     }
     fetchData();
-  }, []);
+  }, [EmployeeID]);
 
   useEffect(() => {
     setFilteredRecords(
-      summarySalaryList.filter(
+      employeeSalaryList.filter(
         (record) =>
           record.EmployeeID.toLowerCase().includes(search.toLowerCase()) ||
           record.Month.toLowerCase().includes(search.toLowerCase()) ||
           record.Year.toString().includes(search.toString())
       )
     );
-  }, [search, summarySalaryList]);
+  }, [search, employeeSalaryList]);
 
   return (
     <div>
       <Box className={classes.Box}>
         <Typography className={classes.topic}>
-          Summary Salary Details - DirectFN Ltd.
+          Previous Salary Details of {EmployeeID} - DirectFN Ltd.
         </Typography>
         <Grid container sx={{ p: 4 }}>
           <Grid
@@ -79,17 +81,28 @@ export default function ViewCurruntSalaryTable() {
           >
             <Grid>
               <div style={{ marginLeft: 10 }}>
+                <Button
+                  className={classes.button}
+                  onClick={() =>
+                    window.open(`/salary/employeeSalary/${EmployeeID}`, "_self")
+                  }
+                >
+                  My Salary sheet
+                </Button>
                 <input
                   className={classes.search}
                   type="text"
-                  placeholder="Search"
+                  placeholder="Search "
                   onChange={(e) => setSearch(e.target.value)}
                 />
               </div>
               <br />
             </Grid>
             <TableContainer component={Paper}>
-              <Table className={classes.table} aria-label="customized table">
+              <Table
+                sx={{ minWidth: 700, paddingLeft: 50 }}
+                aria-label="customized table"
+              >
                 <TableHead>
                   <TableRow>
                     <StyledTableCell align="left">EmployeeID</StyledTableCell>

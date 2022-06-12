@@ -7,14 +7,16 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import { Grid, Box } from "@mui/material";
-import { viewSummarySalaryApi } from "../../../Api/SalaryPaymentModule/SummarySalaryApi/viewSummarySalaryApi";
+import { Button, Box } from "@mui/material/";
+import { Grid } from "@mui/material";
+import { deleteCurrentSalaryApi } from "../../../../Api/SalaryPaymentModule/CurruntSalaryApi/deleteCurrentSalaryApi";
+import { viewCurruntSalaryApi } from "../../../../Api/SalaryPaymentModule/CurruntSalaryApi/viewCurruntSalaryApi";
 import { styled } from "@mui/material/styles";
-import useStyles from "./ViewSummarySalaryTableStyles";
+import useStyles from "./ViewCurruntSalaryTableStyles";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: "#ab47bc",
+    backgroundColor: theme.palette.primary.light,
     color: theme.palette.common.white,
   },
   [`&.${tableCellClasses.body}`]: {
@@ -24,10 +26,10 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 
 const StyledTableRow = styled(TableRow)(() => ({
   "&:nth-of-type(odd)": {
-    backgroundColor: "#f9fbe7",
+    backgroundColor: "#e0e0e0",
   },
   "&:nth-of-type(even)": {
-    backgroundColor: "#c5cae9",
+    backgroundColor: "#e1f5fe",
   },
   "&:hover": {
     backgroundColor: "#fafafa",
@@ -40,33 +42,30 @@ const StyledTableRow = styled(TableRow)(() => ({
 
 export default function ViewCurruntSalaryTable() {
   const classes = useStyles();
-  const [summarySalaryList, setSummarySalaryList] = useState([]);
+  const [curruntSalaryList, setCurruntSalaryList] = useState([]);
   const [search, setSearch] = useState("");
   const [filteredRecords, setFilteredRecords] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
-      setSummarySalaryList(await viewSummarySalaryApi());
+      setCurruntSalaryList(await viewCurruntSalaryApi());
     }
     fetchData();
   }, []);
 
   useEffect(() => {
     setFilteredRecords(
-      summarySalaryList.filter(
-        (record) =>
-          record.EmployeeID.toLowerCase().includes(search.toLowerCase()) ||
-          record.Month.toLowerCase().includes(search.toLowerCase()) ||
-          record.Year.toString().includes(search.toString())
+      curruntSalaryList.filter((record) =>
+        record.EmployeeID.toLowerCase().includes(search.toLowerCase())
       )
     );
-  }, [search, summarySalaryList]);
+  }, [search, curruntSalaryList]);
 
   return (
     <div>
       <Box className={classes.Box}>
         <Typography className={classes.topic}>
-          Summary Salary Details - DirectFN Ltd.
+          Currunt Salary Details - DirectFN Ltd.
         </Typography>
         <Grid container sx={{ p: 4 }}>
           <Grid
@@ -79,10 +78,17 @@ export default function ViewCurruntSalaryTable() {
           >
             <Grid>
               <div style={{ marginLeft: 10 }}>
+                <Button
+                  align="center"
+                  variant="contained"
+                  onClick={() => window.open("currentSalary/create", "_self")}
+                >
+                  Create New
+                </Button>
                 <input
-                  className={classes.search}
                   type="text"
-                  placeholder="Search"
+                  placeholder="Search by EmployeeID"
+                  className={classes.search}
                   onChange={(e) => setSearch(e.target.value)}
                 />
               </div>
@@ -93,8 +99,6 @@ export default function ViewCurruntSalaryTable() {
                 <TableHead>
                   <TableRow>
                     <StyledTableCell align="left">EmployeeID</StyledTableCell>
-                    <StyledTableCell align="left">Year</StyledTableCell>
-                    <StyledTableCell align="left">Month</StyledTableCell>
                     <StyledTableCell align="left">Basic Salary</StyledTableCell>
                     <StyledTableCell align="left">Vehicle Alw.</StyledTableCell>
                     <StyledTableCell align="left">
@@ -106,6 +110,8 @@ export default function ViewCurruntSalaryTable() {
                     <StyledTableCell align="left">Net Salary</StyledTableCell>
                     <StyledTableCell align="left">Company EPF</StyledTableCell>
                     <StyledTableCell align="left">ETF</StyledTableCell>
+                    <StyledTableCell align="left">Update</StyledTableCell>
+                    <StyledTableCell align="left">Delete</StyledTableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -113,12 +119,6 @@ export default function ViewCurruntSalaryTable() {
                     <StyledTableRow key={idx}>
                       <StyledTableCell align="left">
                         {record.EmployeeID}
-                      </StyledTableCell>
-                      <StyledTableCell align="left">
-                        {record.Year}
-                      </StyledTableCell>
-                      <StyledTableCell align="left">
-                        {record.Month}
                       </StyledTableCell>
                       <StyledTableCell align="left">
                         {record.BasicSalary}
@@ -140,6 +140,30 @@ export default function ViewCurruntSalaryTable() {
                       </StyledTableCell>
                       <StyledTableCell align="left">
                         {record.ETF}
+                      </StyledTableCell>
+                      <StyledTableCell align="left">
+                        <Button
+                          variant="contained"
+                          onClick={() =>
+                            window.open(
+                              `/salary/currentSalary/update/${record.EmployeeID}`,
+                              "_self"
+                            )
+                          }
+                        >
+                          Edit
+                        </Button>
+                      </StyledTableCell>
+                      <StyledTableCell align="left">
+                        <Button
+                          variant="contained"
+                          onClick={() => {
+                            deleteCurrentSalaryApi(record.EmployeeID);
+                            window.location.reload(false);
+                          }}
+                        >
+                          Delete
+                        </Button>
                       </StyledTableCell>
                     </StyledTableRow>
                   ))}

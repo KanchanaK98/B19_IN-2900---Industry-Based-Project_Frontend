@@ -16,7 +16,7 @@ import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import ContactMailIcon from "@mui/icons-material/ContactMail";
 import CakeIcon from "@mui/icons-material/Cake";
 import PlaceIcon from "@mui/icons-material/Place";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getAllTeams } from "../../../Api/ReportersManagementModule/TeamsApi";
 import ViewProfileInfo from "./ViewProfileInfo";
 

@@ -50,6 +50,8 @@ import ScheduleExamForm from "./Components/PromotionModule/Exam/ScheduleExamForm
 import UpdateExamForm from "./Components/PromotionModule/Exam/UpdateExamForm/UpdateExamForm";
 import AddMoreQuestionsForm from "./Pages/PromotionModule/Paper/AddMoreQuestions";
 import RecentSection from "./Pages/ReportersManagementModule/DashBoard/RecentSection";
+import SessionExpiryDialog from "./Components/SessionExpiry/SessionExpiryDialog";
+import {LogoutApi} from "./Api/Login/LogoutApi";
 
 function App() {
   const [open, setOpen] = useState(true);
@@ -60,7 +62,7 @@ function App() {
     setOpen(!open);
   };
   const handleLogOut = () => {
-    LogoutApi();
+LogoutApi();
     sessionStorage.clear();
     window.location.replace("/");
   };

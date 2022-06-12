@@ -281,9 +281,9 @@ const  ViewAsset = () => {
                   <Typography style={{ color:'black' }}> {asset.serialNumber}</Typography>
                 </TableCell>
                 <TableCell align="center">
-                { asset.status === 'Fault'?(<Typography style={{ color:'red' }}> {asset.status}</Typography>):null} 
-                {asset.status === 'Available'?(<Typography style={{ color:'blue' }}> {asset.status}</Typography>):null}
-                {asset.status === 'Non-Available'?(<Typography style={{ color:'green' }}> {asset.status}</Typography>):null}
+                { asset.status === 'Fault'&&(<Typography style={{ color:'red' }}> Fault</Typography>)} 
+                {asset.status === 'Available'&&(<Typography style={{ color:'blue' }}>Available</Typography>)}
+                {asset.status === 'Non-Available'&&(<Typography style={{ color:'green' }}> Not-Available</Typography>)}
                 </TableCell>
                 
                 {asset.status === 'Available'?
@@ -295,13 +295,13 @@ const  ViewAsset = () => {
 
                            :asset.status === 'Fault'?
                            (<TableCell align="center">
-                               <button className='btn btn-danger' onClick={()=>{confirmBox(asset._id);setType("release-fault");}}>Release Fault</button>
-                               <button className='btn btn-success' onClick={()=>{ShowModalView(asset._id)}} style={{ marginLeft:"5px" }}>Update</button>
+                               <button className='btn btn-danger' onClick={()=>{confirmBox(asset._id);setType("release-fault");}} style={{ width:140 }}>Release Fault</button>
+                               <button className='btn btn-success' onClick={()=>{ShowModalView(asset._id)}} style={{ marginLeft:"6px" }}>Update</button>
                                </TableCell>):
                            (<TableCell align="center">
-                                <button className='btn btn-primary announce' onClick={()=>{confirmBox(asset._id);setType("unassign");}}>Un-Assign</button>
-                                <button className='btn btn-danger' onClick={()=>{confirmBox(asset._id);setType("fault");}} style={{ marginLeft:"5px" }}>Fault</button>
-                                <button className='btn btn-success' onClick={()=>{ShowModalView(asset._id)}} style={{ marginLeft:"5px" }}>Update</button>
+                                <button className='btn btn-warning btn-block' onClick={()=>{confirmBox(asset._id);setType("unassign");}}>Release</button>
+                                <button className='btn btn-danger btn-block' onClick={()=>{confirmBox(asset._id);setType("fault");}} style={{ marginLeft:"5px" }}>Fault</button>
+                                <button className='btn btn-success btn-block' onClick={()=>{ShowModalView(asset._id)}} style={{ marginLeft:"5px" }}>Update</button>
                             </TableCell>)
                 }
                 

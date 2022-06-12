@@ -51,7 +51,6 @@ export default function ConfirmationBox({opens,id,func1,func2,func3,handleClosed
         PaperProps={{
             style: {
                 backgroundColor: '#EDEADE',
-                border: '2px solid black',
                 borderRadius:15
             },
         }}
@@ -59,7 +58,7 @@ export default function ConfirmationBox({opens,id,func1,func2,func3,handleClosed
       >
         <DialogTitle>
             <Typography variant="h5">
-                {"Confirm the action"}
+                {"Confirm the Action!"}
             </Typography>
         </DialogTitle>
         <DialogContent>
@@ -67,9 +66,9 @@ export default function ConfirmationBox({opens,id,func1,func2,func3,handleClosed
             {/* <Typography variant="h6">
                 Are you sure want to {typed === "fault"?<b>create </b>:<b>release </b>}a Fault?<br/>
             </Typography>  */}
-            {typed === "fault"?<Typography variant="h6">Are you sure want to <b>create </b> a Fault?</Typography>:null}
-            {typed === "release-fault"?<Typography variant="h6">Are you sure want to <b>release </b> a Fault?</Typography>:null}
-            {typed === "unassign"?<Typography variant="h6">Are you sure want to <b>unassign </b> asset?</Typography>:null}
+            {typed === "fault"&&<Typography >Are you sure want to <b>create </b> a Fault?</Typography>}
+            {typed === "release-fault"&&<Typography >Are you sure want to <b>release </b> a Fault?</Typography>}
+            {typed === "unassign"&&<Typography >Are you sure want to <b>unassign </b> asset?</Typography>}
           </DialogContentText>
         </DialogContent>
         <DialogActions>

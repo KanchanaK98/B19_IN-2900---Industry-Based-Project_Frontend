@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { CssBaseline, Grid } from "@mui/material";
+import React, { useState } from "react";
+import { AvatarGroup, CssBaseline, Grid } from "@mui/material";
 import Box from "@mui/material/Box";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import NavBar from "./Components/Navigation/NavBar/NavBar";
@@ -14,7 +14,6 @@ import ProductPage from "./Pages/ReportersManagementModule/Products/ProductPage"
 import CreateProduct from "./Components/ReportersManagementModule/ProductCreate/CreateProduct";
 import UserProfile from "./Components/ReportersManagementModule/UserProfile/UserProfile";
 import EditProduct from "./Components/ReportersManagementModule/ProductUpdate/EditProduct";
-import ProgressBar from "./Components/ReportersManagementModule/DisplayEmployees/ProgressBar";
 import EditTeam from "./Components/ReportersManagementModule/TeamUpdate/EditTeam";
 import CreateTeamPage from "./Pages/ReportersManagementModule/Teams/CreateTeamPage";
 import CreateProductPage from "./Pages/ReportersManagementModule/Products/CreateProductPage";
@@ -26,32 +25,31 @@ import CreateUpdateInterview from "./Pages/RecruitmentModule/Interviews/CreateUp
 import LeaveHistory from "./Pages/LeaveManagementModule/RequestLeaves/LeaveHistory";
 import RequestedLeaveList from "./Pages/LeaveManagementModule/RequestedLeavesTeamLead/RequestedLeaveList";
 import StartInterview from "./Pages/RecruitmentModule/StartInterview/StartInterview";
-import CustomizedTeamView from "./Components/ReportersManagementModule/CustomizedTemView/CustomizedTeamView";
 import ViewCurruntSalary from "./Pages/SalaryPaymentModule/CurruntSalary/ViewCurruntSalary";
-import CreateCurruntSalary from "./Components/SalaryPaymentModule/CurruntSalary/CreateCurruntSalary";
-import UpdateCurruntSalary from "./Components/SalaryPaymentModule/CurruntSalary/UpdateCurruntSalary";
+import CreateCurruntSalary from "./Components/SalaryPaymentModule/CurruntSalary/CreateCurruntSalary/CreateCurruntSalary";
+import UpdateCurruntSalary from "./Components/SalaryPaymentModule/CurruntSalary/UpdateCurruntSalary/UpdateCurruntSalary";
 import ViewSummarySalary from "./Pages/SalaryPaymentModule/SummarySalary/ViewSummarySalary";
 import ViewCurrentEmployeeSalary from "./Pages/SalaryPaymentModule/EmployeeSalary/ViewCurrentEmployeeSalary";
 import ViewAllQuestions from "./Pages/PromotionModule/Questions/ViewAllQuestions";
-import CreateQuestions from "./Components/PromotionModule/Question/CreateQuestions";
+import CreateQuestions from "./Components/PromotionModule/Question/CreateQuestions/CreateQuestions";
 import ViewAllPapersDelete from "./Pages/PromotionModule/Paper/DisplayPaperAndDelete/ViewAllPapersDelete";
 import CreateNewPaper from "./Pages/PromotionModule/Paper/CreatePaper";
-import ViewOnePaper from "./Components/PromotionModule/Paper/ViewOnePaper";
-import UpdatePaperDetails from "./Components/PromotionModule/Paper/UpdatePaperDetails";
+import ViewOnePaper from "./Components/PromotionModule/Paper/ViewOnePaper/ViewOnePaper";
+import UpdatePaperDetails from "./Components/PromotionModule/Paper/UpdatePaperDetails/UpdatePaperDetails";
 import AllSubmissions from "./Pages/PromotionModule/AllSubmissions/AllSubmissions";
 import DisplayTeamMemberSubmissions from "./Pages/PromotionModule/Evaluations/TeamLead/DisplayTeamSubmissionsAndFeedback";
-import DispalyAndSubmitPaper from "./Components/PromotionModule/Submit/DispalyAndSubmitPaper";
-import EvaluatePaper from "./Components/PromotionModule/Evaluation/EvaluatePaper";
-import DisplayMyFeedback from "./Components/PromotionModule/Submit/DisplayFeedback";
+import DispalyAndSubmitPaper from "./Components/PromotionModule/Submit/DispalyAndSubmitPaper/DispalyAndSubmitPaper";
+import EvaluatePaper from "./Components/PromotionModule/Evaluation/EvaluatePaper/EvaluatePaper";
+import DisplayMyFeedback from "./Components/PromotionModule/Submit/DisplayFeedback/DisplayFeedback";
 import JobRoleDialogBox from "./Components/ReportersManagementModule/CreateEmployeeForm/JobRoleDialogBox";
-import FindEmployeeSalary from "./Components/SalaryPaymentModule/EmployeeSalary/FindEmployeeSalary";
+import FindEmployeeSalary from "./Pages/SalaryPaymentModule/EmployeeSalary/FindCurrentEmployeeSalary";
 import DisplayAllEmployees from "./Pages/ReportersManagementModule/DashBoard/DisplayAllEmployees";
 import ViewProfileInfo from "./Components/ReportersManagementModule/DisplayEmployees/ViewProfileInfo";
-import ViewAllExamList from "./Components/PromotionModule/Exam/ViewAllExamList";
-import ScheduleExamForm from "./Components/PromotionModule/Exam/ScheduleExamForm";
-import UpdateExamForm from "./Components/PromotionModule/Exam/UpdateExamForm";
-import SessionExpiryDialog from "./Components/SessionExpiry/SessionExpiryDialog";
-import { LogoutApi } from "./Api/Login/LogoutApi";
+import ViewAllExamList from "./Components/PromotionModule/Exam/ViewAllExamList/ViewAllExamList";
+import ScheduleExamForm from "./Components/PromotionModule/Exam/ScheduleExamForm/ScheduleExamForm";
+import UpdateExamForm from "./Components/PromotionModule/Exam/UpdateExamForm/UpdateExamForm";
+import AddMoreQuestionsForm from "./Pages/PromotionModule/Paper/AddMoreQuestions";
+import RecentSection from "./Pages/ReportersManagementModule/DashBoard/RecentSection";
 
 function App() {
   const [open, setOpen] = useState(true);
@@ -139,10 +137,8 @@ function App() {
               <Route path="/pro" element={<CreateProduct />} />
               <Route path="/user" element={<UserProfile user={user} />} />
               <Route path="/products/update/:id" element={<EditProduct />} />
-              <Route path="progress" element={<ProgressBar />} />
-              <Route path="tree" element={<CustomizedTeamView />} />
-              <Route path="job" element={<JobRoleDialogBox />} />
               <Route path="display" element={<ViewProfileInfo />} />
+              <Route path="recent" element={<RecentSection />} />
 
               {/* Recruitment management */}
               <Route path="/candidate" element={<CreateCandidate />} />
@@ -208,6 +204,10 @@ function App() {
               <Route
                 path="/promotion/Paper/createPaper"
                 element={<CreateNewPaper />}
+              />
+              <Route
+                path="/promotion/Paper/addMoreQuestions/:PaperID"
+                element={<AddMoreQuestionsForm />}
               />
               <Route
                 path="/promotion/Paper/display/:PaperID"

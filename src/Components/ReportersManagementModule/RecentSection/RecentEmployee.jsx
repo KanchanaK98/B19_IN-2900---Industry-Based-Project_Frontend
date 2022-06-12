@@ -33,13 +33,13 @@ function RecentEmployee({ profile }) {
   return (
     <div>
       <Card className={classes.card}>
-        <Typography sx={{ mb: 1, fontWeight: "bold" }}>
+        <Typography sx={{ mb: 1, fontWeight: "bold", color: "#290f91"}}>
           {employeeFirstName + " " + employeeLastName + " | " + jobRole}
         </Typography>
         <Grid container spacing={2}>
           <Grid item md={4} sx={{ justifyContent: "center", display: "flex" }}>
             <Avatar
-              sx={{ width: 100, height: 100 }}
+              sx={{ width: 80, height: 80 ,  border: "2px solid #290f91"}}
               src={profilePic}
               alt={employeeFirstName + " " + employeeLastName}
             ></Avatar>
@@ -52,9 +52,10 @@ function RecentEmployee({ profile }) {
               teams.map((team) => {
                 if (team._id === teamID) {
                   return (
-                    <Typography textAlign="center" key={team._id}> {team.teamName}</Typography>
+                    <Typography textAlign="center" sx={{fontWeight:"bold", color:"#070feb" }} key={team._id}> {team.teamName}</Typography>
                   );
                 }
+          
               })}
           </Grid>
         </Grid>

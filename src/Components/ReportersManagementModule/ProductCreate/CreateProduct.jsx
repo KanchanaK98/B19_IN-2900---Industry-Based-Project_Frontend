@@ -9,49 +9,96 @@ import {
   Button,
   MenuItem,
   Box,
+  Paper,
+  Stack,
+  Alert,
+  AlertTitle,
 } from "@mui/material";
 import InventoryIcon from "@mui/icons-material/Inventory";
 import { TextareaAutosize } from "@mui/material";
 import { createProduct } from "../../../Api/ReportersManagementModule/ProductApi";
 import { getAllTeams } from "../../../Api/ReportersManagementModule/TeamsApi";
+import { Link } from "react-router-dom";
 function CreateProduct() {
+  const [addSuccessfully, setAddSuccessfully] = useState(false);
+  const [notAdded, setnotAdded] = useState(false);
   const [products, setProducts] = useState({
     productID: "",
     productName: "",
     description: "",
-    nameofTeam: {},
+    nameofTeam: "",
   });
   const [teams, setTeams] = useState([]);
-  //----------------------
-
-  const [errors, setErrors] = useState({});
+  const [productErrors, setProductErrors] = useState({
+    productID: "",
+    productName: "",
+    description: "",
+    nameofTeam: "",
+  });
   //------------------------------
   const handleChange = (e) => {
     setProducts((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
     }));
-    //----------------------
-
-    //----------------------
+    setProductErrors((prevState) => ({
+      ...prevState,
+      [e.target.name]: "",
+    }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // setErrors(createProductFormValidation(products))
-    // sendRequest()
-    createProduct(products)
-      .then((res) => {})
-      .catch((err) => {
-        console.log(err);
-      });
-
+  const handleClear = () => {
     setProducts({
       productID: "",
       productName: "",
       description: "",
-      teamNames: {},
+      teamNames: "",
     });
+  };
+
+  //-------------validation---------------------
+  // const re = /^[A-Za-z]+$/;
+  const errorHandle = () => {
+    let isError = false;
+    Object.keys(products).map((property) => {
+      if (!products[property]) {
+        setProductErrors((prevState) => ({
+          ...prevState,
+          [property]: property + "is required",
+        }));
+        isError = true;
+      }
+    });
+    return isError;
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!errorHandle()) {
+      createProduct(products);
+      // .then((res) => {
+      setAddSuccessfully(true);
+      setTimeout(() => {
+        setAddSuccessfully(false);
+      }, 2000);
+      handleClear();
+      // })
+      // .catch((err) => {
+      //   console.log(err);
+      // });
+
+      // setProducts({
+      //   productID: "",
+      //   productName: "",
+      //   description: "",
+      //   teamNames: {},
+      // });
+    } else {
+      setnotAdded(true);
+      setTimeout(() => {
+        setnotAdded(false);
+      }, 2000);
+      handleClear();
+    }
   };
 
   useEffect(() => {
@@ -64,9 +111,9 @@ function CreateProduct() {
   return (
     <div>
       <Box padding={1} sx={{ mt: 2 }}>
-        <form onSubmit={handleSubmit}>
-          <Card sx={{ padding: 5, backgroundColor: "#aec9d1" }}>
-            <Typography variant="h5">
+        <form onSubmit={handleSubmit} autoComplete="off">
+          <Paper sx={{ padding: 5 }}>
+            <Typography variant="h5" fontWeight="bold">
               <InventoryIcon /> Create Product
             </Typography>
             <Divider sx={{ mt: 5, mb: 5 }}></Divider>
@@ -75,7 +122,9 @@ function CreateProduct() {
               <Grid item md={6}>
                 <Grid container>
                   <Grid item md={3}>
-                    <FormLabel>Product ID:</FormLabel>
+                    <FormLabel sx={{ fontWeight: "bold" }}>
+                      Product ID:
+                    </FormLabel>
                   </Grid>
                   <Grid item md={9}>
                     <TextField
@@ -84,8 +133,8 @@ function CreateProduct() {
                       name="productID"
                       value={products.productID}
                       onChange={handleChange}
-                      // error={errors.productID}
-
+                      error={productErrors.productID ? true : false}
+                      helperText={productErrors.productID}
                       fullWidth
                     />
                     {/* <Typography>{errors.productID}</Typography> */}
@@ -96,7 +145,9 @@ function CreateProduct() {
               <Grid item md={6}>
                 <Grid container>
                   <Grid item md={3}>
-                    <FormLabel>Product Name:</FormLabel>
+                    <FormLabel sx={{ fontWeight: "bold" }}>
+                      Product Name:
+                    </FormLabel>
                   </Grid>
                   <Grid item md={9}>
                     <TextField
@@ -105,6 +156,8 @@ function CreateProduct() {
                       name="productName"
                       value={products.productName}
                       onChange={handleChange}
+                      error={productErrors.productName ? true : false}
+                      helperText={productErrors.productName}
                       fullWidth
                     />
                   </Grid>
@@ -113,23 +166,28 @@ function CreateProduct() {
             </Grid>
             <Grid container>
               <Grid item md={1.5}>
-                <FormLabel>Description:</FormLabel>
+                <FormLabel sx={{ fontWeight: "bold" }}>Description:</FormLabel>
               </Grid>
 
               <Grid item md={10.5}>
-                <TextareaAutosize
-                  style={{ width: "100%", height: 200 }}
-                  aria-label="maximum height"
-                  placeholder="Enter product description"
+                <TextField
+                  rows={7}
+                  id="filled-basic"
+                  variant="filled"
+                  multiline
+                  label="Enter Description"
                   name="description"
                   value={products.description}
+                  error={productErrors.description ? true : false}
+                  helpertext={productErrors.description}
                   onChange={handleChange}
+                  fullWidth
                 />
               </Grid>
             </Grid>
             <Grid container sx={{ mt: 3 }}>
               <Grid item md={1.5}>
-                <FormLabel>Team Name:</FormLabel>
+                <FormLabel sx={{ fontWeight: "bold" }}>Team Name:</FormLabel>
               </Grid>
               <Grid item md={4.5}>
                 <TextField
@@ -139,24 +197,56 @@ function CreateProduct() {
                   select
                   value={products.nameofTeam}
                   onChange={handleChange}
+                  error={productErrors.nameofTeam ? true : false}
+                  helperText={productErrors.nameofTeam}
                   fullWidth
                 >
-                  {teams.length > 0 &&
-                    teams.map((team, i) => (
-                      <MenuItem value={team} key={team.teamLeadID}>
-                        <Typography>{team.teamName}</Typography>
-                      </MenuItem>
-                    ))}
+                  {teams.map((team, i) => (
+                    <MenuItem value={team} key={team.teamLeadID}>
+                      <Typography>{team.teamName}</Typography>
+                    </MenuItem>
+                  ))}
                 </TextField>
               </Grid>
+            </Grid>
+            <Grid container>
+              <Grid item md={6} textAlign="left">
+                <Button
+                  component={Link}
+                  to="/products"
+                  variant="contained"
+                  sx={{ mt: 2, backgroundColor: "#183d78" }}
+                >
+                  View Teams
+                </Button>
+              </Grid>
               <Grid item md={6} textAlign="right">
-                <Button onClick={handleSubmit} variant="contained">
+                <Button
+                  onClick={handleSubmit}
+                  variant="contained"
+                  sx={{ mt: 2, backgroundColor: "#183d78" }}
+                >
                   Create New Product
                 </Button>
               </Grid>
             </Grid>
-          </Card>
+          </Paper>
         </form>
+        {addSuccessfully ? (
+          <Stack sx={{ width: "100%" }} spacing={2}>
+            <Alert severity="success">
+              <AlertTitle>Success</AlertTitle>
+              Product has been successfully added!
+            </Alert>
+          </Stack>
+        ) : null}
+        {notAdded ? (
+          <Stack sx={{ width: "100%" }} spacing={2}>
+            <Alert variant="filled" severity="error">
+              Please enter all the details!
+            </Alert>
+          </Stack>
+        ) : null}
       </Box>
     </div>
   );

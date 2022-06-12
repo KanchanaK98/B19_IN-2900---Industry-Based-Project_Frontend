@@ -8,15 +8,29 @@ import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import OrganizationStructure from "../../../Components/ReportersManagementModule/OrganizationStructure/OrganizationStructure";
 import DisplayAllEmployees from "./DisplayAllEmployees";
 import { viewAllEmployees } from "../../../Api/ReportersManagementModule/EmployeeApi";
+import RecentSection from "./RecentSection";
+import { WindowSharp } from "@mui/icons-material";
 function DashBord() {
+  const location = useLocation();
+  //const { allEmployees } = location.state;
   const [value, setValue] = React.useState("1");
   const [profiles, setProfiles] = useState([]);
   const jobRole = JSON.parse(sessionStorage.getItem("user")).jobRole; //profile should change to user
+
   useEffect(() => {
+    console.log(location.state)
+    if (location.state ) {
+      setValue(location.state.allEmployees === true ? "2" :" 1");
+      
+      window.history.replaceState({}, document.title)
+
+      console.log(location.state)
+    }
+ 
     async function fetchData() {
       setProfiles(await viewAllEmployees());
     }
@@ -25,10 +39,11 @@ function DashBord() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
   return (
     <div>
-      <Box padding={4}>
-        {jobRole === "HR" && (
+      <Box padding={2}>
+        {jobRole === "HR Manager" && (
           <Grid item sm={12} md={12} sx={{ mb: 5 }}>
             <Link to="/dashboard/create">
               <Button
@@ -54,17 +69,18 @@ function DashBord() {
                   <Tab label="ORGANIZATION STRUCTURE" value="3" />
                 </TabList>
               </Box>
-              <TabPanel value="1" sx={{ mt: 7 }}>
+              <TabPanel value="1">
                 <Box>
-                  <Grid container>
+                  {/* <Grid container>
                     <Grid item md={8}></Grid>
-                    <Grid item md={4}>
-                      <AllRecentEmployees />
-                    </Grid>
-                  </Grid>
+                    <Grid item md={4}> */}
+                  {/* <AllRecentEmployees /> */}
+                  <RecentSection />
+                  {/* </Grid>
+                  </Grid> */}
                 </Box>
               </TabPanel>
-              <TabPanel value="2" sx={{ mt: 3 }}>
+              <TabPanel value="2" sx={{ mt: 1 }}>
                 <DisplayAllEmployees profiles={profiles} />
               </TabPanel>
               <TabPanel value="3" sx={{ mt: 3 }}>

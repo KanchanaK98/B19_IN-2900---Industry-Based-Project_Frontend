@@ -18,6 +18,7 @@ import InventoryIcon from "@mui/icons-material/Inventory";
 import { TextareaAutosize } from "@mui/material";
 import { createProduct } from "../../../Api/ReportersManagementModule/ProductApi";
 import { getAllTeams } from "../../../Api/ReportersManagementModule/TeamsApi";
+import { Link } from "react-router-dom";
 function CreateProduct() {
   const [addSuccessfully, setAddSuccessfully] = useState(false);
   const [notAdded, setnotAdded] = useState(false);
@@ -54,6 +55,9 @@ function CreateProduct() {
       teamNames: "",
     });
   };
+
+  //-------------validation---------------------
+  // const re = /^[A-Za-z]+$/;
   const errorHandle = () => {
     let isError = false;
     Object.keys(products).map((property) => {
@@ -64,7 +68,6 @@ function CreateProduct() {
         }));
         isError = true;
       }
-      return;
     });
     return isError;
   };
@@ -90,9 +93,9 @@ function CreateProduct() {
       //   teamNames: {},
       // });
     } else {
-      setnotAdded(true)
+      setnotAdded(true);
       setTimeout(() => {
-        setnotAdded(false)
+        setnotAdded(false);
       }, 2000);
       handleClear();
     }
@@ -205,8 +208,24 @@ function CreateProduct() {
                   ))}
                 </TextField>
               </Grid>
+            </Grid>
+            <Grid container>
+              <Grid item md={6} textAlign="left">
+                <Button
+                  component={Link}
+                  to="/products"
+                  variant="contained"
+                  sx={{ mt: 2, backgroundColor: "#183d78" }}
+                >
+                  View Teams
+                </Button>
+              </Grid>
               <Grid item md={6} textAlign="right">
-                <Button onClick={handleSubmit} variant="contained">
+                <Button
+                  onClick={handleSubmit}
+                  variant="contained"
+                  sx={{ mt: 2, backgroundColor: "#183d78" }}
+                >
                   Create New Product
                 </Button>
               </Grid>

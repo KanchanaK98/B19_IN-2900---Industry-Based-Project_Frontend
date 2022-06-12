@@ -65,7 +65,7 @@ function CreateEmployee() {
       // jobType: "",
     });
   };
-  
+
   // const errorHandle = () => {
   //   let isError = false;
   //   Object.keys(candidateData).map((property) => {
@@ -82,7 +82,6 @@ function CreateEmployee() {
   //   }
   //   return isError;
   // };
- 
 
   // const emailValidation = () => {
   //   let isEmail = false;
@@ -101,13 +100,13 @@ function CreateEmployee() {
   // 0771234567
 
   // 771234567
-  
+
   // +94771234567
-  
+
   // 94771234567
-  
+
   // 0111234567(local codes)
-  
+
   const errorHandle = () => {
     let isError = false;
     Object.keys(inputs).map((property) => {
@@ -121,9 +120,12 @@ function CreateEmployee() {
       return;
     });
     const emailFormat = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-    if(inputs.companyEmail && !inputs.companyEmail.match(emailFormat)) {
-      setInputErrors((prevState)=>({...prevState, companyEmail: "Invalid Email address"}));
-        isError = true;
+    if (inputs.companyEmail && !inputs.companyEmail.match(emailFormat)) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        companyEmail: "Invalid Email address",
+      }));
+      isError = true;
     }
     return isError;
   };

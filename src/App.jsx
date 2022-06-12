@@ -73,7 +73,7 @@ function App() {
 
     const resetTimer = () => {
       clearTimeout(timer);
-      timer = setTimeout(action, 1000 * 9 * 1);
+      timer = setTimeout(action, 1000 * 60 * 5);
     };
 
     window.onload = resetTimer;

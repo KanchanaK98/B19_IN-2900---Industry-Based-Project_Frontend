@@ -10,9 +10,9 @@ const API = axios.create({
 API.interceptors.request.use(
   (config) => {
     if (!config.headers["Authorization"]) {
-      config.headers["Authorization"] = `Bearer ${
-        JSON.parse(localStorage.getItem("user")).accessToken
-      }`;
+      config.headers["Authorization"] = `Bearer ${JSON.parse(
+        sessionStorage.getItem("access")
+      )}`;
     }
     return config;
   },
@@ -23,14 +23,12 @@ API.interceptors.request.use(
 
 const refreshTheAccessToken = async () => {
   const response = await axios.post("http://localhost:8070/refresh", {
-    token: JSON.parse(localStorage.getItem("user")).refreshToken,
+    token: JSON.parse(sessionStorage.getItem("refresh")),
   });
+  console.log(response)
 
-  let existsUser = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {};
-
-  existsUser["accessToken"] = response.data.accessToken;
-  existsUser["refreshToken"] = response.data.refreshToken;
-  localStorage.setItem("user", JSON.stringify(existsUser));
+  sessionStorage.setItem("access", JSON.stringify(response.data.accessToken));
+  sessionStorage.setItem("refresh", JSON.stringify(response.data.refreshToken));
 };
 
 API.interceptors.response.use(
@@ -45,7 +43,7 @@ API.interceptors.response.use(
       try {
         await refreshTheAccessToken();
         previousRequest.headers["Authorization"] = `Bearer ${
-          JSON.parse(localStorage.getItem("user")).accessToken
+          JSON.parse(sessionStorage.getItem("access"))
         }`;
         return API(previousRequest);
       } catch (error) {
@@ -56,6 +54,11 @@ API.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+// Logout
+export const logOut = (id)=> {
+  API.post(`/logout/${id}`);
+}
 
 // candidate API
 export const createCandidate = (candidateData) =>
@@ -259,8 +262,8 @@ export const cancelLeave = (id, reason, employeeId) =>
 export const getRequestedLeave = (employeeId) =>
   API.get("/leave/requestedLeave/" + employeeId);
 
-  export const responseRequestedLeave = (id,reason) =>
-  API.post(`/leave/requestedLeave/response/${id}`,reason);
+export const responseRequestedLeave = (id, reason) =>
+  API.post(`/leave/requestedLeave/response/${id}`, reason);
 
-  export const getTeamLead = (employeeId) =>
+export const getTeamLead = (employeeId) =>
   API.get("/leave/request/teamLead/" + employeeId);

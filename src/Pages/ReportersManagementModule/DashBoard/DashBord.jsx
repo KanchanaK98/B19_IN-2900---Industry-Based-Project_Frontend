@@ -15,7 +15,7 @@ import { viewAllEmployees } from "../../../Api/ReportersManagementModule/Employe
 function DashBord() {
   const [value, setValue] = React.useState("1");
   const [profiles, setProfiles] = useState([]);
-  const jobRole = JSON.parse(localStorage.getItem("user")).jobRole; //profile should change to user
+  const jobRole = JSON.parse(sessionStorage.getItem("user")).jobRole; //profile should change to user
   useEffect(() => {
     async function fetchData() {
       setProfiles(await viewAllEmployees());

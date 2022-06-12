@@ -37,7 +37,7 @@ function DisplayProfile({ employee }) {
     fetchData();
   }, []);
 
-  // const classes = useStyles();
+ 
   return (
     <div>
       <Card
@@ -64,16 +64,20 @@ function DisplayProfile({ employee }) {
                 fontFamily: "Kdam Thmor Pro",
               }}
             >
-              {user &&
+              {/* {user &&
                 user.employeeFirstName[0].toUpperCase() +
                   user.employeeFirstName.slice(1) +
                   " " +
                   user.employeeLastName[0].toUpperCase() +
                   user.employeeLastName.slice(1) +
                   " | " +
-                  user.jobRole.replace(/\w\S*/g, (w) =>
-                    w.replace(/^\w/, (c) => c.toUpperCase())
-                  )}
+                  user.jobRole.replace(/\w\S* */}
+              {user &&
+                user.employeeFirstName +
+                  " " +
+                  user.employeeLastName +
+                  " | " +
+                  user.jobRole}
             </Typography>
           </Grid>
           <Grid item md={3}>
@@ -104,7 +108,7 @@ function DisplayProfile({ employee }) {
                 alt={user.employeeFirstName + " " + user.employeeLastName}
               ></Avatar>
             </Grid>
-            <Grid>
+            <Grid md={12}>
               <ProgressBar
                 EmployeeWithAcc={EmployeeWithAcc}
                 EmpWithProf={EmpWithProf}
@@ -114,6 +118,12 @@ function DisplayProfile({ employee }) {
                 // city={user.city}
                 // phoneNumber={user.phoneNumber}
               />
+              <Typography
+                textAlign="center"
+                sx={{ fontWeight: "bold", color: "#183d78", mb: 1 }}
+              >
+                Completeness of the Profile
+              </Typography>
             </Grid>
             {/* <Typography>{moment("lastSeen", "YYYYMMDD").fromNow()}</Typography> */}
             <Typography>

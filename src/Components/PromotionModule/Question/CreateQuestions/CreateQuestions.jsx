@@ -278,7 +278,11 @@ export default function CreateCurruntSalary() {
                         <MenuItem value="BA">BA</MenuItem>
                         <MenuItem value="QA">QA</MenuItem>
                         <MenuItem value="HR">HR</MenuItem>
+                        <MenuItem value="UI/UX">UI/UX</MenuItem>
+                        <MenuItem value="PM">PM</MenuItem>
                         <MenuItem value="SSE">SSE</MenuItem>
+                        <MenuItem value="SA">SA</MenuItem>
+                        <MenuItem value="TL">TL</MenuItem>
                       </Select>
                     </FormControl>
                   </Grid>

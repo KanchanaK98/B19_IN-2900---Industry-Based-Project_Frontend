@@ -1,5 +1,5 @@
 import React from "react";
-import AddMoreQuestions from "../../../Components/PromotionModule/Paper/AddMoreQuestions";
+import AddMoreQuestions from "../../../Components/PromotionModule/Paper/AddMoreQuestions/AddMoreQuestions";
 import { Grid } from "@mui/material";
 
 const AddMoreQuestionsForm = () => {

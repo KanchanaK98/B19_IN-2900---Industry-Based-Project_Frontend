@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
       margin: theme.spacing(2),
     },
     backgroundColor: "#cfd8dc",
-    width: "70%",
+    width: "80%",
     marginLeft: "15%",
   },
   formHeader: {

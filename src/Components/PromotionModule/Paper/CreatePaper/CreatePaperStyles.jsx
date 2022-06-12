@@ -7,9 +7,7 @@ const useStyles = makeStyles((theme) => ({
     "& .MuiTextField-root": {
       margin: theme.spacing(2),
     },
-    backgroundColor: "#cfd8dc",
-    width: "70%",
-    marginLeft: "15%",
+    backgroundColor: "#E0F7FA",
   },
   formHeader: {
     display: "flex",
@@ -23,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
       fontSize: theme.spacing(5),
       marginLeft: theme.spacing(2),
     },
-    color: "#183d78",
   },
   inputs: {
     display: "flex",
@@ -36,51 +33,29 @@ const useStyles = makeStyles((theme) => ({
   },
   texFieldLabel: {
     display: "flex",
-    marginLeft: 15,
+    justifyContent: "left",
     alignItems: "center",
     "& .MuiFormLabel-root": {
       fontWeight: 600,
       fontSize: 19,
     },
+    paddingLeft: 15,
   },
-  card1: {
-    marginLeft: 25,
-    marginBottom: 10,
-    marginTop: 10,
-    width: "85%",
-    padding: 2,
-    backgroundColor: "#e0e0e0",
-    "&:hover": {
-      backgroundColor: "#e8eaf6",
-    },
-  },
-  card2: {
-    marginLeft: 25,
-    marginBottom: 10,
-    width: "85%",
-    padding: 2,
-    backgroundColor: "#e0e0e0",
-    "&:hover": {
-      backgroundColor: "#e8eaf6",
-    },
-  },
-
-  checkbox: {
-    display: "flex",
-    justifyContent: "flex-end",
-  },
-
   createButton: {
     display: "flex",
     justifyContent: "flex-end",
     margin: theme.spacing(2, 5, 1),
   },
-  viewButton: {
-    display: "flex",
-    paddingRight: "15%",
-    justifyContent: "right",
-    margin: theme.spacing(2, 5, 1),
+  Button: {
+    backgroundColor: "#0091EA",
+    color: "#e0f2f1",
+    "&:hover": {
+      color: "#d7dde0",
+      backgroundColor: "#2f375e",
+    },
+  },
+  formQ: {
+    overflow: "scroll",
   },
 }));
-
 export default useStyles;

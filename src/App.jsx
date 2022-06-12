@@ -109,8 +109,6 @@ function App() {
               <Route path="/products/update/:id" element={<EditProduct />} />
               <Route path="display" element={<ViewProfileInfo />} />
               <Route path="recent" element={<RecentSection />} />
-              
-
 
               {/* Recruitment management */}
               <Route path="/candidate" element={<CreateCandidate />} />

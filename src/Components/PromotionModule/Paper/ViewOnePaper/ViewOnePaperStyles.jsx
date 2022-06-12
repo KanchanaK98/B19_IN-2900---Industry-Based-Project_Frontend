@@ -6,6 +6,7 @@ const useStyles = makeStyles({
     boxShadow: "1px 1px #9da1a6",
     width: "100%",
     backgroundColor: "#eceff1",
+    marginBottom: "10%",
   },
   text: {
     fontSize: 14,
@@ -15,7 +16,7 @@ const useStyles = makeStyles({
   },
   pos: {
     marginBottom: 12,
-    justifyContent: "center",
+    marginLeft: "9%",
   },
   gridContainer: {
     paddingLeft: "20%",

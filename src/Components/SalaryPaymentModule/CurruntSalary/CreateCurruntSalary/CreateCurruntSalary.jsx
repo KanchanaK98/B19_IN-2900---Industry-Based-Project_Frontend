@@ -121,8 +121,9 @@ export default function CreateCurruntSalary() {
 
                       <Select
                         labelId="demo-simple-select-helper-label"
-                        id="demo-simple-select-helper"
+                        id="filled-basic"
                         label="EmpID"
+                        variant="filled"
                         fullWidth
                         value={record.EmployeeID}
                         onChange={(event) => {
@@ -147,7 +148,9 @@ export default function CreateCurruntSalary() {
                     </Grid>
                     <TextField
                       label="BasicSalary"
-                      variant="outlined"
+                      //variant="outlined"
+                      id="filled-basic"
+                      variant="filled"
                       name="BasicSalary"
                       value={record.BasicSalary}
                       onChange={(event) => {
@@ -175,7 +178,9 @@ export default function CreateCurruntSalary() {
                     </Grid>
                     <TextField
                       label="Internet Allowance"
-                      variant="outlined"
+                      //variant="outlined"
+                      id="filled-basic"
+                      variant="filled"
                       name="InternetAllowance"
                       value={record.InternetAllowance}
                       onChange={(event) => {
@@ -200,7 +205,9 @@ export default function CreateCurruntSalary() {
                     </Grid>
                     <TextField
                       label="VehicleAllowance"
-                      variant="outlined"
+                      //  variant="outlined"
+                      id="filled-basic"
+                      variant="filled"
                       name="Vehicle Allowance"
                       fullWidth
                       value={record.VehicleAllowance}

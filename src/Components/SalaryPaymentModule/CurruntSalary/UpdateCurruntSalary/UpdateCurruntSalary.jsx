@@ -107,24 +107,28 @@ export default function CreateCurruntSalary() {
                     <Grid item sm={4} md={4} className={classes.texFieldLabel}>
                       <InputLabel>Employee ID</InputLabel>
                     </Grid>
-                    <FormControl sx={{ m: 2, minWidth: 120 }}>
+                    <FormControl sx={{ minWidth: 120 }}>
                       <TextField
                         label="Employee ID"
-                        variant="outlined"
+                        //variant="outlined"
+                        id="filled-basic"
+                        variant="filled"
                         name="EmpID"
                         value={record.EmployeeID}
                         disabled
                         fullWidth
                       />
                     </FormControl>
-                  </Grid>{" "}
+                  </Grid>
                   <Grid container>
                     <Grid item sm={4} md={4} className={classes.texFieldLabel}>
                       <InputLabel>Basic Salary</InputLabel>
                     </Grid>
                     <TextField
                       label="BasicSalary"
-                      variant="outlined"
+                      // variant="outlined"
+                      id="filled-basic"
+                      variant="filled"
                       name="BasicSalary"
                       value={record.BasicSalary}
                       onChange={(event) => {
@@ -152,7 +156,9 @@ export default function CreateCurruntSalary() {
                     </Grid>
                     <TextField
                       label="Internet Allowance"
-                      variant="outlined"
+                      //variant="outlined"
+                      id="filled-basic"
+                      variant="filled"
                       name="InternetAllowance"
                       value={record.InternetAllowance}
                       onChange={(event) => {
@@ -177,7 +183,9 @@ export default function CreateCurruntSalary() {
                     </Grid>
                     <TextField
                       label="VehicleAllowance"
-                      variant="outlined"
+                      //variant="outlined"
+                      id="filled-basic"
+                      variant="filled"
                       name="Vehicle Allowance"
                       fullWidth
                       value={record.VehicleAllowance}

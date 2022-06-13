@@ -41,9 +41,7 @@ import DisplayTeamMemberSubmissions from "./Pages/PromotionModule/Evaluations/Te
 import DispalyAndSubmitPaper from "./Components/PromotionModule/Submit/DispalyAndSubmitPaper/DispalyAndSubmitPaper";
 import EvaluatePaper from "./Components/PromotionModule/Evaluation/EvaluatePaper/EvaluatePaper";
 import DisplayMyFeedback from "./Components/PromotionModule/Submit/DisplayFeedback/DisplayFeedback";
-import JobRoleDialogBox from "./Components/ReportersManagementModule/CreateEmployeeForm/JobRoleDialogBox";
 import FindEmployeeSalary from "./Pages/SalaryPaymentModule/EmployeeSalary/FindCurrentEmployeeSalary";
-import DisplayAllEmployees from "./Pages/ReportersManagementModule/DashBoard/DisplayAllEmployees";
 import ViewProfileInfo from "./Components/ReportersManagementModule/DisplayEmployees/ViewProfileInfo";
 import ViewAllExamList from "./Components/PromotionModule/Exam/ViewAllExamList/ViewAllExamList";
 import ScheduleExamForm from "./Components/PromotionModule/Exam/ScheduleExamForm/ScheduleExamForm";
@@ -73,7 +71,7 @@ LogoutApi();
 
     const resetTimer = () => {
       clearTimeout(timer);
-      timer = setTimeout(action, 1000 * 60 * 5);
+      timer = setTimeout(action, 1000 * 60 * 50);
     };
 
     window.onload = resetTimer;

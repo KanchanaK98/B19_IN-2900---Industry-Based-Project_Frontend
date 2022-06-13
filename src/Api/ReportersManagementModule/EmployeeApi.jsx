@@ -13,9 +13,8 @@ export const createEmployee = async (employeesData) => {
       // jobType: String(employeesData.jobType),
     };
 
-    const {data} = await api.createEmployee(employee);
+    const { data } = await api.createEmployee(employee);
     return data;
-    
   } catch (error) {
     console.log(error);
   }
@@ -71,11 +70,29 @@ export const recentEmployees = async (recentemployees) => {
   }
 };
 
-export const getUser = async () => {
+// export const getUser = async () => {
+//   try {
+//     console.log("hi");
+//     const { data } = await api.getUser(JSON.parse(localStorage.getItem("user")).employeeID);
+//     return data.userInfo;
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
+
+export const getJobRoles = async () => {
   try {
-    console.log("hi");
-    const { data } = await api.getUser(JSON.parse(localStorage.getItem("profile")).employeeID);
-    return data.userInfo;
+    const { data } = await api.getJobRoles();
+    return data.organizationStructure;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const getCandidates = async () => {
+  try {
+    const { data } = await api.getCandidates();
+    return data.candidateData;
   } catch (err) {
     console.log(err);
   }

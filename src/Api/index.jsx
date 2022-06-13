@@ -215,8 +215,15 @@ export const recentEmployees = () => {
   return API.get(`/employee/recentSection`);
 };
 
-export const getUser = (id) => {
-  return API.get(`/employee/user/${id}`);
+// export const getUser = (id) => {
+//   return API.get(`/employee/user/${id}`);
+// };
+export const getJobRoles = () => {
+  return API.get(`/employee/organization`);
+};
+
+export const getCandidates = () => {
+  return API.get(`/employee/candidateData`);
 };
 //teams api
 export const createTeams = (teamcreate) =>

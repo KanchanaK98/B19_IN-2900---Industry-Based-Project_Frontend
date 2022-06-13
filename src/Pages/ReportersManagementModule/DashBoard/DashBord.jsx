@@ -19,7 +19,7 @@ function DashBord() {
   //const { allEmployees } = location.state;
   const [value, setValue] = React.useState("1");
   const [profiles, setProfiles] = useState([]);
-  const jobRole = JSON.parse(sessionStorage.getItem("user")).jobRole; //profile should change to user
+  
 
   useEffect(() => {
     console.log(location.state)
@@ -43,19 +43,20 @@ function DashBord() {
   return (
     <div>
       <Box padding={2}>
-        {jobRole === "HR Manager" && (
+       
           <Grid item sm={12} md={12} sx={{ mb: 5 }}>
             <Link to="/dashboard/create">
               <Button
                 type="button"
                 variant="contained"
+                sx={{backgroundColor:"#183d78"}}
                 startIcon={<AddBoxIcon />}
               >
                 CAREATE NEW EMPLOYEE
               </Button>
             </Link>
           </Grid>
-        )}
+       
         <Grid item sm={12} md={12}>
           <Box sx={{ width: "100%", typography: "body1" }}>
             <TabContext value={value}>
@@ -63,8 +64,9 @@ function DashBord() {
                 <TabList
                   onChange={handleChange}
                   aria-label="lab API tabs example"
+                
                 >
-                  <Tab label="RECENT EMPLOYEE SECTION" value="1" />
+                  <Tab  label="RECENT EMPLOYEE SECTION" value="1" />
                   <Tab label="ALL EMPLOYEES" value="2" />
                   <Tab label="ORGANIZATION STRUCTURE" value="3" />
                 </TabList>
@@ -83,7 +85,7 @@ function DashBord() {
               <TabPanel value="2" sx={{ mt: 1 }}>
                 <DisplayAllEmployees profiles={profiles} />
               </TabPanel>
-              <TabPanel value="3" sx={{ mt: 3 }}>
+              <TabPanel value="3" >
                 <OrganizationStructure />
               </TabPanel>
             </TabContext>

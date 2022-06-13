@@ -18,7 +18,7 @@ import CakeIcon from "@mui/icons-material/Cake";
 import PlaceIcon from "@mui/icons-material/Place";
 import { useEffect, useState } from "react";
 import { getAllTeams } from "../../../Api/ReportersManagementModule/TeamsApi";
-import ViewProfileInfo from "./ViewProfileInfo";
+
 
 function DisplayProfile({ employee }) {
   const [teams, setTeams] = useState();
@@ -37,7 +37,6 @@ function DisplayProfile({ employee }) {
     fetchData();
   }, []);
 
- 
   return (
     <div>
       <Card
@@ -47,7 +46,7 @@ function DisplayProfile({ employee }) {
           padding: 5,
           maxWidth: 750,
           minWidth: 750,
-          minHeight: 400,
+          minHeight: 450,
           // backgroundColor: "#e4ecf7",
           cursor: "pointer",
         }}
@@ -150,7 +149,7 @@ function DisplayProfile({ employee }) {
                 <ContactMailIcon sx={{ color: "#183d78" }} />
                 &nbsp;&nbsp;{user.companyEmail}
               </Typography>
-              {jobRole === "HR" && (
+              {jobRole === "HR Manager" && (
                 <Grid>
                   {user.birthday && (
                     <Typography>

@@ -49,6 +49,7 @@ function DashBord() {
               <Button
                 type="button"
                 variant="contained"
+                sx={{backgroundColor:"#183d78"}}
                 startIcon={<AddBoxIcon />}
               >
                 CAREATE NEW EMPLOYEE
@@ -63,8 +64,9 @@ function DashBord() {
                 <TabList
                   onChange={handleChange}
                   aria-label="lab API tabs example"
+                
                 >
-                  <Tab label="RECENT EMPLOYEE SECTION" value="1" />
+                  <Tab  label="RECENT EMPLOYEE SECTION" value="1" />
                   <Tab label="ALL EMPLOYEES" value="2" />
                   <Tab label="ORGANIZATION STRUCTURE" value="3" />
                 </TabList>
@@ -83,7 +85,7 @@ function DashBord() {
               <TabPanel value="2" sx={{ mt: 1 }}>
                 <DisplayAllEmployees profiles={profiles} />
               </TabPanel>
-              <TabPanel value="3" sx={{ mt: 3 }}>
+              <TabPanel value="3" >
                 <OrganizationStructure />
               </TabPanel>
             </TabContext>

@@ -6,7 +6,6 @@ import TableContainer from "@mui/material/TableContainer";
 import { Button, Box } from "@mui/material/";
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
-import Modal from './AssignModel';
 import AssetUpdateModule from './AssetUpdateModule';
 import AssetAssignModel from './AssetAssignModel';
 import { availableAssetsApi,unavailableAssetsApi,allAssets,modelViewApi,unassignAsset,releaseFaultAsset, createFaultAsset, assignAssets, searchAssetCategory } from '../../Api/AssetManagementModule/assetViewApi';

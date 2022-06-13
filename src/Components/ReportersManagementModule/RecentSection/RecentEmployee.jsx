@@ -1,6 +1,6 @@
 import useStyles from "./RecentEmployeeSectionStyles";
 import { Typography, Avatar, Card, Grid, Divider } from "@mui/material";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getAllTeams } from "../../../Api/ReportersManagementModule/TeamsApi";
 function RecentEmployee({ profile }) {
   const [teams, setTeams] = useState();

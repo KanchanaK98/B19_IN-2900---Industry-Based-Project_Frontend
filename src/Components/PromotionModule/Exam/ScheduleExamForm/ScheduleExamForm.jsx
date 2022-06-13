@@ -35,7 +35,6 @@ import MenuItem from "@mui/material/MenuItem";
 import FormHelperText from "@mui/material/FormHelperText";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { makeStyles } from "@mui/styles";
 import { useParams } from "react-router-dom";
 import { scheduleExamApi } from "../../../../Api/PromotionModule/ExamApi/scheduleExamApi";
 import { viewAllPapersListApi } from "../../../../Api/PromotionModule/PaperApi/viewAllPapersListApi";
@@ -169,13 +168,35 @@ function ScheduleExamForm() {
                           setJobRole(e.target.value);
                         }}
                       >
-                        <MenuItem value="SE">SE</MenuItem>
+                        {/* <MenuItem value="SE">SE</MenuItem>
                         <MenuItem value="BA">BA</MenuItem>
                         <MenuItem value="QA">QA</MenuItem>
                         <MenuItem value="HR">HR</MenuItem>
-                        <MenuItem value="SSE">SSE</MenuItem>
+                        <MenuItem value="SSE">SSE</MenuItem> */}
+                        <MenuItem value="Software Engineer">
+                          Software Engineer
+                        </MenuItem>
+                        <MenuItem value="Senior Software Engineer">
+                          Senior Software Engineer
+                        </MenuItem>
+                        <MenuItem value="HR Manager">HR Manager</MenuItem>
+                        <MenuItem value="Associate Software Engineer">
+                          Associate Software Engineer
+                        </MenuItem>
+                        <MenuItem value="Software Architect">
+                          Software Architect
+                        </MenuItem>
+                        <MenuItem value="Tech Lead">Tech Lead</MenuItem>
+                        <MenuItem value="UI/UX Designer">
+                          UI/UX Designer
+                        </MenuItem>
+                        <MenuItem value="Business Analyst">
+                          Business Analyst
+                        </MenuItem>
+                        <MenuItem value="Product Manager">
+                          Product Manager
+                        </MenuItem>
                       </Select>
-
                       <FormHelperText>
                         Job Role for which exam is scheduling to
                       </FormHelperText>

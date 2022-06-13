@@ -16,13 +16,13 @@ import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import ContactMailIcon from "@mui/icons-material/ContactMail";
 import CakeIcon from "@mui/icons-material/Cake";
 import PlaceIcon from "@mui/icons-material/Place";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getAllTeams } from "../../../Api/ReportersManagementModule/TeamsApi";
 
 
 function DisplayProfile({ employee }) {
   const [teams, setTeams] = useState();
-  const jobRole = JSON.parse(localStorage.getItem("user")).jobRole; //profile should change to user
+  const jobRole = JSON.parse(sessionStorage.getItem("user")).jobRole; //profile should change to user
   // const handleUpdate = () => {
   //   setUpdateEmployee(profile);
   //   setUpdateState(true);

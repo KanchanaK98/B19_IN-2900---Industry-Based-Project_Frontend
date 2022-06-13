@@ -9,9 +9,6 @@ const AssetViewStats = ({countAvailable,countNonAvailable,countFault}) => {
   const classes = useStyles();
   return (
     <Box className={classes.box}>
-      <Typography className={classes.title} variant="h5">
-        Assets Stats
-      </Typography>
       <Grid container spacing={3}>
         <Grid item md={4}>
           <Card elevation={6} className={classes.card1}>

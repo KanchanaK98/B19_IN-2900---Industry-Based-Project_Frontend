@@ -11,13 +11,15 @@ import {
   AlertTitle,
 } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import FeedIcon from "@mui/icons-material/Feed";
 import Stack from "@mui/material/Stack";
+import Select from "@mui/material/Select";
 import useStyles from "./UpdatePaperDetailsStyles";
 import { useParams } from "react-router-dom";
-import { viewAllQuestionsApi } from "../../../../Api/PromotionModule/QuestionApi/viewAllQuestionsApi";
-import { addMoreQuestionsApi } from "../../../../Api/PromotionModule/PaperApi/addMoreQuestionsApi";
+// import { viewAllQuestionsApi } from "../../../../Api/PromotionModule/QuestionApi/viewAllQuestionsApi";
+// import { addMoreQuestionsApi } from "../../../../Api/PromotionModule/PaperApi/addMoreQuestionsApi";
 import { viewOnePaperApi } from "../../../../Api/PromotionModule/PaperApi/viewOnePaperApi";
 import { updatePaperDetailsApi } from "../../../../Api/PromotionModule/PaperApi/updatePaperDetailsApi";
 
@@ -27,8 +29,6 @@ export default function CreateCurruntSalary() {
   const [error, seterror] = useState(false);
   const [added, setadded] = useState(false);
   const [notadded, setnotadded] = useState(false);
-  const [QuestionList, setQuestionList] = useState([]);
-  const [selectedQuestions, setSelectedQuestions] = useState([]);
 
   const [record, setRecord] = useState({
     PaperID: "",
@@ -46,34 +46,40 @@ export default function CreateCurruntSalary() {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    async function fetchData() {
-      setQuestionList(await viewAllQuestionsApi());
-    }
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     setQuestionList(await viewAllQuestionsApi());
+  //   }
+  //   fetchData();
+  // }, []);
 
-  const addMoreQues = async () => {
-    addMoreQuestionsApi(PaperID, selectedQuestions);
-  };
+  // const addMoreQues = async () => {
+  //   addMoreQuestionsApi(PaperID, selectedQuestions);
+  // };
 
   const UpdatePaperDetails = async (e) => {
     e.preventDefault();
-    // addMoreQuestionsApi(PaperID, checkValue);
-    updatePaperDetailsApi(PaperID, record).then((response) => {
-      if (response.success === true) {
-        setadded(true);
-        setTimeout(() => {
-          setadded(false);
-        }, 4000);
-      }
-      if (response.success === false) {
-        setnotadded(true);
-        setTimeout(() => {
-          setnotadded(false);
-        }, 4000);
-      }
-    });
+    if (PaperID && record) {
+      updatePaperDetailsApi(PaperID, record).then((response) => {
+        if (response.success === true) {
+          setadded(true);
+          setTimeout(() => {
+            setadded(false);
+          }, 4000);
+        }
+        if (response.success === false) {
+          setnotadded(true);
+          setTimeout(() => {
+            setnotadded(false);
+          }, 4000);
+        }
+      });
+    } else {
+      seterror(true);
+      setTimeout(() => {
+        seterror(false);
+      }, 4000);
+    }
   };
 
   return (
@@ -114,7 +120,8 @@ export default function CreateCurruntSalary() {
                     <FormControl sx={{ minWidth: 120 }}>
                       <TextField
                         label="PaperID"
-                        variant="outlined"
+                        id="filled-basic"
+                        variant="filled"
                         name="PaperID"
                         value={record.PaperID}
                         disabled
@@ -122,32 +129,68 @@ export default function CreateCurruntSalary() {
                       />
                     </FormControl>
                   </Grid>
+
                   <Grid container>
                     <Grid item sm={4} md={4} className={classes.texFieldLabel}>
                       <InputLabel>Paper Type</InputLabel>
                     </Grid>
-                    <TextField
-                      label="PaperType"
-                      variant="outlined"
-                      name="PaperType"
-                      value={record.PaperType}
-                      onChange={(event) =>
-                        setRecord({
-                          ...record,
-                          PaperType: event.target.value,
-                        })
-                      }
-                      fullWidth
-                    />
+                    <FormControl sx={{ m: 2, minWidth: 120 }}>
+                      <InputLabel id="demo-simple-select-helper-label">
+                        PaperType
+                      </InputLabel>
+
+                      <Select
+                        labelId="demo-simple-select-helper-label"
+                        id="filled-basic"
+                        variant="filled"
+                        label="PaperType"
+                        width="20"
+                        value={record.PaperType}
+                        onChange={(event) =>
+                          setRecord({
+                            ...record,
+                            PaperType: event.target.value,
+                          })
+                        }
+                      >
+                        <MenuItem>None</MenuItem>
+                        <MenuItem value="Software Engineer">
+                          Software Engineer
+                        </MenuItem>
+                        <MenuItem value="Senior Software Engineer">
+                          Senior Software Engineer
+                        </MenuItem>
+                        <MenuItem value="HR Manager">HR Manager</MenuItem>
+                        <MenuItem value="Associate Software Engineer">
+                          Associate Software Engineer
+                        </MenuItem>
+                        <MenuItem value="Software Architect">
+                          Software Architect
+                        </MenuItem>
+                        <MenuItem value="Tech Lead">Tech Lead</MenuItem>
+                        <MenuItem value="UI/UX Designer">
+                          UI/UX Designer
+                        </MenuItem>
+                        <MenuItem value="Business Analyst">
+                          Business Analyst
+                        </MenuItem>
+                        <MenuItem value="Product Manager">
+                          Product Manager
+                        </MenuItem>
+                      </Select>
+                    </FormControl>
                   </Grid>
+
                   <Grid container>
                     <Grid item sm={4} md={4} className={classes.texFieldLabel}>
                       <InputLabel>Paper Name</InputLabel>
                     </Grid>
                     <TextField
                       label="PaperName"
-                      variant="outlined"
+                      id="filled-basic"
+                      variant="filled"
                       name="PaperName"
+                      fullWidth
                       value={record.PaperName}
                       onChange={(event) =>
                         setRecord({
@@ -155,7 +198,6 @@ export default function CreateCurruntSalary() {
                           PaperName: event.target.value,
                         })
                       }
-                      fullWidth
                     />
                   </Grid>
                 </Grid>
@@ -183,6 +225,13 @@ export default function CreateCurruntSalary() {
         </Stack>
       ) : null}
       {error ? (
+        <Stack sx={{ width: "100%" }} spacing={2}>
+          <Alert variant="filled" severity="error">
+            Please enter all the details and Try again!
+          </Alert>
+        </Stack>
+      ) : null}
+      {notadded ? (
         <Stack sx={{ width: "100%" }} spacing={2}>
           <Alert variant="filled" severity="error">
             Please enter all the details and Try again!

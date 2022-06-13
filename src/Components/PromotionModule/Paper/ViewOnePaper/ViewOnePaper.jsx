@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React,  { useState, useEffect } from "react";
 import { Box, Grid, Card, Typography, Button, Divider } from "@mui/material";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
@@ -49,7 +49,6 @@ export default function ViewOnePaper() {
       </Grid>
 
       <Grid container className={classes.gridContainer} justify="center">
-        {" "}
         {Paper.map((p, key) => (
           <Grid item xs={12} md={12} key={key}>
             <Card className={classes.root} variant="outlined">
@@ -100,6 +99,19 @@ export default function ViewOnePaper() {
                 >
                   Edit Paper Details&nbsp;
                 </Button>
+                <Button
+                  variant="contained"
+                  sx={{ backgroundColor: "#183d78" }}
+                  onClick={() => {
+                    window.open(
+                      `/promotion/Paper/addMoreQuestions/${PaperID}`,
+                      "_self"
+                    );
+                  }}
+                >
+                  Add More Questions&nbsp;
+                </Button>
+
                 <Button
                   variant="contained"
                   sx={{ backgroundColor: "#183d78" }}

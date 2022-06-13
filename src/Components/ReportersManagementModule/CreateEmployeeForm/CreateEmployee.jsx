@@ -9,6 +9,7 @@ import Paper from "@mui/material/Paper";
 import { createEmployee } from "../../../Api/ReportersManagementModule/EmployeeApi";
 import { Alert, AlertTitle, MenuItem, Stack, Typography } from "@mui/material";
 import CredentialCard from "./CredentialCard";
+import Candidates from "./Candidates";
 const jobRoles = [
   "Software Engineer",
   "Senior Software Engineer",
@@ -28,7 +29,7 @@ function CreateEmployee() {
     username: "",
     password: "",
   });
-  const[isDisable,setIsDisable]=useState(true)
+  const [isDisable, setIsDisable] = useState(true);
   const [addSuccessfully, setAddSuccessfully] = useState(false);
   const [notAdded, setnotAdded] = useState(false);
   const [inputErrors, setInputErrors] = useState({
@@ -108,10 +109,10 @@ function CreateEmployee() {
 
     if (!errorHandle()) {
       const response = await createEmployee(inputs);
-   
+
       if (response.success === true) {
         setCredentials(response.employeeCredentials);
-        setIsDisable(false)
+        setIsDisable(false);
       }
 
       setAddSuccessfully(true);
@@ -151,17 +152,23 @@ function CreateEmployee() {
             }}
           >
             <Grid>
-              <Grid>
-                <Typography
-                  variant="h5"
-                  sx={{ fontWeight: "bold", color: "#183d78" }}
-                >
-                  <PersonIcon
-                    sx={{ width: 50, height: 50, color: "#183d78" }}
-                  />
-                  CREATE EMPLOYEE
-                </Typography>
+              <Grid container>
+                <Grid item md={6}>
+                  <Typography
+                    variant="h5"
+                    sx={{ fontWeight: "bold", color: "#183d78" }}
+                  >
+                    <PersonIcon
+                      sx={{ width: 50, height: 50, color: "#183d78" }}
+                    />
+                    CREATE EMPLOYEE
+                  </Typography>
+                </Grid>
+                <Grid item md={6}>
+                  <Candidates />
+                </Grid>
               </Grid>
+
               <Grid
                 container
                 rowSpacing={1}
@@ -404,7 +411,6 @@ function CreateEmployee() {
                 {credentials && (
                   <CredentialCard
                     credentials={credentials}
-                   
                     isDisable={isDisable}
                     setIsDisable={setIsDisable}
                   />
@@ -415,7 +421,7 @@ function CreateEmployee() {
                   variant="contained"
                   sx={{
                     display: "flex",
-                    justifyContent: "center",
+                    justifyContent: "flex-end",
                     backgroundColor: "#183d78",
                   }}
                   type="submit"

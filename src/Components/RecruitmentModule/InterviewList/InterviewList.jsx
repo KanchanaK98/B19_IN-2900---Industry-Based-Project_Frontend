@@ -12,6 +12,7 @@ import {
 import {
   Avatar,
   AvatarGroup,
+  Grid,
   IconButton,
   Menu,
   MenuItem,
@@ -19,9 +20,10 @@ import {
 } from "@mui/material";
 import InterviewDetailsDialog from "./InterviewDetailsDialog/InterviewDetailsDialog";
 import SnackBar from "../../SnackBar/SnackBar";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import useStyles from "./InterviewListStyles";
 import { MoreVert } from "@mui/icons-material";
+import ConfirmationDialog from "./ConfirmationDialog/ConfirmationDialog";
 
 const InterviewList = ({ open }) => {
   const [interviewList, setInterviewList] = useState([]);
@@ -29,6 +31,7 @@ const InterviewList = ({ open }) => {
   const [selectedInterview, setSelectedInterview] = useState(null);
   const [openSnackBar, setOpenSnackBar] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [openConfirmation, setOpenConfirmation] = useState(false);
   const openMenu = Boolean(anchorEl);
   const location = useLocation();
 
@@ -124,9 +127,7 @@ const InterviewList = ({ open }) => {
                 <TableCell>
                   <IconButton
                     onClick={(event) => {
-          
                       handleOpenMenu(event, interview);
-                      
                     }}
                     aria-controls={openMenu ? "account-menu" : undefined}
                     aria-haspopup="true"
@@ -168,8 +169,33 @@ const InterviewList = ({ open }) => {
                     }}
                   >
                     <MenuItem onClick={handleViewDetails}>View more</MenuItem>
-                    <MenuItem>Update</MenuItem>
-                    <MenuItem>Cancel</MenuItem>
+
+                    {selectedInterview &&
+                      (new Date() <
+                      new Date(selectedInterview.InterviewDate) ? (
+                        <>
+                          <MenuItem
+                            component={Link}
+                            to={`/interview/update/${interview._id}`}
+                            state={{ interview: selectedInterview }}
+                          >
+                            Update
+                          </MenuItem>
+                          <MenuItem onClick={() => setOpenConfirmation(true)}>
+                            Cancel
+                          </MenuItem>
+                        </>
+                      ) : (
+                        <Grid container>
+                          <MenuItem
+                            component={Link}
+                            to={`/interview/start/${interview._id}`}
+                            state={{ interview: selectedInterview }}
+                          >
+                            start
+                          </MenuItem>
+                        </Grid>
+                      ))}
                   </Menu>
                 </TableCell>
               </TableRow>
@@ -180,6 +206,13 @@ const InterviewList = ({ open }) => {
         openDialog={openDialog}
         handleCloseDialog={handleCloseDialog}
         interview={selectedInterview}
+        handleCancelInterview={handleCancelInterview}
+        setOpenConfirmation={setOpenConfirmation}
+        openConfirmation={openConfirmation}
+      />
+      <ConfirmationDialog
+        setOpenConfirmation={setOpenConfirmation}
+        openConfirmation={openConfirmation}
         handleCancelInterview={handleCancelInterview}
       />
 

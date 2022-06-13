@@ -14,6 +14,9 @@ import {
   Chip,
   Avatar,
   Box,
+  Stack,
+  Alert,
+  AlertTitle,
 } from "@mui/material";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
@@ -22,6 +25,8 @@ import TeamMemberDialog from "./TeamMemberDialog";
 import { updateTeam } from "../../../Api/ReportersManagementModule/TeamsApi";
 import { getEmployeesWithoutTeam } from "../../../Api/ReportersManagementModule/TeamsApi";
 function EditTeam() {
+  const [addSuccessfully, setAddSuccessfully] = useState(false);
+  const [notAdded, setnotAdded] = useState(false);
   const [inputErrors, setInputErrors] = useState({
     teamName: "",
     teamLeader: "",
@@ -72,6 +77,15 @@ function EditTeam() {
     e.preventDefault();
     if (!errorHandle()) {
       updateTeam(editTeam, team._id);
+      setAddSuccessfully(true);
+      setTimeout(() => {
+        setAddSuccessfully(false);
+      }, 2000);
+    } else {
+      setnotAdded(true);
+      setTimeout(() => {
+        setnotAdded(false);
+      }, 2000);
     }
   };
 
@@ -93,7 +107,7 @@ function EditTeam() {
         <Paper sx={{ padding: 4 }}>
           <form onSubmit={handleSubmit}>
             <Typography variant="h5" sx={{ mb: 5, fontWeight: "bold" }}>
-              <GroupAddIcon sx={{width:60,height:60}}/>
+              <GroupAddIcon sx={{ width: 60, height: 60 }} />
               &nbsp; Update Team
             </Typography>
             <Divider sx={{ mb: 5, mt: 2 }}></Divider>
@@ -242,6 +256,21 @@ function EditTeam() {
             </Grid>
           </form>
         </Paper>
+        {addSuccessfully ? (
+          <Stack sx={{ width: "100%", height: 20, mt: 0.5 }} spacing={2}>
+            <Alert severity="success">
+              <AlertTitle>Success</AlertTitle>
+              Team has been successfully added!
+            </Alert>
+          </Stack>
+        ) : null}
+        {notAdded ? (
+          <Stack sx={{ width: "100%", mt: 0.5 }} spacing={2}>
+            <Alert variant="filled" severity="error">
+              Team is not updated!
+            </Alert>
+          </Stack>
+        ) : null}
       </Box>
     </div>
   );

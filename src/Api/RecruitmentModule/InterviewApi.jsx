@@ -64,7 +64,7 @@ export const createInterview = async (interview) => {
 
 export const getInterviewList = async () => {
   try {
-    const employeeID = JSON.parse(localStorage.getItem("user")).employeeID;
+    const employeeID = JSON.parse(sessionStorage.getItem("user")).employeeID;
     const { data } = await api.getInterviewList(employeeID);
     return data.Interviews;
   } catch (error) {
@@ -124,9 +124,12 @@ export const markedCandidate = async (marks, interviewID) => {
 
 export const getInterviewStats = async () => {
   try {
+    console.log("hi1")
     const { data } = await api.getInterviewStats(
-      JSON.parse(localStorage.getItem("user")).employeeID
+      JSON.parse(sessionStorage.getItem("user")).employeeID
     );
+    console.log("hi2")
+    console.log(data)
     return data.InterviewStats;
   } catch (error) {
     console.log(error);

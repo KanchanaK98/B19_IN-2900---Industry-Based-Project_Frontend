@@ -20,7 +20,7 @@ import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import PaidIcon from "@mui/icons-material/Paid";
 import HowToRegIcon from "@mui/icons-material/HowToReg";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { Scrollbars } from "react-custom-scrollbars-2";
+import { Scrollbars } from "react-custom-scrollbars";
 import List from "@mui/material/List";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";

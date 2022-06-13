@@ -30,6 +30,16 @@ const useStyles = makeStyles((theme) => ({
         width : theme.spacing(30)
     }
   },
+  texFieldLabel: {
+    display: "flex",
+    justifyContent: 'flex-start',
+    alignItems: "center",
+   "& .MuiFormLabel-root" : {
+    fontWeight: 600,
+    fontSize: 19
+   },
+  
+  },
   createButton: {
     display: "flex",
     justifyContent: "flex-end",

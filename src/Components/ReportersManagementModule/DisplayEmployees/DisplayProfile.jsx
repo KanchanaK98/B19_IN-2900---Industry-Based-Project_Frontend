@@ -19,10 +19,9 @@ import PlaceIcon from "@mui/icons-material/Place";
 import React, { useEffect, useState } from "react";
 import { getAllTeams } from "../../../Api/ReportersManagementModule/TeamsApi";
 
-
 function DisplayProfile({ employee }) {
   const [teams, setTeams] = useState();
-  const jobRole = JSON.parse(sessionStorage.getItem("user")).jobRole; //profile should change to user
+  
   // const handleUpdate = () => {
   //   setUpdateEmployee(profile);
   //   setUpdateState(true);
@@ -149,21 +148,21 @@ function DisplayProfile({ employee }) {
                 <ContactMailIcon sx={{ color: "#183d78" }} />
                 &nbsp;&nbsp;{user.companyEmail}
               </Typography>
-              {jobRole === "HR Manager" && (
-                <Grid>
-                  {user.birthday && (
-                    <Typography>
-                      <CakeIcon sx={{ color: "#183d78" }} />
-                      &nbsp; {new Date(user.birthday).toDateString()}
-                      {/* {momen{user.birthday).format("MMM DD YYYY")} */}
-                    </Typography>
-                  )}
+             
+              <Grid>
+                {user.birthday && (
                   <Typography>
-                    <PermIdentityIcon sx={{ color: "#183d78" }} />
-                    &nbsp;{user.NIC}
+                    <CakeIcon sx={{ color: "#183d78" }} />
+                    &nbsp; {new Date(user.birthday).toDateString()}
+                    {/* {momen{user.birthday).format("MMM DD YYYY")} */}
                   </Typography>
-                </Grid>
-              )}
+                )}
+                <Typography>
+                  <PermIdentityIcon sx={{ color: "#183d78" }} />
+                  &nbsp;{user.NIC}
+                </Typography>
+              </Grid>
+             
             </Grid>
           </Grid>
           <Grid item md={6} padding={1}>
@@ -181,7 +180,6 @@ function DisplayProfile({ employee }) {
               {user.status}
             </Typography>
 
-            {/* <Typography>Team :{user.teamID}</Typography> */}
             <Divider sx={{ mt: 2, mb: 2 }}></Divider>
             <Typography sx={{ fontWeight: "bold", mb: 1, color: "#183d78" }}>
               Accademic Qulaifications
@@ -284,19 +282,19 @@ function DisplayProfile({ employee }) {
         {/* <Button onClick={handleUpdate} sx={{ mt: 5 }} fullWidth  variant="contained" size="medium">
           Update
         </Button> */}
-        {jobRole === "HR Manager" && (
-          <Button
-            component={Link}
-            to={`/profile/update`}
-            state={{ employee }}
-            sx={{ mt: 5, backgroundColor: "#183d78" }}
-            fullWidth
-            variant="contained"
-            size="medium"
-          >
-            Update
-          </Button>
-        )}
+       
+        <Button
+          component={Link}
+          to={`/profile/update`}
+          state={{ employee }}
+          sx={{ mt: 5, backgroundColor: "#183d78" }}
+          fullWidth
+          variant="contained"
+          size="medium"
+        >
+          Update
+        </Button>
+        
       </Card>
     </div>
   );

@@ -3,7 +3,7 @@ import { Typography, Button, Card, Grid, Avatar, Divider } from "@mui/material";
 import { Link } from "react-router-dom";
 function DisplayTeam({ team }) {
   const { _id, teamName, teamLeadID, TeamWithEmp, ProductOfTeam } = team;
-  const jobRole = JSON.parse(localStorage.getItem("user")).jobRole; //profile should change to user
+  
   return (
     <div>
       <Card
@@ -17,7 +17,7 @@ function DisplayTeam({ team }) {
           backgroundColor: "#e4ecf7",
         }}
       >
-        {/* <EditTwoToneIcon /> */}
+       
 
         <Typography
           align="center"
@@ -45,7 +45,7 @@ function DisplayTeam({ team }) {
                         sx={{
                           width: 80,
                           height: 80,
-                         border: "4px solid #09559c"
+                          border: "4px solid #09559c",
                         }}
                         key={i}
                         component={"span"}
@@ -80,12 +80,12 @@ function DisplayTeam({ team }) {
                     <Typography
                       component={"span"}
                       key={i}
-                      sx={{ color: "#09559c", fontWeight: "bold",mt:2 }}
+                      sx={{ color: "#09559c", fontWeight: "bold", mt: 2 }}
                     >
                       <Grid container sx={{ mb: 1 }}>
                         <Grid item>
                           <Avatar
-                          sx={{  border: "2px solid #09559c",}}
+                            sx={{ border: "2px solid #09559c" }}
                             src={TeamWithEmp[i].profilePic}
                             component={"span"}
                           ></Avatar>
@@ -114,25 +114,20 @@ function DisplayTeam({ team }) {
             : "not assigned"}
         </Typography>
         <Divider sx={{ mt: 2, mb: 2 }}></Divider>
-        {jobRole === "HR Manager" && (
-          <Typography align="center">
-            <Button
-              variant="contained"
-              component={Link}
-              to={`/teams/update/${_id}`}
-              state={{ team }}
-              sx={{ backgroundColor: "#183d78" }}
-            >
-              Update Team
-            </Button>
-          </Typography>
-        )}
-      </Card>
-      {/* <Grid container>
-      <Grid item md={12}>
         
-      </Grid>
-      </Grid> */}
+        <Typography align="center">
+          <Button
+            variant="contained"
+            component={Link}
+            to={`/teams/update/${_id}`}
+            state={{ team }}
+            sx={{ backgroundColor: "#183d78" }}
+          >
+            Update Team
+          </Button>
+        </Typography>
+        
+      </Card>
     </div>
   );
 }

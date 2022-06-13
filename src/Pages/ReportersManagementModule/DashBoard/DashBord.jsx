@@ -19,7 +19,7 @@ function DashBord() {
   //const { allEmployees } = location.state;
   const [value, setValue] = React.useState("1");
   const [profiles, setProfiles] = useState([]);
-  const jobRole = JSON.parse(sessionStorage.getItem("user")).jobRole; //profile should change to user
+  
 
   useEffect(() => {
     console.log(location.state)
@@ -43,7 +43,7 @@ function DashBord() {
   return (
     <div>
       <Box padding={2}>
-        {jobRole === "HR Manager" && (
+       
           <Grid item sm={12} md={12} sx={{ mb: 5 }}>
             <Link to="/dashboard/create">
               <Button
@@ -56,7 +56,7 @@ function DashBord() {
               </Button>
             </Link>
           </Grid>
-        )}
+       
         <Grid item sm={12} md={12}>
           <Box sx={{ width: "100%", typography: "body1" }}>
             <TabContext value={value}>

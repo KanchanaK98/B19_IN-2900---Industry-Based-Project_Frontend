@@ -31,7 +31,7 @@ function EditEmployee() {
     employeeID: "",
   });
   const [removeImage, setRemoveImage] = useState();
-  const jobRole = JSON.parse(localStorage.getItem("user")).jobRole; //profile should change to user
+  
   const location = useLocation();
   const { employee } = location.state;
   // console.log({ employee: employee, mes: "hi" });
@@ -247,7 +247,7 @@ function EditEmployee() {
                       </IconButton>
                     </label>
 
-                    {/* <Button variant="contained">REMOVE</Button> */}
+                    
                   </Grid>
 
                   <Grid
@@ -358,7 +358,7 @@ function EditEmployee() {
                           </FormLabel>
                         </Grid>
                         <Grid item xs={6} md={9}>
-                          {jobRole === "HR Manager" ? (
+                        
                             <TextField
                               id="filled-basic"
                               variant="filled"
@@ -369,19 +369,7 @@ function EditEmployee() {
                               helperText={inputErrors.NIC}
                               fullWidth
                             />
-                          ) : (
-                            <TextField
-                              disabled
-                              id="outlined-disabled"
-                              variant="filled"
-                              name="NIC"
-                              value={inputs.NIC}
-                              onChange={handleChange}
-                              error={inputErrors.NIC ? true : false}
-                              helperText={inputErrors.NIC}
-                              fullWidth
-                            />
-                          )}
+                         
                         </Grid>
                       </Grid>
                     </Grid>
@@ -492,17 +480,17 @@ function EditEmployee() {
                     <Grid item xs={6}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={3}>
-                          {jobRole === "HR Manager" && (
+                         
                             <FormLabel
                               sx={{ fontWeight: "bold", ml: 1, mt: 2 }}
                               className="label"
                             >
                               Employee ID :
                             </FormLabel>
-                          )}
+                          
                         </Grid>
                         <Grid item xs={6} md={9}>
-                          {jobRole === "HR Manager" && (
+                        
                             <TextField
                               id="filled-basic"
                               label=" Employee ID"
@@ -514,24 +502,24 @@ function EditEmployee() {
                               helperText={inputErrors.employeeID}
                               fullWidth
                             />
-                          )}
+                         
                         </Grid>
                       </Grid>
                     </Grid>
                     <Grid item xs={6}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={3}>
-                          {jobRole === "HR" && (
+                         
                             <FormLabel
                               sx={{ fontWeight: "bold", ml: 1, mt: 2 }}
                               className="label"
                             >
                               Job Type:
                             </FormLabel>
-                          )}
+                       
                         </Grid>
                         <Grid item xs={6} md={9}>
-                          {jobRole === "HR Manager" && (
+                        
                             <TextField
                               id="filled-basic"
                               label=" Job Type"
@@ -543,24 +531,24 @@ function EditEmployee() {
                               helperText={inputErrors.jobType}
                               fullWidth
                             />
-                          )}
+                          
                         </Grid>
                       </Grid>
                     </Grid>
                     <Grid item xs={6}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={3}>
-                          {jobRole === "HR Manager" && (
+                        
                             <FormLabel
                               sx={{ fontWeight: "bold", ml: 1, mt: 2 }}
                               className="label"
                             >
                               Status :
                             </FormLabel>
-                          )}
+                         
                         </Grid>
                         <Grid item xs={6} md={9}>
-                          {jobRole === "HR Manager" && (
+                         
                             <TextField
                               id="filled-basic"
                               label=" Status"
@@ -570,24 +558,24 @@ function EditEmployee() {
                               onChange={handleChange}
                               fullWidth
                             />
-                          )}
+                          
                         </Grid>
                       </Grid>
                     </Grid>
                     <Grid item xs={6} sx={{ mb: 1 }}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={3}>
-                          {jobRole === "HR Manager" && (
+                         
                             <FormLabel
                               sx={{ fontWeight: "bold", ml: 1, mt: 2 }}
                               className="label"
                             >
                               Job Role :
                             </FormLabel>
-                          )}
+                          
                         </Grid>
                         <Grid item xs={6} md={9}>
-                          {jobRole === "HR Manager" && (
+                         
                             <TextField
                               id="filled-basic"
                               label="Job Role"
@@ -597,7 +585,7 @@ function EditEmployee() {
                               onChange={handleChange}
                               fullWidth
                             />
-                          )}
+                        
                         </Grid>
                       </Grid>
                     </Grid>

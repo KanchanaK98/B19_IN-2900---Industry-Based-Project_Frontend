@@ -3,12 +3,9 @@ import React, { useEffect, useState } from "react";
 import { viewAllEmployees } from "../../../Api/ReportersManagementModule/EmployeeApi";
 import { Scrollbars } from "react-custom-scrollbars";
 import DisplayProfiles from "./DisplayProfiles";
-function AllEmployees({ setEmployee,profiles }) {
-
-
+function AllEmployees({ setEmployee, profiles }) {
   const handleClick = (profile) => {
     setEmployee(profile);
-    // console.log(profile)
   };
 
   return (
@@ -25,28 +22,24 @@ function AllEmployees({ setEmployee,profiles }) {
                 }}
                 sx={{ mb: 1 }}
               >
-                  <CardActionArea sx={{p : 2}}>
-                <Grid container s>
-                  <Grid item md={2}>
-                    <Avatar src={profile.user.profilePic} />
+                <CardActionArea sx={{ p: 2 }}>
+                  <Grid container s>
+                    <Grid item md={2}>
+                      <Avatar src={profile.user.profilePic} />
+                    </Grid>
+                    <Grid item md={10}>
+                      {profile.user.employeeFirstName +
+                        " " +
+                        profile.user.employeeLastName +
+                        " | " +
+                        profile.user.jobRole}
+                    </Grid>
                   </Grid>
-                  <Grid item md={10}>
-                    {profile.user.employeeFirstName +
-                      " " +
-                      profile.user.employeeLastName +
-                      " | " +
-                      profile.user.jobRole}
-                  </Grid>
-                </Grid>
                 </CardActionArea>
               </Card>
             ))}
         </Box>
       </Scrollbars>
-      {/* </Grid> */}
-      {/* <Grid item md={8}>
-        <DisplayProfiles />
-      </Grid> */}
     </Grid>
   );
 }

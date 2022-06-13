@@ -47,7 +47,7 @@ const MarkingSheet = (interview) => {
   const classes = useStyles();
   const navigate = useNavigate();
   const [marks, setMarks] = useState({
-    interviewer: JSON.parse(localStorage.getItem("user")).employeeID,
+    interviewer: JSON.parse(sessionStorage.getItem("user")).employeeID,
     knowledgeOfSpecificJobSkills: "",
     relatedJobExperience: "",
     relatedEducationOrTraining: "",

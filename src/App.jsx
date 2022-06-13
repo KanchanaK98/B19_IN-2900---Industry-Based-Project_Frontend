@@ -73,7 +73,7 @@ LogoutApi();
 
     const resetTimer = () => {
       clearTimeout(timer);
-      timer = setTimeout(action, 1000 * 60 * 5);
+      timer = setTimeout(action, 1000 * 60 * 50);
     };
 
     window.onload = resetTimer;

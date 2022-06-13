@@ -2,7 +2,6 @@ import { useState, useEffect, React } from "react";
 import { Box, Grid } from "@mui/material";
 import RecentEmployee from "./RecentEmployee";
 import { recentEmployees } from "../../../Api/ReportersManagementModule/EmployeeApi";
-
 import Carousel, { autoplayPlugin } from "@brainhubeu/react-carousel";
 import "@brainhubeu/react-carousel/lib/style.css";
 import Scrollbars from "react-custom-scrollbars";
@@ -19,17 +18,17 @@ function AllRecentEmployees() {
 
   return (
     <div>
-        <Scrollbars style={{ height: 480 ,width:400}}>
-      <Box maxWidth={400} sx={{mt:5}} >
-        <Grid
-          container
-          spacing={4}
-          sx={{
-            justifyContent: "center",
-            display: "flex",
-          }}
-        >
-          {/* <Carousel
+      <Scrollbars style={{ height: 480, width: 400 }}>
+        <Box maxWidth={400} sx={{ mt: 5 }}>
+          <Grid
+            container
+            spacing={4}
+            sx={{
+              justifyContent: "center",
+              display: "flex",
+            }}
+          >
+            {/* <Carousel
             plugins={[
               "infinite",
               {
@@ -51,9 +50,9 @@ function AllRecentEmployees() {
                   </div>
                 );
               })}
-          {/* </Carousel> */}
-        </Grid>
-      </Box>
+            {/* </Carousel> */}
+          </Grid>
+        </Box>
       </Scrollbars>
     </div>
   );

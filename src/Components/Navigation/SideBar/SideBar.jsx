@@ -420,7 +420,7 @@ const SideBar = ({ open, toggleDrawer, user, handleLogOut }) => {
 
                 <ListItem2
                   component={Link}
-                  to="/promotion/Paper"
+                  to={`/promotion/evaluation/exam/viewExam/${user.employeeID}`}
                   selected={selectedIndex2 === 2}
                   onClick={() => {
                     handleListItemClick2(2);
@@ -434,7 +434,7 @@ const SideBar = ({ open, toggleDrawer, user, handleLogOut }) => {
                 </ListItem2>
                 <ListItem2
                   component={Link}
-                  to="/promotion/Paper"
+                  to={`/promotion/evaluation/allSubmissions/${user.employeeID}`}
                   selected={selectedIndex2 === 3}
                   onClick={() => {
                     handleListItemClick2(3);
@@ -445,6 +445,36 @@ const SideBar = ({ open, toggleDrawer, user, handleLogOut }) => {
                     <StarBorder />
                   </ListItemIcon>
                   <ListItemText primary="Evaluation" />
+                </ListItem2>
+
+                <ListItem2
+                  component={Link}
+                  to={`/promotion/evaluation/mySubmissions/${user.employeeID}`}
+                  selected={selectedIndex2 === 4}
+                  onClick={() => {
+                    handleListItemClick2(4);
+                  }}
+                  className={classes.navButton2}
+                >
+                  <ListItemIcon>
+                    <StarBorder />
+                  </ListItemIcon>
+                  <ListItemText primary="Evaluation Test" />
+                </ListItem2>
+
+                <ListItem2
+                  component={Link}
+                  to={`/promotion/evaluation/allSubmissions`}
+                  selected={selectedIndex2 === 5}
+                  onClick={() => {
+                    handleListItemClick2(5);
+                  }}
+                  className={classes.navButton2}
+                >
+                  <ListItemIcon>
+                    <StarBorder />
+                  </ListItemIcon>
+                  <ListItemText primary="All Submission" />
                 </ListItem2>
               </List>
             </Collapse>

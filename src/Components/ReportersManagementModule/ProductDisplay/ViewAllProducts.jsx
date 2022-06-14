@@ -86,9 +86,7 @@ function ViewAllProducts() {
     setSelectedProduct(product);
     setOpenDialog(true);
   };
-  // const handleCancelMenu=()=>{
 
-  // }
   const handleClose = () => {
     setAnchorEl(null);
   };

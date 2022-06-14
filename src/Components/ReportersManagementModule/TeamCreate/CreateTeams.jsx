@@ -41,7 +41,6 @@ function CreateTeams() {
   const [teaminputErrors, setTeaminputErrors] = useState({
     teamName: "",
     teamLead: "",
-    // teamMembers: "",
   });
 
   const handleChange = (e) => {

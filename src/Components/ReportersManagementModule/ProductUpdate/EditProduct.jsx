@@ -8,7 +8,6 @@ import {
   Typography,
   Grid,
   Box,
- 
   Button,
   Stack,
   Alert,
@@ -26,7 +25,6 @@ function EditProduct() {
     productName: "",
     description: "",
   });
-  
 
   const location = useLocation();
   const { product } = location.state;
@@ -105,8 +103,11 @@ function EditProduct() {
         {products && (
           <form>
             <Box>
-              <Card sx={{ padding: 5,backgroundColor:"#e4ecf7" }}>
-                <Typography variant="h5" sx={{ fontWeight: "bold" ,color:"#183d78"}}>
+              <Card sx={{ padding: 5, backgroundColor: "#e4ecf7" }}>
+                <Typography
+                  variant="h5"
+                  sx={{ fontWeight: "bold", color: "#183d78" }}
+                >
                   <InventoryIcon />
                   &nbsp;{products.productName} | {products.productID}
                 </Typography>
@@ -158,14 +159,6 @@ function EditProduct() {
                     <FormLabel>Description:</FormLabel>
                   </Grid>
                   <Grid item md={10.5}>
-                    {/* <TextareaAutosize
-                      style={{ width: "100%", height: 200 }}
-                      aria-label="maximum height"
-                      placeholder="Enter product description"
-                      name="description"
-                      value={products.description}
-                      onChange={handleChange}
-                    /> */}
                     <TextField
                       rows={7}
                       id="filled-basic"
@@ -191,10 +184,8 @@ function EditProduct() {
                     <TextField
                       id="filled-basic"
                       variant="filled"
-                      // name="teamName"
                       disabled
                       value={products.teamName}
-                      // onChange={handleChange}
                       fullWidth
                     ></TextField>
                   </Grid>

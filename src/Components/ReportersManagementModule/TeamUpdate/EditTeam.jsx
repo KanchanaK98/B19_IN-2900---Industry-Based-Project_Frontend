@@ -36,7 +36,7 @@ function EditTeam() {
   const { team } = location.state;
   const [editTeam, setEditTeam] = useState({
     teamName: team.teamName,
-    //teamLeadID: team.teamLeadID,
+
     teamMembers: team.TeamWithEmp.filter(
       (member) => member.employeeID !== team.teamLeadID
     ),

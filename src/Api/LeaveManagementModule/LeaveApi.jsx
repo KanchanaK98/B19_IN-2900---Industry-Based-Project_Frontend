@@ -10,7 +10,7 @@ export const requestLeave = async (leave) => {
       startDate,
       endDate: leaveMethod !== "multiple Day" ? startDate : endDate,
       leaveMethod,
-      employeeId: JSON.parse(localStorage.getItem("user")).employeeID,
+      employeeId: JSON.parse(sessionStorage.getItem("user")).employeeID,
     };
     const response = await api.requestLeave(leaveData);
     console.log(response)
@@ -22,7 +22,8 @@ export const requestLeave = async (leave) => {
 
 export const getLeaveBalance = async () => {
   try {
-    const { data } = await api.getLeaveBalance(JSON.parse(localStorage.getItem("user")).employeeID);
+    const { data } = await api.getLeaveBalance(JSON.parse(sessionStorage.getItem("user")).employeeID);
+    console.log(data);
     return data.remainingLeaves;
   } catch (error) {
     console.log(error);
@@ -32,7 +33,7 @@ export const getLeaveBalance = async () => {
 export const getLeaveHistory = async () => {
   try {
     const { data } = await api.getLeaveList(
-      JSON.parse(localStorage.getItem("user")).employeeID
+      JSON.parse(sessionStorage.getItem("user")).employeeID
     );
     //console.log(data.leaveHistory);
     return data.leaveHistory;
@@ -43,7 +44,7 @@ export const getLeaveHistory = async () => {
 
 export const cancelLeave = async (reason, leaveID) => {
   try {
-    const { data } = await api.cancelLeave(leaveID, reason, JSON.parse(localStorage.getItem("user")).employeeID);
+    const { data } = await api.cancelLeave(leaveID, reason, JSON.parse(sessionStorage.getItem("user")).employeeID);
 
     return data;
   } catch (error) {
@@ -53,7 +54,7 @@ export const cancelLeave = async (reason, leaveID) => {
 
 export const getRequestedLeaves = async () => {
   const response = await api.getRequestedLeave(
-    JSON.parse(localStorage.getItem("user")).employeeID
+    JSON.parse(sessionStorage.getItem("user")).employeeID
   );
   //console.log(response);
   return response.data.requestedLeave;
@@ -70,10 +71,10 @@ export const responseRequestedLeave = async (id, reason) => {
 };
 export const getTeamLead = async () => {
   const response = await api.getTeamLead(
-    JSON.parse(localStorage.getItem("user")).employeeID
+    JSON.parse(sessionStorage.getItem("user")).employeeID
   );
 
   //const TeamLead = object.assign(response.data.teamLeader,response.data.teamName);
-  //console.log(TeamLead);
+console.log(response.data.teamLeader);
   return response.data.teamLeader;
 };

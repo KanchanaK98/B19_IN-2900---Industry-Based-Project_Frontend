@@ -25,8 +25,6 @@ import ProgressBar from "../DisplayEmployees/ProgressBar";
 function UserProfile({ user }) {
   const [profiles, setProfiles] = useState([]);
   const [employeeInfo, setEmployeeInfo] = useState([]);
-  //const filterEmployee=setEmployee(profiles.filter((emp)=>(emp.employeeID===user.employeeID)))
-  //console.log(filterEmployee)
 
   useEffect(() => {
     let userInfo = [];
@@ -36,17 +34,17 @@ function UserProfile({ user }) {
       setEmployeeInfo(
         userInfo.filter((emp) => emp.user.employeeID === user.employeeID)
       );
-
-      // const{empInfo:user,EmpWithProf:EmpWithProf,EmployeeWithAcc}=employee;
     }
     fetchData();
   }, []);
   let employee = { ...employeeInfo[0] };
-  // console.log(employeeInfo[0].user.streetNo);
+
   return (
     <div>
       {employee && (
-        <Box sx={{ width: "100%", backgroundColor: "#d7dde0", padding: 5 }}>
+        <Box
+          sx={{ width: "100%", backgroundColor: "#d7dde0", padding: 8, mt: 5 }}
+        >
           <Grid
             container
             rowSpacing={1}
@@ -55,7 +53,6 @@ function UserProfile({ user }) {
             <Grid item xs={4}>
               <Grid container>
                 <Grid item xs={3} textAlign="left">
-                  {/* <Link to="/profile/update"> */}
                   <Button
                     component={Link}
                     to={`/user/update`}
@@ -66,7 +63,6 @@ function UserProfile({ user }) {
                     <EditIcon />
                     Edit
                   </Button>
-                  {/* </Link> */}
                 </Grid>
                 <Grid item xs={3}>
                   <Avatar
@@ -95,45 +91,54 @@ function UserProfile({ user }) {
                   &nbsp;Profile Info
                 </Typography>
                 <Divider sx={{ mt: 2, mb: 2 }}></Divider>
-                <Typography>
-                  <PlaceIcon />
-                  &nbsp;
-                  {employeeInfo[0] &&
-                    employeeInfo[0].user &&
-                    employeeInfo[0].user.streetNo + ", " + employeeInfo[0] &&
-                    employeeInfo[0].user &&
-                    employeeInfo[0].user.city}
-                </Typography>
-                <Typography sx={{ color: "blue", mb: 1 }}>
-                  <ContactMailIcon />
-                  &nbsp;&nbsp;
-                  {employeeInfo[0] &&
-                    employeeInfo[0].user &&
-                    employeeInfo[0].user.companyEmail}
-                </Typography>
-                <Typography sx={{ mb: 1 }}>
-                  <ContactPhoneIcon />
-                  &nbsp;&nbsp;
-                  {employeeInfo[0] &&
-                    employeeInfo[0].user &&
-                    employeeInfo[0].user.phoneNumber}
-                </Typography>
-                <Typography sx={{ mb: 1 }}>
-                  <CakeIcon />
-                  &nbsp;
-                  {moment(
-                    employeeInfo[0] &&
-                      employeeInfo[0].user &&
-                      employeeInfo[0].user.birthday
-                  ).format("MMM DD YYYY")}
-                </Typography>
+                {employeeInfo[0] &&
+                  employeeInfo[0].user &&
+                  employeeInfo[0].user.streetNo && (
+                    <Typography>
+                      <PlaceIcon />
+                      &nbsp;
+                      {employeeInfo[0].user.streetNo} &nbsp;&nbsp;
+                      {employeeInfo[0] &&
+                        employeeInfo[0].user &&
+                        employeeInfo[0].user.city}
+                    </Typography>
+                  )}
+                {employeeInfo[0] &&
+                  employeeInfo[0].user &&
+                  employeeInfo[0].user.companyEmail && (
+                    <Typography sx={{ mb: 1 }}>
+                      <ContactMailIcon />
+                      &nbsp;&nbsp;
+                      {employeeInfo[0].user.companyEmail}
+                    </Typography>
+                  )}
+                {employeeInfo[0] &&
+                  employeeInfo[0].user &&
+                  employeeInfo[0].user.phoneNumber && (
+                    <Typography sx={{ mb: 1 }}>
+                      <ContactPhoneIcon />
+                      &nbsp;&nbsp;
+                      {employeeInfo[0].user.phoneNumber}
+                    </Typography>
+                  )}
+                {employeeInfo[0] &&
+                  employeeInfo[0].user &&
+                  employeeInfo[0].user.birthday && (
+                    <Typography sx={{ mb: 1 }}>
+                      <CakeIcon />
+                      &nbsp;
+                      {moment(employeeInfo[0].user.birthday).format(
+                        "MMM DD YYYY"
+                      )}
+                    </Typography>
+                  )}
                 <Divider sx={{ mt: 1, mb: 1 }}></Divider>
 
                 <Typography sx={{ mb: 1 }}>
                   {employeeInfo[0] &&
                     employeeInfo[0].user &&
-                    employeeInfo[0].user.jobType}{" "}
-                  |{" "}
+                    employeeInfo[0].user.jobType}
+                  &nbsp;|&nbsp;
                   {employeeInfo[0] &&
                     employeeInfo[0].user &&
                     employeeInfo[0].user.status}
@@ -240,16 +245,6 @@ function UserProfile({ user }) {
                 </Grid>
               </Card>
             </Grid>
-
-            {/* <Grid item xs={12}>
-            <Card sx={{ padding: 3 }}>
-              <Typography variant="h6" sx={{ color: "#708bb8" }}>
-                <MenuBookIcon />
-                &nbsp;Products
-              </Typography>
-              <Divider sx={{ mt: 2, mb: 2 }}></Divider>
-            </Card>
-          </Grid> */}
           </Grid>
         </Box>
       )}

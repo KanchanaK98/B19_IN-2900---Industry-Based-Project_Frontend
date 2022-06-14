@@ -51,11 +51,7 @@ function DisplayTeam({ team }) {
                     >
                       {TeamWithEmp[i].employeeID}
                       &nbsp;
-                      {
-                        TeamWithEmp[i].employeeName
-                        // " " +
-                        // TeamWithEmp[i].employeeLastName
-                      }
+                      {TeamWithEmp[i].employeeName}
                     </Typography>
                   </Grid>
                 );
@@ -87,11 +83,7 @@ function DisplayTeam({ team }) {
                           &nbsp;
                           {TeamWithEmp[i].employeeID}
                           <br /> &nbsp;
-                          {
-                            TeamWithEmp[i].employeeName
-                            // " " +
-                            // TeamWithEmp[i].employeeLastName
-                          }
+                          {TeamWithEmp[i].employeeName}
                         </Grid>
                       </Grid>
                     </Typography>

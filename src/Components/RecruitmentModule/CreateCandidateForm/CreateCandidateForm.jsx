@@ -83,20 +83,26 @@ const CreateCandidateForm = ({
       cv: "",
     });
   };
-  
+
   const errorHandle = () => {
     let isError = false;
     Object.keys(candidateData).forEach((property) => {
       if (!candidateData[property]) {
-        setCandidateErrors((prevState)=>({...prevState, [property]: property + " is required!"}));
+        setCandidateErrors((prevState) => ({
+          ...prevState,
+          [property]: property + " is required!",
+        }));
         isError = true;
       }
       return;
     });
     const emailFormat = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-    if(candidateData.email && !candidateData.email.match(emailFormat)) {
-      setCandidateErrors((prevState)=>({...prevState, email: "Invalid Email address"}));
-        isError = true;
+    if (candidateData.email && !candidateData.email.match(emailFormat)) {
+      setCandidateErrors((prevState) => ({
+        ...prevState,
+        email: "Invalid Email address",
+      }));
+      isError = true;
     }
     return isError;
   };
@@ -207,15 +213,16 @@ const CreateCandidateForm = ({
                         error={candidateErrors.phoneNumber ? true : false}
                         helperText={candidateErrors.phoneNumber}
                         fullWidth
-                        onChange={(value) =>{
+                        onChange={(value) => {
                           setCandidateData({
                             ...candidateData,
                             phoneNumber: value,
-                          })
-                          setCandidateErrors({ ...candidateErrors, phoneNumber: "" })
-                        }
-                          
-                        }
+                          });
+                          setCandidateErrors({
+                            ...candidateErrors,
+                            phoneNumber: "",
+                          });
+                        }}
                       />
                     </Grid>
                   </Grid>

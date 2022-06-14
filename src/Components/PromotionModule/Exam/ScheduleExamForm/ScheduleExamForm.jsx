@@ -130,10 +130,11 @@ function ScheduleExamForm() {
       PaperID,
       Status,
     };
+    console.log(examDetails);
     // if (ExamID && ExamName && DateScheduled && JobRole && PaperID && Status) {
     if (!errorHandle()) {
       const response = await scheduleExamApi(EmployeeID, examDetails);
-      window.location.reload(false);
+      // window.location.reload(false);
       if (response.success === true) {
         setExamID("");
         setExamName("");

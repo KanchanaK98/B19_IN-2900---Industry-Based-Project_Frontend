@@ -87,6 +87,9 @@ export const markedCandidate = (marks, interviewID) => {
 export const getInterviewStats = (employeeID) => {
   return API.get(`/recruitment/interview/InterviewStats/${employeeID}`);
 };
+export const getInterviewResult = (interview) => {
+  return API.post(`/recruitment/interview/scheduled/result`, interview);
+};
 
 // LogIn API
 //export const userLogin = (user) => API.post("/login", user);

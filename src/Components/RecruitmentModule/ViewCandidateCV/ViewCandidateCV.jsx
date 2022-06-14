@@ -48,9 +48,18 @@ const ViewCandidateCV = ({ openDialog, handleCloseDialog, candidateData }) => {
       <Divider variant="middle" />
       <Divider variant="middle" />
       <DialogContent>
+        {
+          candidateData.cv ? (
         <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.13.216/build/pdf.worker.min.js">
           <Viewer fileUrl={candidateData.cv} />
         </Worker>
+
+          ): (
+            <Typography variant="h6">
+              Cv have not been uploaded.
+            </Typography>
+          )
+        }
       </DialogContent>
     </Dialog>
   );

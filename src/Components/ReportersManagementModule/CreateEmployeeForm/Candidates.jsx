@@ -40,7 +40,7 @@ function Candidates() {
     if (candidates && candidates.length === 0) {
       setIsDisable(true);
     }
-    console.log(candidates);
+    
     if (open) {
       const { current: descriptionElement } = descriptionElementRef;
       if (descriptionElement !== null) {

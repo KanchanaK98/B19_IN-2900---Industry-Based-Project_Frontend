@@ -120,8 +120,9 @@ function CreateEmployee() {
           setAddSuccessfully(false);
         }, 2000);
       }
+      console.log(response.status);
 
-      if (response.success === false) {
+      if (response.status === 400) {
         setDuplicated(true);
         setTimeout(() => {
           setDuplicated(false);
@@ -317,91 +318,16 @@ function CreateEmployee() {
                           </MenuItem>
                         ))}
                       </TextField>
-                      {/* <JobRoleDialogBox
-                        jobRole={inputs.jobRole}
-                        setInputs={setInputs}
-                      /> */}
                     </Grid>
                   </Grid>
                 </Grid>
-                <Grid item xs={6} marginTop={2}>
-                  {/* <Grid container spacing={2}>
-                    <Grid item xs={6} md={3}>
-                      <FormLabel className="label" sx={{fontWeight:"bold"}}>Job Type :</FormLabel>
-                    </Grid>
-                    <Grid item xs={6} md={9}> */}
-                  {/* <TextField
-                      id="filled-basic"
-                      label="Filled"
-                      variant="filled"
-                      name="jobType"
-                      value={inputs.jobType}
-                      onChange={handleChange}
-                      fullWidth
-                    /> */}
-
-                  {/* <FormControl fullWidth>
-                        <InputLabel id="demo-simple-select-label">
-                          Job Type
-                        </InputLabel>
-                        <Select
-                          labelId="demo-simple-select-label"
-                          id="demo-simple-select"
-                          value={inputs.jobType}
-                          label="Job Type"
-                          onChange={handleChange}
-                          selectprops={{ renderValue: inputs.jobType }}
-                        >
-                          <MenuItem value={1}>White Collar</MenuItem>
-                        </Select>
-                      </FormControl>
-                    </Grid>
-                  </Grid> */}
-                </Grid>
+                <Grid item xs={6} marginTop={2}></Grid>
                 <Grid
                   item
                   xs={6}
                   marginTop={2}
                   style={{ marginBlockEnd: "20px" }}
-                >
-                  {/* <Grid container spacing={2}>
-                    <Grid item xs={6} md={3}>
-                      <FormLabel
-                        style={{ marginLeft: "10px" }}
-                        className="label"
-                      >
-                        Status :
-                      </FormLabel>
-                    </Grid>
-                    <Grid item xs={6} md={9}> */}
-                  {/* <TextField
-                      id="filled-basic"
-                      label="Filled"
-                      variant="filled"
-                      name="status"
-                      value={inputs.status}
-                      onChange={handleChange}
-                      fullWidth
-                    
-                    /> */}
-                  {/* <FormControl fullWidth>
-                        <InputLabel id="demo-simple-select-label">
-                          Status
-                        </InputLabel>
-                        <Select
-                          labelId="demo-simple-select-label"
-                          id="demo-simple-select"
-                          value={inputs.status}
-                          label="Status"
-                          onChange={handleChange}
-                          selectprops={{ renderValue: inputs.status }}
-                        >
-                          <MenuItem value={1}>Probationary</MenuItem>
-                        </Select>
-                      </FormControl>
-                    </Grid>
-                  </Grid> */}
-                </Grid>
+                ></Grid>
               </Grid>
             </Grid>
             <Grid container>

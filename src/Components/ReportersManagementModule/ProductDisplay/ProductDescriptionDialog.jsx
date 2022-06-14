@@ -8,18 +8,13 @@ import {
   IconButton,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 
-function ProductDescriptionDialog({
-  openDialog,
-  handleCloseDialog,
-  selectedProduct,
-  setSelectedProduct,
-}) {
+function ProductDescriptionDialog({ openDialog, handleCloseDialog, product }) {
+
   return (
     <Dialog fullWidth open={openDialog} onClose={handleCloseDialog}>
       <DialogTitle>
-        {" "}
         <Grid container sx={{ display: "flex", alignItems: "center" }}>
           <Grid sm={10} md={10} item>
             <Typography variant="h5">Product Description</Typography>
@@ -40,7 +35,7 @@ function ProductDescriptionDialog({
       <Divider variant="middle" />
       <DialogContent>
         <Grid>
-          <Typography>{selectedProduct.description}</Typography>
+          <Typography>{product && product.description}</Typography>
         </Grid>
       </DialogContent>
     </Dialog>

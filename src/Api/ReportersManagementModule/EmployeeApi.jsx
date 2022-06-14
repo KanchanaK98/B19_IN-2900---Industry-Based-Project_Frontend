@@ -9,12 +9,12 @@ export const createEmployee = async (employeesData) => {
       jobRole: String(employeesData.jobRole),
       NIC: String(employeesData.NIC),
       companyEmail: String(employeesData.companyEmail),
-      status: String(employeesData.status),
-      jobType: String(employeesData.jobType),
+      // status: String(employeesData.status),
+      // jobType: String(employeesData.jobType),
     };
 
-    const response = await api.createEmployee(employee);
-    //return response.data;
+    const { data } = await api.createEmployee(employee);
+    return data;
   } catch (error) {
     console.log(error);
   }
@@ -70,11 +70,29 @@ export const recentEmployees = async (recentemployees) => {
   }
 };
 
-export const getUser = async () => {
+// export const getUser = async () => {
+//   try {
+//     console.log("hi");
+//     const { data } = await api.getUser(JSON.parse(localStorage.getItem("user")).employeeID);
+//     return data.userInfo;
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
+
+export const getJobRoles = async () => {
   try {
-    console.log("hi");
-    const { data } = await api.getUser(JSON.parse(localStorage.getItem("profile")).employeeID);
-    return data.userInfo;
+    const { data } = await api.getJobRoles();
+    return data.organizationStructure;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const getCandidates = async () => {
+  try {
+    const { data } = await api.getCandidates();
+    return data.candidateData;
   } catch (err) {
     console.log(err);
   }

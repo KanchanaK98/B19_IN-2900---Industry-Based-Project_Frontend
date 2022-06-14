@@ -16,15 +16,26 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import Stack from "@mui/material/Stack";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { Link, useLocation } from "react-router-dom";
-import { Typography } from "@mui/material";
+import { Alert, AlertTitle, Typography } from "@mui/material";
 import { updateEmployee } from "../../../Api/ReportersManagementModule/EmployeeApi";
-
+import DeleteIcon from "@mui/icons-material/Delete";
 function EditEmployee() {
-  const jobRole = JSON.parse(localStorage.getItem("profile")).jobRole; //profile should change to user
+  const [inputErrors, setInputErrors] = useState({
+    employeeFirstName: "",
+    employeeLastName: "",
+    NIC: "",
+    companyEmail: "",
+    status: "",
+    jobRole: "",
+    jobType: "",
+    employeeID: "",
+  });
+  const [removeImage, setRemoveImage] = useState();
+  
   const location = useLocation();
   const { employee } = location.state;
-  console.log({ employee: employee, mes: "hi" });
-  // const id = useParams().empID;
+  // console.log({ employee: employee, mes: "hi" });
+
   const [inputs, setInputs] = useState({
     // employeeID: employee.user.employeeID,
     employeeFirstName: employee.user.employeeFirstName,
@@ -38,13 +49,10 @@ function EditEmployee() {
     birthday: new Date(employee.user.birthday)
       ? new Date(employee.user.birthday)
       : "",
-    //------------------------------------
     status: employee.user.status ? employee.user.status : "",
     employeeID: employee.user.employeeID ? employee.user.employeeID : "",
     jobRole: employee.user.jobRole ? employee.user.jobRole : "",
     jobType: employee.user.jobType ? employee.user.jobType : "",
-
-    //-------------------------------------------------------------
     ordinaryLevelResult: employee.EmployeeWithAcc
       ? employee.EmployeeWithAcc.ordinaryLevelResult
       : " ",
@@ -59,18 +67,102 @@ function EditEmployee() {
     course: employee.EmpWithProf ? employee.EmpWithProf.course : " ",
   });
 
+  const [addSuccessfully, setAddSuccessfully] = useState(false);
+  const [notAdded, setnotAdded] = useState(false);
+
   const handleChange = (e) => {
     setInputs((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
     }));
   };
-
+  //----------validation-----------------------------
+  const errorHandle = () => {
+    let isError = false;
+    if (!inputs.employeeFirstName) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        employeeFirstName: "Employee First Name is required",
+      }));
+      isError = true;
+    }
+    if (!inputs.employeeLastName) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        employeeLastName: "Employee Last Name is required",
+      }));
+      isError = true;
+    }
+    if (!inputs.employeeID) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        employeeID: "Employee ID is required",
+      }));
+      isError = true;
+    }
+    if (!inputs.status) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        status: "Status is required",
+      }));
+      isError = true;
+    }
+    if (!inputs.jobType) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        jobType: "Job Type is required",
+      }));
+      isError = true;
+    }
+    if (!inputs.jobRole) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        jobRole: "Job Role is required",
+      }));
+      isError = true;
+    }
+    if (!inputs.NIC) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        NIC: "NIC is required",
+      }));
+      isError = true;
+    }
+    if (!inputs.companyEmail) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        companyEmail: "Email is required",
+      }));
+      isError = true;
+    }
+    const emailFormat = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    if (inputs.companyEmail && !inputs.companyEmail.match(emailFormat)) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        companyEmail: "Invalid Email address",
+      }));
+      isError = true;
+    }
+    const phoneNumberFormat =
+      "^(?:0|94|\\+94)?(?:(11|21|23|24|25|26|27|31|32|33|34|35|36|37|38|41|45|47|51|52|54|55|57|63|65|66|67|81|912)(0|2|3|4|5|7|9)|7(0|1|2|5|6|7|8)\\d)\\d{6}$";
+    if (inputs.phoneNumber && !inputs.phoneNumber.match(phoneNumberFormat)) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        phoneNumber: "Invalid Phone Number",
+      }));
+      isError = true;
+    }
+    return isError;
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const response = await updateEmployee(inputs);
-    console.log(response);
+    if (!errorHandle()) {
+      const response = await updateEmployee(inputs);
+      setAddSuccessfully(true);
+      setTimeout(() => {
+        setAddSuccessfully(false);
+      }, 2000);
+    }
   };
 
   const Input = styled("input")({
@@ -94,12 +186,19 @@ function EditEmployee() {
       console.log("Please select valid image file");
     }
   };
+
+  const removeProfilePhoto = () => {
+    setInputs((prevState) => ({
+      ...prevState,
+      profilePic: " ",
+    }));
+  };
   return (
     <div>
       {inputs && (
         <form>
-          <Box>
-            <Paper elevation={3} style={{ padding: 20 }}>
+          <Box padding={6} sx={{ mb: 4 }}>
+            <Paper elevation={3} sx={{ padding: 4.5 }}>
               <Grid container>
                 <Grid item sm={12} md={12}>
                   <Typography variant="h5">
@@ -107,69 +206,66 @@ function EditEmployee() {
                     MY PROFILE
                   </Typography>
                 </Grid>
-                <Grid
-                  item
-                  sm={12}
-                  md={12}
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <Avatar
-                    src={inputs.profilePic}
+                <Grid container>
+                  <Grid
+                    item
+                    sm={12}
+                    md={6}
                     sx={{
-                      mt: 5,
-                      mb: 5,
-                      width: 150,
-                      height: 150,
-                      border: "0.5px solid #1b529e",
+                      display: "flex",
+                      justifyContent: "flex-end",
+                      alignItems: "center",
                     }}
-                  />
-
-                  <label htmlFor="icon-button-file">
-                    <Input
-                      accept="image/*"
-                      id="icon-button-file"
-                      type="file"
-                      onChange={uploadProfilePhoto}
+                  >
+                    <Avatar
+                      src={inputs.profilePic}
+                      sx={{
+                        mt: 5,
+                        mb: 5,
+                        width: 150,
+                        height: 150,
+                        border: "0.5px solid #1b529e",
+                      }}
                     />
-                    <IconButton
-                      color="primary"
-                      aria-label="upload picture"
-                      component="span"
-                    >
-                      <PhotoCamera sx={{ mt: 10, width: 30, height: 30 }} />
-                    </IconButton>
-                  </label>
 
-                  {/* </Avatar> */}
-                </Grid>
-                <Grid item sm={12} md={12}>
-                  <Grid container spacing={2}>
-                    <Grid item sm={12} md={6} sx={{ mb: 5 }}>
-                      <Button
-                        onClick={handleSubmit}
-                        variant="contained"
-                        fullWidth
+                    <label htmlFor="icon-button-file">
+                      <Input
+                        accept="image/*"
+                        id="icon-button-file"
+                        type="file"
+                        onChange={uploadProfilePhoto}
+                      />
+                      <IconButton
+                        color="primary"
+                        aria-label="upload picture"
+                        component="span"
+                        sx={{ mt: 10 }}
                       >
-                        UPDATE
-                      </Button>
-                    </Grid>
-                    <Grid item sm={12} md={6}>
-                      <Button
-                        LinkComponent={Link}
-                        to={`/dashboard`}
-                        variant="contained"
-                        fullWidth
-                      >
-                        CANCEL
-                      </Button>
-                    </Grid>
+                        <PhotoCamera
+                          sx={{ width: 30, height: 30, color: "#183d78" }}
+                        />
+                      </IconButton>
+                    </label>
+
+                    
+                  </Grid>
+
+                  <Grid
+                    item
+                    md={6}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                    }}
+                  >
+                    <IconButton onClick={removeProfilePhoto} sx={{ mt: 10 }}>
+                      <DeleteIcon
+                        sx={{ width: 30, height: 30, color: "#183d78" }}
+                      />
+                    </IconButton>
                   </Grid>
                 </Grid>
-
                 <Grid item sm={12} md={12}>
                   <Grid
                     container
@@ -179,7 +275,10 @@ function EditEmployee() {
                     <Grid item xs={6}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={3}>
-                          <FormLabel sx={{ ml: 1, mt: 2 }} className="label">
+                          <FormLabel
+                            sx={{ fontWeight: "bold", ml: 1, mt: 2 }}
+                            className="label"
+                          >
                             First Name :
                           </FormLabel>
                         </Grid>
@@ -191,6 +290,8 @@ function EditEmployee() {
                             name="employeeFirstName"
                             value={inputs.employeeFirstName}
                             onChange={handleChange}
+                            error={inputErrors.employeeFirstName ? true : false}
+                            helperText={inputErrors.employeeFirstName}
                             fullWidth
                           />
                         </Grid>
@@ -199,7 +300,10 @@ function EditEmployee() {
                     <Grid item xs={6}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={3}>
-                          <FormLabel sx={{ ml: 1, mt: 2 }} className="label">
+                          <FormLabel
+                            sx={{ fontWeight: "bold", ml: 1, mt: 2 }}
+                            className="label"
+                          >
                             Last Name :
                           </FormLabel>
                         </Grid>
@@ -211,6 +315,8 @@ function EditEmployee() {
                             name="employeeLastName"
                             value={inputs.employeeLastName}
                             onChange={handleChange}
+                            error={inputErrors.employeeLastName ? true : false}
+                            helperText={inputErrors.employeeLastName}
                             fullWidth
                           />
                         </Grid>
@@ -219,7 +325,10 @@ function EditEmployee() {
                     <Grid item xs={6}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={3}>
-                          <FormLabel sx={{ ml: 1, mt: 2 }} className="label">
+                          <FormLabel
+                            sx={{ fontWeight: "bold", ml: 1, mt: 2 }}
+                            className="label"
+                          >
                             Email :
                           </FormLabel>
                         </Grid>
@@ -231,6 +340,8 @@ function EditEmployee() {
                             name="companyEmail"
                             value={inputs.companyEmail}
                             onChange={handleChange}
+                            error={inputErrors.companyEmail ? true : false}
+                            helperText={inputErrors.companyEmail}
                             fullWidth
                           />
                         </Grid>
@@ -239,39 +350,37 @@ function EditEmployee() {
                     <Grid item xs={6}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={3}>
-                          <FormLabel sx={{ ml: 1, mt: 2 }} className="label">
+                          <FormLabel
+                            sx={{ fontWeight: "bold", ml: 1, mt: 2 }}
+                            className="label"
+                          >
                             NIC :
                           </FormLabel>
                         </Grid>
                         <Grid item xs={6} md={9}>
-                          {jobRole === "HR" ? (
+                        
                             <TextField
                               id="filled-basic"
                               variant="filled"
                               name="NIC"
                               value={inputs.NIC}
                               onChange={handleChange}
+                              error={inputErrors.NIC ? true : false}
+                              helperText={inputErrors.NIC}
                               fullWidth
                             />
-                          ) : (
-                            <TextField
-                              disabled
-                              id="outlined-disabled"
-                              variant="filled"
-                              name="NIC"
-                              value={inputs.NIC}
-                              onChange={handleChange}
-                              fullWidth
-                            />
-                          )}
+                         
                         </Grid>
                       </Grid>
                     </Grid>
                     <Grid item xs={6}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={3}>
-                          <FormLabel sx={{ ml: 1, mt: 2 }} className="label">
-                            Phone Number :
+                          <FormLabel
+                            sx={{ fontWeight: "bold", ml: 1, mt: 2 }}
+                            className="label"
+                          >
+                            Phone :
                           </FormLabel>
                         </Grid>
                         <Grid item xs={6} md={9}>
@@ -282,6 +391,8 @@ function EditEmployee() {
                             name="phoneNumber"
                             value={inputs.phoneNumber}
                             onChange={handleChange}
+                            error={inputErrors.phoneNumber ? true : false}
+                            helperText={inputErrors.phoneNumber}
                             fullWidth
                           />
                         </Grid>
@@ -290,7 +401,10 @@ function EditEmployee() {
                     <Grid item xs={6}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={3}>
-                          <FormLabel sx={{ ml: 1, mt: 2 }} className="label">
+                          <FormLabel
+                            sx={{ fontWeight: "bold", ml: 1, mt: 2 }}
+                            className="label"
+                          >
                             Birthday :
                           </FormLabel>
                         </Grid>
@@ -320,7 +434,10 @@ function EditEmployee() {
                     <Grid item xs={6}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={3}>
-                          <FormLabel sx={{ ml: 1, mt: 2 }} className="label">
+                          <FormLabel
+                            sx={{ fontWeight: "bold", ml: 1, mt: 2 }}
+                            className="label"
+                          >
                             Street No :
                           </FormLabel>
                         </Grid>
@@ -340,7 +457,10 @@ function EditEmployee() {
                     <Grid item xs={6} sx={{ mb: 1 }}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={3}>
-                          <FormLabel sx={{ ml: 1, mt: 2 }} className="label">
+                          <FormLabel
+                            sx={{ fontWeight: "bold", ml: 1, mt: 2 }}
+                            className="label"
+                          >
                             City :
                           </FormLabel>
                         </Grid>
@@ -360,14 +480,17 @@ function EditEmployee() {
                     <Grid item xs={6}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={3}>
-                          {jobRole === "HR" && (
-                            <FormLabel sx={{ ml: 1, mt: 2 }} className="label">
+                         
+                            <FormLabel
+                              sx={{ fontWeight: "bold", ml: 1, mt: 2 }}
+                              className="label"
+                            >
                               Employee ID :
                             </FormLabel>
-                          )}
+                          
                         </Grid>
                         <Grid item xs={6} md={9}>
-                          {jobRole === "HR" && (
+                        
                             <TextField
                               id="filled-basic"
                               label=" Employee ID"
@@ -375,23 +498,28 @@ function EditEmployee() {
                               name="employeeID"
                               value={inputs.employeeID}
                               onChange={handleChange}
+                              error={inputErrors.employeeID ? true : false}
+                              helperText={inputErrors.employeeID}
                               fullWidth
                             />
-                          )}
+                         
                         </Grid>
                       </Grid>
                     </Grid>
                     <Grid item xs={6}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={3}>
-                          {jobRole === "HR" && (
-                            <FormLabel sx={{ ml: 1, mt: 2 }} className="label">
+                         
+                            <FormLabel
+                              sx={{ fontWeight: "bold", ml: 1, mt: 2 }}
+                              className="label"
+                            >
                               Job Type:
                             </FormLabel>
-                          )}
+                       
                         </Grid>
                         <Grid item xs={6} md={9}>
-                          {jobRole === "HR" && (
+                        
                             <TextField
                               id="filled-basic"
                               label=" Job Type"
@@ -399,57 +527,65 @@ function EditEmployee() {
                               name="jobType"
                               value={inputs.jobType}
                               onChange={handleChange}
+                              error={inputErrors.jobType ? true : false}
+                              helperText={inputErrors.jobType}
                               fullWidth
                             />
-                          )}
+                          
                         </Grid>
                       </Grid>
                     </Grid>
                     <Grid item xs={6}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={3}>
-                          {jobRole === "HR" && (
-                            <FormLabel sx={{ ml: 1, mt: 2 }} className="label">
+                        
+                            <FormLabel
+                              sx={{ fontWeight: "bold", ml: 1, mt: 2 }}
+                              className="label"
+                            >
                               Status :
                             </FormLabel>
-                          )}
+                         
                         </Grid>
                         <Grid item xs={6} md={9}>
-                          {jobRole === "HR" && (
+                         
                             <TextField
                               id="filled-basic"
                               label=" Status"
                               variant="filled"
-                              name="Status"
+                              name="status"
                               value={inputs.status}
                               onChange={handleChange}
                               fullWidth
                             />
-                          )}
+                          
                         </Grid>
                       </Grid>
                     </Grid>
                     <Grid item xs={6} sx={{ mb: 1 }}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={3}>
-                          {jobRole === "HR" && (
-                            <FormLabel sx={{ ml: 1, mt: 2 }} className="label">
+                         
+                            <FormLabel
+                              sx={{ fontWeight: "bold", ml: 1, mt: 2 }}
+                              className="label"
+                            >
                               Job Role :
                             </FormLabel>
-                          )}
+                          
                         </Grid>
                         <Grid item xs={6} md={9}>
-                          {jobRole === "HR" && (
+                         
                             <TextField
                               id="filled-basic"
                               label="Job Role"
                               variant="filled"
-                              name="city"
+                              name="jobRole"
                               value={inputs.jobRole}
                               onChange={handleChange}
                               fullWidth
                             />
-                          )}
+                        
                         </Grid>
                       </Grid>
                     </Grid>
@@ -460,7 +596,10 @@ function EditEmployee() {
                     <Grid item xs={6} sx={{ mt: 1 }}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={3}>
-                          <FormLabel sx={{ ml: 1, mt: 2 }} className="label">
+                          <FormLabel
+                            sx={{ fontWeight: "bold", ml: 1, mt: 2 }}
+                            className="label"
+                          >
                             Degree :
                           </FormLabel>
                         </Grid>
@@ -480,7 +619,10 @@ function EditEmployee() {
                     <Grid item xs={6} sx={{ mt: 1 }}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={3}>
-                          <FormLabel sx={{ ml: 1, mt: 2 }} className="label">
+                          <FormLabel
+                            sx={{ fontWeight: "bold", ml: 1, mt: 2 }}
+                            className="label"
+                          >
                             Languages :
                           </FormLabel>
                         </Grid>
@@ -500,7 +642,10 @@ function EditEmployee() {
                     <Grid item xs={6} sx={{ mb: 1 }}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={3}>
-                          <FormLabel sx={{ ml: 1, mt: 2 }} className="label">
+                          <FormLabel
+                            sx={{ fontWeight: "bold", ml: 1, mt: 2 }}
+                            className="label"
+                          >
                             Courses :
                           </FormLabel>
                         </Grid>
@@ -524,14 +669,17 @@ function EditEmployee() {
                     <Grid item xs={6} sx={{ mt: 1 }}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={3}>
-                          <FormLabel sx={{ ml: 1, mt: 2 }} className="label">
-                            A/L Results :{" "}
+                          <FormLabel
+                            sx={{ fontWeight: "bold", ml: 1, mt: 2 }}
+                            className="label"
+                          >
+                            A/L Results :
                           </FormLabel>
                         </Grid>
                         <Grid item xs={6} md={9}>
                           <TextField
                             id="filled-basic"
-                            label=" A/L Results"
+                            label=" A,B,C"
                             variant="filled"
                             name="advancedLevelResults"
                             value={inputs.advancedLevelResults || " "}
@@ -542,8 +690,11 @@ function EditEmployee() {
                       </Grid>
                       <Grid container spacing={2} sx={{ mt: 1 }}>
                         <Grid item xs={6} md={3}>
-                          <FormLabel sx={{ ml: 1, mt: 2 }} className="label">
-                            Achievements :{" "}
+                          <FormLabel
+                            sx={{ fontWeight: "bold", ml: 1, mt: 2 }}
+                            className="label"
+                          >
+                            Achievements :
                           </FormLabel>
                         </Grid>
                         <Grid item xs={6} md={9}>
@@ -569,14 +720,17 @@ function EditEmployee() {
                     >
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={3}>
-                          <FormLabel sx={{ ml: 1, mt: 2 }} className="label">
+                          <FormLabel
+                            sx={{ fontWeight: "bold", ml: 1, mt: 2 }}
+                            className="label"
+                          >
                             O/L Results :
                           </FormLabel>
                         </Grid>
                         <Grid item xs={6} md={9}>
                           <TextField
                             id="filled-basic"
-                            label="O/L Results"
+                            label="A,B,C"
                             variant="filled"
                             name="ordinaryLevelResult"
                             value={inputs.ordinaryLevelResult || " "}
@@ -589,7 +743,60 @@ function EditEmployee() {
                   </Grid>
                 </Grid>
               </Grid>
+              <Grid item sm={12} md={12} sx={{ mt: 4 }}>
+                <Grid container spacing={2}>
+                  <Grid item sm={12} md={4}>
+                    <Button
+                      onClick={handleSubmit}
+                      variant="contained"
+                      sx={{ backgroundColor: "#183d78" }}
+                      fullWidth
+                    >
+                      UPDATE
+                    </Button>
+                  </Grid>
+                  <Grid item sm={12} md={4}>
+                    <Button
+                      LinkComponent={Link}
+                      to={`/dashboard`}
+                      state={{ allEmployees: true }}
+                      variant="contained"
+                      sx={{ backgroundColor: "#183d78" }}
+                      fullWidth
+                    >
+                      VIEW ALL EMPLOYEES
+                    </Button>
+                  </Grid>
+                  <Grid item sm={12} md={4}>
+                    <Button
+                      LinkComponent={Link}
+                      to={`/dashboard`}
+                      state={{ allEmployees: true }}
+                      variant="contained"
+                      sx={{ backgroundColor: "#183d78" }}
+                      fullWidth
+                    >
+                      CANCEL
+                    </Button>
+                  </Grid>
+                </Grid>
+              </Grid>
             </Paper>
+            {addSuccessfully ? (
+              <Stack sx={{ width: "100%", mt: 0.5, height: 20 }} spacing={2}>
+                <Alert severity="success">
+                  <AlertTitle>Success</AlertTitle>
+                  Profile updated successfully added!
+                </Alert>
+              </Stack>
+            ) : null}
+            {notAdded ? (
+              <Stack sx={{ width: "100%" }} spacing={2}>
+                <Alert variant="filled" severity="error">
+                  Profile is not updated!
+                </Alert>
+              </Stack>
+            ) : null}
           </Box>
         </form>
       )}

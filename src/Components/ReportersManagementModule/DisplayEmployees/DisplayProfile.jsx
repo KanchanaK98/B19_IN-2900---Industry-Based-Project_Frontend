@@ -16,13 +16,12 @@ import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import ContactMailIcon from "@mui/icons-material/ContactMail";
 import CakeIcon from "@mui/icons-material/Cake";
 import PlaceIcon from "@mui/icons-material/Place";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getAllTeams } from "../../../Api/ReportersManagementModule/TeamsApi";
-import ViewProfileInfo from "./ViewProfileInfo";
 
 function DisplayProfile({ employee }) {
   const [teams, setTeams] = useState();
-  const jobRole = JSON.parse(localStorage.getItem("user")).jobRole; //profile should change to user
+  
   // const handleUpdate = () => {
   //   setUpdateEmployee(profile);
   //   setUpdateState(true);
@@ -37,7 +36,6 @@ function DisplayProfile({ employee }) {
     fetchData();
   }, []);
 
-  // const classes = useStyles();
   return (
     <div>
       <Card
@@ -47,7 +45,7 @@ function DisplayProfile({ employee }) {
           padding: 5,
           maxWidth: 750,
           minWidth: 750,
-          minHeight: 400,
+          minHeight: 450,
           // backgroundColor: "#e4ecf7",
           cursor: "pointer",
         }}
@@ -57,18 +55,27 @@ function DisplayProfile({ employee }) {
             <Typography
               variant="h6"
               textAlign="left"
-              sx={{ mb: 1, fontWeight: "bold" }}
+              sx={{
+                mb: 1,
+                fontWeight: "bold",
+                color: "#183d78",
+                fontFamily: "Kdam Thmor Pro",
+              }}
             >
-              {user &&
+              {/* {user &&
                 user.employeeFirstName[0].toUpperCase() +
                   user.employeeFirstName.slice(1) +
                   " " +
                   user.employeeLastName[0].toUpperCase() +
                   user.employeeLastName.slice(1) +
                   " | " +
-                  user.jobRole.replace(/\w\S*/g, (w) =>
-                    w.replace(/^\w/, (c) => c.toUpperCase())
-                  )}
+                  user.jobRole.replace(/\w\S* */}
+              {user &&
+                user.employeeFirstName +
+                  " " +
+                  user.employeeLastName +
+                  " | " +
+                  user.jobRole}
             </Typography>
           </Grid>
           <Grid item md={3}>
@@ -77,7 +84,12 @@ function DisplayProfile({ employee }) {
               teams.map((team) => {
                 if (team._id === user.teamID) {
                   return (
-                    <Typography variant="h6" textAlign="center" key={team._id}>
+                    <Typography
+                      variant="h6"
+                      textAlign="center"
+                      key={team._id}
+                      sx={{ color: "#8385a8" }}
+                    >
                       {team.teamName}
                     </Typography>
                   );
@@ -94,7 +106,7 @@ function DisplayProfile({ employee }) {
                 alt={user.employeeFirstName + " " + user.employeeLastName}
               ></Avatar>
             </Grid>
-            <Grid>
+            <Grid md={12}>
               <ProgressBar
                 EmployeeWithAcc={EmployeeWithAcc}
                 EmpWithProf={EmpWithProf}
@@ -104,47 +116,53 @@ function DisplayProfile({ employee }) {
                 // city={user.city}
                 // phoneNumber={user.phoneNumber}
               />
+              <Typography
+                textAlign="center"
+                sx={{ fontWeight: "bold", color: "#183d78", mb: 1 }}
+              >
+                Completeness of the Profile
+              </Typography>
             </Grid>
             {/* <Typography>{moment("lastSeen", "YYYYMMDD").fromNow()}</Typography> */}
             <Typography>
               {moment(user.lastSeen).format("ddd MMM DD YYYY hh:mm:ss")}
             </Typography>
             <Divider sx={{ mt: 2, mb: 2 }}></Divider>
-            <Typography sx={{ fontWeight: "bold", mb: 1 }}>
+            <Typography sx={{ fontWeight: "bold", mb: 1, color: "#183d78" }}>
               Profile Info
             </Typography>
             <Grid>
               {user.streetNo && (
                 <Typography>
-                  <PlaceIcon />
+                  <PlaceIcon sx={{ color: "#183d78" }} />
                   &nbsp; {user.streetNo + " " + user.city}
                 </Typography>
               )}
               {user.phoneNumber && (
                 <Typography>
-                  <ContactPhoneIcon />
+                  <ContactPhoneIcon sx={{ color: "#183d78" }} />
                   &nbsp; {user.phoneNumber}
                 </Typography>
               )}
               <Typography>
-                <ContactMailIcon />
+                <ContactMailIcon sx={{ color: "#183d78" }} />
                 &nbsp;&nbsp;{user.companyEmail}
               </Typography>
-              {jobRole === "HR" && (
-                <Grid>
-                  {user.birthday && (
-                    <Typography>
-                      <CakeIcon />
-                      &nbsp; {new Date(user.birthday).toDateString()}
-                      {/* {momen{user.birthday).format("MMM DD YYYY")} */}
-                    </Typography>
-                  )}
+             
+              <Grid>
+                {user.birthday && (
                   <Typography>
-                    <PermIdentityIcon />
-                    &nbsp;{user.NIC}
+                    <CakeIcon sx={{ color: "#183d78" }} />
+                    &nbsp; {new Date(user.birthday).toDateString()}
+                    {/* {momen{user.birthday).format("MMM DD YYYY")} */}
                   </Typography>
-                </Grid>
-              )}
+                )}
+                <Typography>
+                  <PermIdentityIcon sx={{ color: "#183d78" }} />
+                  &nbsp;{user.NIC}
+                </Typography>
+              </Grid>
+             
             </Grid>
           </Grid>
           <Grid item md={6} padding={1}>
@@ -162,9 +180,8 @@ function DisplayProfile({ employee }) {
               {user.status}
             </Typography>
 
-            {/* <Typography>Team :{user.teamID}</Typography> */}
             <Divider sx={{ mt: 2, mb: 2 }}></Divider>
-            <Typography sx={{ fontWeight: "bold", mb: 1 }}>
+            <Typography sx={{ fontWeight: "bold", mb: 1, color: "#183d78" }}>
               Accademic Qulaifications
             </Typography>
             <Typography>
@@ -182,8 +199,12 @@ function DisplayProfile({ employee }) {
                 })}
             </Typography>
             <Typography>
+              <Grid cotainter>
+                <Grid item md={5}></Grid>
+                <Grid item md={7}></Grid>
+              </Grid>
               <FormLabel sx={{ color: "#9098a6", fontWeight: "bold" }}>
-                A/L Results :&nbsp;{" "}
+                A/L Results :&nbsp;
               </FormLabel>
               {EmployeeWithAcc &&
                 EmployeeWithAcc.advancedLevelResults.map((result, i) => {
@@ -196,7 +217,6 @@ function DisplayProfile({ employee }) {
             </Typography>
             <Typography>
               <FormLabel sx={{ color: "#9098a6", fontWeight: "bold" }}>
-                {" "}
                 Achievements :&nbsp;
               </FormLabel>
 
@@ -210,7 +230,7 @@ function DisplayProfile({ employee }) {
                 })}
             </Typography>
             <Divider sx={{ mt: 2, mb: 2 }}></Divider>
-            <Typography sx={{ fontWeight: "bold", mb: 1 }}>
+            <Typography sx={{ fontWeight: "bold", mb: 1, color: "#183d78" }}>
               Professional Qualifications
             </Typography>
             <Typography>
@@ -262,19 +282,19 @@ function DisplayProfile({ employee }) {
         {/* <Button onClick={handleUpdate} sx={{ mt: 5 }} fullWidth  variant="contained" size="medium">
           Update
         </Button> */}
-        {jobRole === "HR" && (
-          <Button
-            component={Link}
-            to={`/profile/update`}
-            state={{ employee }}
-            sx={{ mt: 5, backgroundColor: "#1b529e" }}
-            fullWidth
-            variant="contained"
-            size="medium"
-          >
-            Update
-          </Button>
-        )}
+       
+        <Button
+          component={Link}
+          to={`/profile/update`}
+          state={{ employee }}
+          sx={{ mt: 5, backgroundColor: "#183d78" }}
+          fullWidth
+          variant="contained"
+          size="medium"
+        >
+          Update
+        </Button>
+        
       </Card>
     </div>
   );

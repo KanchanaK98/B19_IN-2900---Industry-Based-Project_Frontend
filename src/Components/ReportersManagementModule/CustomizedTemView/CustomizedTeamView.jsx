@@ -10,7 +10,7 @@ import { Avatar, Card, Typography } from "@mui/material";
 import { Grid } from "@mui/material";
 import GroupsIcon from "@mui/icons-material/Groups";
 import { Box } from "@mui/system";
-
+import AvatarGroup from '@mui/material/AvatarGroup';
 function MinusSquare(props) {
   return (
     <SvgIcon fontSize="inherit" style={{ width: 14, height: 14 }} {...props}>
@@ -94,7 +94,7 @@ export default function CustomizedTeamView() {
     fetchData();
   }, []);
 
-  console.log(teams);
+  
   let flag = teams.length;
   return (
     <TreeView
@@ -103,13 +103,14 @@ export default function CustomizedTeamView() {
       defaultCollapseIcon={<MinusSquare />}
       // defaultExpandIcon={<PlusSquare />}
       defaultExpandIcon={
-        <Box >
+        <Box>
           <GroupsIcon
             sx={{
-              width: 40,
-              height: 40,
-              backgroundColor: "blue",
+              width: 50,
+              height: 50,
+              //backgroundColor: "blue",
               borderRadius: 1,
+              color: "#0b90bd",
             }}
           />
         </Box>
@@ -117,31 +118,49 @@ export default function CustomizedTeamView() {
       defaultEndIcon={<CloseSquare />}
       sx={{ height: 740, flexGrow: 1, maxWidth: 400, overflowY: "auto" }}
     >
-      <StyledTreeItem nodeId="0" label="TEAMS">
+      <StyledTreeItem nodeId="0" label="TEAMS" sx={{ color: "#0b90bd" }}>
         {teams &&
           teams.map((team, i) => {
             return (
-              <Card sx={{ mt: 2, padding: 3 }}>
-                <Box sx={{ m: 1 }}>
-                  <StyledTreeItem nodeId={i + 1} label={team.teamName}>
+              <Card
+                sx={{
+                  mt: 2,
+                  padding: 2,
+                  backgroundImage: `linear-gradient(to right, rgba(213, 239, 247), rgba(12, 189, 247))`,
+                }}
+                key={team._id}
+              >
+                <Box sx={{ m: 1 }} key={team._id}>
+                  <StyledTreeItem
+                    nodeId={`${i} + 1`}
+                    label={team.teamName}
+                    sx={{ color: "#0b90bd" }}
+                  >
                     <TreeView defaultExpanded={["0"]}>
                       {team.TeamWithEmp.map((member, j) => {
                         return (
-                          <>
-                            <Card sx={{ padding: 1, mb: 2 }}>
-                              <Grid container sx={{ mb: 2 }} key={team._id}>
-                                <Grid item md={1}>
-                                  <Avatar src={member.profilePic} />
-                                </Grid>
-                                <Grid item md={11}>
-                                  <StyledTreeItem
-                                    nodeId={j}
-                                    label={member.employeeName}
-                                  />
-                                </Grid>
+                          <Card
+                            sx={{
+                              padding: 1,
+                              mb: 2,
+
+                              backgroundImage: `linear-gradient(to right, rgba(206, 233, 242), rgba(100, 209, 245))`,
+                            }}
+                            key={team._id}
+                          >
+                            <Grid container sx={{ mb: 2 }}>
+                              <Grid item md={1}>
+                                <Avatar src={member.profilePic} />
                               </Grid>
-                            </Card>
-                          </>
+                              <Grid item md={11}>
+                                <StyledTreeItem
+                                  sx={{ color: "#06465c" }}
+                                  nodeId={j}
+                                  label={member.employeeName}
+                                />
+                              </Grid>
+                            </Grid>
+                          </Card>
                         );
 
                         //  console.log(++flag)

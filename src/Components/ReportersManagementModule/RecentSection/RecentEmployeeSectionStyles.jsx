@@ -7,10 +7,12 @@ const useStyles = makeStyles((theme) => ({
   card: {
     borderRadius: 15,
     marginBottom: 15,
-    padding: 25,
+    padding: 20,
     marginLeft: 9,
     maxWidth: 380,
     minWidth: 380,
+    backgroundColor:"#787a7d"
+   // backgroundImage: `linear-gradient(to right, rgba(170, 247, 250), rgba(30, 208, 214))`,
   },
 
   avatar: {},

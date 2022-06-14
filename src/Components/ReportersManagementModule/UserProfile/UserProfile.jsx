@@ -36,178 +36,212 @@ function UserProfile({ user }) {
       setEmployeeInfo(
         userInfo.filter((emp) => emp.user.employeeID === user.employeeID)
       );
-      console.log(userInfo)
+
       // const{empInfo:user,EmpWithProf:EmpWithProf,EmployeeWithAcc}=employee;
     }
     fetchData();
   }, []);
-let employee={ ...employeeInfo[0] }
-console.log(employeeInfo)
+  let employee = { ...employeeInfo[0] };
+  // console.log(employeeInfo[0].user.streetNo);
   return (
     <div>
-      <Box sx={{ width: "100%", backgroundColor: "#d7dde0", padding: 5 }}>
-        <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-          <Grid item xs={4}>
-            <Grid container>
-              <Grid item xs={3} textAlign="left">
-                {/* <Link to="/profile/update"> */}
-                <Button
-                  component={Link}
-                  to={`/user/update`}
-                  state={{ employee}}
-                  variant="contained"
-                  sx={{ backgroundColor: "#183d78" }}
-                >
-                  <EditIcon />
-                  Edit
-                </Button>
-                {/* </Link> */}
+      {employee && (
+        <Box sx={{ width: "100%", backgroundColor: "#d7dde0", padding: 5 }}>
+          <Grid
+            container
+            rowSpacing={1}
+            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+          >
+            <Grid item xs={4}>
+              <Grid container>
+                <Grid item xs={3} textAlign="left">
+                  {/* <Link to="/profile/update"> */}
+                  <Button
+                    component={Link}
+                    to={`/user/update`}
+                    state={{ employee }}
+                    variant="contained"
+                    sx={{ backgroundColor: "#183d78" }}
+                  >
+                    <EditIcon />
+                    Edit
+                  </Button>
+                  {/* </Link> */}
+                </Grid>
+                <Grid item xs={3}>
+                  <Avatar
+                    alt="Remy Sharp"
+                    src={user.profilePic}
+                    sx={{
+                      width: 120,
+                      height: 120,
+                      mt: 5,
+                      border: "0.5px solid #183d78",
+                    }}
+                  />
+                </Grid>
               </Grid>
-              <Grid item xs={3}>
-                <Avatar
-                  alt="Remy Sharp"
-                  src={user.profilePic}
-                  sx={{
-                    width: 120,
-                    height: 120,
-                    mt: 5,
-                    border: "0.5px solid #183d78",
-                  }}
-                />
-              </Grid>
+
+              <ProgressBar
+                EmpWithProf={employeeInfo[0] && employeeInfo[0].EmpWithProf}
+                EmployeeWithAcc={
+                  employeeInfo[0] && employeeInfo[0].EmployeeWithAcc
+                }
+                user={employeeInfo[0] && employeeInfo[0].user}
+              />
+              <Card sx={{ padding: 3, mt: 2 }}>
+                <Typography variant="h6" sx={{ color: "#708bb8" }}>
+                  <AccountCircleIcon />
+                  &nbsp;Profile Info
+                </Typography>
+                <Divider sx={{ mt: 2, mb: 2 }}></Divider>
+                <Typography>
+                  <PlaceIcon />
+                  &nbsp;
+                  {employeeInfo[0] &&
+                    employeeInfo[0].user &&
+                    employeeInfo[0].user.streetNo + ", " + employeeInfo[0] &&
+                    employeeInfo[0].user &&
+                    employeeInfo[0].user.city}
+                </Typography>
+                <Typography sx={{ color: "blue", mb: 1 }}>
+                  <ContactMailIcon />
+                  &nbsp;&nbsp;
+                  {employeeInfo[0] &&
+                    employeeInfo[0].user &&
+                    employeeInfo[0].user.companyEmail}
+                </Typography>
+                <Typography sx={{ mb: 1 }}>
+                  <ContactPhoneIcon />
+                  &nbsp;&nbsp;
+                  {employeeInfo[0] &&
+                    employeeInfo[0].user &&
+                    employeeInfo[0].user.phoneNumber}
+                </Typography>
+                <Typography sx={{ mb: 1 }}>
+                  <CakeIcon />
+                  &nbsp;
+                  {moment(
+                    employeeInfo[0] &&
+                      employeeInfo[0].user &&
+                      employeeInfo[0].user.birthday
+                  ).format("MMM DD YYYY")}
+                </Typography>
+                <Divider sx={{ mt: 1, mb: 1 }}></Divider>
+
+                <Typography sx={{ mb: 1 }}>
+                  {employeeInfo[0] &&
+                    employeeInfo[0].user &&
+                    employeeInfo[0].user.jobType}{" "}
+                  |{" "}
+                  {employeeInfo[0] &&
+                    employeeInfo[0].user &&
+                    employeeInfo[0].user.status}
+                </Typography>
+              </Card>
             </Grid>
 
-            <ProgressBar
-              EmpWithProf={employeeInfo[0] && employeeInfo[0].EmpWithProf}
-              EmployeeWithAcc={employeeInfo[0] && employeeInfo[0].EmployeeWithAcc}
-              user={employeeInfo[0] && employeeInfo[0].user}
-            />
-            <Card sx={{ padding: 3, mt: 2 }}>
-              <Typography variant="h6" sx={{ color: "#708bb8" }}>
-                <AccountCircleIcon />
-                &nbsp;Profile Info
+            <Grid item xs={8} sx={{ mt: 1 }}>
+              <Typography
+                variant="h4"
+                sx={{ mb: 2, fontWeight: "bold", color: "#183d78" }}
+              >
+                {user.employeeFirstName + " " + user.employeeLastName}|{" "}
+                {user.jobRole}
               </Typography>
-              <Divider sx={{ mt: 2, mb: 2 }}></Divider>
-              <Typography>
-                <PlaceIcon />
-                &nbsp;{user.streetNo + ", " + user.city}
-              </Typography>
-              <Typography sx={{ color: "blue", mb: 1 }}>
-                <ContactMailIcon />
-                &nbsp;&nbsp;{user.companyEmail}
-              </Typography>
-              <Typography sx={{ mb: 1 }}>
-                <ContactPhoneIcon />
-                &nbsp;&nbsp;{user.phoneNumber}
-              </Typography>
-              <Typography sx={{ mb: 1 }}>
-                <CakeIcon />
-                &nbsp;
-                {moment(user.birthday).format("MMM DD YYYY")}
-              </Typography>
-              <Divider sx={{ mt: 1, mb: 1 }}></Divider>
-
-              <Typography sx={{ mb: 1 }}>
-                {user.jobType} | {user.status}
-              </Typography>
-            </Card>
-          </Grid>
-
-          <Grid item xs={8} sx={{ mt: 1 }}>
-            <Typography
-              variant="h4"
-              sx={{ mb: 2, fontWeight: "bold", color: "#183d78" }}
-            >
-              {user.employeeFirstName + " " + user.employeeLastName}|{" "}
-              {user.jobRole}
-            </Typography>
-            <Card sx={{ padding: 3 }}>
-              <Typography variant="h6" sx={{ color: "#708bb8" }}>
-                <SchoolIcon />
-                &nbsp;Professional Qualification
-              </Typography>
-              <Divider sx={{ mt: 2, mb: 2 }}></Divider>
-              <Grid container spacing={2} columns={12}>
-                <Grid item xs={4}>
-                  <Typography sx={{ fontWeight: "bold", color: "#9da1a6" }}>
-                    Courses
-                  </Typography>
-                  <Divider sx={{ mt: 1, mb: 1 }}></Divider>
-                  {employeeInfo.length > 0 &&
-                    employeeInfo[0].EmpWithProf.course.map((result, i) => {
-                      return <Typography key={i}>{result}</Typography>;
-                    })}
-                </Grid>
-                <Grid item xs={4}>
-                  <Typography sx={{ fontWeight: "bold", color: "#9da1a6" }}>
-                    Degrees
-                  </Typography>
-                  <Divider sx={{ mt: 1, mb: 1 }}></Divider>
-                  {employeeInfo.length > 0 &&
-                    employeeInfo[0].EmpWithProf.degree.map((result, i) => {
-                      return <Typography key={i}>{result}</Typography>;
-                    })}
-                </Grid>
-                <Grid item xs={4}>
-                  <Typography sx={{ fontWeight: "bold", color: "#9da1a6" }}>
-                    Languages
-                  </Typography>
-                  <Divider sx={{ mt: 1, mb: 1 }}></Divider>
-                  {employeeInfo.length > 0 &&
-                    employeeInfo[0].EmpWithProf.language.map((result, i) => {
-                      return <Typography key={i}>{result}</Typography>;
-                    })}
-                </Grid>
-              </Grid>
-            </Card>
-            <Card sx={{ padding: 3, mt: 2 }}>
-              <Typography variant="h6" sx={{ color: "#708bb8" }}>
-                <MenuBookIcon />
-                &nbsp;Academic Qualification
-              </Typography>
-              <Divider sx={{ mt: 2, mb: 2 }}></Divider>
-              <Grid container spacing={2} columns={12}>
-                <Grid item xs={4}>
-                  <Typography sx={{ fontWeight: "bold", color: "#9da1a6" }}>
-                    O/L Results
-                  </Typography>
-                  <Divider sx={{ mt: 1, mb: 1 }}></Divider>
-                  {employeeInfo.length > 0 &&
-                    employeeInfo[0].EmployeeWithAcc.ordinaryLevelResult.map(
-                      (result, i) => {
+              <Card sx={{ padding: 3 }}>
+                <Typography variant="h6" sx={{ color: "#708bb8" }}>
+                  <SchoolIcon />
+                  &nbsp;Professional Qualification
+                </Typography>
+                <Divider sx={{ mt: 2, mb: 2 }}></Divider>
+                <Grid container spacing={2} columns={12}>
+                  <Grid item xs={4}>
+                    <Typography sx={{ fontWeight: "bold", color: "#9da1a6" }}>
+                      Courses
+                    </Typography>
+                    <Divider sx={{ mt: 1, mb: 1 }}></Divider>
+                    {employeeInfo.length > 0 &&
+                      employeeInfo[0].EmpWithProf &&
+                      employeeInfo[0].EmpWithProf.course.map((result, i) => {
                         return <Typography key={i}>{result}</Typography>;
-                      }
-                    )}
-                </Grid>
-                <Grid item xs={4}>
-                  <Typography sx={{ fontWeight: "bold", color: "#9da1a6" }}>
-                    A/L Results
-                  </Typography>
-                  <Divider sx={{ mt: 1, mb: 1 }}></Divider>
-                  {employeeInfo.length > 0 &&
-                    employeeInfo[0].EmployeeWithAcc.advancedLevelResults.map(
-                      (result, i) => {
+                      })}
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Typography sx={{ fontWeight: "bold", color: "#9da1a6" }}>
+                      Degrees
+                    </Typography>
+                    <Divider sx={{ mt: 1, mb: 1 }}></Divider>
+                    {employeeInfo.length > 0 &&
+                      employeeInfo[0].EmpWithProf &&
+                      employeeInfo[0].EmpWithProf.degree.map((result, i) => {
                         return <Typography key={i}>{result}</Typography>;
-                      }
-                    )}
-                </Grid>
-                <Grid item xs={4}>
-                  <Typography sx={{ fontWeight: "bold", color: "#9da1a6" }}>
-                    Achievments
-                  </Typography>
-                  <Divider sx={{ mt: 1, mb: 1 }}></Divider>
-                  {employeeInfo.length > 0 &&
-                    employeeInfo[0].EmployeeWithAcc.achievements.map(
-                      (result, i) => {
+                      })}
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Typography sx={{ fontWeight: "bold", color: "#9da1a6" }}>
+                      Languages
+                    </Typography>
+                    <Divider sx={{ mt: 1, mb: 1 }}></Divider>
+                    {employeeInfo.length > 0 &&
+                      employeeInfo[0].EmpWithProf &&
+                      employeeInfo[0].EmpWithProf.language.map((result, i) => {
                         return <Typography key={i}>{result}</Typography>;
-                      }
-                    )}
+                      })}
+                  </Grid>
                 </Grid>
-              </Grid>
-            </Card>
-          </Grid>
+              </Card>
+              <Card sx={{ padding: 3, mt: 2 }}>
+                <Typography variant="h6" sx={{ color: "#708bb8" }}>
+                  <MenuBookIcon />
+                  &nbsp;Academic Qualification
+                </Typography>
+                <Divider sx={{ mt: 2, mb: 2 }}></Divider>
+                <Grid container spacing={2} columns={12}>
+                  <Grid item xs={4}>
+                    <Typography sx={{ fontWeight: "bold", color: "#9da1a6" }}>
+                      O/L Results
+                    </Typography>
+                    <Divider sx={{ mt: 1, mb: 1 }}></Divider>
+                    {employeeInfo.length > 0 &&
+                      employeeInfo[0].EmployeeWithAcc &&
+                      employeeInfo[0].EmployeeWithAcc.ordinaryLevelResult.map(
+                        (result, i) => {
+                          return <Typography key={i}>{result}</Typography>;
+                        }
+                      )}
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Typography sx={{ fontWeight: "bold", color: "#9da1a6" }}>
+                      A/L Results
+                    </Typography>
+                    <Divider sx={{ mt: 1, mb: 1 }}></Divider>
+                    {employeeInfo.length > 0 &&
+                      employeeInfo[0].EmployeeWithAcc &&
+                      employeeInfo[0].EmployeeWithAcc.advancedLevelResults.map(
+                        (result, i) => {
+                          return <Typography key={i}>{result}</Typography>;
+                        }
+                      )}
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Typography sx={{ fontWeight: "bold", color: "#9da1a6" }}>
+                      Achievments
+                    </Typography>
+                    <Divider sx={{ mt: 1, mb: 1 }}></Divider>
+                    {employeeInfo.length > 0 &&
+                      employeeInfo[0].EmployeeWithAcc &&
+                      employeeInfo[0].EmployeeWithAcc.achievements.map(
+                        (result, i) => {
+                          return <Typography key={i}>{result}</Typography>;
+                        }
+                      )}
+                  </Grid>
+                </Grid>
+              </Card>
+            </Grid>
 
-          {/* <Grid item xs={12}>
+            {/* <Grid item xs={12}>
             <Card sx={{ padding: 3 }}>
               <Typography variant="h6" sx={{ color: "#708bb8" }}>
                 <MenuBookIcon />
@@ -216,8 +250,9 @@ console.log(employeeInfo)
               <Divider sx={{ mt: 2, mb: 2 }}></Divider>
             </Card>
           </Grid> */}
-        </Grid>
-      </Box>
+          </Grid>
+        </Box>
+      )}
     </div>
   );
 }

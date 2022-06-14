@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import {
   Card,
   Divider,
@@ -10,24 +10,25 @@ import {
   Box,
   TextareaAutosize,
   Button,
+  Stack,
+  Alert,
+  AlertTitle,
 } from "@mui/material";
 import InventoryIcon from "@mui/icons-material/Inventory";
 import { updateProduct } from "../../../Api/ReportersManagementModule/ProductApi";
 
 function EditProduct() {
+  const [addSuccessfully, setAddSuccessfully] = useState(false);
+  const [notAdded, setnotAdded] = useState(false);
+  const [inputErrors, setInputErrors] = useState({
+    productID: "",
+    productName: "",
+    description: "",
+  });
   const { id } = useParams();
-  console.log(id);
-  // const [teams, setTeams] = useState([]);
+
   const location = useLocation();
   const { product } = location.state;
-
-  // if (teams.length > 0) {
-  //   teams.map((tm) => {
-  //     if (tm._id === product.teamID) {
-  //       tm.name = tm.teamName;
-  //     }
-  //   });
-  // }
 
   const [products, setProducts] = useState({
     // _id: product._id,
@@ -43,21 +44,60 @@ function EditProduct() {
       [e.target.name]: e.target.value,
     }));
   };
+
+  const errorHandle = () => {
+    let isError = false;
+
+    if (!products.productName) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        productName: "Product Name is required",
+      }));
+      isError = true;
+    }
+    if (!products.productID) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        productID: "Product ID is required",
+      }));
+      isError = true;
+    }
+    if (!products.description) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        description: "Description is required",
+      }));
+      isError = true;
+    }
+
+    return isError;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // sendRequest()
-    updateProduct(products, product._id)
-      .then((res) => {})
-      .catch((err) => {
-        console.log(err);
-      });
+    if (!errorHandle()) {
+      updateProduct(products, product._id)
+        .then((res) => {
+          setAddSuccessfully(true);
+          setTimeout(() => {
+            setAddSuccessfully(false);
+          }, 2000);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      setnotAdded(true);
+      setTimeout(() => {
+        setnotAdded(false);
+      }, 2000);
+    }
   };
 
-  console.log(product);
   return (
     <div>
-      <Box padding={4}>
+      <Box padding={4} sx={{ mb: 6 }}>
         {products && (
           <form>
             <Box>
@@ -80,6 +120,8 @@ function EditProduct() {
                           name="productID"
                           value={products.productID}
                           onChange={handleChange}
+                          error={inputErrors.productID ? true : false}
+                          helperText={inputErrors.productID}
                           fullWidth
                         />
                       </Grid>
@@ -97,6 +139,8 @@ function EditProduct() {
                           variant="filled"
                           name="productName"
                           value={products.productName}
+                          error={inputErrors.productName ? true : false}
+                          helperText={inputErrors.productName}
                           onChange={handleChange}
                           fullWidth
                         />
@@ -110,13 +154,26 @@ function EditProduct() {
                     <FormLabel>Description:</FormLabel>
                   </Grid>
                   <Grid item md={10.5}>
-                    <TextareaAutosize
+                    {/* <TextareaAutosize
                       style={{ width: "100%", height: 200 }}
                       aria-label="maximum height"
                       placeholder="Enter product description"
                       name="description"
                       value={products.description}
                       onChange={handleChange}
+                    /> */}
+                    <TextField
+                      rows={7}
+                      id="filled-basic"
+                      variant="filled"
+                      multiline
+                      label="Enter Description"
+                      name="description"
+                      value={products.description}
+                      error={inputErrors.description ? true : false}
+                      helpertext={inputErrors.description}
+                      onChange={handleChange}
+                      fullWidth
                     />
                   </Grid>
                 </Grid>
@@ -137,14 +194,44 @@ function EditProduct() {
                       fullWidth
                     ></TextField>
                   </Grid>
-
+                </Grid>
+                <Grid container>
+                  <Grid item md={6} textAlign="left">
+                    <Button
+                      component={Link}
+                      to="/products"
+                      variant="contained"
+                      sx={{ mt: 2, backgroundColor: "#183d78" }}
+                    >
+                      View Products
+                    </Button>
+                  </Grid>
                   <Grid item md={6} textAlign="right" sx={{ mt: 2 }}>
-                    <Button variant="contained" onClick={handleSubmit}>
+                    <Button
+                      variant="contained"
+                      sx={{ mt: 2, backgroundColor: "#183d78" }}
+                      onClick={handleSubmit}
+                    >
                       Update
                     </Button>
                   </Grid>
                 </Grid>
               </Card>
+              {addSuccessfully ? (
+                <Stack sx={{ width: "100%" }} spacing={2}>
+                  <Alert severity="success">
+                    <AlertTitle>Success</AlertTitle>
+                    Product updated successfully!
+                  </Alert>
+                </Stack>
+              ) : null}
+              {notAdded ? (
+                <Stack sx={{ width: "100%" }} spacing={2}>
+                  <Alert variant="filled" severity="error">
+                    Product is not updated!
+                  </Alert>
+                </Stack>
+              ) : null}
             </Box>
           </form>
         )}

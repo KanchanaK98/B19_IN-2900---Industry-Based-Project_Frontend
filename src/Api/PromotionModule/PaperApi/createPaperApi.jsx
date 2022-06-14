@@ -1,11 +1,13 @@
 import * as api from "../../index";
 
-export const createPaperApi = async (currentData) => {
+export const createPaperApi = async (newPaper) => {
+  console.log("newPaper from frontend", newPaper);
   try {
-    const { data } = await api.createPaper(currentData);
     console.log("createPaperApi executed");
+    const { data } = await api.createPaper(newPaper);
+    console.log("createPaperApi executed 2");
     return data;
   } catch (error) {
-    console.log(error);
+    return console.log(error);
   }
 };

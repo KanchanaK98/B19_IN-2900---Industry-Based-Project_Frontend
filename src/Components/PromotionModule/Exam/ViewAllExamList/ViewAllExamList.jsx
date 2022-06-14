@@ -155,7 +155,6 @@ export default function ViewAllExamList() {
                       <StyledTableCell align="left">
                         <Button
                           className={classes.Button}
-                          disable
                           variant="contained"
                           onClick={() => {
                             deleteScheduledExamApi(
@@ -171,16 +170,7 @@ export default function ViewAllExamList() {
                       </StyledTableCell>
                       {element.Status === "Completed" ? (
                         <StyledTableCell align="left">
-                          <Button
-                            disabled
-                            variant="contained"
-                            onClick={() =>
-                              window.open(
-                                ` /promotion/evaluation/exam/updateExam/${EmployeeID}/${element.ExamID}`,
-                                "_self"
-                              )
-                            }
-                          >
+                          <Button disabled variant="contained">
                             Update&nbsp;
                           </Button>
                         </StyledTableCell>

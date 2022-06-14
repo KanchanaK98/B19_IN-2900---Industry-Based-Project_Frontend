@@ -1,13 +1,12 @@
 import React from "react";
 import { Grid, Button,Box} from "@mui/material";
-import DisplayProducts from "../../../Components/ReportersManagementModule/ProductDisplay/DisplayProducts";
 import {Link} from 'react-router-dom'
 import ViewAllProducts from "../../../Components/ReportersManagementModule/ProductDisplay/ViewAllProducts";
 function ProductPage() {
   return (
     <div>
       <Box padding={4}>
-      <Grid item sm={12} md={12} sx={{ mb: 5 }}>
+      <Grid item sm={12} md={12} sx={{ mb: 3 }}>
         <Grid container>
           <Grid item md={6}>
           <Link to="/products/create">
@@ -21,7 +20,7 @@ function ProductPage() {
           </Grid>
         </Grid>
       </Grid>
-      <Grid item sm={12} md={12} sx={{ mb: 5 }}>
+      <Grid item sm={12} md={12} sx={{ mb: 2 }}>
         {/* <DisplayProducts /> */}
         <ViewAllProducts/>
       </Grid>

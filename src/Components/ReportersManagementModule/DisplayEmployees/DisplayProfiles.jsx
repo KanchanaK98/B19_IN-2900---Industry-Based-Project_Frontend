@@ -2,11 +2,11 @@ import { useState, useEffect, React } from "react";
 import DisplayProfile from "./DisplayProfile";
 import { Grid } from "@mui/material";
 import { viewAllEmployees } from "../../../Api/ReportersManagementModule/EmployeeApi";
-import ViewProfileInfo from "./ViewProfileInfo";
+
 
 function DisplayProfiles() {
   const [profiles, setProfiles] = useState([]);
-  const [empoyeeInfo, setEmployeeInfo] = useState([]);
+ 
 
   useEffect(() => {
     async function fetchData() {
@@ -35,9 +35,6 @@ function DisplayProfiles() {
             );
           })}
       </Grid>
-      {/* <Grid>
-        <ViewProfileInfo employee={empoyeeInfo} />
-      </Grid> */}
     </div>
   );
 }

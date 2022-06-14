@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   Card,
   Divider,
@@ -8,7 +8,7 @@ import {
   Typography,
   Grid,
   Box,
-  TextareaAutosize,
+ 
   Button,
   Stack,
   Alert,
@@ -20,12 +20,13 @@ import { updateProduct } from "../../../Api/ReportersManagementModule/ProductApi
 function EditProduct() {
   const [addSuccessfully, setAddSuccessfully] = useState(false);
   const [notAdded, setnotAdded] = useState(false);
+  const [duplicated, setDuplicated] = useState(false);
   const [inputErrors, setInputErrors] = useState({
     productID: "",
     productName: "",
     description: "",
   });
-  const { id } = useParams();
+  
 
   const location = useLocation();
   const { product } = location.state;
@@ -77,16 +78,19 @@ function EditProduct() {
     e.preventDefault();
 
     if (!errorHandle()) {
-      updateProduct(products, product._id)
-        .then((res) => {
-          setAddSuccessfully(true);
-          setTimeout(() => {
-            setAddSuccessfully(false);
-          }, 2000);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      const response = await updateProduct(products, product._id);
+      if (response.success === true) {
+        setAddSuccessfully(true);
+        setTimeout(() => {
+          setAddSuccessfully(false);
+        }, 2000);
+      }
+      if (response.success === false) {
+        setDuplicated(true);
+        setTimeout(() => {
+          setDuplicated(false);
+        }, 2000);
+      }
     } else {
       setnotAdded(true);
       setTimeout(() => {
@@ -228,7 +232,14 @@ function EditProduct() {
               {notAdded ? (
                 <Stack sx={{ width: "100%" }} spacing={2}>
                   <Alert variant="filled" severity="error">
-                    Product is not updated!
+                    Please enter all details!
+                  </Alert>
+                </Stack>
+              ) : null}
+              {duplicated ? (
+                <Stack sx={{ width: "100%" }} spacing={2}>
+                  <Alert variant="filled" severity="error">
+                    Details are duplicated,Product is not updated!
                   </Alert>
                 </Stack>
               ) : null}

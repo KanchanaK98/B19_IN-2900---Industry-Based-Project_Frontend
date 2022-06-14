@@ -1,41 +1,41 @@
-import { Close } from "@mui/icons-material";
 import {
+  Button,
   Dialog,
   DialogContent,
   DialogTitle,
   Divider,
   Grid,
-  IconButton,
   Typography,
 } from "@mui/material";
 import React from "react";
 
 function ProductDescriptionDialog({ openDialog, handleCloseDialog, product }) {
-
   return (
-    <Dialog fullWidth open={openDialog} onClose={handleCloseDialog}>
+    <Dialog sx={{}} open={openDialog} onClose={handleCloseDialog}>
       <DialogTitle>
         <Grid container sx={{ display: "flex", alignItems: "center" }}>
-          <Grid sm={10} md={10} item>
-            <Typography variant="h5">Product Description</Typography>
-          </Grid>
-
-          <Grid
-            sm={2}
-            md={2}
-            item
-            sx={{ display: "flex", justifyContent: "flex-end" }}
+          {/* <Grid sm={10} md={10} item> */}
+          <Typography
+            variant="h5"
+            sx={{ color: "#183d78", fontWeight: "bold" }}
           >
-            <IconButton onClick={handleCloseDialog}>
-              <Close />
-            </IconButton>
-          </Grid>
+            Product Description
+          </Typography>
         </Grid>
       </DialogTitle>
       <Divider variant="middle" />
       <DialogContent>
         <Grid>
           <Typography>{product && product.description}</Typography>
+        </Grid>
+
+        <Grid sx={{ display: "flex", justifyContent: "center" }}>
+          <Button
+            onClick={handleCloseDialog}
+            sx={{ mt: 2, backgroundColor: "#183d78", borderRadius: 20 }}
+          >
+            cancel
+          </Button>
         </Grid>
       </DialogContent>
     </Dialog>

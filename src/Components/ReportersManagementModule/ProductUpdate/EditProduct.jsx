@@ -105,8 +105,8 @@ function EditProduct() {
         {products && (
           <form>
             <Box>
-              <Card sx={{ padding: 5 }}>
-                <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+              <Card sx={{ padding: 5,backgroundColor:"#e4ecf7" }}>
+                <Typography variant="h5" sx={{ fontWeight: "bold" ,color:"#183d78"}}>
                   <InventoryIcon />
                   &nbsp;{products.productName} | {products.productID}
                 </Typography>

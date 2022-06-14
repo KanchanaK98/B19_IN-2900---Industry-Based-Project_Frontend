@@ -112,9 +112,12 @@ function EditTeam() {
   return (
     <div>
       <Box padding={6}>
-        <Paper sx={{ padding: 4 }}>
+        <Paper sx={{ padding: 4, backgroundColor: "#e4ecf7" }}>
           <form onSubmit={handleSubmit}>
-            <Typography variant="h5" sx={{ mb: 5, fontWeight: "bold" }}>
+            <Typography
+              variant="h5"
+              sx={{ mb: 5, fontWeight: "bold", color: "#183d78" }}
+            >
               <GroupAddIcon sx={{ width: 60, height: 60 }} />
               &nbsp; Update Team
             </Typography>
@@ -144,13 +147,7 @@ function EditTeam() {
                   </Grid>
 
                   <Grid item sm={8} md={8}>
-                    {/* <IconButton onClick={handleOpenDialog}>
-                      <AddCircleIcon sx={{ color: "gray" }} fontSize="large" />
-                    </IconButton> */}
-                    <IconButton
-                      onClick={handleOpenDialog}
-                      // disabled={team.TeamWithEmp.length === 0 ? true : false}
-                    >
+                    <IconButton onClick={handleOpenDialog}>
                       <EditIcon sx={{ color: "gray" }} fontSize="large" />
                     </IconButton>
                   </Grid>

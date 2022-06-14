@@ -9,14 +9,12 @@ export const createEmployee = async (employeesData) => {
       jobRole: String(employeesData.jobRole),
       NIC: String(employeesData.NIC),
       companyEmail: String(employeesData.companyEmail),
-      // status: String(employeesData.status),
-      // jobType: String(employeesData.jobType),
     };
 
     const { data } = await api.createEmployee(employee);
     return data;
   } catch (error) {
-    console.log(error);
+    return error.response;
   }
 };
 
@@ -69,16 +67,6 @@ export const recentEmployees = async (recentemployees) => {
     console.log(err);
   }
 };
-
-// export const getUser = async () => {
-//   try {
-//     console.log("hi");
-//     const { data } = await api.getUser(JSON.parse(localStorage.getItem("user")).employeeID);
-//     return data.userInfo;
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };
 
 export const getJobRoles = async () => {
   try {

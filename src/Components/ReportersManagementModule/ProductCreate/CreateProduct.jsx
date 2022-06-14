@@ -174,7 +174,7 @@ function CreateProduct() {
 
               <Grid item md={10.5}>
                 <TextField
-                  rows={7}
+                  rows={2}
                   id="filled-basic"
                   variant="filled"
                   multiline

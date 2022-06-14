@@ -129,9 +129,12 @@ function CreateTeams() {
   return (
     <div>
       <Box padding={4}>
-        <Paper sx={{ padding: 4 }}>
+        <Paper sx={{ padding: 4, backgroundColor: "#c7cad1" }}>
           <form onSubmit={handleSubmit}>
-            <Typography variant="h5" sx={{ mb: 5, fontWeight: "bold" }}>
+            <Typography
+              variant="h5"
+              sx={{ mb: 5, fontWeight: "bold", color: "#183d78" }}
+            >
               <GroupAddIcon sx={{ height: 40, width: 40 }} />
               &nbsp; Create Team
             </Typography>
@@ -164,24 +167,7 @@ function CreateTeams() {
                     <IconButton onClick={handleOpenDialog}>
                       <AddCircleIcon sx={{ color: "gray" }} fontSize="large" />
                     </IconButton>
-                    {/* <IconButton
-                      onClick={handleOpenDialog}
-                      disabled={
-                        teaminputs.teamMembers.length === 0 ? true : false
-                      }
-                    >
-                      <EditIcon sx={{ color: "gray" }} fontSize="large" />
-                    </IconButton> */}
                   </Grid>
-                  {/* <Grid item md={12}>
-                    <Typography
-                      fontSize="0.75rem"
-                      sx={{ ml: 4, letterSpacing: "0.03333em" }}
-                      color="error"
-                    >
-                      {teaminputErrors.teamMembers}
-                    </Typography>
-                  </Grid> */}
                 </Grid>
                 <TeamMemberDialog
                   openDialog={openDialog}
@@ -265,23 +251,12 @@ function CreateTeams() {
                         ))}
                     </TextField>
                   </Grid>
-
-                  {/* <Multiselect
-              options={members}
-              displayValue="fullName"
-            ></Multiselect> */}
                 </Grid>
               </Grid>
             </Grid>
 
-            {/* <Divider sx={{ mt: 5, mb: 5 }}></Divider> */}
-            {/* <FormLabel sx={{ mt: 2, mr: 2 }} className="label">
-          Team Members :
-          <Multiselect options={members} displayValue="fullName"></Multiselect>
-        </FormLabel> */}
             <Grid container>
               <Grid item md={6} sx={{ textAlign: "left" }}>
-                {/* <Link to="/teams" sx={{TextDecoder:"inherit"}}> */}
                 <Button
                   component={Link}
                   to="/teams"
@@ -290,7 +265,6 @@ function CreateTeams() {
                 >
                   View Teams
                 </Button>
-                {/* </Link> */}
               </Grid>
               <Grid item md={6} sx={{ textAlign: "right" }}>
                 <Button
@@ -302,16 +276,6 @@ function CreateTeams() {
                 </Button>
               </Grid>
             </Grid>
-
-            {/* <SnackBar
-       handleCloseSnackBar={handleCloseSnackBar}
-       openSnackBar={openSnackBar}
-       message={
-         flag
-           ? "Team successfully created"
-           : "Team connot be created"
-       }
-     /> */}
           </form>
         </Paper>
         {addSuccessfully ? (

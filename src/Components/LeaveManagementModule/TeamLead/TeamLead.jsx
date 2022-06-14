@@ -13,7 +13,7 @@ const TeamLead = () => {
 
   const fetchData = async () => {
     setTeamLead(
-      await getTeamLead(JSON.parse(localStorage.getItem("user")).employeeID)
+      await getTeamLead(JSON.parse(sessionStorage.getItem("user")).employeeID)
     );
   };
 

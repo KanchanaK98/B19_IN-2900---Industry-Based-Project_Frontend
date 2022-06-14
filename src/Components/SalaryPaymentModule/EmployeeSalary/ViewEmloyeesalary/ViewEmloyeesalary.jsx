@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Grid, Card, Typography, Divider, Button } from "@mui/material";
 import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
 import PaidSharpIcon from "@mui/icons-material/PaidSharp";

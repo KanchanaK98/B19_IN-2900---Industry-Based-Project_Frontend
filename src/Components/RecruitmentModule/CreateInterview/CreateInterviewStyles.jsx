@@ -23,8 +23,8 @@ const useStyles = makeStyles((theme) => ({
   inputs: {
     display: "flex",
     flexDirection: "column",
-    marginTop: theme.spacing(2),
-   
+    marginTop: theme.spacing(3),
+    alignItems: "flex-end",
     justifyContent: "flex-start",
     "& .MuiTextField-root" : {
         width : theme.spacing(30)
@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   },
   texFieldLabel: {
     display: "flex",
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: "center",
    "& .MuiFormLabel-root" : {
     fontWeight: 600,

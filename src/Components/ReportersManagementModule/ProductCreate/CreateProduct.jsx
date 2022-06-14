@@ -110,15 +110,15 @@ function CreateProduct() {
 
   return (
     <div>
-      <Box padding={1} sx={{ mt: 2 }}>
+      <Box padding={1} sx={{ mt: 2,mb:6 }}>
         <form onSubmit={handleSubmit} autoComplete="off">
-          <Paper sx={{ padding: 5 }}>
-            <Typography variant="h5" fontWeight="bold">
+          <Paper sx={{ padding: 5 ,backgroundColor:"#c7cad1"}}>
+            <Typography variant="h5" fontWeight="bold" sx={{color:"#183d78"}}>
               <InventoryIcon /> Create Product
             </Typography>
             <Divider sx={{ mt: 5, mb: 5 }}></Divider>
 
-            <Grid container sx={{ mb: 5 }} spacing={4}>
+            <Grid container sx={{ mb: 2 }} spacing={4}>
               <Grid item md={6}>
                 <Grid container>
                   <Grid item md={3}>
@@ -185,7 +185,7 @@ function CreateProduct() {
                 />
               </Grid>
             </Grid>
-            <Grid container sx={{ mt: 3 }}>
+            <Grid container sx={{ mt: 2}}>
               <Grid item md={1.5}>
                 <FormLabel sx={{ fontWeight: "bold" }}>Team Name:</FormLabel>
               </Grid>

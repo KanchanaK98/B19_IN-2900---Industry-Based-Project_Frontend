@@ -11,7 +11,7 @@ function ProductPage() {
         <Grid container>
           <Grid item md={6}>
           <Link to="/products/create">
-          <Button type="button" variant="contained">
+          <Button type="button" variant="contained" sx={{backgroundColor:"#183d78"}} >
            Create New Product
           </Button>
         </Link>

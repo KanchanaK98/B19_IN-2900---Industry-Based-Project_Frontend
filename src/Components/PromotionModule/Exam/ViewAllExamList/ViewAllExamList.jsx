@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { viewAllExamsApi } from "../../../../Api/PromotionModule/ExamApi/viewAllExamsApi";
 import { deleteScheduledExamApi } from "../../../../Api/PromotionModule/ExamApi/deleteScheduledExamApi";

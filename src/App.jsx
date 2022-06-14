@@ -41,27 +41,47 @@ import DisplayTeamMemberSubmissions from "./Pages/PromotionModule/Evaluations/Te
 import DispalyAndSubmitPaper from "./Components/PromotionModule/Submit/DispalyAndSubmitPaper/DispalyAndSubmitPaper";
 import EvaluatePaper from "./Components/PromotionModule/Evaluation/EvaluatePaper/EvaluatePaper";
 import DisplayMyFeedback from "./Components/PromotionModule/Submit/DisplayFeedback/DisplayFeedback";
-import JobRoleDialogBox from "./Components/ReportersManagementModule/CreateEmployeeForm/JobRoleDialogBox";
 import FindEmployeeSalary from "./Pages/SalaryPaymentModule/EmployeeSalary/FindCurrentEmployeeSalary";
-import DisplayAllEmployees from "./Pages/ReportersManagementModule/DashBoard/DisplayAllEmployees";
 import ViewProfileInfo from "./Components/ReportersManagementModule/DisplayEmployees/ViewProfileInfo";
 import ViewAllExamList from "./Components/PromotionModule/Exam/ViewAllExamList/ViewAllExamList";
 import ScheduleExamForm from "./Components/PromotionModule/Exam/ScheduleExamForm/ScheduleExamForm";
 import UpdateExamForm from "./Components/PromotionModule/Exam/UpdateExamForm/UpdateExamForm";
 import AddMoreQuestionsForm from "./Pages/PromotionModule/Paper/AddMoreQuestions";
 import RecentSection from "./Pages/ReportersManagementModule/DashBoard/RecentSection";
+import SessionExpiryDialog from "./Components/SessionExpiry/SessionExpiryDialog";
+import {LogoutApi} from "./Api/Login/LogoutApi";
 
 function App() {
   const [open, setOpen] = useState(true);
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
+  const [user, setUser] = useState(JSON.parse(sessionStorage.getItem("user")));
+  let timer;
 
   const toggleDrawer = () => {
     setOpen(!open);
   };
   const handleLogOut = () => {
-    localStorage.clear();
+LogoutApi();
+    sessionStorage.clear();
     window.location.replace("/");
   };
+  if (user) {
+    const action = () => {
+      window.location.replace("/sessionExpired");
+    };
+
+    const resetTimer = () => {
+      clearTimeout(timer);
+      timer = setTimeout(action, 1000 * 60 * 50);
+    };
+
+    window.onload = resetTimer;
+    window.onclick = resetTimer;
+    window.onkeypress = resetTimer;
+    window.ontouchstart = resetTimer;
+    window.onmousemove = resetTimer;
+    window.onmousedown = resetTimer;
+    window.addEventListener("scroll", resetTimer, true);
+  }
 
   return (
     <Box sx={{ display: "flex", bgcolor: "rgba(231, 243, 238, 0.4)" }}>
@@ -89,7 +109,17 @@ function App() {
           <Grid item sm={12} md={12}>
             <Routes>
               {/* LogIn */}
-              <Route exact path="/" element={<Login setUser={setUser} />} />
+
+              <Route
+                exact
+                path="/"
+                element={<Login setUser={setUser} user={user} />}
+              />
+              <Route
+                exact
+                path="/sessionExpired"
+                element={<SessionExpiryDialog />}
+              />
               {/* Reporter management */}
               <Route path="/dashboard" element={<DashBord />} />
               <Route path="/profile/update/" element={<EditEmployee />} />

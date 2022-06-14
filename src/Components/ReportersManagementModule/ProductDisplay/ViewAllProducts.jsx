@@ -77,12 +77,12 @@ function ViewAllProducts() {
                 <TableCell>
                   <Grid item md={3}>
                     <IconButton
-                      sx={{ backgroundColor: "#eabbfc" }}
+                      sx={{ backgroundColor: "#183d78" }}
                       component={Link}
                       to={`/products/update/${products._id}`}
                       state={{ product }}
                     >
-                      <EditIcon sx={{ color: "gray" }} fontSize="large" />
+                      <EditIcon sx={{ color: "white" }} fontSize="large" />
                     </IconButton>
                   </Grid>
                 </TableCell>

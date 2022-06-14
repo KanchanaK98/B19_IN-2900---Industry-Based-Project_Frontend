@@ -1,16 +1,16 @@
 import { React, useState, useEffect } from "react";
-import PropTypes from "prop-types";
+
 import SvgIcon from "@mui/material/SvgIcon";
 import { alpha, styled } from "@mui/material/styles";
 import TreeView from "@mui/lab/TreeView";
 import TreeItem, { treeItemClasses } from "@mui/lab/TreeItem";
-import Collapse from "@mui/material/Collapse";
+
 import { viewAllTeams } from "../../../Api/ReportersManagementModule/TeamsApi";
-import { Avatar, Card, Typography } from "@mui/material";
+import { Avatar, Card } from "@mui/material";
 import { Grid } from "@mui/material";
 import GroupsIcon from "@mui/icons-material/Groups";
 import { Box } from "@mui/system";
-import AvatarGroup from '@mui/material/AvatarGroup';
+
 function MinusSquare(props) {
   return (
     <SvgIcon fontSize="inherit" style={{ width: 14, height: 14 }} {...props}>
@@ -43,32 +43,6 @@ function CloseSquare(props) {
   );
 }
 
-// function TransitionComponent(props) {
-//   const style = useSpring({
-//     from: {
-//       opacity: 0,
-//       transform: 'translate3d(20px,0,0)',
-//     },
-//     to: {
-//       opacity: props.in ? 1 : 0,
-//       transform: `translate3d(${props.in ? 0 : 20}px,0,0)`,
-//     },
-//   });
-
-//   return (
-//     <animated.div style={style}>
-//       <Collapse {...props} />
-//     </animated.div>
-//   );
-// }
-
-// TransitionComponent.propTypes = {
-//   /**
-//    * Show the component; triggers the enter or exit states
-//    */
-//   in: PropTypes.bool,
-// };
-
 const StyledTreeItem = styled((props) => (
   //   <TreeItem {...props} TransitionComponent={TransitionComponent} />
   <TreeItem {...props} />
@@ -94,8 +68,6 @@ export default function CustomizedTeamView() {
     fetchData();
   }, []);
 
-  
-  let flag = teams.length;
   return (
     <TreeView
       aria-label="customized"
@@ -116,7 +88,7 @@ export default function CustomizedTeamView() {
         </Box>
       }
       defaultEndIcon={<CloseSquare />}
-      sx={{ height: 740, flexGrow: 1, maxWidth: 400, overflowY: "auto" }}
+      sx={{ height: 625, flexGrow: 1, maxWidth: 400, overflowY: "auto" }}
     >
       <StyledTreeItem nodeId="0" label="TEAMS" sx={{ color: "#0b90bd" }}>
         {teams &&
@@ -130,7 +102,7 @@ export default function CustomizedTeamView() {
                 }}
                 key={team._id}
               >
-                <Box sx={{ m: 1 }} key={team._id}>
+                <Box sx={{ m: 1 }}>
                   <StyledTreeItem
                     nodeId={`${i} + 1`}
                     label={team.teamName}
@@ -146,7 +118,7 @@ export default function CustomizedTeamView() {
 
                               backgroundImage: `linear-gradient(to right, rgba(206, 233, 242), rgba(100, 209, 245))`,
                             }}
-                            key={team._id}
+                            key={j}
                           >
                             <Grid container sx={{ mb: 2 }}>
                               <Grid item md={1}>
@@ -155,7 +127,7 @@ export default function CustomizedTeamView() {
                               <Grid item md={11}>
                                 <StyledTreeItem
                                   sx={{ color: "#06465c" }}
-                                  nodeId={j}
+                                  nodeId={`${j}`}
                                   label={member.employeeName}
                                 />
                               </Grid>

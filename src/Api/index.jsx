@@ -232,9 +232,8 @@ export const getCandidates = () => {
 export const createTeams = (teamcreate) =>
   API.post(`/employee/teamAdd`, teamcreate);
 
-export const updateTeam = (updateteam, id) => 
+export const updateTeam = (updateteam, id) =>
   API.put(`/employee/updateTeam/${id}`, updateteam);
-
 
 export const getEmployeesWithoutTeam = () => {
   return API.get(`/employee/get`);
@@ -252,9 +251,8 @@ export const getAllTeams = () => {
 export const createProduct = (productcreate) =>
   API.post(`/employee/addProduct`, productcreate);
 
-export const updateProduct = (updateProdData, id) => 
+export const updateProduct = (updateProdData, id) =>
   API.put(`/employee/updateProduct/${id}`, updateProdData);
-
 
 export const viewPProducts = (viewproduct) => {
   return API.get(`/employee/viewProducts`);
@@ -263,9 +261,8 @@ export const viewPProducts = (viewproduct) => {
 // leave API
 export const getLeaveBalance = (employeeID) =>
   API.get(`/leave/leaveBalance/${employeeID}`);
-export const requestLeave = (leaveDetail) => 
-   API.post("/leave/request", leaveDetail);
-  
+export const requestLeave = (leaveDetail) =>
+  API.post("/leave/request", leaveDetail);
 
 export const getLeaveList = (employeeId) => API.get("/leave/" + employeeId);
 export const cancelLeave = (id, reason, employeeId) =>

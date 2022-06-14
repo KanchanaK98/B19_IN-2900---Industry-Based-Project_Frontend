@@ -19,12 +19,14 @@ import { viewCurruntSalaryApi } from "../../../../Api/SalaryPaymentModule/Currun
 import { viewAllEmployees } from "../../../../Api/ReportersManagementModule/EmployeeApi";
 import AttachMoneyRoundedIcon from "@mui/icons-material/AttachMoneyRounded";
 import Stack from "@mui/material/Stack";
+import FormHelperText from "@mui/material/FormHelperText";
 import useStyles from "./CreateCurruntSalaryStyles";
 
 export default function CreateCurruntSalary() {
   const classes = useStyles();
   const [error, seterror] = useState(false);
   const [added, setadded] = useState(false);
+  const [fill, setFill] = useState(false);
   const [profiles, setProfiles] = useState([]);
   const [curruntSalaryList, setCurruntSalaryList] = useState([]);
   const [record, setRecord] = useState({
@@ -55,28 +57,80 @@ export default function CreateCurruntSalary() {
   );
   //console.log("comparedeid", comparedEid);
 
+  //--------------validation-----------------------
+  const [inputErrors, setInputErrors] = useState({
+    employeeID: "",
+    basicSalary: "",
+    vehicleAllowance: "",
+    internetAllowance: "",
+  });
+
+  const errorHandle = () => {
+    let isError = false;
+
+    if (!record.EmployeeID) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        employeeID: "EmployeeID is required",
+      }));
+      isError = true;
+    }
+
+    if (!record.BasicSalary) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        basicSalary: "Basic salary is required",
+      }));
+      isError = true;
+    }
+    if (!record.InternetAllowance) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        internetAllowance: "Internet Allowance is required",
+      }));
+      isError = true;
+    }
+    if (!record.VehicleAllowance) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        vehicleAllowance: "Vehicle Allowance is required",
+      }));
+      isError = true;
+    }
+    return isError;
+  };
+  //-----------------------------------------------------
+
   const CreateCurruntSalaryFunc = async (e) => {
     console.log("CreateCurruntSalaryFunc");
     e.preventDefault();
-    if (
-      record.EmployeeID &&
-      record.BasicSalary &&
-      record.InternetAllowance &&
-      record.VehicleAllowance
-    ) {
+    // if (
+    //   record.EmployeeID &&
+    //   record.BasicSalary &&
+    //   record.InternetAllowance &&
+    //   record.VehicleAllowance
+    // ) {
+    if (!errorHandle()) {
       const response = await createCurruntSalaryApi(record);
+      window.location.reload(false);
       if (response.success === true) {
         console.log("success");
+        // setRecord(" ");
         setadded(true);
         setTimeout(() => {
           setadded(false);
         }, 2000);
+      } else {
+        console.log("error");
+        seterror(true);
+        setTimeout(() => {
+          seterror(false);
+        }, 2000);
       }
     } else {
-      console.log("error");
-      seterror(true);
+      setFill(true);
       setTimeout(() => {
-        seterror(false);
+        setFill(false);
       }, 2000);
     }
   };
@@ -126,6 +180,7 @@ export default function CreateCurruntSalary() {
                         variant="filled"
                         fullWidth
                         value={record.EmployeeID}
+                        error={inputErrors.employeeID ? true : false}
                         onChange={(event) => {
                           setRecord({
                             ...record,
@@ -140,6 +195,9 @@ export default function CreateCurruntSalary() {
                           </MenuItem>
                         ))}
                       </Select>
+                      <FormHelperText style={{ color: "#cf0028" }}>
+                        {inputErrors.employeeID}
+                      </FormHelperText>
                     </FormControl>
                   </Grid>
                   <Grid container>
@@ -153,6 +211,8 @@ export default function CreateCurruntSalary() {
                       variant="filled"
                       name="BasicSalary"
                       value={record.BasicSalary}
+                      helperText={inputErrors.basicSalary}
+                      error={inputErrors.basicSalary ? true : false}
                       onChange={(event) => {
                         if (
                           event.target.value !== null &&
@@ -183,6 +243,8 @@ export default function CreateCurruntSalary() {
                       variant="filled"
                       name="InternetAllowance"
                       value={record.InternetAllowance}
+                      helperText={inputErrors.internetAllowance}
+                      error={inputErrors.internetAllowance ? true : false}
                       onChange={(event) => {
                         if (
                           event.target.value != null &&
@@ -211,6 +273,8 @@ export default function CreateCurruntSalary() {
                       name="Vehicle Allowance"
                       fullWidth
                       value={record.VehicleAllowance}
+                      helperText={inputErrors.vehicleAllowance}
+                      error={inputErrors.vehicleAllowance ? true : false}
                       onChange={(event) => {
                         if (
                           event.target.value != null &&
@@ -253,7 +317,15 @@ export default function CreateCurruntSalary() {
       {error ? (
         <Stack sx={{ width: "100%" }} spacing={2}>
           <Alert variant="filled" severity="error">
-            Please enter all the details and Try again!
+            Cannot create salary sheet for existing Salary sheet
+            EmployeeID.Please try to delete and ReCreate or Update it!
+          </Alert>
+        </Stack>
+      ) : null}
+      {fill ? (
+        <Stack sx={{ width: "100%" }} spacing={2}>
+          <Alert variant="filled" severity="warning">
+            Please enter all the details!
           </Alert>
         </Stack>
       ) : null}

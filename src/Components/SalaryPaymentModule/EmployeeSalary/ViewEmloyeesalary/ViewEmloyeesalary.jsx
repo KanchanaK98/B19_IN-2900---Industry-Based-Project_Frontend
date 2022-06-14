@@ -33,7 +33,7 @@ export default function ViewEmloyeesalary() {
             <Grid container spacing={2} columns={12}>
               <Grid item xs={12} align="center">
                 <Typography className={classes.topic}>Salary Sheet</Typography>
-              </Grid>{" "}
+              </Grid>
             </Grid>
             {employeeSalaryList.map((salary, key) => (
               <Card className={classes.card} key={key}>

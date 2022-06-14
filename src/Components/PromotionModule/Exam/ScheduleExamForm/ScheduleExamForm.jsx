@@ -134,7 +134,7 @@ function ScheduleExamForm() {
     // if (ExamID && ExamName && DateScheduled && JobRole && PaperID && Status) {
     if (!errorHandle()) {
       const response = await scheduleExamApi(EmployeeID, examDetails);
-      // window.location.reload(false);
+      window.location.reload(false);
       if (response.success === true) {
         setExamID("");
         setExamName("");
@@ -145,12 +145,12 @@ function ScheduleExamForm() {
         setadded(true);
         setTimeout(() => {
           setadded(false);
-        }, 2000);
+        }, 4000);
       } else {
         seterror(true);
         setTimeout(() => {
           seterror(false);
-        }, 2000);
+        }, 4000);
       }
     } else {
       setFill(true);
@@ -161,7 +161,7 @@ function ScheduleExamForm() {
   };
 
   return (
-    <Box>
+    <Box className={classes.Box}>
       <Grid item sm={12} md={12} className={classes.createButton}>
         <Button
           className={classes.Button}
@@ -285,7 +285,7 @@ function ScheduleExamForm() {
                       >
                         {PaperList.map((option, key) => (
                           <MenuItem value={option.PaperID} key={key}>
-                            {option.PaperID}
+                            {option.PaperID} ({option.PaperName})
                           </MenuItem>
                         ))}
                       </Select>
@@ -320,7 +320,9 @@ function ScheduleExamForm() {
                         //helperText={inputErrors.dateScheduled}
                         //error={inputErrors.dateScheduled ? true : false}
                         onChange={(date) => {
-                          setDateScheduled(date);
+                          //DateScheduled.toLocaleString('IST', { timeZone: 'Asia/Kolkata' })
+                          //toLocaleDateString
+                          setDateScheduled(date.toLocaleDateString("IST"));
                         }}
                         renderInput={(params) => (
                           <TextField

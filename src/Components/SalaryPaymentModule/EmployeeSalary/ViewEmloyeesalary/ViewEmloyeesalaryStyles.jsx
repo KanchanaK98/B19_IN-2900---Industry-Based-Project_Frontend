@@ -6,7 +6,7 @@ const useStyles = makeStyles(() => ({
     height: "100%",
     backgroundColor: "#d7dde0",
     padding: 6,
-    paddingBottom: 20,
+    paddingBottom: "8%",
   },
 
   card: { padding: "20px", backgroundColor: "#e0f2f1" },

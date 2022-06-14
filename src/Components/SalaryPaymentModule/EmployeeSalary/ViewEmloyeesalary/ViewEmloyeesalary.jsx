@@ -17,7 +17,7 @@ export default function ViewEmloyeesalary() {
     }
     fetchData();
   }, [EmployeeID]);
-  console.log("--", employeeSalaryList);
+  //console.log("--", employeeSalaryList);
 
   return (
     <div>
@@ -155,7 +155,7 @@ export default function ViewEmloyeesalary() {
                 View Previous records&nbsp;
                 <ArrowForwardIosSharpIcon />
               </Button>
-            </Grid>{" "}
+            </Grid>
           </Grid>
         </Grid>
       </Box>

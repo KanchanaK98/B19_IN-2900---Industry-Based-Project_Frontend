@@ -152,7 +152,7 @@ function UpdateExamForm() {
   };
 
   return (
-    <Box>
+    <Box className={classes.Box}>
       <Grid item sm={12} md={12} className={classes.createButton}>
         <Button
           className={classes.Button}
@@ -279,7 +279,8 @@ function UpdateExamForm() {
                         value={DateScheduled}
                         disablePast
                         onChange={(date) => {
-                          setDateScheduled(date);
+                          //setDateScheduled(date);
+                          setDateScheduled(date.toLocaleDateString("IST"));
                         }}
                         renderInput={(params) => (
                           <TextField
@@ -369,7 +370,7 @@ function UpdateExamForm() {
                       >
                         {PaperList.map((option, key) => (
                           <MenuItem value={option.PaperID} key={key}>
-                            {option.PaperID}
+                            {option.PaperID} ({option.PaperName})
                           </MenuItem>
                         ))}
                       </Select>
@@ -398,7 +399,7 @@ function UpdateExamForm() {
         <Stack sx={{ width: "100%" }} spacing={2}>
           <Alert severity="success">
             <AlertTitle>Success</AlertTitle>
-            The new Exam is successfully scheduled!
+            Exam is successfully updated!
           </Alert>{" "}
         </Stack>
       ) : null}

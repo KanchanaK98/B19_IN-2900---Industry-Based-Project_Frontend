@@ -72,53 +72,60 @@ const TeamLead = () => {
           </Grid>
         </Grid>
 
-        <Grid container>
-          <Grid>
-            <PhoneIcon />
+        {teamLead.phoneNumber && (
+          <Grid container>
+            <Grid>
+              <PhoneIcon />
+            </Grid>
+            <Typography
+              fontFamily="Segoe UI Emoji"
+              sx={{
+                color: "#607d8b",
+                mt: 1,
+                ml: 2,
+                fontSize: 18,
+                fontWeight: "bold",
+              }}
+            >
+              {teamLead.phoneNumber}
+            </Typography>
           </Grid>
-          <Typography
-            fontFamily="Segoe UI Emoji"
-            sx={{
-              color: "#607d8b",
-              mt: 1,
-              ml: 2,
-              fontSize: 18,
-              fontWeight: "bold",
-            }}
-          >
-            {teamLead.phoneNumber}
-          </Typography>
-        </Grid>
-        <Grid container>
-          <AttachEmailIcon />
-          <Typography
-            fontFamily="Segoe UI Emoji"
-            sx={{
-              color: "#607d8b",
-              mt: 1,
-              ml: 2,
-              fontSize: 18,
-              fontWeight: "bold",
-            }}
-          >
-            {teamLead.companyEmail}
-          </Typography>
-        </Grid>
-        <Grid container>
-          <LocationOnIcon />
-          <Typography
-            fontFamily="Segoe UI Emoji"
-            sx={{
-              color: "#607d8b",
-              mt: 1,
-              ml: 2,
-              fontSize: 18,
-              fontWeight: "bold",
-            }}
-          >
-            {teamLead.streetNo + ", " + teamLead.city}
-          </Typography>
-        </Grid>
+        )}
+        {teamLead.companyEmail && (
+          <Grid container>
+            <AttachEmailIcon />
+            <Typography
+              fontFamily="Segoe UI Emoji"
+              sx={{
+                color: "#607d8b",
+                mt: 1,
+                ml: 2,
+                fontSize: 18,
+                fontWeight: "bold",
+              }}
+            >
+              {teamLead.companyEmail}
+            </Typography>
+          </Grid>
+        )}
+
+        {teamLead.streetNo && teamLead.city && (
+          <Grid container>
+            <LocationOnIcon />
+            <Typography
+              fontFamily="Segoe UI Emoji"
+              sx={{
+                color: "#607d8b",
+                mt: 1,
+                ml: 2,
+                fontSize: 18,
+                fontWeight: "bold",
+              }}
+            >
+              {teamLead.streetNo + ", " + teamLead.city}
+            </Typography>
+          </Grid>
+        )}
       </Paper>
     </Box>
   );

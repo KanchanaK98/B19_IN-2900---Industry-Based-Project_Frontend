@@ -1,27 +1,28 @@
-import * as api from '../index';
 
-export const requestLeave =async (leave) => {
+import * as api from "../index";
+
+export const requestLeave = async (leave) => {
   try {
-    const { leaveType, reason, startDate, endDate, leaveMethod } =
-      leave;
+    const { leaveType, reason, startDate, endDate, leaveMethod } = leave;
     const leaveData = {
       leaveType,
       reason,
       startDate,
-      endDate : (leaveMethod !=="multiple Day") ? startDate : endDate,
+      endDate: leaveMethod !== "multiple Day" ? startDate : endDate,
       leaveMethod,
-      employeeId: JSON.parse(localStorage.getItem("user")).employeeID
+      employeeId: JSON.parse(localStorage.getItem("user")).employeeID,
     };
-   const response = await api.requestLeave(leaveData);
-  return response.data;
+    const response = await api.requestLeave(leaveData);
+    console.log(response)
+    return response.data;
   } catch (error) {
     console.log(error);
   }
 };
 
-export const getLeaveBalance = async (employeeID) => {
+export const getLeaveBalance = async () => {
   try {
-    const {data} = await api.getLeaveBalance(employeeID);
+    const { data } = await api.getLeaveBalance(JSON.parse(localStorage.getItem("user")).employeeID);
     return data.remainingLeaves;
   } catch (error) {
     console.log(error);
@@ -30,57 +31,49 @@ export const getLeaveBalance = async (employeeID) => {
 
 export const getLeaveHistory = async () => {
   try {
-    const {data} = await api.getLeaveList(JSON.parse(localStorage.getItem("user")).employeeID);
+    const { data } = await api.getLeaveList(
+      JSON.parse(localStorage.getItem("user")).employeeID
+    );
     //console.log(data.leaveHistory);
     return data.leaveHistory;
   } catch (error) {
     console.log(error);
   }
-}
+};
 
-export const cancelLeave = async (reason, leaveID, employeeID) => {
+export const cancelLeave = async (reason, leaveID) => {
   try {
-    const {data} = await api.cancelLeave(leaveID,reason, employeeID);
-   
+    const { data } = await api.cancelLeave(leaveID, reason, JSON.parse(localStorage.getItem("user")).employeeID);
+
     return data;
   } catch (error) {
     console.log(error);
   }
-}
+};
 
-
-export const getRequestedLeaves= async() =>{
- 
-  const response =  await api.getRequestedLeave(JSON.parse(localStorage.getItem("user")).employeeID);
+export const getRequestedLeaves = async () => {
+  const response = await api.getRequestedLeave(
+    JSON.parse(localStorage.getItem("user")).employeeID
+  );
   //console.log(response);
   return response.data.requestedLeave;
-}
+};
 
-export const responseRequestedLeave = async(id,reason) =>{
-  try{
-    const response = await api.responseRequestedLeave(id,{reason:reason});
-    
+export const responseRequestedLeave = async (id, reason) => {
+  try {
+    const response = await api.responseRequestedLeave(id, { reason: reason });
+
     console.log(response);
-
-    }
-
-  
-  catch(error){
+  } catch (error) {
     console.log(error);
   }
-}
-export const getTeamLead= async() =>{
- 
-  const response =  await api.getTeamLead(JSON.parse(localStorage.getItem("user")).employeeID);
-  console.log(response);
-  return response.data.teamLeader; 
-}
+};
+export const getTeamLead = async () => {
+  const response = await api.getTeamLead(
+    JSON.parse(localStorage.getItem("user")).employeeID
+  );
 
-
-
-
-
-
-
-
-
+  //const TeamLead = object.assign(response.data.teamLeader,response.data.teamName);
+  //console.log(TeamLead);
+  return response.data.teamLeader;
+};

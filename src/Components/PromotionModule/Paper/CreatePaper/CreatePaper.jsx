@@ -1,145 +1,3 @@
-// import React, { useState } from "react";
-// import { makeStyles } from "@mui/styles";
-// import Box from "@mui/material/Box";
-// import TextField from "@mui/material/TextField";
-// import { Button, Grid } from "@mui/material";
-// import { createPaperApi } from "../../../Api/PromotionModule/PaperApi/createPaperApi";
-
-// const useStyles = makeStyles((theme) => ({
-//   root: {
-//     " & > * ": {
-//       margin: theme.spacing(0.5),
-//       width: "24ch",
-//       flexDirection: "column",
-//       alignItems: "center",
-//     },
-//   },
-// }));
-
-// export default function CreatePaper() {
-//   const classes = useStyles();
-//   const [record, setRecord] = useState({
-//     PaperID: "",
-//     PaperName: "",
-//     PaperType: "",
-//     DateCreated: "",
-//     questions: [],
-//   });
-
-//   const CreatePaperFunc = () => {
-//     console.log("call CreatePaperFunc");
-//     createPaperApi(record).then((response) => {
-//       console.log("from", response);
-//     });
-
-//     //install axios
-//     // let obj = {
-//     //   EmployeeID: "EE002",
-//     //   BasicSalary: 100000,
-//     //   VehicleAllowance: 5000,
-//     //   InternetAllowance: 1000,
-//     // };
-//     // axios
-//     //   .post("http://localhost:8070/salary/currentSalary/create", record)
-//     //   .then((response) => {
-//     //     console.log(response)}).error((err) => {
-//     //       console.log(err);
-//     //     });
-
-//     // .then(() => {
-//     //   window.location.reload(false); //do not need to refresh, auto realoads
-//     // });
-//     console.log(record);
-//   };
-
-//   // const BacktoAllQuestionsFunc = () => {
-//   //   console.log("back is called");
-//   //   viewAllQuestionsApi().then((response) => {
-//   //     console.log("from Back", response);
-//   //   });
-//   // };
-
-//   return (
-//     <Box>
-//       <Grid align="center" width="50">
-//         <div>
-//           <h3>Create New Paper</h3>
-//         </div>
-
-//         <form className={classes.root} noValidate autoComplete="off">
-//           <Grid>
-//             <TextField
-//               type="text"
-//               label="Paper ID"
-//               variant="outlined"
-//               id="outlined-basic"
-//               vlaue={record.PaperID}
-//               onChange={(event) => {
-//                 setRecord({ ...record, PaperID: event.target.value });
-//               }}
-//             />
-//           </Grid>
-//           <TextField
-//             type="text"
-//             id="outlined-basic"
-//             label="Paper Name"
-//             variant="outlined"
-//             value={record.PaperName}
-//             onChange={(event) =>
-//               setRecord({
-//                 ...record,
-//                 PaperName: event.target.value,
-//               })
-//             }
-//           />
-//           <Grid>
-//             <TextField
-//               type="text"
-//               id="outlined-basic"
-//               label="Paper Type"
-//               variant="outlined"
-//               value={record.PaperType}
-//               onChange={(event) =>
-//                 setRecord({
-//                   ...record,
-//                   PaperType: event.target.value,
-//                 })
-//               }
-//             />
-//           </Grid>
-//           <Grid>
-//             <TextField
-//               type="text"
-//               id="outlined-basic"
-//               label="Questions"
-//               variant="outlined"
-//               value={record.questions}
-//               onChange={(event) =>
-//                 setRecord({
-//                   ...record,
-//                   questions: event.target.value,
-//                 })
-//               }
-//             />
-//           </Grid>
-//           <Button variant="contained" color="primary" onClick={CreatePaperFunc}>
-//             {" "}
-//             Create
-//           </Button>
-//           {/* <Button
-//             variant="contained"
-//             color="primary"
-//             onClick={BacktoAllQuestionsFunc}
-//           >
-//             {" "}
-//             View All Questions
-//           </Button> */}
-//         </form>
-//       </Grid>
-//     </Box>
-//   );
-// }
-
 import React, { useState, useEffect } from "react";
 import {
   Box,
@@ -164,15 +22,17 @@ import Checkbox from "@mui/material/Checkbox";
 import Select from "@mui/material/Select";
 import { createPaperApi } from "../../../../Api/PromotionModule/PaperApi/createPaperApi";
 import { viewAllQuestionsApi } from "../../../../Api/PromotionModule/QuestionApi/viewAllQuestionsApi";
+import { viewAllPapersListApi } from "../../../../Api/PromotionModule/PaperApi/viewAllPapersListApi";
 import useStyles from "./CreatePaperStyles";
 
-function ScheduleExamForm() {
+function CreatePaperForm() {
   const classes = useStyles();
   const [paperId, setPaperID] = useState("");
   const [papername, setPaperName] = useState("");
   const [paperType, setPaperType] = useState("");
   const [QuestionList, setQuestionList] = useState([]);
   const [selectedQuestions, setSelectedQuestions] = useState([]);
+  const [PaperList, setPaperList] = useState([]);
   const [error, seterror] = useState(false);
   const [added, setadded] = useState(false);
   const [fill, setFill] = useState(false);
@@ -187,14 +47,7 @@ function ScheduleExamForm() {
       },
     },
   };
-  //const { EmployeeID } = useParams();
 
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     setPaperList(await viewAllPapersListApi());
-  //   }
-  //   fetchData();
-  // }, []);
   useEffect(() => {
     async function fetchData() {
       setQuestionList(await viewAllQuestionsApi());
@@ -202,42 +55,103 @@ function ScheduleExamForm() {
     fetchData();
   }, []);
 
-  console.log("paperId", paperId);
-  console.log("papername", papername);
-  console.log("paperType", paperType);
-  console.log("selectedQuestions", selectedQuestions);
+  useEffect(() => {
+    async function fetchData() {
+      setPaperList(await viewAllPapersListApi());
+    }
+    fetchData();
+  }, []);
+
+  // console.log("paperId", paperId);
+  // console.log("papername", PaperList.length);
+  // console.log("paperType", paperType);
+  // console.log("selectedQuestions", selectedQuestions);
+
+  //--------------validation-----------------------
+  const [inputErrors, setInputErrors] = useState({
+    paperId: "",
+    papername: "",
+    paperType: "",
+    selectedQuestions: "",
+  });
+
+  const errorHandle = () => {
+    let isError = false;
+
+    if (!paperId) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        paperId: "Paper ID is required",
+      }));
+      isError = true;
+    }
+    if (!papername) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        papername: "paper Name is required",
+      }));
+      isError = true;
+    }
+    if (!paperType) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        paperType: "Paper Type is required",
+      }));
+      isError = true;
+    }
+    if (selectedQuestions.length === 0) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        selectedQuestions: "Please select Questions",
+      }));
+      isError = true;
+    }
+
+    const regExp = /^[\w]*$/i;
+    if (!papername.match(regExp)) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        papername: "Only A-Z, a-z, 0-9, _ are valid",
+      }));
+      isError = true;
+    }
+    return isError;
+  };
+  //-----------------------------------------------------
 
   const CreatePaperFunc = async (e) => {
     e.preventDefault();
-    const newPaper = {
-      paperId,
-      papername,
-      paperType,
-      selectedQuestions,
-    };
-    console.log("record", newPaper);
-    if (paperId && papername && paperType && selectedQuestions) {
+
+    if (!errorHandle()) {
+      const newPaper = {
+        paperId,
+        papername,
+        paperType,
+        selectedQuestions,
+      };
+      console.log("record", newPaper);
+      //if (paperId && papername && paperType && selectedQuestions) {
       const response = await createPaperApi(newPaper);
+      window.location.reload(false);
       console.log("response", response);
       if (response.success === true) {
         setadded(true);
         setTimeout(() => {
           setadded(false);
-        }, 2000);
+        }, 4000);
       } else {
         seterror(true);
         setTimeout(() => {
           seterror(false);
-        }, 2000);
+        }, 4000);
       }
     } else {
       setFill(true);
       setTimeout(() => {
         setFill(false);
-      }, 2000);
+      }, 4000);
     }
   };
-
   return (
     <Box>
       <Grid item sm={12} md={12} className={classes.createButton}>
@@ -255,7 +169,7 @@ function ScheduleExamForm() {
         <Grid container>
           <Grid item sm={12} md={12} className={classes.formHeader}>
             <EventNoteRoundedIcon />
-            <Typography variant="h4">Schedule New Exam</Typography>
+            <Typography variant="h4">Create New Paper</Typography>
           </Grid>
 
           <Grid item sm={12} md={12}>
@@ -272,10 +186,13 @@ function ScheduleExamForm() {
                       <InputLabel>Paper Id</InputLabel>
                     </Grid>
                     <TextField
-                      label="ID"
+                      id="filled-basic"
+                      label="PaperID"
                       variant="outlined"
                       name="paperId"
                       value={paperId}
+                      helperText={inputErrors.paperId}
+                      error={inputErrors.paperId ? true : false}
                       onChange={(e) => {
                         setPaperID(e.target.value);
                       }}
@@ -287,7 +204,7 @@ function ScheduleExamForm() {
                     <Grid item sm={4} md={4} className={classes.texFieldLabel}>
                       <InputLabel>Paper Type</InputLabel>
                     </Grid>
-                    <FormControl sx={{ m: 2, minWidth: 120 }}>
+                    <FormControl sx={{ m: 1, minWidth: 120 }}>
                       <InputLabel id="demo-simple-select-helper-label">
                         Paper Type
                       </InputLabel>
@@ -297,7 +214,9 @@ function ScheduleExamForm() {
                         id="demo-simple-select-helper"
                         value={paperType}
                         fullWidth
-                        label="papername"
+                        label="paper Type"
+                        //helperText={inputErrors.paperType}
+                        error={inputErrors.paperType ? true : false}
                         onChange={(e) => {
                           setPaperType(e.target.value);
                         }}
@@ -326,6 +245,9 @@ function ScheduleExamForm() {
                           Product Manager
                         </MenuItem>
                       </Select>
+                      <FormHelperText style={{ color: "#cf0028" }}>
+                        {inputErrors.paperType}
+                      </FormHelperText>
                     </FormControl>
                   </Grid>
 
@@ -338,6 +260,8 @@ function ScheduleExamForm() {
                       variant="outlined"
                       name="PaperName"
                       value={papername}
+                      helperText={inputErrors.papername}
+                      error={inputErrors.papername ? true : false}
                       onChange={(e) => {
                         setPaperName(e.target.value);
                       }}
@@ -360,7 +284,8 @@ function ScheduleExamForm() {
                         id="demo-multiple-checkbox"
                         multiple
                         value={selectedQuestions}
-                        // onChange={handleChange}
+                        // helperText={inputErrors.selectedQuestions}
+                        error={inputErrors.selectedQuestions ? true : false}
                         input={<OutlinedInput label="Tag" />}
                         renderValue={(selected) => selected.join(", ")}
                         MenuProps={MenuProps}
@@ -386,6 +311,9 @@ function ScheduleExamForm() {
                           </MenuItem>
                         ))}
                       </Select>
+                      <FormHelperText style={{ color: "r#cf0028ed" }}>
+                        {inputErrors.selectedQuestions}
+                      </FormHelperText>
                     </FormControl>
                   </Grid>
                 </Grid>
@@ -397,7 +325,7 @@ function ScheduleExamForm() {
                   size="large"
                   type="submit"
                 >
-                  Schedule
+                  Create
                 </Button>
               </Grid>
             </form>
@@ -421,8 +349,8 @@ function ScheduleExamForm() {
       ) : null}
       {fill ? (
         <Stack sx={{ width: "100%" }} spacing={2}>
-          <Alert variant="filled" severity="error">
-            Please enter all the details!
+          <Alert variant="filled" severity="warning">
+            Please enter all the details or Check them again!
           </Alert>
         </Stack>
       ) : null}
@@ -430,4 +358,4 @@ function ScheduleExamForm() {
   );
 }
 
-export default ScheduleExamForm;
+export default CreatePaperForm;

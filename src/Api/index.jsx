@@ -260,8 +260,10 @@ export const viewPProducts = (viewproduct) => {
 // leave API
 export const getLeaveBalance = (employeeID) =>
   API.get(`/leave/leaveBalance/${employeeID}`);
-export const requestLeave = (leaveDetail) =>
-  API.post("/leave/request", leaveDetail);
+export const requestLeave = (leaveDetail) => 
+   API.post("/leave/request", leaveDetail);
+  
+
 export const getLeaveList = (employeeId) => API.get("/leave/" + employeeId);
 export const cancelLeave = (id, reason, employeeId) =>
   API.post(`/leave/cancel/${id}`, { reason, employeeId });

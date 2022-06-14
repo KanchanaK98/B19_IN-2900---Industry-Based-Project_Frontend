@@ -3,7 +3,6 @@ import * as api from "../index";
 export const fetchEmployees = async () => {
   try {
     const { data } = await api.fetchEmployees();
-    console.log(data.data);
     let employees = [];
     await Promise.all(
       data.data.map(async (employee) => {
@@ -23,7 +22,6 @@ export const fetchEmployees = async () => {
         });
       })
     );
-    console.log(employees);
     return employees;
   } catch (error) {
     console.log(error);
@@ -52,9 +50,7 @@ export const createInterview = async (interview) => {
       InterviewDate: InterviewDate.toDateString(),
       InterviewTime: InterviewTime.toTimeString(),
       Interviewers,
-      //: interviewers,
     };
-    console.log(interviewData);
     const response = await api.createInterview(interviewData);
     return response.data;
   } catch (error) {
@@ -95,7 +91,6 @@ export const updateInterview = async (interview, interviewID) => {
       InterviewTime: new Date(InterviewTime).toTimeString(),
       InterviewerID: interviewers,
     };
-    //console.log(interviewData);
     const { data } = await api.updateInterview(interviewData, interviewID);
 
     return data;
@@ -115,7 +110,47 @@ export const cancelInterview = async (interviewID) => {
 
 export const markedCandidate = async (marks, interviewID) => {
   try {
-    const { data } = await api.markedCandidate(marks, interviewID);
+    const {
+      interviewer,
+      knowledgeOfSpecificJobSkills,
+      relatedJobExperience,
+      relatedEducationOrTraining,
+      initiative,
+      communicationOrListeningSkills,
+      attitude,
+      interestInCompanyOrPosition,
+      strengths,
+      weaknesses,
+      additionalComments,
+      selectedForTheSecondInterview,
+      selected,
+      Reject,
+    } = marks;
+    const recommendation =
+      selectedForTheSecondInterview === true
+        ? "Passed 1st"
+        : selected === true
+        ? "Selected"
+        : Reject === true
+        ? "Rejected"
+        : "Hold";
+    const { data } = await api.markedCandidate(
+      {
+        interviewer,
+        knowledgeOfSpecificJobSkills,
+        relatedJobExperience,
+        relatedEducationOrTraining,
+        initiative,
+        communicationOrListeningSkills,
+        attitude,
+        interestInCompanyOrPosition,
+        strengths,
+        weaknesses,
+        additionalComments,
+        recommendation,
+      },
+      interviewID
+    );
     return data;
   } catch (error) {
     console.log(error);
@@ -124,13 +159,23 @@ export const markedCandidate = async (marks, interviewID) => {
 
 export const getInterviewStats = async () => {
   try {
-    console.log("hi1")
     const { data } = await api.getInterviewStats(
       JSON.parse(sessionStorage.getItem("user")).employeeID
     );
-    console.log("hi2")
-    console.log(data)
     return data.InterviewStats;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getInterviewResult = async (interviewType, candidateID) => {
+  try {
+    const interview = {
+      interviewType: interviewType,
+      candidateID: candidateID,
+    };
+    const { data } = await api.getInterviewResult(interview);
+     return data.InterviewResult;
   } catch (error) {
     console.log(error);
   }

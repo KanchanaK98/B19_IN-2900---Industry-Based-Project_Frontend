@@ -4,6 +4,8 @@ import {
   Box,
   Grid,
   IconButton,
+  Menu,
+  MenuItem,
   Paper,
   Skeleton,
   Typography,
@@ -12,9 +14,37 @@ import React, { useEffect, useState } from "react";
 import { fetchRecentCandidates } from "../../../Api/RecruitmentModule/CandidateApi";
 import useStyles from "./RecentCandidateStyles";
 import { Scrollbars } from "react-custom-scrollbars";
+import { getInterviewResult } from "../../../Api/RecruitmentModule/InterviewApi";
+import InterviewResult from "../InterviewResult/InterviewResult";
 
 const RecentCandidate = () => {
   const [candidates, setCandidates] = useState(null);
+  const [selectedCandidates, setSelectedCandidates] = useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [openDialog, setOpenDialog] = useState(false);
+  const openMenu = Boolean(anchorEl);
+  const [interviewResult, setInterviewResult] = useState(null);
+
+  const handleOpenMenu = (event, candidate) => {
+    setSelectedCandidates(candidate);
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const viewInterviewResult = async (interviewType) => {
+    setInterviewResult(
+      await getInterviewResult(interviewType, selectedCandidates._id)
+    );
+
+    setOpenDialog(true);
+  };
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+    setSelectedCandidates(null);
+  };
+
   const fetchData = async () => {
     setCandidates(await fetchRecentCandidates());
   };
@@ -30,7 +60,7 @@ const RecentCandidate = () => {
         Recent Candidates
       </Typography>
       <Paper elevation={5} className={classes.paper}>
-        <Scrollbars style={{height: 600}}>
+        <Scrollbars style={{ height: 600 }}>
           {!candidates ? (
             <Grid className={classes.skeleton}>
               <Skeleton variant="rectangular" width={310} height={60} />
@@ -55,7 +85,7 @@ const RecentCandidate = () => {
                     color={
                       candidate.status === "Recruited"
                         ? "success"
-                        : candidate.status === "Failed"
+                        : candidate.status === "Rejected"
                         ? "error"
                         : "primary"
                     }
@@ -67,7 +97,7 @@ const RecentCandidate = () => {
                     color={
                       candidate.status === "Recruited"
                         ? "green"
-                        : candidate.status === "Failed"
+                        : candidate.status === "Rejected"
                         ? "error"
                         : "primary"
                     }
@@ -77,15 +107,71 @@ const RecentCandidate = () => {
                   </Typography>
                 </Grid>
                 <Grid item md={1}>
-                  <IconButton>
+                  <IconButton
+                    onClick={(event) => {
+                      handleOpenMenu(event, candidate);
+                    }}
+                    aria-controls={openMenu ? "account-menu" : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={openMenu ? "true" : undefined}
+                    disabled={candidate.status === "Initiated" ? true : false}
+                  >
                     <MoreVert />
                   </IconButton>
+                  <Menu
+                    anchorEl={anchorEl}
+                    open={openMenu}
+                    onClose={handleClose}
+                    onClick={handleClose}
+                    transformOrigin={{ horizontal: "right", vertical: "top" }}
+                    anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+                    PaperProps={{
+                      elevation: 0,
+                      sx: {
+                        overflow: "visible",
+                        filter: "drop-shadow(0px 1px 2px rgba(0,0,0,0.1))",
+                        "& .MuiAvatar-root": {
+                          width: 32,
+                          height: 32,
+                          ml: -0.5,
+                          mr: 1,
+                        },
+                        "&:before": {
+                          content: '""',
+                          display: "block",
+                          position: "absolute",
+                          top: 0,
+                          right: 14,
+                          width: 10,
+                          height: 10,
+                          bgcolor: "background.paper",
+                          transform: "translateY(-50%) rotate(45deg)",
+                          zIndex: 0,
+                        },
+                      },
+                    }}
+                  >
+                    <MenuItem onClick={() => viewInterviewResult("Technical")}>
+                      Technical Interview
+                    </MenuItem>
+                    <MenuItem onClick={() => viewInterviewResult("HR")}>
+                      HR Interview
+                    </MenuItem>
+                  </Menu>
                 </Grid>
               </Grid>
             ))
           )}
         </Scrollbars>
       </Paper>
+      {selectedCandidates && interviewResult && (
+        <InterviewResult
+          openDialog={openDialog}
+          handleCloseDialog={handleCloseDialog}
+          selectedCandidates={selectedCandidates}
+          interviewResult={interviewResult}
+        />
+      )}
     </Box>
   );
 };

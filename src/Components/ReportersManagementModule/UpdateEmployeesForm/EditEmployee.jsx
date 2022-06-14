@@ -16,7 +16,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import Stack from "@mui/material/Stack";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { Link, useLocation } from "react-router-dom";
-import { Alert, AlertTitle, Typography } from "@mui/material";
+import { Alert, AlertTitle, MenuItem, Typography } from "@mui/material";
 import { updateEmployee } from "../../../Api/ReportersManagementModule/EmployeeApi";
 import DeleteIcon from "@mui/icons-material/Delete";
 function EditEmployee() {
@@ -30,14 +30,11 @@ function EditEmployee() {
     jobType: "",
     employeeID: "",
   });
-  const [removeImage, setRemoveImage] = useState();
-  
+
   const location = useLocation();
   const { employee } = location.state;
-  // console.log({ employee: employee, mes: "hi" });
 
   const [inputs, setInputs] = useState({
-    // employeeID: employee.user.employeeID,
     employeeFirstName: employee.user.employeeFirstName,
     employeeLastName: employee.user.employeeLastName,
     streetNo: employee.user.streetNo ? employee.user.streetNo : "",
@@ -69,13 +66,28 @@ function EditEmployee() {
 
   const [addSuccessfully, setAddSuccessfully] = useState(false);
   const [notAdded, setnotAdded] = useState(false);
-
+  const [notUpdated, setNotUpdated] = useState(false);
+  const jobRoles = [
+    "Software Engineer",
+    "Senior Software Engineer",
+    "HR Manager",
+    "IT Employee",
+    "CTO",
+    "Associate Software Engineer",
+    "Software Architect",
+    "Tech Lead",
+    "UI/UX Designer",
+    "Business Analyst",
+    "Intern",
+    "Product Manager",
+  ];
   const handleChange = (e) => {
     setInputs((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
     }));
   };
+
   //----------validation-----------------------------
   const errorHandle = () => {
     let isError = false;
@@ -154,13 +166,28 @@ function EditEmployee() {
     }
     return isError;
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!errorHandle()) {
       const response = await updateEmployee(inputs);
-      setAddSuccessfully(true);
+      // console.log(response);
+      if (response.success === true) {
+        setAddSuccessfully(true);
+        setTimeout(() => {
+          setAddSuccessfully(false);
+        }, 2000);
+      }
+      if (response.success === false) {
+        setNotUpdated(true);
+        setTimeout(() => {
+          setNotUpdated(false);
+        }, 2000);
+      }
+    } else {
+      setnotAdded(true);
       setTimeout(() => {
-        setAddSuccessfully(false);
+        setnotAdded(false);
       }, 2000);
     }
   };
@@ -246,8 +273,6 @@ function EditEmployee() {
                         />
                       </IconButton>
                     </label>
-
-                    
                   </Grid>
 
                   <Grid
@@ -358,18 +383,16 @@ function EditEmployee() {
                           </FormLabel>
                         </Grid>
                         <Grid item xs={6} md={9}>
-                        
-                            <TextField
-                              id="filled-basic"
-                              variant="filled"
-                              name="NIC"
-                              value={inputs.NIC}
-                              onChange={handleChange}
-                              error={inputErrors.NIC ? true : false}
-                              helperText={inputErrors.NIC}
-                              fullWidth
-                            />
-                         
+                          <TextField
+                            id="filled-basic"
+                            variant="filled"
+                            name="NIC"
+                            value={inputs.NIC}
+                            onChange={handleChange}
+                            error={inputErrors.NIC ? true : false}
+                            helperText={inputErrors.NIC}
+                            fullWidth
+                          />
                         </Grid>
                       </Grid>
                     </Grid>
@@ -480,113 +503,95 @@ function EditEmployee() {
                     <Grid item xs={6}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={3}>
-                         
-                            <FormLabel
-                              sx={{ fontWeight: "bold", ml: 1, mt: 2 }}
-                              className="label"
-                            >
-                              Employee ID :
-                            </FormLabel>
-                          
+                          <FormLabel
+                            sx={{ fontWeight: "bold", ml: 1, mt: 2 }}
+                            className="label"
+                          >
+                            Job Role :
+                          </FormLabel>
                         </Grid>
                         <Grid item xs={6} md={9}>
-                        
-                            <TextField
-                              id="filled-basic"
-                              label=" Employee ID"
-                              variant="filled"
-                              name="employeeID"
-                              value={inputs.employeeID}
-                              onChange={handleChange}
-                              error={inputErrors.employeeID ? true : false}
-                              helperText={inputErrors.employeeID}
-                              fullWidth
-                            />
-                         
+                          <TextField
+                            id="data"
+                            label="Job Role"
+                            variant="filled"
+                            name="jobRole"
+                            select
+                            value={inputs.jobRole}
+                            onChange={handleChange}
+                            fullWidth
+                            SelectProps={{
+                              renderValue: (job) => job,
+                            }}
+                          >
+                            {jobRoles.map((job) => (
+                              <MenuItem value={job} key={job}>
+                                {job}
+                              </MenuItem>
+                            ))}
+                          </TextField>
                         </Grid>
                       </Grid>
                     </Grid>
                     <Grid item xs={6}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={3}>
-                         
-                            <FormLabel
-                              sx={{ fontWeight: "bold", ml: 1, mt: 2 }}
-                              className="label"
-                            >
-                              Job Type:
-                            </FormLabel>
-                       
+                          <FormLabel
+                            sx={{ fontWeight: "bold", ml: 1, mt: 2 }}
+                            className="label"
+                          >
+                            Job Type:
+                          </FormLabel>
                         </Grid>
                         <Grid item xs={6} md={9}>
-                        
-                            <TextField
-                              id="filled-basic"
-                              label=" Job Type"
-                              variant="filled"
-                              name="jobType"
-                              value={inputs.jobType}
-                              onChange={handleChange}
-                              error={inputErrors.jobType ? true : false}
-                              helperText={inputErrors.jobType}
-                              fullWidth
-                            />
-                          
+                          <TextField
+                            id="filled-basic"
+                            label=" Job Type"
+                            variant="filled"
+                            name="jobType"
+                            value={inputs.jobType}
+                            onChange={handleChange}
+                            error={inputErrors.jobType ? true : false}
+                            helperText={inputErrors.jobType}
+                            fullWidth
+                          />
                         </Grid>
                       </Grid>
                     </Grid>
                     <Grid item xs={6}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={3}>
-                        
-                            <FormLabel
-                              sx={{ fontWeight: "bold", ml: 1, mt: 2 }}
-                              className="label"
-                            >
-                              Status :
-                            </FormLabel>
-                         
+                          <FormLabel
+                            sx={{ fontWeight: "bold", ml: 1, mt: 2 }}
+                            className="label"
+                          >
+                            Status :
+                          </FormLabel>
                         </Grid>
                         <Grid item xs={6} md={9}>
-                         
-                            <TextField
-                              id="filled-basic"
-                              label=" Status"
-                              variant="filled"
-                              name="status"
-                              value={inputs.status}
-                              onChange={handleChange}
-                              fullWidth
-                            />
-                          
+                          <TextField
+                            id="filled-basic"
+                            label="Status"
+                            variant="filled"
+                            name="status"
+                            value={inputs.status}
+                            onChange={handleChange}
+                            select
+                            selectprops={{ renderValue: inputs.status }}
+                            fullWidth
+                          >
+                            <MenuItem value={"Probationary"}>
+                              Probationary
+                            </MenuItem>
+                            <MenuItem value={"Permenent"}>Permenent</MenuItem>
+                          </TextField>
                         </Grid>
                       </Grid>
                     </Grid>
                     <Grid item xs={6} sx={{ mb: 1 }}>
                       <Grid container spacing={2}>
-                        <Grid item xs={6} md={3}>
-                         
-                            <FormLabel
-                              sx={{ fontWeight: "bold", ml: 1, mt: 2 }}
-                              className="label"
-                            >
-                              Job Role :
-                            </FormLabel>
-                          
-                        </Grid>
-                        <Grid item xs={6} md={9}>
-                         
-                            <TextField
-                              id="filled-basic"
-                              label="Job Role"
-                              variant="filled"
-                              name="jobRole"
-                              value={inputs.jobRole}
-                              onChange={handleChange}
-                              fullWidth
-                            />
-                        
-                        </Grid>
+                        <Grid item xs={6} md={3}></Grid>
+                        <Grid item xs={6} md={9}></Grid>
                       </Grid>
                     </Grid>
                     <Grid item sm={12} md={12}>
@@ -791,6 +796,13 @@ function EditEmployee() {
               </Stack>
             ) : null}
             {notAdded ? (
+              <Stack sx={{ width: "100%" }} spacing={2}>
+                <Alert variant="filled" severity="error">
+                  Please enter correct details!
+                </Alert>
+              </Stack>
+            ) : null}
+            {notUpdated ? (
               <Stack sx={{ width: "100%" }} spacing={2}>
                 <Alert variant="filled" severity="error">
                   Profile is not updated!

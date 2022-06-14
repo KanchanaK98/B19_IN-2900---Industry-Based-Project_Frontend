@@ -3,7 +3,7 @@ import { Typography, Button, Card, Grid, Avatar, Divider } from "@mui/material";
 import { Link } from "react-router-dom";
 function DisplayTeam({ team }) {
   const { _id, teamName, teamLeadID, TeamWithEmp, ProductOfTeam } = team;
-  
+  console.log(ProductOfTeam);
   return (
     <div>
       <Card
@@ -17,8 +17,6 @@ function DisplayTeam({ team }) {
           backgroundColor: "#e4ecf7",
         }}
       >
-       
-
         <Typography
           align="center"
           variant="h6"
@@ -27,11 +25,6 @@ function DisplayTeam({ team }) {
           {teamName}
         </Typography>
         <Grid sx={{ justifyContent: "center", display: "flex" }}>
-          {/* <Avatar
-            sx={{ width: 60, height: 60 }}
-            src={TeamWithEmp[0].profilePic}
-          ></Avatar> */}
-
           {TeamWithEmp.length > 0 &&
             TeamWithEmp.map((result, i, j, k) => {
               if (TeamWithEmp[i].employeeID === teamLeadID) {
@@ -108,13 +101,24 @@ function DisplayTeam({ team }) {
           </Typography>
         </Grid>
         <Divider sx={{ mt: 2, mb: 2 }}></Divider>
+
         <Typography align="center" sx={{ color: "#183d78" }}>
-          {ProductOfTeam.length > 0
-            ? ProductOfTeam[0].productName
-            : "not assigned"}
+          {ProductOfTeam.length > 0 &&
+            ProductOfTeam.map((product, i) => {
+              console.log(i);
+              console.log(ProductOfTeam.length);
+              if (ProductOfTeam.length - 1 === i) {
+                return (
+                  <Typography key={product.productID} component={"span"}>
+                    Product : {product.productName} <br />
+                  </Typography>
+                );
+              }
+              i++;
+            })}
         </Typography>
         <Divider sx={{ mt: 2, mb: 2 }}></Divider>
-        
+
         <Typography align="center">
           <Button
             variant="contained"
@@ -126,7 +130,6 @@ function DisplayTeam({ team }) {
             Update Team
           </Button>
         </Typography>
-        
       </Card>
     </div>
   );

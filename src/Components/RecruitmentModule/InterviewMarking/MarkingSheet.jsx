@@ -1,5 +1,6 @@
 import { Delete } from "@mui/icons-material";
 import {
+  Alert,
   Button,
   Checkbox,
   FormControlLabel,
@@ -7,6 +8,7 @@ import {
   Grid,
   IconButton,
   Paper,
+  Stack,
   Table,
   TableBody,
   TableCell,
@@ -43,11 +45,11 @@ const criteria = [
     name: "interestInCompanyOrPosition",
   },
 ];
-const MarkingSheet = (interview) => {
+const MarkingSheet = ({ interview }) => {
   const classes = useStyles();
   const navigate = useNavigate();
   const [marks, setMarks] = useState({
-    interviewer: JSON.parse(localStorage.getItem("user")).employeeID,
+    interviewer: JSON.parse(sessionStorage.getItem("user")).employeeID,
     knowledgeOfSpecificJobSkills: "",
     relatedJobExperience: "",
     relatedEducationOrTraining: "",
@@ -59,6 +61,7 @@ const MarkingSheet = (interview) => {
     weaknesses: [],
     additionalComments: [],
     selectedForTheSecondInterview: false,
+    selected: false,
     Reject: false,
     holdUntilOthersAreInterviewed: false,
   });
@@ -73,6 +76,7 @@ const MarkingSheet = (interview) => {
       .map(() => new Array(5).fill(false))
   );
   const [checked2, setChecked2] = useState([false, false, false]);
+  const [errors, setErrors] = useState({ error1: false, error2: false });
 
   const handleOnChange = (event, index1, index2) => {
     let temp = [...checked];
@@ -94,10 +98,40 @@ const MarkingSheet = (interview) => {
     });
   };
 
+  const errorHandle = () => {
+    let recommendCounter = 0;
+    let isError = false;
+    Object.keys(marks).forEach((property) => {
+      if (marks[property] === "") {
+        setErrors((prevState) => ({
+          ...prevState,
+          error1: true,
+        }));
+        isError = true;
+      }
+      if (marks[property] === false) {
+        recommendCounter++;
+      }
+    });
+    if (recommendCounter === 4) {
+      setErrors((prevState) => ({
+        ...prevState,
+        error2: true,
+      }));
+      isError = true;
+    }
+    return isError;
+  };
+
   const handleSubmit = async () => {
-    const response = await markedCandidate(marks, interview.interview._id);
-    handleClear();
-    navigate("/interview", {state : response});
+    if (!errorHandle()) {
+      const response = await markedCandidate(marks, interview._id);
+      handleClear();
+      navigate("/interview", { state: response });
+    }
+    setTimeout(() => {
+      setErrors({ error1: false, error2: false });
+    }, 5000);
   };
 
   const handleClear = () => {
@@ -119,6 +153,7 @@ const MarkingSheet = (interview) => {
       weaknesses: [],
       additionalComments: [],
       selectedForTheSecondInterview: false,
+      selected: false,
       Reject: false,
       holdUntilOthersAreInterviewed: false,
     });
@@ -129,10 +164,12 @@ const MarkingSheet = (interview) => {
       <Grid container className={classes.header}>
         <Typography variant="h6">Overall Assessments</Typography>
       </Grid>
-      <Typography className={classes.note} variant="body1">
-        Note: Please do note discuss salary expectations at the technical
-        interview. This will be discussed at the final interview.
-      </Typography>
+      {interview.InterviewType === "Technical" && (
+        <Typography className={classes.note} variant="body1">
+          Note: Please do note discuss salary expectations at the technical
+          interview. This will be discussed at the final interview.
+        </Typography>
+      )}
       <Paper elevation={0} className={classes.table}>
         <Table>
           <TableHead>
@@ -168,6 +205,13 @@ const MarkingSheet = (interview) => {
           </TableBody>
         </Table>
       </Paper>
+      {errors.error1 && (
+        <Stack sx={{ width: "100%" }} spacing={2}>
+          <Alert variant="filled" severity="error">
+            Please completed the above table!
+          </Alert>
+        </Stack>
+      )}
 
       <Grid container className={classes.strength}>
         <Grid item md={12} className={classes.strengthHead}>
@@ -393,16 +437,29 @@ const MarkingSheet = (interview) => {
                   checked={checked2[0]}
                   onChange={() => {
                     setChecked2([true, false, false]);
-                    setMarks({
-                      ...marks,
-                      selectedForTheSecondInterview:
-                        !marks.selectedForTheSecondInterview,
-                    });
+                    interview.InterviewType === "HR"
+                      ? setMarks({
+                          ...marks,
+                          selected: !marks.selected,
+                        })
+                      : setMarks({
+                          ...marks,
+                          selectedForTheSecondInterview:
+                            !marks.selectedForTheSecondInterview,
+                        });
                   }}
-                  name="selectedForTheSecondInterview"
+                  name={
+                    interview.InterviewType === "HR"
+                      ? "selected"
+                      : "selectedForTheSecondInterview"
+                  }
                 />
               }
-              label="Selected for the second interview"
+              label={
+                interview.InterviewType === "HR"
+                  ? "Selected"
+                  : "Selected for the second interview"
+              }
             />
             <FormControlLabel
               control={
@@ -440,6 +497,13 @@ const MarkingSheet = (interview) => {
           </FormGroup>
         </Grid>
       </Grid>
+      {errors.error2 && (
+        <Stack sx={{ width: "100%" }} spacing={2}>
+          <Alert variant="filled" severity="error">
+            Recommendation is required!
+          </Alert>
+        </Stack>
+      )}
 
       <Grid container className={classes.submitButton}>
         <Button

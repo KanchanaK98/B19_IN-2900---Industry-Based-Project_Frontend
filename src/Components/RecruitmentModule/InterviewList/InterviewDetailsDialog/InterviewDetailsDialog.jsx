@@ -7,15 +7,17 @@ import { Button, Divider, Grid, IconButton, Typography } from "@mui/material";
 import { Close } from "@mui/icons-material";
 import useStyles from "./InterviewDetailsDialogStyles";
 import { Link } from "react-router-dom";
+import ConfirmationDialog from "../ConfirmationDialog/ConfirmationDialog";
 
 const InterviewDetailsDialog = ({
   openDialog,
   handleCloseDialog,
   interview,
   handleCancelInterview,
+  setOpenConfirmation,
+  openConfirmation,
 }) => {
   const classes = useStyles();
-  const [open, setOpen] = useState(false);
 
   return (
     <Dialog fullWidth open={openDialog} onClose={handleCloseDialog}>
@@ -85,7 +87,7 @@ const InterviewDetailsDialog = ({
             <Grid container className={classes.buttons}>
               <Grid item md={6}>
                 <Button
-                  onClick={() => setOpen(true)}
+                  onClick={() => setOpenConfirmation(true)}
                   size="small"
                   color="warning"
                   variant="contained"
@@ -122,35 +124,11 @@ const InterviewDetailsDialog = ({
           ))}
       </DialogActions>
 
-      <Dialog open={open} onClose={() => setOpen(false)}>
-        <DialogContent>
-          <Typography>
-            Are you sure you want to cancel this interview ?
-          </Typography>
-        </DialogContent>
-        <DialogActions>
-          <Grid container>
-            <Grid item sm={6} md={6} className={classes.yesNoButtons}>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => setOpen(false)}
-              >
-                No
-              </Button>
-            </Grid>
-            <Grid item sm={6} md={6} className={classes.yesNoButtons}>
-              <Button
-                variant="contained"
-                color="error"
-                onClick={handleCancelInterview}
-              >
-                Yes
-              </Button>
-            </Grid>
-          </Grid>
-        </DialogActions>
-      </Dialog>
+      <ConfirmationDialog
+       setOpenConfirmation ={setOpenConfirmation}
+       openConfirmation = {openConfirmation}
+        handleCancelInterview={handleCancelInterview}
+      />
     </Dialog>
   );
 };

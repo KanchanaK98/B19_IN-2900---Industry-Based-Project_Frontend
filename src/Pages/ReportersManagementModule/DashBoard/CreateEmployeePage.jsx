@@ -9,7 +9,7 @@ function CreateEmployeePage() {
     <div>
       <Grid container>
         <Grid item md={8}>
-          <Box padding={2}>
+          <Box padding={2} sx={{mb:7}}>
             <ProductCountUp />
             <Grid sx={{ mt: 2 }}>
               <CreateEmployee />

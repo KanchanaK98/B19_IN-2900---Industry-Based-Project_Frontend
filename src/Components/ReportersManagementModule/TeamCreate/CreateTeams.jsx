@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import EditIcon from "@mui/icons-material/Edit";
 // import { Multiselect } from "multiselect-react-dropdown";
 import {
   Avatar,
@@ -32,7 +31,7 @@ import { Link } from "react-router-dom";
 function CreateTeams() {
   const [addSuccessfully, setAddSuccessfully] = useState(false);
   const [notAdded, setnotAdded] = useState(false);
-  
+  const [error, setError] = useState(false);
 
   const [teaminputs, setTeaminputs] = useState({
     teamName: "",
@@ -44,7 +43,7 @@ function CreateTeams() {
     teamLead: "",
     // teamMembers: "",
   });
-  
+
   const handleChange = (e) => {
     setTeaminputs((prevState) => ({
       ...prevState,
@@ -81,24 +80,29 @@ function CreateTeams() {
       }));
       isError = true;
     }
-    console.log(teaminputErrors);
+
     return isError;
   };
-  //console.log(teaminputErrors)
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!errorHandle()) {
-      createTeams(teaminputs);
-      setAddSuccessfully(true);
-      setTimeout(() => {
-        setAddSuccessfully(false);
-      }, 2000);
-      handleClear();
-      // setTeaminputs({
-      //   teamName: "",
-      //   teamLead: {},
-      //   teamMembers: [],
-      // });
+      const response = await createTeams(teaminputs);
+      console.log(response);
+      if (response.success === true) {
+        setAddSuccessfully(true);
+        setTimeout(() => {
+          setAddSuccessfully(false);
+        }, 2000);
+        handleClear();
+      }
+      if (response.success === false) {
+        setError(true);
+        setTimeout(() => {
+          setError(false);
+        }, 2000);
+        handleClear();
+      }
     } else {
       setnotAdded(true);
       setTimeout(() => {
@@ -125,9 +129,12 @@ function CreateTeams() {
   return (
     <div>
       <Box padding={4}>
-        <Paper sx={{ padding: 4 }}>
+        <Paper sx={{ padding: 4, backgroundColor: "#c7cad1" }}>
           <form onSubmit={handleSubmit}>
-            <Typography variant="h5" sx={{ mb: 5, fontWeight: "bold" }}>
+            <Typography
+              variant="h5"
+              sx={{ mb: 5, fontWeight: "bold", color: "#183d78" }}
+            >
               <GroupAddIcon sx={{ height: 40, width: 40 }} />
               &nbsp; Create Team
             </Typography>
@@ -160,24 +167,7 @@ function CreateTeams() {
                     <IconButton onClick={handleOpenDialog}>
                       <AddCircleIcon sx={{ color: "gray" }} fontSize="large" />
                     </IconButton>
-                    <IconButton
-                      onClick={handleOpenDialog}
-                      disabled={
-                        teaminputs.teamMembers.length === 0 ? true : false
-                      }
-                    >
-                      <EditIcon sx={{ color: "gray" }} fontSize="large" />
-                    </IconButton>
                   </Grid>
-                  {/* <Grid item md={12}>
-                    <Typography
-                      fontSize="0.75rem"
-                      sx={{ ml: 4, letterSpacing: "0.03333em" }}
-                      color="error"
-                    >
-                      {teaminputErrors.teamMembers}
-                    </Typography>
-                  </Grid> */}
                 </Grid>
                 <TeamMemberDialog
                   openDialog={openDialog}
@@ -261,23 +251,12 @@ function CreateTeams() {
                         ))}
                     </TextField>
                   </Grid>
-
-                  {/* <Multiselect
-              options={members}
-              displayValue="fullName"
-            ></Multiselect> */}
                 </Grid>
               </Grid>
             </Grid>
 
-            {/* <Divider sx={{ mt: 5, mb: 5 }}></Divider> */}
-            {/* <FormLabel sx={{ mt: 2, mr: 2 }} className="label">
-          Team Members :
-          <Multiselect options={members} displayValue="fullName"></Multiselect>
-        </FormLabel> */}
             <Grid container>
               <Grid item md={6} sx={{ textAlign: "left" }}>
-                {/* <Link to="/teams" sx={{TextDecoder:"inherit"}}> */}
                 <Button
                   component={Link}
                   to="/teams"
@@ -286,7 +265,6 @@ function CreateTeams() {
                 >
                   View Teams
                 </Button>
-                {/* </Link> */}
               </Grid>
               <Grid item md={6} sx={{ textAlign: "right" }}>
                 <Button
@@ -298,16 +276,6 @@ function CreateTeams() {
                 </Button>
               </Grid>
             </Grid>
-
-            {/* <SnackBar
-       handleCloseSnackBar={handleCloseSnackBar}
-       openSnackBar={openSnackBar}
-       message={
-         flag
-           ? "Team successfully created"
-           : "Team connot be created"
-       }
-     /> */}
           </form>
         </Paper>
         {addSuccessfully ? (
@@ -315,6 +283,13 @@ function CreateTeams() {
             <Alert severity="success">
               <AlertTitle>Success</AlertTitle>
               Team has been successfully added!
+            </Alert>
+          </Stack>
+        ) : null}
+        {error ? (
+          <Stack sx={{ width: "100%" }} spacing={2}>
+            <Alert variant="filled" severity="error">
+              Team is not added!
             </Alert>
           </Stack>
         ) : null}

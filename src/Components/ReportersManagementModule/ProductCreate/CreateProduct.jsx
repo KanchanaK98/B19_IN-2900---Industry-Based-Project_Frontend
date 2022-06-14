@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
   Grid,
-  
   Divider,
   FormLabel,
   TextField,
@@ -57,7 +56,6 @@ function CreateProduct() {
   };
 
   //-------------validation---------------------
-  // const re = /^[A-Za-z]+$/;
   const errorHandle = () => {
     let isError = false;
     Object.keys(products).map((property) => {
@@ -90,7 +88,6 @@ function CreateProduct() {
         }, 2000);
         handleClear();
       }
-   
     } else {
       setnotAdded(true);
       setTimeout(() => {
@@ -140,7 +137,6 @@ function CreateProduct() {
                       helperText={productErrors.productID}
                       fullWidth
                     />
-                    {/* <Typography>{errors.productID}</Typography> */}
                   </Grid>
                 </Grid>
               </Grid>

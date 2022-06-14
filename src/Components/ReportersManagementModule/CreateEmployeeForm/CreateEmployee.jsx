@@ -41,8 +41,6 @@ function CreateEmployee() {
     jobRole: "",
     NIC: "",
     companyEmail: "",
-    // status: "",
-    // jobType: "",
   });
   const [inputs, setInputs] = useState({
     employeeID: "",
@@ -51,8 +49,6 @@ function CreateEmployee() {
     jobRole: "",
     NIC: "",
     companyEmail: "",
-    // status: "",
-    // jobType: "",
   });
   const handleChange = (e) => {
     setInputs((prevState) => ({

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import EditIcon from "@mui/icons-material/Edit";
 // import { Multiselect } from "multiselect-react-dropdown";
 import {
   Avatar,
@@ -32,7 +31,7 @@ import { Link } from "react-router-dom";
 function CreateTeams() {
   const [addSuccessfully, setAddSuccessfully] = useState(false);
   const [notAdded, setnotAdded] = useState(false);
-  
+  const [error, setError] = useState(false);
 
   const [teaminputs, setTeaminputs] = useState({
     teamName: "",
@@ -44,7 +43,7 @@ function CreateTeams() {
     teamLead: "",
     // teamMembers: "",
   });
-  
+
   const handleChange = (e) => {
     setTeaminputs((prevState) => ({
       ...prevState,
@@ -81,24 +80,29 @@ function CreateTeams() {
       }));
       isError = true;
     }
-    console.log(teaminputErrors);
+
     return isError;
   };
-  //console.log(teaminputErrors)
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!errorHandle()) {
-      createTeams(teaminputs);
-      setAddSuccessfully(true);
-      setTimeout(() => {
-        setAddSuccessfully(false);
-      }, 2000);
-      handleClear();
-      // setTeaminputs({
-      //   teamName: "",
-      //   teamLead: {},
-      //   teamMembers: [],
-      // });
+      const response = await createTeams(teaminputs);
+      console.log(response);
+      if (response.success === true) {
+        setAddSuccessfully(true);
+        setTimeout(() => {
+          setAddSuccessfully(false);
+        }, 2000);
+        handleClear();
+      }
+      if (response.success === false) {
+        setError(true);
+        setTimeout(() => {
+          setError(false);
+        }, 2000);
+        handleClear();
+      }
     } else {
       setnotAdded(true);
       setTimeout(() => {
@@ -160,14 +164,14 @@ function CreateTeams() {
                     <IconButton onClick={handleOpenDialog}>
                       <AddCircleIcon sx={{ color: "gray" }} fontSize="large" />
                     </IconButton>
-                    <IconButton
+                    {/* <IconButton
                       onClick={handleOpenDialog}
                       disabled={
                         teaminputs.teamMembers.length === 0 ? true : false
                       }
                     >
                       <EditIcon sx={{ color: "gray" }} fontSize="large" />
-                    </IconButton>
+                    </IconButton> */}
                   </Grid>
                   {/* <Grid item md={12}>
                     <Typography
@@ -315,6 +319,13 @@ function CreateTeams() {
             <Alert severity="success">
               <AlertTitle>Success</AlertTitle>
               Team has been successfully added!
+            </Alert>
+          </Stack>
+        ) : null}
+        {error ? (
+          <Stack sx={{ width: "100%" }} spacing={2}>
+            <Alert variant="filled" severity="error">
+              Team is not added!
             </Alert>
           </Stack>
         ) : null}

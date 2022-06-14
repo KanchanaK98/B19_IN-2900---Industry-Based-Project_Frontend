@@ -10,6 +10,7 @@ import { createEmployee } from "../../../Api/ReportersManagementModule/EmployeeA
 import { Alert, AlertTitle, MenuItem, Stack, Typography } from "@mui/material";
 import CredentialCard from "./CredentialCard";
 import Candidates from "./Candidates";
+import { Link } from "react-router-dom";
 const jobRoles = [
   "Software Engineer",
   "Senior Software Engineer",
@@ -31,6 +32,7 @@ function CreateEmployee() {
   });
   const [isDisable, setIsDisable] = useState(true);
   const [addSuccessfully, setAddSuccessfully] = useState(false);
+  const [duplicated, setDuplicated] = useState(false);
   const [notAdded, setnotAdded] = useState(false);
   const [inputErrors, setInputErrors] = useState({
     employeeID: "",
@@ -113,23 +115,19 @@ function CreateEmployee() {
       if (response.success === true) {
         setCredentials(response.employeeCredentials);
         setIsDisable(false);
+        setAddSuccessfully(true);
+        setTimeout(() => {
+          setAddSuccessfully(false);
+        }, 2000);
       }
 
-      setAddSuccessfully(true);
-      setTimeout(() => {
-        setAddSuccessfully(false);
-      }, 2000);
+      if (response.success === false) {
+        setDuplicated(true);
+        setTimeout(() => {
+          setDuplicated(false);
+        }, 2000);
+      }
       handleClear();
-      // setInputs({
-      //   employeeID: "",
-      //   employeeFirstName: "",
-      //   employeeLastName: "",
-      //   jobRole: "",
-      //   NIC: "",
-      //   companyEmail: "",
-      //   status: "",
-      //   jobType: "",
-      // });
     } else {
       handleClear();
       setnotAdded(true);
@@ -164,7 +162,7 @@ function CreateEmployee() {
                     CREATE EMPLOYEE
                   </Typography>
                 </Grid>
-                <Grid item md={6}>
+                <Grid item md={6} textAlign="right">
                   <Candidates />
                 </Grid>
               </Grid>
@@ -408,26 +406,39 @@ function CreateEmployee() {
             </Grid>
             <Grid container>
               <Grid item md={6} textalign="left">
-                {credentials && (
-                  <CredentialCard
-                    credentials={credentials}
-                    isDisable={isDisable}
-                    setIsDisable={setIsDisable}
-                  />
-                )}
-              </Grid>
-              <Grid item md={6} textalign="right">
                 <Button
+                  component={Link}
+                  to="/dashboard"
                   variant="contained"
-                  sx={{
-                    display: "flex",
-                    justifyContent: "flex-end",
-                    backgroundColor: "#183d78",
-                  }}
-                  type="submit"
+                  sx={{ backgroundColor: "#183d78" }}
                 >
-                  CREATE EMPLOYEE
+                  DASHBOARD
                 </Button>
+              </Grid>
+
+              <Grid item md={6}>
+                <Grid container>
+                  <Grid item md={6} textAlign="right">
+                    {credentials && (
+                      <CredentialCard
+                        credentials={credentials}
+                        isDisable={isDisable}
+                        setIsDisable={setIsDisable}
+                      />
+                    )}
+                  </Grid>
+                  <Grid item md={6} textAlign="right">
+                    <Button
+                      variant="contained"
+                      sx={{
+                        backgroundColor: "#183d78",
+                      }}
+                      type="submit"
+                    >
+                      CREATE EMPLOYEE
+                    </Button>
+                  </Grid>
+                </Grid>
               </Grid>
             </Grid>
           </Paper>
@@ -443,6 +454,13 @@ function CreateEmployee() {
             <Stack sx={{ width: "100%" }} spacing={2}>
               <Alert variant="filled" severity="error">
                 Please enter all the details!
+              </Alert>
+            </Stack>
+          ) : null}
+          {duplicated ? (
+            <Stack sx={{ width: "100%" }} spacing={2}>
+              <Alert variant="filled" severity="error">
+                Details are duplicated!
               </Alert>
             </Stack>
           ) : null}

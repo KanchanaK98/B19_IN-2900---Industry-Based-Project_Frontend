@@ -28,7 +28,7 @@ export default function CreateCurruntSalary() {
 
   const [error, seterror] = useState(false);
   const [added, setadded] = useState(false);
-  const [notadded, setnotadded] = useState(false);
+  const [fill, setFill] = useState(false);
 
   const [record, setRecord] = useState({
     PaperID: "",
@@ -57,27 +57,55 @@ export default function CreateCurruntSalary() {
   //   addMoreQuestionsApi(PaperID, selectedQuestions);
   // };
 
+  //--------------validation-----------------------
+  const [inputErrors, setInputErrors] = useState({
+    papername: "",
+  });
+
+  const errorHandle = () => {
+    let isError = false;
+
+    if (!record.PaperName) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        papername: "Paper name is required",
+      }));
+      isError = true;
+    }
+
+    const regExp = /^[\w]*$/i;
+    if (!record.PaperName.match(regExp)) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        papername: "Only A-Z, a-z, 0-9, _ are valid",
+      }));
+      isError = true;
+    }
+    return isError;
+  };
+  //-----------------------------------------------------
+
   const UpdatePaperDetails = async (e) => {
     e.preventDefault();
-    if (PaperID && record) {
-      updatePaperDetailsApi(PaperID, record).then((response) => {
-        if (response.success === true) {
-          setadded(true);
-          setTimeout(() => {
-            setadded(false);
-          }, 4000);
-        }
-        if (response.success === false) {
-          setnotadded(true);
-          setTimeout(() => {
-            setnotadded(false);
-          }, 4000);
-        }
-      });
+    if (!errorHandle()) {
+      // if (PaperID && record) {
+      const response = await updatePaperDetailsApi(PaperID, record);
+      window.location.reload(false);
+      if (response.success === true) {
+        setadded(true);
+        setTimeout(() => {
+          setadded(false);
+        }, 4000);
+      } else {
+        seterror(true);
+        setTimeout(() => {
+          seterror(false);
+        }, 4000);
+      }
     } else {
-      seterror(true);
+      setFill(true);
       setTimeout(() => {
-        seterror(false);
+        setFill(false);
       }, 4000);
     }
   };
@@ -192,6 +220,8 @@ export default function CreateCurruntSalary() {
                       name="PaperName"
                       fullWidth
                       value={record.PaperName}
+                      helperText={inputErrors.papername}
+                      error={inputErrors.papername ? true : false}
                       onChange={(event) =>
                         setRecord({
                           ...record,
@@ -231,10 +261,10 @@ export default function CreateCurruntSalary() {
           </Alert>
         </Stack>
       ) : null}
-      {notadded ? (
+      {fill ? (
         <Stack sx={{ width: "100%" }} spacing={2}>
-          <Alert variant="filled" severity="error">
-            Please enter all the details and Try again!
+          <Alert variant="filled" severity="warning">
+            Please enter all the details or Check them again!
           </Alert>
         </Stack>
       ) : null}

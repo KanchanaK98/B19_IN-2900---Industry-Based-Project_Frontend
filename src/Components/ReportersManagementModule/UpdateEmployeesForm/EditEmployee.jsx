@@ -30,8 +30,8 @@ function EditEmployee() {
     jobType: "",
     employeeID: "",
   });
-  const [removeImage, setRemoveImage] = useState();
   
+
   const location = useLocation();
   const { employee } = location.state;
   // console.log({ employee: employee, mes: "hi" });
@@ -69,7 +69,7 @@ function EditEmployee() {
 
   const [addSuccessfully, setAddSuccessfully] = useState(false);
   const [notAdded, setnotAdded] = useState(false);
-
+  const [notUpdated, setNotUpdated] = useState(false);
   const handleChange = (e) => {
     setInputs((prevState) => ({
       ...prevState,
@@ -158,9 +158,23 @@ function EditEmployee() {
     e.preventDefault();
     if (!errorHandle()) {
       const response = await updateEmployee(inputs);
-      setAddSuccessfully(true);
+      console.log(response);
+      if (response.success === true) {
+        setAddSuccessfully(true);
+        setTimeout(() => {
+          setAddSuccessfully(false);
+        }, 2000);
+      }
+      if (response.success === false) {
+        setNotUpdated(true);
+        setTimeout(() => {
+          setNotUpdated(false);
+        }, 2000);
+      }
+    } else {
+      setnotAdded(true);
       setTimeout(() => {
-        setAddSuccessfully(false);
+        setnotAdded(false);
       }, 2000);
     }
   };
@@ -246,8 +260,6 @@ function EditEmployee() {
                         />
                       </IconButton>
                     </label>
-
-                    
                   </Grid>
 
                   <Grid
@@ -358,18 +370,16 @@ function EditEmployee() {
                           </FormLabel>
                         </Grid>
                         <Grid item xs={6} md={9}>
-                        
-                            <TextField
-                              id="filled-basic"
-                              variant="filled"
-                              name="NIC"
-                              value={inputs.NIC}
-                              onChange={handleChange}
-                              error={inputErrors.NIC ? true : false}
-                              helperText={inputErrors.NIC}
-                              fullWidth
-                            />
-                         
+                          <TextField
+                            id="filled-basic"
+                            variant="filled"
+                            name="NIC"
+                            value={inputs.NIC}
+                            onChange={handleChange}
+                            error={inputErrors.NIC ? true : false}
+                            helperText={inputErrors.NIC}
+                            fullWidth
+                          />
                         </Grid>
                       </Grid>
                     </Grid>
@@ -480,112 +490,96 @@ function EditEmployee() {
                     <Grid item xs={6}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={3}>
-                         
-                            <FormLabel
-                              sx={{ fontWeight: "bold", ml: 1, mt: 2 }}
-                              className="label"
-                            >
-                              Employee ID :
-                            </FormLabel>
-                          
+                          <FormLabel
+                            sx={{ fontWeight: "bold", ml: 1, mt: 2 }}
+                            className="label"
+                          >
+                            Employee ID :
+                          </FormLabel>
                         </Grid>
                         <Grid item xs={6} md={9}>
-                        
-                            <TextField
-                              id="filled-basic"
-                              label=" Employee ID"
-                              variant="filled"
-                              name="employeeID"
-                              value={inputs.employeeID}
-                              onChange={handleChange}
-                              error={inputErrors.employeeID ? true : false}
-                              helperText={inputErrors.employeeID}
-                              fullWidth
-                            />
-                         
+                          <TextField
+                            id="filled-basic"
+                            label=" Employee ID"
+                            variant="filled"
+                            name="employeeID"
+                            value={inputs.employeeID}
+                            onChange={handleChange}
+                            error={inputErrors.employeeID ? true : false}
+                            helperText={inputErrors.employeeID}
+                            fullWidth
+                          />
                         </Grid>
                       </Grid>
                     </Grid>
                     <Grid item xs={6}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={3}>
-                         
-                            <FormLabel
-                              sx={{ fontWeight: "bold", ml: 1, mt: 2 }}
-                              className="label"
-                            >
-                              Job Type:
-                            </FormLabel>
-                       
+                          <FormLabel
+                            sx={{ fontWeight: "bold", ml: 1, mt: 2 }}
+                            className="label"
+                          >
+                            Job Type:
+                          </FormLabel>
                         </Grid>
                         <Grid item xs={6} md={9}>
-                        
-                            <TextField
-                              id="filled-basic"
-                              label=" Job Type"
-                              variant="filled"
-                              name="jobType"
-                              value={inputs.jobType}
-                              onChange={handleChange}
-                              error={inputErrors.jobType ? true : false}
-                              helperText={inputErrors.jobType}
-                              fullWidth
-                            />
-                          
+                          <TextField
+                            id="filled-basic"
+                            label=" Job Type"
+                            variant="filled"
+                            name="jobType"
+                            value={inputs.jobType}
+                            onChange={handleChange}
+                            error={inputErrors.jobType ? true : false}
+                            helperText={inputErrors.jobType}
+                            fullWidth
+                          />
                         </Grid>
                       </Grid>
                     </Grid>
                     <Grid item xs={6}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={3}>
-                        
-                            <FormLabel
-                              sx={{ fontWeight: "bold", ml: 1, mt: 2 }}
-                              className="label"
-                            >
-                              Status :
-                            </FormLabel>
-                         
+                          <FormLabel
+                            sx={{ fontWeight: "bold", ml: 1, mt: 2 }}
+                            className="label"
+                          >
+                            Status :
+                          </FormLabel>
                         </Grid>
                         <Grid item xs={6} md={9}>
-                         
-                            <TextField
-                              id="filled-basic"
-                              label=" Status"
-                              variant="filled"
-                              name="status"
-                              value={inputs.status}
-                              onChange={handleChange}
-                              fullWidth
-                            />
-                          
+                          <TextField
+                            id="filled-basic"
+                            label=" Status"
+                            variant="filled"
+                            name="status"
+                            value={inputs.status}
+                            onChange={handleChange}
+                            fullWidth
+                          />
                         </Grid>
                       </Grid>
                     </Grid>
                     <Grid item xs={6} sx={{ mb: 1 }}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={3}>
-                         
-                            <FormLabel
-                              sx={{ fontWeight: "bold", ml: 1, mt: 2 }}
-                              className="label"
-                            >
-                              Job Role :
-                            </FormLabel>
-                          
+                          <FormLabel
+                            sx={{ fontWeight: "bold", ml: 1, mt: 2 }}
+                            className="label"
+                          >
+                            Job Role :
+                          </FormLabel>
                         </Grid>
                         <Grid item xs={6} md={9}>
-                         
-                            <TextField
-                              id="filled-basic"
-                              label="Job Role"
-                              variant="filled"
-                              name="jobRole"
-                              value={inputs.jobRole}
-                              onChange={handleChange}
-                              fullWidth
-                            />
-                        
+                          <TextField
+                            id="filled-basic"
+                            label="Job Role"
+                            variant="filled"
+                            name="jobRole"
+                            value={inputs.jobRole}
+                            onChange={handleChange}
+                            fullWidth
+                          />
                         </Grid>
                       </Grid>
                     </Grid>
@@ -791,6 +785,13 @@ function EditEmployee() {
               </Stack>
             ) : null}
             {notAdded ? (
+              <Stack sx={{ width: "100%" }} spacing={2}>
+                <Alert variant="filled" severity="error">
+                  Please enter correct details!
+                </Alert>
+              </Stack>
+            ) : null}
+            {notUpdated ? (
               <Stack sx={{ width: "100%" }} spacing={2}>
                 <Alert variant="filled" severity="error">
                   Profile is not updated!

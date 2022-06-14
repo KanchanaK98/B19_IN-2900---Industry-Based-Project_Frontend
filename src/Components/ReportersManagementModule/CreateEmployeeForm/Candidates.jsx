@@ -34,30 +34,32 @@ function Candidates() {
       setCandidates(await getCandidates());
     }
     fetchData();
+    if (!(candidates && candidates.length > 0)) {
+      setIsDisable(false);
+    }
+    if (candidates && candidates.length === 0) {
+      setIsDisable(true);
+    }
+    console.log(candidates);
     if (open) {
       const { current: descriptionElement } = descriptionElementRef;
       if (descriptionElement !== null) {
         descriptionElement.focus();
       }
     }
-    // if (!(candidates === undefined)) {
-    //   setIsDisable(false);
-    // }
   }, [open]);
   //  console.log(candidates)
   return (
     <div>
       <Button
-        // disabled={isDisable}
+        disabled={isDisable}
         onClick={handleClickOpen("paper")}
         variant="contained"
         sx={{
-          display: "flex",
-          justifyContent: "flex-end",
           backgroundColor: "#183d78",
         }}
       >
-        Initiated Candidates
+        Selected Candidates
       </Button>
       <Dialog
         open={open}
@@ -70,7 +72,7 @@ function Candidates() {
           id="scroll-dialog-title"
           sx={{ color: "#183d78", fontWeight: "bold" }}
         >
-          Initiated Candidates
+          Selected Candidates
         </DialogTitle>
         <DialogContent dividers={scroll === "paper"}>
           {candidates &&

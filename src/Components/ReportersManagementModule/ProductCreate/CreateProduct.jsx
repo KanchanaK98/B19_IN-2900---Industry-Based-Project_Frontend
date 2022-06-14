@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {
   Grid,
-  Card,
+  
   Divider,
   FormLabel,
   TextField,
@@ -15,11 +15,11 @@ import {
   AlertTitle,
 } from "@mui/material";
 import InventoryIcon from "@mui/icons-material/Inventory";
-import { TextareaAutosize } from "@mui/material";
 import { createProduct } from "../../../Api/ReportersManagementModule/ProductApi";
 import { getAllTeams } from "../../../Api/ReportersManagementModule/TeamsApi";
 import { Link } from "react-router-dom";
 function CreateProduct() {
+  const [duplicated, setDuplicated] = useState(false);
   const [addSuccessfully, setAddSuccessfully] = useState(false);
   const [notAdded, setnotAdded] = useState(false);
   const [products, setProducts] = useState({
@@ -71,27 +71,26 @@ function CreateProduct() {
     });
     return isError;
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!errorHandle()) {
-      createProduct(products);
-      // .then((res) => {
-      setAddSuccessfully(true);
-      setTimeout(() => {
-        setAddSuccessfully(false);
-      }, 2000);
-      handleClear();
-      // })
-      // .catch((err) => {
-      //   console.log(err);
-      // });
-
-      // setProducts({
-      //   productID: "",
-      //   productName: "",
-      //   description: "",
-      //   teamNames: {},
-      // });
+      const response = await createProduct(products);
+      console.log(response);
+      if (response.success === true) {
+        setAddSuccessfully(true);
+        setTimeout(() => {
+          setAddSuccessfully(false);
+        }, 2000);
+        handleClear();
+      }
+      if (response.success === false) {
+        setDuplicated(true);
+        setTimeout(() => {
+          setDuplicated(false);
+        }, 2000);
+        handleClear();
+      }
+   
     } else {
       setnotAdded(true);
       setTimeout(() => {
@@ -110,10 +109,14 @@ function CreateProduct() {
 
   return (
     <div>
-      <Box padding={1} sx={{ mt: 2,mb:6 }}>
+      <Box padding={1} sx={{ mt: 2, mb: 6 }}>
         <form onSubmit={handleSubmit} autoComplete="off">
-          <Paper sx={{ padding: 5 ,backgroundColor:"#c7cad1"}}>
-            <Typography variant="h5" fontWeight="bold" sx={{color:"#183d78"}}>
+          <Paper sx={{ padding: 5, backgroundColor: "#c7cad1" }}>
+            <Typography
+              variant="h5"
+              fontWeight="bold"
+              sx={{ color: "#183d78" }}
+            >
               <InventoryIcon /> Create Product
             </Typography>
             <Divider sx={{ mt: 5, mb: 5 }}></Divider>
@@ -185,7 +188,7 @@ function CreateProduct() {
                 />
               </Grid>
             </Grid>
-            <Grid container sx={{ mt: 2}}>
+            <Grid container sx={{ mt: 2 }}>
               <Grid item md={1.5}>
                 <FormLabel sx={{ fontWeight: "bold" }}>Team Name:</FormLabel>
               </Grid>
@@ -217,7 +220,7 @@ function CreateProduct() {
                   variant="contained"
                   sx={{ mt: 2, backgroundColor: "#183d78" }}
                 >
-                  View Teams
+                  View Products
                 </Button>
               </Grid>
               <Grid item md={6} textAlign="right">
@@ -244,6 +247,13 @@ function CreateProduct() {
           <Stack sx={{ width: "100%" }} spacing={2}>
             <Alert variant="filled" severity="error">
               Please enter all the details!
+            </Alert>
+          </Stack>
+        ) : null}
+        {duplicated ? (
+          <Stack sx={{ width: "100%" }} spacing={2}>
+            <Alert variant="filled" severity="error">
+              Product is duplicated!
             </Alert>
           </Stack>
         ) : null}

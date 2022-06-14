@@ -8,7 +8,9 @@ export const createProduct = async (productCreateData) => {
       teamNames: productCreateData.nameofTeam.teamName,
     };
     
-    const response = await api.createProduct(productcreate);
+    const {data} = await api.createProduct(productcreate);
+    return data;
+
   } catch (err) {
     console.log(err);
   }

@@ -37,6 +37,7 @@ function ProgressBar({
     ) {
       count++;
     }
+
     if (
       EmployeeWithAcc.ordinaryLevelResult[0] == null ||
       EmployeeWithAcc.ordinaryLevelResult[0] === " " ||
@@ -51,6 +52,8 @@ function ProgressBar({
     ) {
       count++;
     }
+  } else {
+    count = 3;
   }
   if (EmpWithProf) {
     if (
@@ -74,19 +77,47 @@ function ProgressBar({
     ) {
       count++;
     }
+  } else {
+    count += 3;
   }
-  if (user && user.phoneNumber === "") {
+  if (
+    user &&
+    (user.phoneNumber === "" ||
+      user.phoneNumber === " " ||
+      user.phoneNumber === undefined)
+  ) {
     count++;
   }
-  if (user && user.birthday === "") {
+  if (
+    user &&
+    (user.birthday === "" ||
+      user.birthday === " " ||
+      user.birthday === undefined)
+  ) {
     count++;
   }
-  if (user && (user.city === "" && user.streetNo === "")) {
+  if (
+    user &&
+    (user.city === "" || user.city === " " || user.city === undefined) &&
+    (user.streetNo === "" ||
+      user.streetNo === " " ||
+      user.streetNo === undefined)
+  ) {
     count++;
   }
+  if (
+    user &&
+    (user.profilePic === "" ||
+      user.profilePic === " " ||
+      user.profilePic === undefined)
+  ) {
+    count++;
+  }
+
+  
   switch (count) {
-    case 0:{
-      percentage=0
+    case 0: {
+      percentage = 100;
       break;
     }
     case 1: {
@@ -126,7 +157,7 @@ function ProgressBar({
       break;
     }
     default: {
-      percentage = 100;
+      percentage = 0;
     }
   }
   return (

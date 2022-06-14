@@ -8,7 +8,8 @@ export const createTeams = async (teamCreateData) => {
         ({ employeeID }) => employeeID
       ),
     };
-    const response = await api.createTeams(teamcreate);
+    const {data} = await api.createTeams(teamcreate);
+    return data;
   } catch (error) {
     console.log(error);
   }

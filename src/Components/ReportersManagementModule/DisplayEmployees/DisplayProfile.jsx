@@ -28,7 +28,7 @@ function DisplayProfile({ employee }) {
   // };
 
   const { user, EmployeeWithAcc, EmpWithProf } = employee;
-  console.log(user);
+  // console.log(user);
   useEffect(() => {
     async function fetchData() {
       setTeams(await getAllTeams());
@@ -106,7 +106,7 @@ function DisplayProfile({ employee }) {
                 alt={user.employeeFirstName + " " + user.employeeLastName}
               ></Avatar>
             </Grid>
-            <Grid md={12}>
+            <Grid>
               <ProgressBar
                 EmployeeWithAcc={EmployeeWithAcc}
                 EmpWithProf={EmpWithProf}

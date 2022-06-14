@@ -1,27 +1,9 @@
 import * as api from "../../index";
 
-// export const updateCurruntSalaryApi = async (
-//   currentDataRecords,
-//   EmployeeID
-// ) => {
-//   try {
-//     const currentData = {
-//       EmployeeID: currentDataRecords.EmployeeID,
-//       BasicSalary: currentDataRecords.BasicSalary,
-//       VehicleAllowance: currentDataRecords.VehicleAllowance,
-//       InternetAllowance: currentDataRecords.InternetAllowance,
-//     };
-//     const { data } = await api.updateCurrentSalarySheet(
-//       currentData,
-//       EmployeeID
-//     );
-//     return data;
-//   } catch (error) {
-//     console.log({ error: error.message });
-//   }
-// };
-
-export const updateCurruntSalaryApi = async (EmployeeID,currentDataRecords) => {
+export const updateCurruntSalaryApi = async (
+  EmployeeID,
+  currentDataRecords
+) => {
   try {
     const currentData = {
       EmployeeID: currentDataRecords.EmployeeID,
@@ -29,7 +11,10 @@ export const updateCurruntSalaryApi = async (EmployeeID,currentDataRecords) => {
       VehicleAllowance: currentDataRecords.VehicleAllowance,
       InternetAllowance: currentDataRecords.InternetAllowance,
     };
-    const { data } = await api.updateCurrentSalarySheet(EmployeeID,currentData);
+    const { data } = await api.updateCurrentSalarySheet(
+      EmployeeID,
+      currentData
+    );
     return data;
   } catch (error) {
     console.log({ error: error.message });

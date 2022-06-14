@@ -5,28 +5,37 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import {
   Button,
+  Card,
   Divider,
   Grid,
   IconButton,
   TextField,
   Typography,
 } from "@mui/material";
-import {  Close } from "@mui/icons-material";
+import { Close } from "@mui/icons-material";
 import useStyles from "./ViewDetailDialogStyles";
 import { cancelLeave } from "../../../Api/LeaveManagementModule/LeaveApi";
 
-const ViewMoreDialog = ({ open, handleClose, leave, leaveHistory, setLeaveHistory,setCancel,cancel }) => {
+const ViewMoreDialog = ({
+  open,
+  handleClose,
+  leave,
+  leaveHistory,
+  setLeaveHistory,
+  setCancel,
+  cancel,
+}) => {
   const classes = useStyles();
   const [reason, setReason] = useState();
- // const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+  // const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
 
-  const handleSubmit = async()=> {
-  // const response =
-   await cancelLeave(reason, leave.leaveHistory._id, 'E002');
-   setReason("")
-   setLeaveHistory(leaveHistory.filter((lev) => lev !== leave))
-   handleClose();
-  }
+  const handleSubmit = async () => {
+    // const response =
+    await cancelLeave(reason, leave.leaveHistory._id);
+    setReason("");
+    setLeaveHistory(leaveHistory.filter((lev) => lev !== leave));
+    handleClose();
+  };
   return (
     <Dialog
       open={open}
@@ -34,71 +43,134 @@ const ViewMoreDialog = ({ open, handleClose, leave, leaveHistory, setLeaveHistor
       ia-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title" className={classes.title} sx={{ backgroundColor: "rgb(243, 229, 245)" }}>
+      <DialogTitle id="alert-dialog-title" className={classes.title}>
         <Grid container>
-          <Grid item md={8} sx={{ mt: 1 }}>
-            <Typography variant="h5">Leave Details</Typography>
-          </Grid>
-          <Grid item md={4} className={classes.closeButton}>
+          <Grid item md={12} className={classes.closeButton}>
             <IconButton onClick={handleClose}>
               <Close fontSize="large" />
             </IconButton>
           </Grid>
+          <Grid item md={12} sx={{ mt: 1 }}>
+            <Grid
+              container
+              direction="row"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Typography variant="h5" fontFamily="Rubik" sx={{ fontSize: 25, color:"#880e4f" }}>
+                Leave Details
+              </Typography>
+            </Grid>
+          </Grid>
         </Grid>
       </DialogTitle>
-      <DialogContent className={classes.root} sx={{ backgroundColor: "rgb(243, 229, 245)" }}>
-        <Divider />
-        <Divider sx={{ mb: 2 }} />
-
+      <DialogContent className={classes.root}>
         <Grid container>
           <Grid item md={12} className={classes.content}>
-            <Typography sx={{mr : 2}}>Leave type: </Typography>
-            <Typography>{leave.leaveHistory.leaveType}</Typography>
-          </Grid>
-          <Grid item md={12} className={classes.content}>
-            <Typography sx={{mr : 2}}>Start date: </Typography>
-            <Typography>
-              {new Date(leave.leaveHistory.startDate).toDateString()}
+            <Typography
+              fontFamily="Segoe UI Emoji"
+              sx={{ mr: 2, fontSize: 20, color: "#607d8b" }}
+            >
+              Leave type{" "}
             </Typography>
+          
+          <Grid item md={12}>
+            <Card className={classes.card}>
+              <Typography fontFamily="Rubik" >{leave.leaveHistory.leaveType}</Typography>
+            </Card>
+          </Grid>
           </Grid>
           <Grid item md={12} className={classes.content}>
-            <Typography sx={{mr : 2}}>End Date: </Typography>
-            <Typography>
-              {new Date(leave.leaveHistory.endDate).toDateString()}
+            <Typography
+              fontFamily="Segoe UI Emoji"
+              sx={{ mr: 2, fontSize: 20, color: "#607d8b" }}
+            >
+              Start date{" "}
             </Typography>
+            <Card className={classes.card}>
+              <Typography fontFamily="Rubik">
+                {new Date(leave.leaveHistory.startDate).toDateString()}
+              </Typography>
+            </Card>
           </Grid>
           <Grid item md={12} className={classes.content}>
-            <Typography sx={{mr : 2}}>Reason: </Typography>
-            <Typography>{leave.leaveHistory.reason}</Typography>
+            <Typography
+              fontFamily="Segoe UI Emoji"
+              sx={{ mr: 2, fontSize: 20, color: "#607d8b" }}
+            >
+              End Date{" "}
+            </Typography>
+            <Card className={classes.card}>
+              <Typography fontFamily="Rubik" >
+                {new Date(leave.leaveHistory.endDate).toDateString()}
+              </Typography>
+            </Card>
           </Grid>
-          <Grid item md={12} className={classes.content}></Grid>
+          <Grid item md={12} className={classes.content}>
+            <Typography
+              fontFamily="Segoe UI Emoji"
+              sx={{ mr: 2, fontSize: 20, color: "#607d8b" }}
+            >
+              Reason{" "}
+            </Typography>
+            <Card className={classes.card}>
+              <Typography fontFamily="Rubik">{leave.leaveHistory.reason}</Typography>
+            </Card>
+          </Grid>
         </Grid>
         {cancel && (
           <TextField
-            label="reason"
+            label="Type a reason for cancellation"
             name="reason"
             variant="filled"
             value={reason}
             fullWidth
             multiline
             rows={3}
-            onChange={(event)=> setReason(event.target.value)}
+            onChange={(event) => setReason(event.target.value)}
           />
         )}
       </DialogContent>
       <DialogActions>
         {leave.leaveHistory.status === "Pending" && !cancel && (
-          <Button sx={{ m: 2 }} variant="contained" color="error" onClick={()=> setCancel(true)}>
+          <Grid
+          container
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Button
+          
+            sx={{ m: 2 ,borderRadius:16}}
+            variant="contained"
+            minWidth="60px"
+            color="error"
+            
+            onClick={() => setCancel(true)}
+          >
             Cancel Leave
           </Button>
+          </Grid>
         )}
-        {
-          cancel && (
-            <Button disabled={reason ? false: true} sx={{ mt: 2, mr: 3, mb: 2 }} variant="contained" color="success" onClick={handleSubmit} >
+        {cancel && (
+           <Grid
+           container
+           direction="row"
+           justifyContent="center"
+           alignItems="center"
+         >
+          <Button
+             name="reason"
+            sx={{ mt: 2, mr: 3, mb: 2,borderRadius:16,minWidth:50 }}
+            disabled={reason ? false : true} 
+            variant="contained"
+            color="success"
+            onClick={handleSubmit}
+          >
             Submit
           </Button>
-          )
-        }
+          </Grid>
+        )}
       </DialogActions>
     </Dialog>
   );

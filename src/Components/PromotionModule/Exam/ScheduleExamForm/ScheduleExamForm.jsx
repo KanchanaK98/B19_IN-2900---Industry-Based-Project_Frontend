@@ -54,6 +54,7 @@ function ScheduleExamForm() {
   const [error, seterror] = useState(false);
   const [added, setadded] = useState(false);
   const [Status, setStatus] = useState([]);
+  const [fill, setFill] = useState(false);
 
   const [PaperList, setPaperList] = useState([]);
 
@@ -65,6 +66,57 @@ function ScheduleExamForm() {
     }
     fetchData();
   }, []);
+
+  //--------------validation-----------------------
+  const [inputErrors, setInputErrors] = useState({
+    examID: "",
+    examName: "",
+    dateScheduled: "",
+    jobRole: "",
+    paperID: "",
+  });
+
+  const errorHandle = () => {
+    let isError = false;
+
+    if (!ExamID) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        examID: "Exam ID is required",
+      }));
+      isError = true;
+    }
+    if (!ExamName) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        examName: "Exam name is required",
+      }));
+      isError = true;
+    }
+    if (!DateScheduled) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        dateScheduled: "Date scheduled filed is required",
+      }));
+      isError = true;
+    }
+    if (!JobRole) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        jobRole: "Jobrole is required",
+      }));
+      isError = true;
+    }
+    if (!PaperID) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        paperID: "Paper ID is required",
+      }));
+      isError = true;
+    }
+    return isError;
+  };
+  //-----------------------------------------------------
 
   const sendData = async (e) => {
     e.preventDefault();
@@ -78,8 +130,10 @@ function ScheduleExamForm() {
       PaperID,
       Status,
     };
-    if (ExamID && ExamName && DateScheduled && JobRole && PaperID && Status) {
+    // if (ExamID && ExamName && DateScheduled && JobRole && PaperID && Status) {
+    if (!errorHandle()) {
       const response = await scheduleExamApi(EmployeeID, examDetails);
+      window.location.reload(false);
       if (response.success === true) {
         setExamID("");
         setExamName("");
@@ -91,12 +145,17 @@ function ScheduleExamForm() {
         setTimeout(() => {
           setadded(false);
         }, 2000);
+      } else {
+        seterror(true);
+        setTimeout(() => {
+          seterror(false);
+        }, 2000);
       }
     } else {
-      seterror(true);
+      setFill(true);
       setTimeout(() => {
-        seterror(false);
-      }, 2000);
+        setFill(false);
+      }, 4000);
     }
   };
 
@@ -143,6 +202,8 @@ function ScheduleExamForm() {
                       variant="outlined"
                       name="ExamID"
                       value={ExamID}
+                      helperText={inputErrors.examID}
+                      error={inputErrors.examID ? true : false}
                       onChange={(e) => {
                         setExamID(e.target.value);
                       }}
@@ -164,6 +225,7 @@ function ScheduleExamForm() {
                         id="demo-simple-select-helper"
                         value={JobRole}
                         label="Job Role"
+                        error={inputErrors.jobRole ? true : false}
                         onChange={(e) => {
                           setJobRole(e.target.value);
                         }}
@@ -197,8 +259,8 @@ function ScheduleExamForm() {
                           Product Manager
                         </MenuItem>
                       </Select>
-                      <FormHelperText>
-                        Job Role for which exam is scheduling to
+                      <FormHelperText style={{ color: "#cf0028" }}>
+                        {inputErrors.jobRole}
                       </FormHelperText>
                     </FormControl>
                   </Grid>
@@ -215,6 +277,7 @@ function ScheduleExamForm() {
                         id="demo-simple-select-helper"
                         value={PaperID}
                         label="PaperID"
+                        error={inputErrors.paperID ? true : false}
                         onChange={(e) => {
                           setPaperID(e.target.value);
                         }}
@@ -225,6 +288,9 @@ function ScheduleExamForm() {
                           </MenuItem>
                         ))}
                       </Select>
+                      <FormHelperText style={{ color: "#cf0028" }}>
+                        {inputErrors.paperID}
+                      </FormHelperText>
                     </FormControl>
                   </Grid>
                 </Grid>
@@ -249,13 +315,24 @@ function ScheduleExamForm() {
                         label="Schedule date"
                         variant="outlined"
                         value={DateScheduled}
+                        disablePast
+                        //helperText={inputErrors.dateScheduled}
+                        //error={inputErrors.dateScheduled ? true : false}
                         onChange={(date) => {
                           setDateScheduled(date);
                         }}
-                        renderInput={(params) => <TextField {...params} />}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            helperText={inputErrors.dateScheduled}
+                            error={inputErrors.dateScheduled ? true : false}
+                          />
+                        )}
                       />
+                      {/* <FormHelperText style={{ color: "red" }}>
+                        {inputErrors.dateScheduled}
+                      </FormHelperText> */}
                     </LocalizationProvider>
-                    {/* value.format("YYYY-MM-DD HH:mm:ss"), "Asia/Singapore" */}
                   </Grid>
 
                   <Grid container>
@@ -267,6 +344,8 @@ function ScheduleExamForm() {
                       variant="outlined"
                       name="ExamName"
                       value={ExamName}
+                      helperText={inputErrors.examName}
+                      error={inputErrors.examName ? true : false}
                       onChange={(e) => {
                         setExamName(e.target.value);
                       }}
@@ -314,6 +393,13 @@ function ScheduleExamForm() {
         <Stack sx={{ width: "100%" }} spacing={2}>
           <Alert variant="filled" severity="error">
             Please enter all the details!
+          </Alert>
+        </Stack>
+      ) : null}
+      {fill ? (
+        <Stack sx={{ width: "100%" }} spacing={2}>
+          <Alert variant="filled" severity="warning">
+            Please enter all the details or Check them again!
           </Alert>
         </Stack>
       ) : null}

@@ -23,6 +23,7 @@ export default function CreateCurruntSalary() {
   const classes = useStyles();
   const [error, seterror] = useState(false);
   const [added, setadded] = useState(false);
+  const [fill, setFill] = useState(false);
 
   const [record, setRecord] = useState({
     EmployeeID: "",
@@ -32,7 +33,7 @@ export default function CreateCurruntSalary() {
   });
 
   const { EmployeeID } = useParams();
-  console.log(EmployeeID);
+  //console.log(EmployeeID);
 
   useEffect(() => {
     async function fetchData() {
@@ -41,16 +42,54 @@ export default function CreateCurruntSalary() {
     }
     fetchData();
   }, []);
+  //console.log("viewEmployeeSalaryApi", record);
+
+  //--------------validation-----------------------
+  const [inputErrors, setInputErrors] = useState({
+    employeeID: "",
+    basicSalary: "",
+    vehicleAllowance: "",
+    internetAllowance: "",
+  });
+
+  const errorHandle = () => {
+    let isError = false;
+
+    if (!record.BasicSalary) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        basicSalary: "Basic salary is required",
+      }));
+      isError = true;
+    }
+    if (!record.InternetAllowance) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        internetAllowance: "Internet Allowance is required",
+      }));
+      isError = true;
+    }
+    if (!record.VehicleAllowance) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        vehicleAllowance: "Vehicle Allowance is required",
+      }));
+      isError = true;
+    }
+    return isError;
+  };
+  //-----------------------------------------------------
 
   const UpdateCurruntSalaryFunc = async (e) => {
-    console.log("updateCurruntSalaryFunc");
+    // console.log("updateCurruntSalaryFunc");
     e.preventDefault();
-    if (
-      record.EmployeeID &&
-      record.BasicSalary &&
-      record.InternetAllowance &&
-      record.VehicleAllowance
-    ) {
+    // if (
+    //   record.EmployeeID &&
+    //   record.BasicSalary &&
+    //   record.InternetAllowance &&
+    //   record.VehicleAllowance
+    // ) {
+    if (!errorHandle()) {
       const response = updateCurruntSalaryApi(record.EmployeeID, record).then(
         (response) => {
           if (response.success === true) {
@@ -59,7 +98,7 @@ export default function CreateCurruntSalary() {
             setTimeout(() => {
               setadded(false);
             }, 4000);
-          } else {
+          } else if (response.success === false) {
             console.log("error");
             seterror(true);
             setTimeout(() => {
@@ -68,7 +107,12 @@ export default function CreateCurruntSalary() {
           }
         }
       );
-      console.log("response", response);
+      //console.log("response", response);
+    } else {
+      setFill(true);
+      setTimeout(() => {
+        setFill(false);
+      }, 2000);
     }
   };
 
@@ -131,6 +175,8 @@ export default function CreateCurruntSalary() {
                       variant="filled"
                       name="BasicSalary"
                       value={record.BasicSalary}
+                      helperText={inputErrors.basicSalary}
+                      // error={inputErrors.basicSalary ? true : false}
                       onChange={(event) => {
                         if (
                           event.target.value !== null &&
@@ -161,6 +207,8 @@ export default function CreateCurruntSalary() {
                       variant="filled"
                       name="InternetAllowance"
                       value={record.InternetAllowance}
+                      helperText={inputErrors.internetAllowance}
+                      error={inputErrors.internetAllowance ? true : false}
                       onChange={(event) => {
                         if (
                           event.target.value != null &&
@@ -189,6 +237,8 @@ export default function CreateCurruntSalary() {
                       name="Vehicle Allowance"
                       fullWidth
                       value={record.VehicleAllowance}
+                      helperText={inputErrors.vehicleAllowance}
+                      error={inputErrors.vehicleAllowance ? true : false}
                       onChange={(event) => {
                         if (
                           event.target.value != null &&
@@ -232,6 +282,13 @@ export default function CreateCurruntSalary() {
         <Stack sx={{ width: "100%" }} spacing={2}>
           <Alert variant="filled" severity="error">
             Please enter all the details and Try again!
+          </Alert>
+        </Stack>
+      ) : null}
+      {fill ? (
+        <Stack sx={{ width: "100%" }} spacing={2}>
+          <Alert variant="filled" severity="error">
+            Please enter all the details!
           </Alert>
         </Stack>
       ) : null}

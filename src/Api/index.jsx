@@ -25,7 +25,7 @@ const refreshTheAccessToken = async () => {
   const response = await axios.post("http://localhost:8070/refresh", {
     token: JSON.parse(sessionStorage.getItem("refresh")),
   });
-  console.log(response)
+  console.log(response);
 
   sessionStorage.setItem("access", JSON.stringify(response.data.accessToken));
   sessionStorage.setItem("refresh", JSON.stringify(response.data.refreshToken));
@@ -42,9 +42,9 @@ API.interceptors.response.use(
       previousRequest._retry = true;
       try {
         await refreshTheAccessToken();
-        previousRequest.headers["Authorization"] = `Bearer ${
-          JSON.parse(sessionStorage.getItem("access"))
-        }`;
+        previousRequest.headers["Authorization"] = `Bearer ${JSON.parse(
+          sessionStorage.getItem("access")
+        )}`;
         return API(previousRequest);
       } catch (error) {
         return Promise.reject(error);
@@ -56,9 +56,9 @@ API.interceptors.response.use(
 );
 
 // Logout
-export const logOut = (id)=> {
+export const logOut = (id) => {
   API.post(`/logout/${id}`);
-}
+};
 
 // candidate API
 export const createCandidate = (candidateData) =>
@@ -86,6 +86,9 @@ export const markedCandidate = (marks, interviewID) => {
 };
 export const getInterviewStats = (employeeID) => {
   return API.get(`/recruitment/interview/InterviewStats/${employeeID}`);
+};
+export const getInterviewResult = (interview) => {
+  return API.post(`/recruitment/interview/scheduled/result`, interview);
 };
 
 // LogIn API
@@ -229,9 +232,8 @@ export const getCandidates = () => {
 export const createTeams = (teamcreate) =>
   API.post(`/employee/teamAdd`, teamcreate);
 
-export const updateTeam = (updateteam, id) => {
+export const updateTeam = (updateteam, id) =>
   API.put(`/employee/updateTeam/${id}`, updateteam);
-};
 
 export const getEmployeesWithoutTeam = () => {
   return API.get(`/employee/get`);
@@ -246,13 +248,11 @@ export const getAllTeams = () => {
 };
 //product api
 
-export const createProduct = (productcreate) => {
+export const createProduct = (productcreate) =>
   API.post(`/employee/addProduct`, productcreate);
-};
 
-export const updateProduct = (updateProdData, id) => {
+export const updateProduct = (updateProdData, id) =>
   API.put(`/employee/updateProduct/${id}`, updateProdData);
-};
 
 export const viewPProducts = (viewproduct) => {
   return API.get(`/employee/viewProducts`);
@@ -261,9 +261,8 @@ export const viewPProducts = (viewproduct) => {
 // leave API
 export const getLeaveBalance = (employeeID) =>
   API.get(`/leave/leaveBalance/${employeeID}`);
-export const requestLeave = (leaveDetail) => 
-   API.post("/leave/request", leaveDetail);
-  
+export const requestLeave = (leaveDetail) =>
+  API.post("/leave/request", leaveDetail);
 
 export const getLeaveList = (employeeId) => API.get("/leave/" + employeeId);
 export const cancelLeave = (id, reason, employeeId) =>

@@ -29,14 +29,21 @@ function AssetInsertion() {
     const [error, seterror] = useState(false);
     const [added, setadded] = useState(false);
     const [alreadyID, setalreadyID] = useState(false);
+    const [inputErrors, setInputErrors] = useState({assetID:false});
 
     const sendData = async (e) =>
     {
         e.preventDefault();
+        const regexAssetID = /^A[0-9]{4}$/; //A0123
+        
         const asset = {assetID, assetCategory, model, serialNumber, status}
         if(assetID&&assetCategory&&model&&serialNumber)
             {
-                
+              if(!assetID.match(regexAssetID))
+              {
+                setInputErrors({assetID:true})
+              }else
+              {
                 const response = await assetInsertionApi(asset);
                 if(response.success === true)
                 {
@@ -45,6 +52,7 @@ function AssetInsertion() {
                     setModel("");
                     setSerialNumber("");
                     setStatus("Available");
+                    setInputErrors({assetID:false})
                     setadded(true);
                     setTimeout(() => {
                         setadded(false);
@@ -56,6 +64,8 @@ function AssetInsertion() {
                         setalreadyID(false);
                     }, 2000);
                 }
+              }
+                
                 
         }else
         {
@@ -101,6 +111,8 @@ function AssetInsertion() {
                         value={assetID}
                         onChange={(e)=>{setAssetID(e.target.value)}}
                         fullWidth
+                        error={inputErrors.assetID ? true : false}
+                        helperText="Ex - A0123"
                       />
                   </Grid>
 
@@ -145,6 +157,7 @@ function AssetInsertion() {
                           value={model}
                           onChange={(e)=>{setModel(e.target.value)}}
                           fullWidth
+                          helperText="Ex - Asus,Hp,Apple"
                         />
                   </Grid>
 

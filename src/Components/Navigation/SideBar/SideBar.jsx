@@ -287,6 +287,21 @@ const SideBar = ({ open, toggleDrawer, user, handleLogOut }) => {
                   </ListItemIcon>
                   <ListItemText primary="Request Leave" />
                 </ListItem2>
+
+                <ListItem2
+                  component={Link}
+                  to="/requestedLeaves"
+                  selected={selectedIndex2 === 2}
+                  onClick={() => {
+                    handleListItemClick2(2);
+                  }}
+                  className={classes.navButton2}
+                >
+                  <ListItemIcon>
+                    <StarBorder />
+                  </ListItemIcon>
+                  <ListItemText primary="Requested Leave" />
+                </ListItem2>
               </List>
             </Collapse>
           </Grid>
@@ -310,7 +325,7 @@ const SideBar = ({ open, toggleDrawer, user, handleLogOut }) => {
               <List component="div" disablePadding>
                 <ListItem2
                   component={Link}
-                  to="/salary/summarySalary"
+                  to= {`/salary/employeeSalary/${user.employeeID}`}
                   selected={selectedIndex2 === 0}
                   onClick={() => {
                     handleListItemClick2(0);
@@ -321,6 +336,36 @@ const SideBar = ({ open, toggleDrawer, user, handleLogOut }) => {
                     <StarBorder />
                   </ListItemIcon>
                   <ListItemText primary="Salary Sheet" />
+                </ListItem2>
+
+                <ListItem2
+                  component={Link}
+                  to="/salary/currentSalary"
+                  selected={selectedIndex2 === 1}
+                  onClick={() => {
+                    handleListItemClick2(1);
+                  }}
+                  className={classes.navButton2}
+                >
+                  <ListItemIcon>
+                    <StarBorder />
+                  </ListItemIcon>
+                  <ListItemText primary="Current" />
+                </ListItem2>
+
+                <ListItem2
+                  component={Link}
+                  to="/salary/summarySalary"
+                  selected={selectedIndex2 === 2}
+                  onClick={() => {
+                    handleListItemClick2(2);
+                  }}
+                  className={classes.navButton2}
+                >
+                  <ListItemIcon>
+                    <StarBorder />
+                  </ListItemIcon>
+                  <ListItemText primary="Summary" />
                 </ListItem2>
               </List>
             </Collapse>
@@ -371,6 +416,65 @@ const SideBar = ({ open, toggleDrawer, user, handleLogOut }) => {
                     <StarBorder />
                   </ListItemIcon>
                   <ListItemText primary="Paper" />
+                </ListItem2>
+
+                <ListItem2
+                  component={Link}
+                  to={`/promotion/evaluation/exam/viewExam/${user.employeeID}`}
+                  selected={selectedIndex2 === 2}
+                  onClick={() => {
+                    handleListItemClick2(2);
+                  }}
+                  className={classes.navButton2}
+                >
+                  <ListItemIcon>
+                    <StarBorder />
+                  </ListItemIcon>
+                  <ListItemText primary="Exam" />
+                </ListItem2>
+                <ListItem2
+                  component={Link}
+                  to={`/promotion/evaluation/allSubmissions/${user.employeeID}`}
+                  selected={selectedIndex2 === 3}
+                  onClick={() => {
+                    handleListItemClick2(3);
+                  }}
+                  className={classes.navButton2}
+                >
+                  <ListItemIcon>
+                    <StarBorder />
+                  </ListItemIcon>
+                  <ListItemText primary="Evaluation" />
+                </ListItem2>
+
+                <ListItem2
+                  component={Link}
+                  to={`/promotion/evaluation/mySubmissions/${user.employeeID}`}
+                  selected={selectedIndex2 === 4}
+                  onClick={() => {
+                    handleListItemClick2(4);
+                  }}
+                  className={classes.navButton2}
+                >
+                  <ListItemIcon>
+                    <StarBorder />
+                  </ListItemIcon>
+                  <ListItemText primary="Evaluation Test" />
+                </ListItem2>
+
+                <ListItem2
+                  component={Link}
+                  to={`/promotion/evaluation/allSubmissions`}
+                  selected={selectedIndex2 === 5}
+                  onClick={() => {
+                    handleListItemClick2(5);
+                  }}
+                  className={classes.navButton2}
+                >
+                  <ListItemIcon>
+                    <StarBorder />
+                  </ListItemIcon>
+                  <ListItemText primary="All Submission" />
                 </ListItem2>
               </List>
             </Collapse>

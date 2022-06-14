@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
-import DisplayProfiles from "../../../Components/ReportersManagementModule/DisplayEmployees/DisplayProfiles";
 import { Grid, Button } from "@mui/material";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import Box from "@mui/material/Box";
-import AllRecentEmployees from "../../../Components/ReportersManagementModule/RecentSection/AllRecentEmployees";
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
@@ -13,24 +11,19 @@ import OrganizationStructure from "../../../Components/ReportersManagementModule
 import DisplayAllEmployees from "./DisplayAllEmployees";
 import { viewAllEmployees } from "../../../Api/ReportersManagementModule/EmployeeApi";
 import RecentSection from "./RecentSection";
-import { WindowSharp } from "@mui/icons-material";
 function DashBord() {
   const location = useLocation();
   //const { allEmployees } = location.state;
   const [value, setValue] = React.useState("1");
   const [profiles, setProfiles] = useState([]);
-  
 
   useEffect(() => {
-    console.log(location.state)
-    if (location.state ) {
-      setValue(location.state.allEmployees === true ? "2" :" 1");
-      
-      window.history.replaceState({}, document.title)
+    if (location.state) {
+      setValue(location.state.allEmployees === true ? "2" : " 1");
 
-      console.log(location.state)
+      window.history.replaceState({}, document.title);
     }
- 
+
     async function fetchData() {
       setProfiles(await viewAllEmployees());
     }
@@ -43,20 +36,19 @@ function DashBord() {
   return (
     <div>
       <Box padding={2}>
-       
-          <Grid item sm={12} md={12} sx={{ mb: 5 }}>
-            <Link to="/dashboard/create">
-              <Button
-                type="button"
-                variant="contained"
-                sx={{backgroundColor:"#183d78"}}
-                startIcon={<AddBoxIcon />}
-              >
-                CAREATE NEW EMPLOYEE
-              </Button>
-            </Link>
-          </Grid>
-       
+        <Grid item sm={12} md={12} sx={{ mb: 5 }}>
+          <Link to="/dashboard/create">
+            <Button
+              type="button"
+              variant="contained"
+              sx={{ backgroundColor: "#183d78" }}
+              startIcon={<AddBoxIcon />}
+            >
+              CAREATE NEW EMPLOYEE
+            </Button>
+          </Link>
+        </Grid>
+
         <Grid item sm={12} md={12}>
           <Box sx={{ width: "100%", typography: "body1" }}>
             <TabContext value={value}>
@@ -64,9 +56,8 @@ function DashBord() {
                 <TabList
                   onChange={handleChange}
                   aria-label="lab API tabs example"
-                
                 >
-                  <Tab  label="RECENT EMPLOYEE SECTION" value="1" />
+                  <Tab label="RECENT EMPLOYEE SECTION" value="1" />
                   <Tab label="ALL EMPLOYEES" value="2" />
                   <Tab label="ORGANIZATION STRUCTURE" value="3" />
                 </TabList>
@@ -85,7 +76,7 @@ function DashBord() {
               <TabPanel value="2" sx={{ mt: 1 }}>
                 <DisplayAllEmployees profiles={profiles} />
               </TabPanel>
-              <TabPanel value="3" >
+              <TabPanel value="3">
                 <OrganizationStructure />
               </TabPanel>
             </TabContext>

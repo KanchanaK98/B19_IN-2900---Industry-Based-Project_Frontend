@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { AvatarGroup, CssBaseline, Grid } from "@mui/material";
+import { CssBaseline, Grid } from "@mui/material";
 import Box from "@mui/material/Box";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import NavBar from "./Components/Navigation/NavBar/NavBar";
@@ -42,7 +42,6 @@ import DispalyAndSubmitPaper from "./Components/PromotionModule/Submit/DispalyAn
 import EvaluatePaper from "./Components/PromotionModule/Evaluation/EvaluatePaper/EvaluatePaper";
 import DisplayMyFeedback from "./Components/PromotionModule/Submit/DisplayFeedback/DisplayFeedback";
 import FindEmployeeSalary from "./Pages/SalaryPaymentModule/EmployeeSalary/FindCurrentEmployeeSalary";
-import ViewProfileInfo from "./Components/ReportersManagementModule/DisplayEmployees/ViewProfileInfo";
 import ViewAllExamList from "./Components/PromotionModule/Exam/ViewAllExamList/ViewAllExamList";
 import ScheduleExamForm from "./Components/PromotionModule/Exam/ScheduleExamForm/ScheduleExamForm";
 import UpdateExamForm from "./Components/PromotionModule/Exam/UpdateExamForm/UpdateExamForm";
@@ -137,7 +136,6 @@ LogoutApi();
               <Route path="/pro" element={<CreateProduct />} />
               <Route path="/user" element={<UserProfile user={user} />} />
               <Route path="/products/update/:id" element={<EditProduct />} />
-              <Route path="display" element={<ViewProfileInfo />} />
               <Route path="recent" element={<RecentSection />} />
 
               {/* Recruitment management */}

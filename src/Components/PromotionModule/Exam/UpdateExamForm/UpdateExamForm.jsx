@@ -38,8 +38,8 @@ function UpdateExamForm() {
   const [error, seterror] = useState(false);
   const [added, setadded] = useState(false);
   const [PaperList, setPaperList] = useState([]);
-  const [Status, setStatus] = useState([]);
-
+  const [Status, setStatus] = useState("");
+  const [fill, setFill] = useState(false);
   const { EmployeeID } = useParams();
   const { ExamID } = useParams();
 
@@ -64,6 +64,56 @@ function UpdateExamForm() {
   }, []);
   //console.log("paper fetched", record);
 
+  //--------------validation-----------------------
+  const [inputErrors, setInputErrors] = useState({
+    examName: "",
+    dateScheduled: "",
+    jobRole: "",
+    paperID: "",
+    status: "",
+  });
+
+  const errorHandle = () => {
+    let isError = false;
+
+    if (!ExamName) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        examName: "Exam name is required",
+      }));
+      isError = true;
+    }
+    if (!DateScheduled) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        dateScheduled: "Date scheduled filed is required",
+      }));
+      isError = true;
+    }
+    if (!JobRole) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        jobRole: "Jobrole is required",
+      }));
+      isError = true;
+    }
+    if (!PaperID) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        paperID: "Paper ID is required",
+      }));
+      isError = true;
+    }
+    if (!Status) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        status: "Status is required",
+      }));
+      isError = true;
+    }
+    return isError;
+  };
+  //-----------------------------------------------------
   const sendData = async (e) => {
     e.preventDefault();
 
@@ -75,28 +125,29 @@ function UpdateExamForm() {
       PaperID,
       Status,
     };
-    if (ExamID && ExamName && DateScheduled && JobRole && PaperID && Status) {
+    //if (ExamID && ExamName && DateScheduled && JobRole && PaperID && Status) {
+    if (!errorHandle()) {
       const response = await updateExamDetailsApi(
         EmployeeID,
         ExamID,
         examDetails
       );
       if (response.success === true) {
-        // setExamID("");
-        setExamName("");
-        setDateScheduled("");
-        setJobRole("");
-        setPaperID("");
         setadded(true);
         setTimeout(() => {
           setadded(false);
         }, 2000);
+      } else {
+        seterror(true);
+        setTimeout(() => {
+          seterror(false);
+        }, 2000);
       }
     } else {
-      seterror(true);
+      setFill(true);
       setTimeout(() => {
-        seterror(false);
-      }, 2000);
+        setFill(false);
+      }, 4000);
     }
   };
 
@@ -174,6 +225,7 @@ function UpdateExamForm() {
                         labelId="demo-simple-select-helper-label"
                         id="demo-simple-select-helper"
                         value={JobRole}
+                        error={inputErrors.jobRole ? true : false}
                         label="Job Role"
                         onChange={(e) => {
                           setJobRole(e.target.value);
@@ -208,8 +260,8 @@ function UpdateExamForm() {
                           Product Manager
                         </MenuItem>
                       </Select>
-                      <FormHelperText>
-                        Job Role for which exam is scheduling to
+                      <FormHelperText style={{ color: "#cf0028" }}>
+                        {inputErrors.jobRole}
                       </FormHelperText>
                     </FormControl>
                   </Grid>
@@ -225,10 +277,17 @@ function UpdateExamForm() {
                         label="Schedule date"
                         variant="outlined"
                         value={DateScheduled}
+                        disablePast
                         onChange={(date) => {
                           setDateScheduled(date);
                         }}
-                        renderInput={(params) => <TextField {...params} />}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            helperText={inputErrors.dateScheduled}
+                            error={inputErrors.dateScheduled ? true : false}
+                          />
+                        )}
                       />
                     </LocalizationProvider>
                     {/* value.format("YYYY-MM-DD HH:mm:ss"), "Asia/Singapore" */}
@@ -242,6 +301,8 @@ function UpdateExamForm() {
                       variant="outlined"
                       name="ExamName"
                       value={ExamName}
+                      helperText={inputErrors.examName}
+                      error={inputErrors.examName ? true : false}
                       onChange={(e) => {
                         setExamName(e.target.value);
                       }}
@@ -262,6 +323,7 @@ function UpdateExamForm() {
                         labelId="demo-simple-select-helper-label"
                         id="demo-simple-select-helper"
                         value={Status}
+                        error={inputErrors.status ? true : false}
                         label="Exam Status"
                         onChange={(e) => {
                           setStatus(e.target.value);
@@ -280,6 +342,9 @@ function UpdateExamForm() {
                           Pending
                         </MenuItem>
                       </Select>
+                      <FormHelperText style={{ color: "#cf0028" }}>
+                        {inputErrors.status}
+                      </FormHelperText>
                     </FormControl>
                   </Grid>
                 </Grid>
@@ -296,6 +361,7 @@ function UpdateExamForm() {
                         labelId="demo-simple-select-helper-label"
                         id="demo-simple-select-helper"
                         value={PaperID}
+                        error={inputErrors.paperID ? true : false}
                         label="PaperID"
                         onChange={(e) => {
                           setPaperID(e.target.value);
@@ -307,6 +373,9 @@ function UpdateExamForm() {
                           </MenuItem>
                         ))}
                       </Select>
+                      <FormHelperText style={{ color: "#cf0028" }}>
+                        {inputErrors.paperID}
+                      </FormHelperText>
                     </FormControl>
                   </Grid>
                 </Grid>
@@ -337,6 +406,13 @@ function UpdateExamForm() {
         <Stack sx={{ width: "100%" }} spacing={2}>
           <Alert variant="filled" severity="error">
             Please enter all the details!
+          </Alert>
+        </Stack>
+      ) : null}
+      {fill ? (
+        <Stack sx={{ width: "100%" }} spacing={2}>
+          <Alert variant="filled" severity="warning">
+            Please enter all the details or Check them again!
           </Alert>
         </Stack>
       ) : null}

@@ -10,6 +10,7 @@ import { createEmployee } from "../../../Api/ReportersManagementModule/EmployeeA
 import { Alert, AlertTitle, MenuItem, Stack, Typography } from "@mui/material";
 import CredentialCard from "./CredentialCard";
 import Candidates from "./Candidates";
+import { Link } from "react-router-dom";
 const jobRoles = [
   "Software Engineer",
   "Senior Software Engineer",
@@ -31,6 +32,7 @@ function CreateEmployee() {
   });
   const [isDisable, setIsDisable] = useState(true);
   const [addSuccessfully, setAddSuccessfully] = useState(false);
+  const [duplicated, setDuplicated] = useState(false);
   const [notAdded, setnotAdded] = useState(false);
   const [inputErrors, setInputErrors] = useState({
     employeeID: "",
@@ -66,21 +68,9 @@ function CreateEmployee() {
       jobRole: "",
       NIC: "",
       companyEmail: "",
-      // status: "",
-      // jobType: "",
     });
   };
 
-  //let regexPhoneNumber = "^(?:0|94|\\+94)?(?:(11|21|23|24|25|26|27|31|32|33|34|35|36|37|38|41|45|47|51|52|54|55|57|63|65|66|67|81|912)(0|2|3|4|5|7|9)|7(0|1|2|5|6|7|8)\\d)\\d{6}$";
-  // 0771234567
-
-  // 771234567
-
-  // +94771234567
-
-  // 94771234567
-
-  // 0111234567(local codes)
   //--------------validation-----------------------
   const errorHandle = () => {
     let isError = false;
@@ -113,23 +103,20 @@ function CreateEmployee() {
       if (response.success === true) {
         setCredentials(response.employeeCredentials);
         setIsDisable(false);
+        setAddSuccessfully(true);
+        setTimeout(() => {
+          setAddSuccessfully(false);
+        }, 2000);
       }
+      console.log(response.status);
 
-      setAddSuccessfully(true);
-      setTimeout(() => {
-        setAddSuccessfully(false);
-      }, 2000);
+      if (response.status === 400) {
+        setDuplicated(true);
+        setTimeout(() => {
+          setDuplicated(false);
+        }, 2000);
+      }
       handleClear();
-      // setInputs({
-      //   employeeID: "",
-      //   employeeFirstName: "",
-      //   employeeLastName: "",
-      //   jobRole: "",
-      //   NIC: "",
-      //   companyEmail: "",
-      //   status: "",
-      //   jobType: "",
-      // });
     } else {
       handleClear();
       setnotAdded(true);
@@ -164,7 +151,7 @@ function CreateEmployee() {
                     CREATE EMPLOYEE
                   </Typography>
                 </Grid>
-                <Grid item md={6}>
+                <Grid item md={6} textAlign="right">
                   <Candidates />
                 </Grid>
               </Grid>
@@ -319,115 +306,53 @@ function CreateEmployee() {
                           </MenuItem>
                         ))}
                       </TextField>
-                      {/* <JobRoleDialogBox
-                        jobRole={inputs.jobRole}
-                        setInputs={setInputs}
-                      /> */}
                     </Grid>
                   </Grid>
                 </Grid>
-                <Grid item xs={6} marginTop={2}>
-                  {/* <Grid container spacing={2}>
-                    <Grid item xs={6} md={3}>
-                      <FormLabel className="label" sx={{fontWeight:"bold"}}>Job Type :</FormLabel>
-                    </Grid>
-                    <Grid item xs={6} md={9}> */}
-                  {/* <TextField
-                      id="filled-basic"
-                      label="Filled"
-                      variant="filled"
-                      name="jobType"
-                      value={inputs.jobType}
-                      onChange={handleChange}
-                      fullWidth
-                    /> */}
-
-                  {/* <FormControl fullWidth>
-                        <InputLabel id="demo-simple-select-label">
-                          Job Type
-                        </InputLabel>
-                        <Select
-                          labelId="demo-simple-select-label"
-                          id="demo-simple-select"
-                          value={inputs.jobType}
-                          label="Job Type"
-                          onChange={handleChange}
-                          selectprops={{ renderValue: inputs.jobType }}
-                        >
-                          <MenuItem value={1}>White Collar</MenuItem>
-                        </Select>
-                      </FormControl>
-                    </Grid>
-                  </Grid> */}
-                </Grid>
+                <Grid item xs={6} marginTop={2}></Grid>
                 <Grid
                   item
                   xs={6}
                   marginTop={2}
                   style={{ marginBlockEnd: "20px" }}
-                >
-                  {/* <Grid container spacing={2}>
-                    <Grid item xs={6} md={3}>
-                      <FormLabel
-                        style={{ marginLeft: "10px" }}
-                        className="label"
-                      >
-                        Status :
-                      </FormLabel>
-                    </Grid>
-                    <Grid item xs={6} md={9}> */}
-                  {/* <TextField
-                      id="filled-basic"
-                      label="Filled"
-                      variant="filled"
-                      name="status"
-                      value={inputs.status}
-                      onChange={handleChange}
-                      fullWidth
-                    
-                    /> */}
-                  {/* <FormControl fullWidth>
-                        <InputLabel id="demo-simple-select-label">
-                          Status
-                        </InputLabel>
-                        <Select
-                          labelId="demo-simple-select-label"
-                          id="demo-simple-select"
-                          value={inputs.status}
-                          label="Status"
-                          onChange={handleChange}
-                          selectprops={{ renderValue: inputs.status }}
-                        >
-                          <MenuItem value={1}>Probationary</MenuItem>
-                        </Select>
-                      </FormControl>
-                    </Grid>
-                  </Grid> */}
-                </Grid>
+                ></Grid>
               </Grid>
             </Grid>
             <Grid container>
               <Grid item md={6} textalign="left">
-                {credentials && (
-                  <CredentialCard
-                    credentials={credentials}
-                    isDisable={isDisable}
-                    setIsDisable={setIsDisable}
-                  />
-                )}
-              </Grid>
-              <Grid item md={6} textalign="right">
                 <Button
+                  component={Link}
+                  to="/dashboard"
                   variant="contained"
-                  sx={{
-                    display: "flex",
-                    justifyContent: "flex-end",
-                    backgroundColor: "#183d78",
-                  }}
-                  type="submit"
+                  sx={{ backgroundColor: "#183d78" }}
                 >
-                  CREATE EMPLOYEE
+                  DASHBOARD
                 </Button>
+              </Grid>
+
+              <Grid item md={6}>
+                <Grid container>
+                  <Grid item md={6} textAlign="right">
+                    {credentials && (
+                      <CredentialCard
+                        credentials={credentials}
+                        isDisable={isDisable}
+                        setIsDisable={setIsDisable}
+                      />
+                    )}
+                  </Grid>
+                  <Grid item md={6} textAlign="right">
+                    <Button
+                      variant="contained"
+                      sx={{
+                        backgroundColor: "#183d78",
+                      }}
+                      type="submit"
+                    >
+                      CREATE EMPLOYEE
+                    </Button>
+                  </Grid>
+                </Grid>
               </Grid>
             </Grid>
           </Paper>
@@ -443,6 +368,13 @@ function CreateEmployee() {
             <Stack sx={{ width: "100%" }} spacing={2}>
               <Alert variant="filled" severity="error">
                 Please enter all the details!
+              </Alert>
+            </Stack>
+          ) : null}
+          {duplicated ? (
+            <Stack sx={{ width: "100%" }} spacing={2}>
+              <Alert variant="filled" severity="error">
+                Details are duplicated!
               </Alert>
             </Stack>
           ) : null}

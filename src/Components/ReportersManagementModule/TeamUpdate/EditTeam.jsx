@@ -19,7 +19,6 @@ import {
   AlertTitle,
 } from "@mui/material";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
 import EditIcon from "@mui/icons-material/Edit";
 import TeamMemberDialog from "./TeamMemberDialog";
 import { updateTeam } from "../../../Api/ReportersManagementModule/TeamsApi";
@@ -27,6 +26,7 @@ import { getEmployeesWithoutTeam } from "../../../Api/ReportersManagementModule/
 function EditTeam() {
   const [addSuccessfully, setAddSuccessfully] = useState(false);
   const [notAdded, setnotAdded] = useState(false);
+  const [duplicated, seDuplicated] = useState(false);
   const [inputErrors, setInputErrors] = useState({
     teamName: "",
     teamLeader: "",
@@ -76,11 +76,19 @@ function EditTeam() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!errorHandle()) {
-      updateTeam(editTeam, team._id);
-      setAddSuccessfully(true);
-      setTimeout(() => {
-        setAddSuccessfully(false);
-      }, 2000);
+      const response = await updateTeam(editTeam, team._id);
+      if (response.success === true) {
+        setAddSuccessfully(true);
+        setTimeout(() => {
+          setAddSuccessfully(false);
+        }, 2000);
+      }
+      if (response.success === false) {
+        seDuplicated(true);
+        setTimeout(() => {
+          seDuplicated(false);
+        }, 2000);
+      }
     } else {
       setnotAdded(true);
       setTimeout(() => {
@@ -104,9 +112,12 @@ function EditTeam() {
   return (
     <div>
       <Box padding={6}>
-        <Paper sx={{ padding: 4 }}>
+        <Paper sx={{ padding: 4, backgroundColor: "#e4ecf7" }}>
           <form onSubmit={handleSubmit}>
-            <Typography variant="h5" sx={{ mb: 5, fontWeight: "bold" }}>
+            <Typography
+              variant="h5"
+              sx={{ mb: 5, fontWeight: "bold", color: "#183d78" }}
+            >
               <GroupAddIcon sx={{ width: 60, height: 60 }} />
               &nbsp; Update Team
             </Typography>
@@ -137,12 +148,6 @@ function EditTeam() {
 
                   <Grid item sm={8} md={8}>
                     <IconButton onClick={handleOpenDialog}>
-                      <AddCircleIcon sx={{ color: "gray" }} fontSize="large" />
-                    </IconButton>
-                    <IconButton
-                      onClick={handleOpenDialog}
-                      disabled={team.TeamWithEmp.length === 0 ? true : false}
-                    >
                       <EditIcon sx={{ color: "gray" }} fontSize="large" />
                     </IconButton>
                   </Grid>
@@ -267,7 +272,14 @@ function EditTeam() {
         {notAdded ? (
           <Stack sx={{ width: "100%", mt: 0.5 }} spacing={2}>
             <Alert variant="filled" severity="error">
-              Team is not updated!
+              Please enter all the details!
+            </Alert>
+          </Stack>
+        ) : null}
+        {duplicated ? (
+          <Stack sx={{ width: "100%" }} spacing={2}>
+            <Alert variant="filled" severity="error">
+              Team details are duplicated!
             </Alert>
           </Stack>
         ) : null}

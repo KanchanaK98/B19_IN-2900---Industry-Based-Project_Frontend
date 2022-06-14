@@ -158,21 +158,7 @@ function ViewAllProducts() {
                   <StyledTableCell>
                     <Typography>{product.teamName}</Typography>
                   </StyledTableCell>
-                  {/* <StyledTableCell>
-                  <Typography
-                    sx={{
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      display: "webkit-box",
-                      WebkitLineClamp: 0,
 
-                      // -webkit-line-clamp: 4;
-                      // -webkit-box-orient: vertical;
-                    }}
-                  >
-                    {product.description}
-                  </Typography>
-                </StyledTableCell> */}
                   <StyledTableCell>
                     <IconButton
                       onClick={(event) => {
@@ -217,8 +203,12 @@ function ViewAllProducts() {
                         },
                       }}
                     >
-                      <MenuItem onClick={()=>handleViewDetails(selectedProduct)}>View more</MenuItem>
-                      <MenuItem>Edit</MenuItem>
+                      <MenuItem
+                        onClick={() => handleViewDetails(selectedProduct)}
+                      >
+                        View more
+                      </MenuItem>
+
                       <MenuItem>Cancel</MenuItem>
                     </Menu>
                   </StyledTableCell>
@@ -231,8 +221,6 @@ function ViewAllProducts() {
           openDialog={openDialog}
           handleCloseDialog={handleCloseDialog}
           product={selectedProduct}
-          // handleCancelMenu={handleCancelMenu}
-         
         />
       </TableContainer>
     </div>

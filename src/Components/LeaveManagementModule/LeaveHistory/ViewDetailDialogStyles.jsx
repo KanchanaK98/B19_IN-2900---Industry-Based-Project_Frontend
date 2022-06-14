@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'flex-end'
   },
   content: {
-    display: "flex",
+    //display: "flex",
 margin: theme.spacing(1,0)
     //  color:"#560027",
     //  marginRight: theme.spacing(2),
@@ -27,6 +27,12 @@ margin: theme.spacing(1,0)
   large: {
     width: theme.spacing(9),
     height: theme.spacing(9),
+  }, 
+  card:{
+    borderRadius: theme.spacing(4),
+    padding: theme.spacing(2),
+    margin: theme.spacing(1,8,2,8),
+    backgroundColor: "#e8eaf6"
   }
 }));
 

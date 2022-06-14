@@ -26,7 +26,9 @@ const refreshTheAccessToken = async () => {
     token: JSON.parse(localStorage.getItem("user")).refreshToken,
   });
 
-  let existsUser = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {};
+  let existsUser = localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user"))
+    : {};
 
   existsUser["accessToken"] = response.data.accessToken;
   existsUser["refreshToken"] = response.data.refreshToken;
@@ -251,16 +253,18 @@ export const viewPProducts = (viewproduct) => {
 // leave API
 export const getLeaveBalance = (employeeID) =>
   API.get(`/leave/leaveBalance/${employeeID}`);
-export const requestLeave = (leaveDetail) =>
-  API.post("/leave/request", leaveDetail);
+export const requestLeave = (leaveDetail) => 
+   API.post("/leave/request", leaveDetail);
+  
+
 export const getLeaveList = (employeeId) => API.get("/leave/" + employeeId);
 export const cancelLeave = (id, reason, employeeId) =>
   API.post(`/leave/cancel/${id}`, { reason, employeeId });
 export const getRequestedLeave = (employeeId) =>
   API.get("/leave/requestedLeave/" + employeeId);
 
-  export const responseRequestedLeave = (id,reason) =>
-  API.post(`/leave/requestedLeave/response/${id}`,reason);
+export const responseRequestedLeave = (id, reason) =>
+  API.post(`/leave/requestedLeave/response/${id}`, reason);
 
-  export const getTeamLead = (employeeId) =>
+export const getTeamLead = (employeeId) =>
   API.get("/leave/request/teamLead/" + employeeId);

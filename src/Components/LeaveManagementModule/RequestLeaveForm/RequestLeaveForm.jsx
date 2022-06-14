@@ -29,16 +29,47 @@ const RequestLeaveForm = () => {
     leaveMethod: "",
   });
   const [openSnackBar, setOpenSnackBar] = useState(false);
+  const [leaveErrors, setLeaveErrors] = useState({
+    leaveType: "",
+    reason: "",
+    startDate: "",
+    endDate: "",
+    leaveMethod: "",
+  });
+  const errorHandle = () => {
+    var error = false;
+    Object.keys(leave).forEach((property) => {
+      if (!leave[property]) {
+        setLeaveErrors((prevState) => ({
+          ...prevState,
+          [property]: property + " is required",
+        }));
+        error = true;
+      }
+    });
+    return error;
+  };
+
   const handleOnChange = (event) => {
     setLeave({ ...leave, [event.target.name]: event.target.value });
+    setLeaveErrors((prevState) => ({
+      ...prevState,
+      [event.target.name]: "",
+    }));
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const response = await requestLeave(leave);
+    if (!errorHandle()) {
+      const response = await requestLeave(leave);
+      console.log(response);
+      clearForm();
 
-    clearForm();
-    if (response.success === true) setOpenSnackBar(true);
+      if (response.success === true) {
+        setOpenSnackBar(true);
+      }
+    }
+    console.log(leaveErrors);
   };
 
   const handleCloseSnackBar = () => {
@@ -77,10 +108,12 @@ const RequestLeaveForm = () => {
                     value={leave.leaveType}
                     variant="filled"
                     onChange={handleOnChange}
+                    error={leaveErrors.leaveType ? true : false}
+                    helperText={leaveErrors.leaveType}
                   >
-                    <MenuItem value="annual">Annual Leave</MenuItem>
-                    <MenuItem value="casual">Casual Leave</MenuItem>
-                    <MenuItem value="medical">Medical Leave</MenuItem>
+                    <MenuItem value="Annual">Annual Leave</MenuItem>
+                    <MenuItem value="Casual">Casual Leave</MenuItem>
+                    <MenuItem value="Medical">Medical Leave</MenuItem>
                   </TextField>
                 </Grid>
               </Grid>
@@ -97,6 +130,8 @@ const RequestLeaveForm = () => {
                         inputFormat="MM/dd/yyyy"
                         name="startDate"
                         value={leave.startDate}
+                        error={leaveErrors.startDate ? true : false}
+                        helperText={leaveErrors.startDate}
                         onChange={(newValue) => {
                           setLeave({ ...leave, startDate: newValue });
                         }}
@@ -122,6 +157,8 @@ const RequestLeaveForm = () => {
                     value={leave.reason}
                     variant="filled"
                     onChange={handleOnChange}
+                    error={leaveErrors.reason ? true : false}
+                    helperText={leaveErrors.reason}
                   />
                 </Grid>
               </Grid>
@@ -140,6 +177,8 @@ const RequestLeaveForm = () => {
                     value={leave.leaveMethod}
                     variant="filled"
                     onChange={handleOnChange}
+                    error={leaveErrors.leaveMethod ? true : false}
+                    helperText={leaveErrors.leaveMethod}
                   >
                     <MenuItem value="half Day">half Day</MenuItem>
                     <MenuItem value="full Day">full Day</MenuItem>
@@ -160,6 +199,8 @@ const RequestLeaveForm = () => {
                           inputFormat="MM/dd/yyyy"
                           name="endDate"
                           value={leave.endDate}
+                          error={leaveErrors.endDate ? true : false}
+                          helperText={leaveErrors.endDate}
                           onChange={(newValue) => {
                             setLeave({ ...leave, endDate: newValue });
                           }}

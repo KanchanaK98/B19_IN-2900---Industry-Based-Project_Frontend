@@ -7,13 +7,14 @@ import DialogTitle from "@mui/material/DialogTitle";
 import {
   Avatar,
   Button,
+  Card,
   Divider,
   Grid,
   IconButton,
   TextField,
   Typography,
 } from "@mui/material";
-import { Close, Send } from "@mui/icons-material";
+import { ArrowBack, Close, Send } from "@mui/icons-material";
 import useStyles from "../ViewDetailDialogStyles";
 import ConfirmApproval from "./ConfirmApproval";
 import { responseRequestedLeave } from "../../../../Api/LeaveManagementModule/LeaveApi";
@@ -30,7 +31,7 @@ const ViewDetailTeamLead = ({
   const [reason, setReason] = useState(null);
   const classes = useStyles();
   const handleOnChange = (event) => {
-    setReason(event.target.value)
+    setReason(event.target.value);
   };
   const handleResponse = async () => {
     await responseRequestedLeave(leaveDetail.leave._id, reason);
@@ -42,24 +43,47 @@ const ViewDetailTeamLead = ({
   const handleConfirmOpen = () => {
     setConfirmOpen(true);
   };
- 
+  const back = () => {
+    setReject(false);
+  };
+
   return (
     <Dialog open={open} onClose={onClose} fullWidth>
-      <DialogTitle sx={{ backgroundColor: "rgb(243, 229, 245)" }}>
+      <DialogTitle>
         <Grid container>
-          <Grid item md={8} sx={{ mt: 1 }}>
-            <Typography variant="h5">Leave Details</Typography>
-          </Grid>
-          <Grid item md={4} className={classes.closeButton}>
+          {reject && (
+            <Grid item md={6}>
+              <IconButton onClick={back}>
+                <ArrowBack />
+              </IconButton>
+            </Grid>
+          )}
+
+          <Grid item md={reject ? 6 : 12} className={classes.closeButton}>
             <IconButton onClick={onClose}>
-              <Close fontSize="large" />
+              <Close fontSize="small" />
             </IconButton>
           </Grid>
+
+          <Grid item md={12} sx={{ mt: 1 }}>
+            <Grid
+              container
+              direction="row"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Typography
+                variant="h5"
+                fontFamily="Rubik"
+                sx={{ fontSize: 25, color: "#880e4f" }}
+              >
+                Leave Details
+              </Typography>
+            </Grid>
+          </Grid>
         </Grid>
-        <Divider />
-        <Divider />
       </DialogTitle>
-      <DialogContent sx={{ backgroundColor: "rgb(243, 229, 245)" }}>
+      <DialogContent>
         <Grid container>
           <Grid item md={12} className={classes.content}>
             <Avatar
@@ -69,45 +93,93 @@ const ViewDetailTeamLead = ({
             />
           </Grid>
           <Grid item md={12} className={classes.content}>
-            <Typography sx={{ m: "auto", fontSize: 20, fontWeight: 600 }}>
-              {leaveDetail.employee.employeeFirstName +
-                " " +
-                leaveDetail.employee.employeeLastName}
+            <Grid
+              container
+              direction="row"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Typography sx={{ m: "auto", fontSize: 20, fontWeight: 600 }}>
+                {leaveDetail.employee.employeeID +
+                  " | " +
+                  leaveDetail.employee.employeeFirstName +
+                  " " +
+                  leaveDetail.employee.employeeLastName}
+              </Typography>
+            </Grid>
+            <Divider sx={{ mt: 2 }}></Divider>
+          </Grid>
+
+          <Grid item md={12} className={classes.content}>
+            <Typography
+              fontFamily="Segoe UI Emoji"
+              sx={{ mr: 2, fontSize: 20, color: "#607d8b" }}
+            >
+              Leave Type:
             </Typography>
+            <Card className={classes.card}>
+              <Typography fontFamily="Rubik">
+                {leaveDetail.leave.leaveType}
+              </Typography>
+            </Card>
           </Grid>
           <Grid item md={12} className={classes.content}>
-            <Typography sx={{ m: "auto", fontSize: 20, fontWeight: 600 }}>
-              {leaveDetail.employee.employeeID}
+            <Typography
+              fontFamily="Segoe UI Emoji"
+              sx={{ mr: 2, fontSize: 20, color: "#607d8b" }}
+            >
+              Leave Method:
             </Typography>
+            <Card className={classes.card}>
+              <Typography fontFamily="Rubik">
+                {leaveDetail.leave.leaveMethod}
+              </Typography>
+            </Card>
           </Grid>
           <Grid item md={12} className={classes.content}>
-            <Typography sx={{ mr: 2 }}>Leave Type:</Typography>
-            <Typography>{leaveDetail.leave.leaveType}</Typography>
-          </Grid>
-          <Grid item md={12} className={classes.content}>
-            <Typography sx={{ mr: 2 }}>Leave Method:</Typography>
-            <Typography>{leaveDetail.leave.leaveMethod}</Typography>
-          </Grid>
-          <Grid item md={12} className={classes.content}>
-            <Typography sx={{ mr: 2 }}>Start Date:</Typography>
-            <Typography>
-              {new Date(leaveDetail.leave.startDate).toDateString()}
+            <Typography
+              fontFamily="Segoe UI Emoji"
+              sx={{ mr: 2, fontSize: 20, color: "#607d8b" }}
+            >
+              Start Date:
             </Typography>
+            <Card className={classes.card}>
+              <Typography fontFamily="Rubik">
+                {new Date(leaveDetail.leave.startDate).toDateString()}
+              </Typography>
+            </Card>
           </Grid>
           <Grid item md={12} className={classes.content}>
-            <Typography sx={{ mr: 2 }}> End Date:</Typography>
-            <Typography>
-              {new Date(leaveDetail.leave.endDate).toDateString()}
+            <Typography
+              fontFamily="Segoe UI Emoji"
+              sx={{ mr: 2, fontSize: 20, color: "#607d8b" }}
+            >
+              {" "}
+              End Date:
             </Typography>
+            <Card className={classes.card}>
+              <Typography fontFamily="Rubik">
+                {new Date(leaveDetail.leave.endDate).toDateString()}
+              </Typography>
+            </Card>
           </Grid>
           <Grid item md={12} className={classes.content}>
-            <Typography sx={{ mr: 2 }}>Reason:</Typography>
-            <Typography>{leaveDetail.leave.reason}</Typography>
+            <Typography
+              fontFamily="Segoe UI Emoji"
+              sx={{ mr: 2, fontSize: 20, color: "#607d8b" }}
+            >
+              Reason:
+            </Typography>
+            <Card className={classes.card}>
+              <Typography fontFamily="Rubik">
+                {leaveDetail.leave.reason}
+              </Typography>
+            </Card>
           </Grid>
         </Grid>
         {reject && (
           <TextField
-            label="reason"
+            label="Type reasons for rejecting"
             sx={{ backgroundColor: "white" }}
             onChange={handleOnChange}
             name="reason"
@@ -118,39 +190,51 @@ const ViewDetailTeamLead = ({
           />
         )}
       </DialogContent>
-      <DialogActions sx={{ backgroundColor: "rgb(243, 229, 245)" }}>
+      <DialogActions>
         {leaveDetail.leave.status === "Pending" && !(approve || reject) && (
-          <Grid>
-            <Button
-              onClick={handleConfirmOpen}
-              variant="contained"
-              color="success"
-              sx={{ mt: 2, mr: 1, mb: 2 }}
+          <Grid container>
+            <Grid
+              item
+              md={6}
+              sx={{ display: "flex", justifyContent: "center" }}
             >
-              Approve
-            </Button>
+              <Button
+              fullWidth
+                onClick={handleConfirmOpen}
+                variant="contained"
+                color="success"
+                sx={{ mt: 2, mr: 1, mb: 2,ml:2 ,borderRadius:16}}
+              >
+                Approve
+              </Button>
+            </Grid>
             <ConfirmApproval
               confirmOpen={confirmOpen}
               setConfirmOpen={setConfirmOpen}
               handleApprove={handleResponse}
             />
-            <Button
-              onClick={() => setReject(true)}
-              variant="contained"
-              color="error"
-              sx={{ mt: 2, mr: 3, mb: 2 }}
-            >
-              Reject
-            </Button>
+            <Grid item md={6}  sx={{display: "flex", justifyContent: "center"}}>
+              <Button
+              fullWidth
+                onClick={() => setReject(true)}
+                variant="contained"
+                color="error"
+                sx={{ mt: 2, mr: 3, mb: 2,borderRadius:16 }}
+              >
+                Reject
+              </Button>
+            </Grid>
           </Grid>
         )}
 
         {reject && (
           <Button
+          fullWidth
+            disabled={reason ? false : true}
             variant="contained"
             onClick={handleResponse}
             endIcon={<Send />}
-            sx={{ mt: 2, mr: 3, mb: 2 }}
+            sx={{ mt: 2, mr: 4, mb: 2 ,ml:3,borderRadius:16}}
           >
             Send
           </Button>

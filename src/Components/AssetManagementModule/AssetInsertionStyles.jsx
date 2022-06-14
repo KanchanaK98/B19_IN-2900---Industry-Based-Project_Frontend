@@ -3,7 +3,7 @@ import { makeStyles } from "@mui/styles";
 const useStyles = makeStyles((theme) => ({
   form: {
     padding: theme.spacing(3),
-    margin: theme.spacing(3),
+    margin: theme.spacing(1),
     "& .MuiTextField-root": {
       margin: theme.spacing(2),
     },

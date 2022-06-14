@@ -2,10 +2,13 @@ import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles((theme) => ({
   form: {
-    padding: theme.spacing(3),
-    margin: theme.spacing(3),
+    padding: theme.spacing(2),
+    marginLeft: "40px",
+    marginRight: "40px",
+    marginTop: "10px",
+    // paddingBottom: "30px",
     "& .MuiTextField-root": {
-      margin: theme.spacing(2),
+      margin: theme.spacing(1),
     },
     backgroundColor: "#E0F7FA",
   },
@@ -39,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
       fontWeight: 600,
       fontSize: 19,
     },
-    paddingLeft: 15,
+    paddingLeft: 20,
   },
   createButton: {
     display: "flex",

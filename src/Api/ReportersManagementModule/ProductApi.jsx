@@ -7,12 +7,12 @@ export const createProduct = async (productCreateData) => {
       description: productCreateData.description,
       teamNames: productCreateData.nameofTeam.teamName,
     };
-    
-    const {data} = await api.createProduct(productcreate);
-    return data;
 
+    const { data } = await api.createProduct(productcreate);
+    return data;
   } catch (err) {
-    console.log(err);
+    return err.response;
+    // console.log(err);
   }
 };
 

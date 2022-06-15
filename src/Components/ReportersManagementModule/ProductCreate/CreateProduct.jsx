@@ -81,7 +81,7 @@ function CreateProduct() {
         }, 2000);
         handleClear();
       }
-      if (response.success === false) {
+      if (response.status === 400) {
         setDuplicated(true);
         setTimeout(() => {
           setDuplicated(false);

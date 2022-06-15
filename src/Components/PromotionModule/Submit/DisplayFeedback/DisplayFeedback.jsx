@@ -58,7 +58,7 @@ const DisplayMyFeedback = () => {
   console.log("mysubmissions - frontend", mysubmissionList);
   return (
     <div>
-      {mysubmissionList == null ? (
+      {mysubmissionList.length === 0 ? (
         <div>
           <Box className={classes.Box}>
             <Typography className={classes.topic}>

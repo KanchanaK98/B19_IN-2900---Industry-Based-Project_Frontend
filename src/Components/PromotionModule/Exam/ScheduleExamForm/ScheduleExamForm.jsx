@@ -114,6 +114,7 @@ function ScheduleExamForm() {
       }));
       isError = true;
     }
+
     return isError;
   };
   //-----------------------------------------------------

@@ -20,14 +20,18 @@ function AllEmployees({ setEmployee, profiles }) {
                 onClick={() => {
                   handleClick(profile);
                 }}
-                sx={{ mb: 1 }}
+                sx={{ mb: 1, backgroundColor: "#e4ecf7" }}
               >
                 <CardActionArea sx={{ p: 2 }}>
                   <Grid container s>
                     <Grid item md={2}>
                       <Avatar src={profile.user.profilePic} />
                     </Grid>
-                    <Grid item md={10}>
+                    <Grid
+                      item
+                      md={10}
+                      sx={{ color: "#183d78", fontWeight: "bold" }}
+                    >
                       {profile.user.employeeFirstName +
                         " " +
                         profile.user.employeeLastName +

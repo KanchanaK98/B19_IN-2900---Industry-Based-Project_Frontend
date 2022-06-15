@@ -13,7 +13,7 @@ import { viewAllEmployees } from "../../../Api/ReportersManagementModule/Employe
 import RecentSection from "./RecentSection";
 function DashBord() {
   const location = useLocation();
-  //const { allEmployees } = location.state;
+
   const [value, setValue] = React.useState("1");
   const [profiles, setProfiles] = useState([]);
 

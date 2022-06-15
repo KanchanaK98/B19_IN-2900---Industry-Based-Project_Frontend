@@ -102,7 +102,7 @@ const TeamMemberDialog = ({
                   }}
                 >
                   <Grid item>
-                    <Avatar sx={{ height: 35, width: 35 }}>
+                    <Avatar src={employee.profilePic} sx={{ height: 35, width: 35 }}>
                       {employee.employeeName.toUpperCase()}
                     </Avatar>
                   </Grid>

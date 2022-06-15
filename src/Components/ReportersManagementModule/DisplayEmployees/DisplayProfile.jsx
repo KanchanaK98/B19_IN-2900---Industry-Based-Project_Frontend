@@ -41,6 +41,7 @@ function DisplayProfile({ employee }) {
           minWidth: 750,
           minHeight: 450,
           cursor: "pointer",
+          backgroundColor:"#e4ecf7"
         }}
       >
         <Grid container>

@@ -332,6 +332,7 @@ function CreateEmployee() {
                     {credentials && (
                       <CredentialCard
                         credentials={credentials}
+                        setCredentials={setCredentials}
                         isDisable={isDisable}
                         setIsDisable={setIsDisable}
                       />

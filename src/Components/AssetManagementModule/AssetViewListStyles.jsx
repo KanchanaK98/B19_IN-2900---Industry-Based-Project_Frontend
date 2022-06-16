@@ -5,6 +5,7 @@ const useStyles = makeStyles(() => ({
     width: "100%",
     backgroundColor: "#d7dde0",
     padding: 4,
+    minHeight:'100vh'
   },
   topic: {
     fontSize: "30px",

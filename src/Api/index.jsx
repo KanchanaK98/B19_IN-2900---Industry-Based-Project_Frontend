@@ -110,6 +110,8 @@ export const searchAssetCategory = (assetCategory) =>
 export const insertAsset = (asset) => API.post("/assets/add", asset);
 export const updateAsset = (id, asset) =>
   API.patch("/assets/update/" + id, asset);
+export const availableAssetCategory = (assetCategories) => 
+  API.get("assets/availableAssets/category/"+ assetCategories)
 
 //Current Salary API
 export const viewCurrentSalarySheet = () => API.get("/salary/currentSalary");

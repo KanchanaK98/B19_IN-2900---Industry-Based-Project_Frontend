@@ -48,6 +48,7 @@ import UpdateExamForm from "./Components/PromotionModule/Exam/UpdateExamForm/Upd
 import AddMoreQuestionsForm from "./Pages/PromotionModule/Paper/AddMoreQuestions";
 import RecentSection from "./Pages/ReportersManagementModule/DashBoard/RecentSection";
 import SessionExpiryDialog from "./Components/SessionExpiry/SessionExpiryDialog";
+import AvailableAssets from "./Components/AssetManagementModule/AvailableAssetList";
 import {LogoutApi} from "./Api/Login/LogoutApi";
 
 function App() {
@@ -153,6 +154,7 @@ LogoutApi();
               {/* Assets management */}
               <Route path="/asset" element={<ViewAsset user={user} />} />
               <Route path="/assetInsertion" element={<AssetInsertion />} />
+              <Route path="/availableAssets" element={<AvailableAssets />} />
               {/* Leave management */}
               <Route path="/requestLeave" element={<RequestLeaves />} />
               <Route path="/leaveHistory" element={<LeaveHistory />} />

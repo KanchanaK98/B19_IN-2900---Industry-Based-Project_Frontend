@@ -16,7 +16,7 @@ const useStyles = makeStyles({
   },
   pos: {
     marginBottom: 12,
-    marginLeft: "9%",
+    justifyContent: "center",
   },
   gridContainer: {
     paddingLeft: "20%",
@@ -54,6 +54,9 @@ const useStyles = makeStyles({
     marginBottom: 10,
     marginLeft: 10,
     marginTop: 25,
+  },
+  btn: {
+    marginRight: 5,
   },
 });
 export default useStyles;

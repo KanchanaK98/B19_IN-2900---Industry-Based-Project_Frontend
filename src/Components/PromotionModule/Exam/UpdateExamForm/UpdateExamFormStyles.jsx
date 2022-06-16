@@ -1,6 +1,14 @@
 import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles((theme) => ({
+  Box: {
+    width: "100%",
+    backgroundColor: "#d7dde0",
+    // padding: 1
+    paddingTop: "1%",
+    paddingLeft: "2%",
+    paddingBottom: "1%",
+  },
   form: {
     padding: theme.spacing(3),
     margin: theme.spacing(3),

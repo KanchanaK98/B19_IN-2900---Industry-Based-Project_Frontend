@@ -55,9 +55,10 @@ const DisplayMyFeedback = () => {
     fetchData();
   }, [EmployeeID]);
 
+  console.log("mysubmissions - frontend", mysubmissionList);
   return (
     <div>
-      {mysubmissionList == null ? (
+      {mysubmissionList.length === 0 ? (
         <div>
           <Box className={classes.Box}>
             <Typography className={classes.topic}>
@@ -143,11 +144,9 @@ const DisplayMyFeedback = () => {
                           TeamLead ID
                         </StyledTableCell>
                         <StyledTableCell align="left">
-                          Feed back
-                        </StyledTableCell>
-                        <StyledTableCell align="center">
                           Date Of Evaluation
                         </StyledTableCell>
+                        <StyledTableCell align="left">Feedback</StyledTableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -156,15 +155,44 @@ const DisplayMyFeedback = () => {
                           <StyledTableCell align="left">
                             {record.DateAttempted}
                           </StyledTableCell>
-                          <StyledTableCell align="left">
-                            {record.TeamLeadID}
-                          </StyledTableCell>
-                          <StyledTableCell align="left">
-                            {record.DateOfEvaluation}
-                          </StyledTableCell>
-                          <StyledTableCell align="left">
-                            {record.Feedback}
-                          </StyledTableCell>
+                          {record.TeamLeadID ? (
+                            <StyledTableCell align="left">
+                              {record.TeamLeadID}
+                            </StyledTableCell>
+                          ) : (
+                            <StyledTableCell
+                              align="left"
+                              sx={{ color: "red", fontWeight: "bold" }}
+                            >
+                              Pending
+                            </StyledTableCell>
+                          )}
+
+                          {record.Feedback ? (
+                            <StyledTableCell align="left">
+                              {record.DateOfEvaluation}
+                            </StyledTableCell>
+                          ) : (
+                            <StyledTableCell
+                              align="left"
+                              sx={{ color: "red", fontWeight: "bold" }}
+                            >
+                              Pending
+                            </StyledTableCell>
+                          )}
+
+                          {record.Feedback ? (
+                            <StyledTableCell align="left">
+                              {record.Feedback}
+                            </StyledTableCell>
+                          ) : (
+                            <StyledTableCell
+                              align="left"
+                              sx={{ color: "red", fontWeight: "bold" }}
+                            >
+                              Pending
+                            </StyledTableCell>
+                          )}
                         </StyledTableRow>
                       ))}
                     </TableBody>

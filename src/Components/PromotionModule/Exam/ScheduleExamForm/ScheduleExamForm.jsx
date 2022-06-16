@@ -114,6 +114,7 @@ function ScheduleExamForm() {
       }));
       isError = true;
     }
+
     return isError;
   };
   //-----------------------------------------------------
@@ -130,6 +131,7 @@ function ScheduleExamForm() {
       PaperID,
       Status,
     };
+    console.log(examDetails);
     // if (ExamID && ExamName && DateScheduled && JobRole && PaperID && Status) {
     if (!errorHandle()) {
       const response = await scheduleExamApi(EmployeeID, examDetails);
@@ -144,12 +146,12 @@ function ScheduleExamForm() {
         setadded(true);
         setTimeout(() => {
           setadded(false);
-        }, 2000);
+        }, 4000);
       } else {
         seterror(true);
         setTimeout(() => {
           seterror(false);
-        }, 2000);
+        }, 4000);
       }
     } else {
       setFill(true);
@@ -160,7 +162,7 @@ function ScheduleExamForm() {
   };
 
   return (
-    <Box>
+    <Box className={classes.Box}>
       <Grid item sm={12} md={12} className={classes.createButton}>
         <Button
           className={classes.Button}
@@ -284,7 +286,7 @@ function ScheduleExamForm() {
                       >
                         {PaperList.map((option, key) => (
                           <MenuItem value={option.PaperID} key={key}>
-                            {option.PaperID}
+                            {option.PaperID} ({option.PaperName})
                           </MenuItem>
                         ))}
                       </Select>
@@ -319,7 +321,9 @@ function ScheduleExamForm() {
                         //helperText={inputErrors.dateScheduled}
                         //error={inputErrors.dateScheduled ? true : false}
                         onChange={(date) => {
-                          setDateScheduled(date);
+                          //DateScheduled.toLocaleString('IST', { timeZone: 'Asia/Kolkata' })
+                          //toLocaleDateString
+                          setDateScheduled(date.toLocaleDateString("IST"));
                         }}
                         renderInput={(params) => (
                           <TextField

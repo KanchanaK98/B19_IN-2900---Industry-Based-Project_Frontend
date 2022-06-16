@@ -11,6 +11,7 @@ import { Button, Box } from "@mui/material/";
 import { Grid } from "@mui/material";
 import { deleteCurrentSalaryApi } from "../../../../Api/SalaryPaymentModule/CurruntSalaryApi/deleteCurrentSalaryApi";
 import { viewCurruntSalaryApi } from "../../../../Api/SalaryPaymentModule/CurruntSalaryApi/viewCurruntSalaryApi";
+import { viewAllEmployees } from "../../../../Api/ReportersManagementModule/EmployeeApi";
 import { styled } from "@mui/material/styles";
 import useStyles from "./ViewCurruntSalaryTableStyles";
 
@@ -52,6 +53,18 @@ export default function ViewCurruntSalaryTable() {
     }
     fetchData();
   }, []);
+
+  //----------------------------------------
+  const [profiles, setProfiles] = useState([]);
+  useEffect(() => {
+    async function fetchData() {
+      setProfiles(await viewAllEmployees());
+    }
+    fetchData();
+  }, []);
+  const filteredEmps = profiles.filter((emp) => emp.user.status !== "Resign");
+  console.log("emp", filteredEmps);
+  //-------------------------------------------
 
   useEffect(() => {
     setFilteredRecords(

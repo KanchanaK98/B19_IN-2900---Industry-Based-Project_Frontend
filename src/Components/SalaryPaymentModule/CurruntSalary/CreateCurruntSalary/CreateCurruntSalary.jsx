@@ -51,6 +51,9 @@ export default function CreateCurruntSalary() {
   }, []);
   //console.log("profiles", profiles);
 
+  // const filteredEmps = profiles.filter((emp) => emp.user.status !== "Resign");
+  // console.log("emp", filteredEmps);
+
   const comparedEid = profiles.filter(
     (q1) =>
       !curruntSalaryList.find((q2) => q1.user.employeeID === q2.EmployeeID)
@@ -136,7 +139,7 @@ export default function CreateCurruntSalary() {
   };
 
   return (
-    <Box>
+    <Box className={classes.Box}>
       <Grid item sm={12} md={12} className={classes.createButton}>
         <Button
           color="primary"

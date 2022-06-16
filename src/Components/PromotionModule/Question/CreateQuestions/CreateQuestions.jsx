@@ -83,13 +83,13 @@ export default function CreateCurruntSalary() {
         setadded(true);
         setTimeout(() => {
           setadded(false);
-        }, 2000);
+        }, 4000);
       } else {
         console.log("error");
         seterror(true);
         setTimeout(() => {
           seterror(false);
-        }, 2000);
+        }, 4000);
       }
     } else {
       setFill(true);
@@ -259,14 +259,14 @@ export default function CreateCurruntSalary() {
         <Stack sx={{ width: "100%" }} spacing={2}>
           <Alert severity="success">
             <AlertTitle>Success</AlertTitle>
-            The new Question successfully created!
+            New Question successfully created!
           </Alert>{" "}
         </Stack>
       ) : null}
       {error ? (
         <Stack sx={{ width: "100%" }} spacing={2}>
           <Alert variant="filled" severity="error">
-            Please enter all the details and Try again!
+            Please Try again!
           </Alert>
         </Stack>
       ) : null}

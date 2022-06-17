@@ -113,6 +113,12 @@ export const updateAsset = (id, asset) =>
 export const availableAssetCategory = (assetCategories) => 
   API.get("assets/availableAssets/category/"+ assetCategories)
 
+//salary percentages API
+export const viewSalaryRates = (EmployeeID) =>
+  API.get(`/salary/salaryPercentages/${EmployeeID}`);
+export const createSalaryPercentages = (EmployeeID, rates) =>
+  API.post(`/salary/salaryPercentages/create/${EmployeeID}`, rates);
+
 //Current Salary API
 export const viewCurrentSalarySheet = () => API.get("/salary/currentSalary");
 export const createCurrentSalarySheet = (newCurruntSalarySheet) =>

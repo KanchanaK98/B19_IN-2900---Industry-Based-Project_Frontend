@@ -8,10 +8,10 @@ const useStyles = makeStyles(() => ({
   },
   topic: {
     fontSize: "30px",
-    color: "#0288d1",
+    color: "#880E4F",
     textAlign: "center",
     fontWeight: "bold",
-    marginTop: 10,
+    marginTop: 15,
   },
   search: {
     marginLeft: 50,
@@ -23,16 +23,23 @@ const useStyles = makeStyles(() => ({
   },
   table: {
     minWidth: 700,
-    paddingLeft: 50,
   },
-  ratesfont: {
-    paddingLeft: "50%",
-    paddingRight: "10%",
-    display: "flex",
-    justifyContent: "space-between",
-    textAlign: "center",
-    fontSize: "13px",
-    color: "#78909C",
+  paper: {
+    width: "60%",
+    position: "relative",
+    marginLeft: "20%",
+    marginBottom: "1%",
+  },
+  btngrid: {
+    marginLeft: "20%",
+    marginBottom: "1%",
+  },
+  btn: {
+    backgroundColor: "#EC407A",
+    "&:hover": {
+      color: "#d7dde0",
+      backgroundColor: "#757575",
+    },
   },
 }));
 

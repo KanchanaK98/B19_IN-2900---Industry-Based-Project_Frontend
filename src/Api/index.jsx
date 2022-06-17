@@ -229,9 +229,9 @@ export const getCandidates = () => {
   return API.get(`/employee/candidateData`);
 };
 
-export const resignStatus = () => {
-  return API.get(`/assets/isAssigned`);
-};
+export const resignStatus = (empID) => 
+   API.get(`/assets/isAssigned/`+ empID);
+
 //teams api
 export const createTeams = (teamcreate) =>
   API.post(`/employee/teamAdd`, teamcreate);

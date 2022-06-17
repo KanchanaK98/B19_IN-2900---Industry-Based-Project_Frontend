@@ -46,9 +46,9 @@ import ViewAllExamList from "./Components/PromotionModule/Exam/ViewAllExamList/V
 import ScheduleExamForm from "./Components/PromotionModule/Exam/ScheduleExamForm/ScheduleExamForm";
 import UpdateExamForm from "./Components/PromotionModule/Exam/UpdateExamForm/UpdateExamForm";
 import AddMoreQuestionsForm from "./Pages/PromotionModule/Paper/AddMoreQuestions";
-import RecentSection from "./Pages/ReportersManagementModule/DashBoard/RecentSection";
 import SessionExpiryDialog from "./Components/SessionExpiry/SessionExpiryDialog";
 import {LogoutApi} from "./Api/Login/LogoutApi";
+import Organization from "./Components/ReportersManagementModule/OrganizationStructure/Organization";
 
 function App() {
   const [open, setOpen] = useState(true);
@@ -136,7 +136,7 @@ LogoutApi();
               <Route path="/pro" element={<CreateProduct />} />
               <Route path="/user" element={<UserProfile user={user} />} />
               <Route path="/products/update/:id" element={<EditProduct />} />
-              <Route path="recent" element={<RecentSection />} />
+              <Route path="/dashboard/organization/create" element={<Organization />} />
 
               {/* Recruitment management */}
               <Route path="/candidate" element={<CreateCandidate />} />

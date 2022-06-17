@@ -4,19 +4,18 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
+  Grid,
   Typography,
 } from "@mui/material";
 import React, { useEffect, useRef } from "react";
 import { useState } from "react";
-import { getCandidates } from "../../../Api/ReportersManagementModule/EmployeeApi";
 
-function Candidates() {
-  const [candidates, setCandidates] = useState();
+function Candidates({ candidates, setInputs, isDisableCandidate }) {
+  // const [candidates, setCandidates] = useState();
   const [open, setOpen] = useState(false);
   const [scroll, setScroll] = useState("paper");
-  const [isDisable, setIsDisable] = useState(true);
+  // const [isDisable, setIsDisable] = useState(true);
 
   const handleClickOpen = (scrollType) => () => {
     setOpen(true);
@@ -30,17 +29,17 @@ function Candidates() {
   const descriptionElementRef = useRef(null);
 
   useEffect(() => {
-    async function fetchData() {
-      setCandidates(await getCandidates());
-    }
-    fetchData();
-    if (!(candidates && candidates.length > 0)) {
-      setIsDisable(false);
-    }
-    if (candidates && candidates.length === 0) {
-      setIsDisable(true);
-    }
-    
+    //   async function fetchData() {
+    //     setCandidates(await getCandidates());
+    //   }
+    //   fetchData();
+    //   if (!(candidates && candidates.length > 0)) {
+    //     setIsDisable(false);
+    //   }
+    //   if (candidates && candidates.length === 0) {
+    //     setIsDisable(true);
+    //   }
+
     if (open) {
       const { current: descriptionElement } = descriptionElementRef;
       if (descriptionElement !== null) {
@@ -48,11 +47,20 @@ function Candidates() {
       }
     }
   }, [open]);
-  //  console.log(candidates)
+  const handleClick = (candidate) => {
+    setInputs((prevState) => ({
+      ...prevState,
+      NIC: candidate.NIC,
+      jobRole: candidate.appliedPosition,
+      employeeFirstName: candidate.candidateName.split(" ")[0],
+      employeeLastName: candidate.candidateName.split(" ")[1],
+    }));
+  };
+
   return (
     <div>
       <Button
-        disabled={isDisable}
+        disabled={isDisableCandidate}
         onClick={handleClickOpen("paper")}
         variant="contained"
         sx={{
@@ -79,6 +87,9 @@ function Candidates() {
             candidates.map((candidate) => (
               <Card
                 key={candidate.NIC}
+                onClick={() => {
+                  handleClick(candidate);
+                }}
                 sx={{
                   padding: 2,
                   backgroundColor: "#d7dde0",
@@ -97,11 +108,12 @@ function Candidates() {
             onClick={handleClose}
             sx={{
               display: "flex",
-              justifyContent: "flex-end",
+              justifyContent: "center",
               backgroundColor: "#183d78",
+              textAlign: "center",
             }}
           >
-            Cancel
+            OK
           </Button>
         </DialogActions>
       </Dialog>

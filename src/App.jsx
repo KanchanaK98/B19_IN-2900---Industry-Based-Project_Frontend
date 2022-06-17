@@ -48,9 +48,13 @@ import UpdateExamForm from "./Components/PromotionModule/Exam/UpdateExamForm/Upd
 import AddMoreQuestionsForm from "./Pages/PromotionModule/Paper/AddMoreQuestions";
 import RecentSection from "./Pages/ReportersManagementModule/DashBoard/RecentSection";
 import SessionExpiryDialog from "./Components/SessionExpiry/SessionExpiryDialog";
+
 import CreateSalaryRates from "./Components/SalaryPaymentModule/SalaryRates/CreateSalaryRates/CreateSalaryRates";
 import ViewSalaryRatesTable from "./Components/SalaryPaymentModule/SalaryRates/ViewSalaryRates/ViewSalaryRatesTable";
 import { LogoutApi } from "./Api/Login/LogoutApi";
+
+import AvailableAssets from "./Components/AssetManagementModule/AvailableAssetList";
+
 
 function App() {
   const [open, setOpen] = useState(true);
@@ -155,6 +159,7 @@ function App() {
               {/* Assets management */}
               <Route path="/asset" element={<ViewAsset user={user} />} />
               <Route path="/assetInsertion" element={<AssetInsertion />} />
+              <Route path="/availableAssets" element={<AvailableAssets />} />
               {/* Leave management */}
               <Route path="/requestLeave" element={<RequestLeaves />} />
               <Route path="/leaveHistory" element={<LeaveHistory />} />

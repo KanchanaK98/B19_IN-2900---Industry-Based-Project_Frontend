@@ -104,7 +104,9 @@ export default function CreateSalaryRates() {
           color="primary"
           variant="contained"
           size="large"
-          // onClick={() => window.open("/salary/currentSalary", "_self")}
+          onClick={() =>
+            window.open(`/salary/salaryPercentages/${EmployeeID}`, "_self")
+          }
         >
           View Salary Rates
         </Button>

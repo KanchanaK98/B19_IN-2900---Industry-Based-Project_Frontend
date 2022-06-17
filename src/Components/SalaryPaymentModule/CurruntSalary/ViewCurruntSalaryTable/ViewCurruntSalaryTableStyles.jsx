@@ -25,6 +25,15 @@ const useStyles = makeStyles(() => ({
     minWidth: 700,
     paddingLeft: 50,
   },
+  ratesfont: {
+    paddingLeft: "50%",
+    paddingRight: "10%",
+    display: "flex",
+    justifyContent: "space-between",
+    textAlign: "center",
+    fontSize: "13px",
+    color: "#78909C",
+  },
 }));
 
 export default useStyles;

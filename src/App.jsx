@@ -49,6 +49,7 @@ import AddMoreQuestionsForm from "./Pages/PromotionModule/Paper/AddMoreQuestions
 import RecentSection from "./Pages/ReportersManagementModule/DashBoard/RecentSection";
 import SessionExpiryDialog from "./Components/SessionExpiry/SessionExpiryDialog";
 import CreateSalaryRates from "./Components/SalaryPaymentModule/SalaryRates/CreateSalaryRates/CreateSalaryRates";
+import ViewSalaryRatesTable from "./Components/SalaryPaymentModule/SalaryRates/ViewSalaryRates/ViewSalaryRatesTable";
 import { LogoutApi } from "./Api/Login/LogoutApi";
 
 function App() {
@@ -249,13 +250,16 @@ function App() {
                 path="/promotion/evaluation/exam/updateExam/:EmployeeID/:ExamID"
                 element={<UpdateExamForm />}
               />
-
+              {/* Salary rates */}
               <Route
-                path="/salary/currentSalary/salaryPercentages/create/:EmployeeID"
+                path="/salary/salaryPercentages/create/:EmployeeID"
                 element={<CreateSalaryRates />}
               />
+              <Route
+                path="/salary/salaryPercentages/:EmployeeID"
+                element={<ViewSalaryRatesTable />}
+              />
             </Routes>
-            
           </Grid>
         </Grid>
       </BrowserRouter>

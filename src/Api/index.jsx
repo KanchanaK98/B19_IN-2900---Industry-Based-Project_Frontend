@@ -112,8 +112,9 @@ export const updateAsset = (id, asset) =>
   API.patch("/assets/update/" + id, asset);
 
 //salary percentages API
-export const viewSalaryRates = () => API.get("/salary/salaryPercentages");
-export const createSalaryPercentages= (EmployeeID, rates) =>
+export const viewSalaryRates = (EmployeeID) =>
+  API.get(`/salary/salaryPercentages/${EmployeeID}`);
+export const createSalaryPercentages = (EmployeeID, rates) =>
   API.post(`/salary/salaryPercentages/create/${EmployeeID}`, rates);
 
 //Current Salary API

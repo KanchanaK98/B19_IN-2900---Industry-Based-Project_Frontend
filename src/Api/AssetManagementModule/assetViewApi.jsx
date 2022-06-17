@@ -83,3 +83,14 @@ export const updateAssets = async (id, asset) =>{
     console.log(error);
   }
 }
+export const searchAvailableAssetCategory = async (assetCategories) => {
+  try {
+    const { data } = await api.availableAssetCategory(assetCategories);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+

@@ -17,8 +17,13 @@ import Stack from "@mui/material/Stack";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { Link, useLocation } from "react-router-dom";
 import { Alert, AlertTitle, MenuItem, Typography } from "@mui/material";
-import { updateEmployee } from "../../../Api/ReportersManagementModule/EmployeeApi";
+import {
+  resignStatus,
+  updateEmployee,
+} from "../../../Api/ReportersManagementModule/EmployeeApi";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { add } from "date-fns";
+
 function EditEmployee() {
   const [inputErrors, setInputErrors] = useState({
     employeeFirstName: "",
@@ -66,7 +71,11 @@ function EditEmployee() {
 
   const [addSuccessfully, setAddSuccessfully] = useState(false);
   const [notAdded, setnotAdded] = useState(false);
+  const [noChangeField, setNoChangeField] = useState(false);
   const [notUpdated, setNotUpdated] = useState(false);
+  const [updateField, setUpdateField] = useState(false);
+  const [notresigned, setNotresigned] = useState(false)
+
   const jobRoles = [
     "Software Engineer",
     "Senior Software Engineer",
@@ -81,11 +90,13 @@ function EditEmployee() {
     "Intern",
     "Product Manager",
   ];
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
     setInputs((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
     }));
+
+    setUpdateField(true);
   };
 
   //----------validation-----------------------------
@@ -164,31 +175,68 @@ function EditEmployee() {
       }));
       isError = true;
     }
+    let NICformat = /^([0-9]{9}[x|X|v|V]|[0-9]{12})$/;
+    if (inputs.NIC && !inputs.NIC.match(NICformat)) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        NIC: "Invalid NIC Entered",
+      }));
+      isError = true;
+    }
     return isError;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!errorHandle()) {
-      const response = await updateEmployee(inputs);
-      // console.log(response);
-      if (response.success === true) {
+    console.log(inputs.employeeID);
+ const empID=inputs.employeeID
+    console.log(empID);
+    if (inputs.status === "Resigned") {
+      const response = await resignStatus(empID);
+      console.log(response);
+      if (response.success === false) {
+        console.log("error");
+      }
+      if(response.success==="true1"){
         setAddSuccessfully(true);
         setTimeout(() => {
           setAddSuccessfully(false);
         }, 2000);
       }
-      if (response.success === false) {
-        setNotUpdated(true);
+      if(response.success===true){
+        setNotresigned(true);
         setTimeout(() => {
-          setNotUpdated(false);
+          setNotresigned(false);
         }, 2000);
       }
     } else {
-      setnotAdded(true);
-      setTimeout(() => {
-        setnotAdded(false);
-      }, 2000);
+      if (!errorHandle()) {
+        const response = await updateEmployee(inputs);
+        if (response.success === true && updateField) {
+          setAddSuccessfully(true);
+          setTimeout(() => {
+            setAddSuccessfully(false);
+          }, 2000);
+        }
+        if (!updateField) {
+          setNoChangeField(true);
+          setTimeout(() => {
+            setNoChangeField(false);
+          }, 2000);
+        }
+
+        if (response.status === 400) {
+          setNotUpdated(true);
+          setTimeout(() => {
+            setNotUpdated(false);
+          }, 2000);
+        }
+      } else {
+        setnotAdded(true);
+        setTimeout(() => {
+          setnotAdded(false);
+        }, 2000);
+      }
     }
   };
 
@@ -199,7 +247,7 @@ function EditEmployee() {
   const uploadProfilePhoto = (event) => {
     const fileType = ["image/png"];
     let selectedFile = event.target.files[0];
-    // console.log(selectedFile.type);
+
     if (selectedFile && fileType.includes(selectedFile.type)) {
       let reader = new FileReader();
       reader.readAsDataURL(selectedFile);
@@ -209,16 +257,20 @@ function EditEmployee() {
           profilePic: event.target.result,
         });
       };
+      setUpdateField(true);
     } else {
       console.log("Please select valid image file");
     }
   };
 
   const removeProfilePhoto = () => {
-    setInputs((prevState) => ({
-      ...prevState,
-      profilePic: " ",
-    }));
+    if (!(employee.user.profilePic === " ")) {
+      setInputs((prevState) => ({
+        ...prevState,
+        profilePic: " ",
+      }));
+      setUpdateField(true);
+    }
   };
   return (
     <div>
@@ -257,7 +309,7 @@ function EditEmployee() {
 
                     <label htmlFor="icon-button-file">
                       <Input
-                        accept="image/*"
+                        accept="image/png"
                         id="icon-button-file"
                         type="file"
                         onChange={uploadProfilePhoto}
@@ -312,9 +364,10 @@ function EditEmployee() {
                             id="filled-basic"
                             label=" First Name "
                             variant="filled"
+                            sx={{ backgroundColor: "#c7fcf7" }}
                             name="employeeFirstName"
                             value={inputs.employeeFirstName}
-                            onChange={handleChange}
+                            onChange={handleChange || add(this)}
                             error={inputErrors.employeeFirstName ? true : false}
                             helperText={inputErrors.employeeFirstName}
                             fullWidth
@@ -338,8 +391,9 @@ function EditEmployee() {
                             label="  Last Name"
                             variant="filled"
                             name="employeeLastName"
+                            sx={{ backgroundColor: "#c7fcf7" }}
                             value={inputs.employeeLastName}
-                            onChange={handleChange}
+                            onChange={handleChange || add(this)}
                             error={inputErrors.employeeLastName ? true : false}
                             helperText={inputErrors.employeeLastName}
                             fullWidth
@@ -363,8 +417,9 @@ function EditEmployee() {
                             label=" Email"
                             variant="filled"
                             name="companyEmail"
+                            sx={{ backgroundColor: "#c7fcf7" }}
                             value={inputs.companyEmail}
-                            onChange={handleChange}
+                            onChange={handleChange || add(this)}
                             error={inputErrors.companyEmail ? true : false}
                             helperText={inputErrors.companyEmail}
                             fullWidth
@@ -387,8 +442,9 @@ function EditEmployee() {
                             id="filled-basic"
                             variant="filled"
                             name="NIC"
+                            sx={{ backgroundColor: "#c7fcf7" }}
                             value={inputs.NIC}
-                            onChange={handleChange}
+                            onChange={handleChange || add(this)}
                             error={inputErrors.NIC ? true : false}
                             helperText={inputErrors.NIC}
                             fullWidth
@@ -413,7 +469,7 @@ function EditEmployee() {
                             variant="filled"
                             name="phoneNumber"
                             value={inputs.phoneNumber}
-                            onChange={handleChange}
+                            onChange={handleChange || add(this)}
                             error={inputErrors.phoneNumber ? true : false}
                             helperText={inputErrors.phoneNumber}
                             fullWidth
@@ -471,7 +527,7 @@ function EditEmployee() {
                             variant="filled"
                             name="streetNo"
                             value={inputs.streetNo}
-                            onChange={handleChange}
+                            onChange={handleChange || add(this)}
                             fullWidth
                           />
                         </Grid>
@@ -494,7 +550,7 @@ function EditEmployee() {
                             variant="filled"
                             name="city"
                             value={inputs.city}
-                            onChange={handleChange}
+                            onChange={handleChange || add(this)}
                             fullWidth
                           />
                         </Grid>
@@ -517,8 +573,9 @@ function EditEmployee() {
                             variant="filled"
                             name="jobRole"
                             select
+                            sx={{ backgroundColor: "#c7fcf7" }}
                             value={inputs.jobRole}
-                            onChange={handleChange}
+                            onChange={handleChange || add(this)}
                             fullWidth
                             SelectProps={{
                               renderValue: (job) => job,
@@ -549,8 +606,9 @@ function EditEmployee() {
                             label=" Job Type"
                             variant="filled"
                             name="jobType"
+                            sx={{ backgroundColor: "#c7fcf7" }}
                             value={inputs.jobType}
-                            onChange={handleChange}
+                            onChange={handleChange || add(this)}
                             error={inputErrors.jobType ? true : false}
                             helperText={inputErrors.jobType}
                             fullWidth
@@ -574,8 +632,9 @@ function EditEmployee() {
                             label="Status"
                             variant="filled"
                             name="status"
+                            sx={{ backgroundColor: "#c7fcf7" }}
                             value={inputs.status}
-                            onChange={handleChange}
+                            onChange={handleChange || add(this)}
                             select
                             selectprops={{ renderValue: inputs.status }}
                             fullWidth
@@ -584,6 +643,7 @@ function EditEmployee() {
                               Probationary
                             </MenuItem>
                             <MenuItem value={"Permenent"}>Permenent</MenuItem>
+                            <MenuItem value={"Resigned"}>Resigned</MenuItem>
                           </TextField>
                         </Grid>
                       </Grid>
@@ -615,7 +675,7 @@ function EditEmployee() {
                             variant="filled"
                             name="degree"
                             value={inputs.degree || " "}
-                            onChange={handleChange}
+                            onChange={handleChange || add(this)}
                             fullWidth
                           />
                         </Grid>
@@ -638,7 +698,7 @@ function EditEmployee() {
                             variant="filled"
                             name="language"
                             value={inputs.language || " "}
-                            onChange={handleChange}
+                            onChange={handleChange || add(this)}
                             fullWidth
                           />
                         </Grid>
@@ -661,7 +721,7 @@ function EditEmployee() {
                             variant="filled"
                             name="course"
                             value={inputs.course || " "}
-                            onChange={handleChange}
+                            onChange={handleChange || add(this)}
                             fullWidth
                           />
                         </Grid>
@@ -688,7 +748,7 @@ function EditEmployee() {
                             variant="filled"
                             name="advancedLevelResults"
                             value={inputs.advancedLevelResults || " "}
-                            onChange={handleChange}
+                            onChange={handleChange || add(this)}
                             fullWidth
                           />
                         </Grid>
@@ -709,7 +769,7 @@ function EditEmployee() {
                             variant="filled"
                             name="achievements"
                             value={inputs.achievements || " "}
-                            onChange={handleChange}
+                            onChange={handleChange || add(this)}
                             fullWidth
                           />
                         </Grid>
@@ -739,7 +799,7 @@ function EditEmployee() {
                             variant="filled"
                             name="ordinaryLevelResult"
                             value={inputs.ordinaryLevelResult || " "}
-                            onChange={handleChange}
+                            onChange={handleChange || add(this)}
                             fullWidth
                           />
                         </Grid>
@@ -806,6 +866,21 @@ function EditEmployee() {
               <Stack sx={{ width: "100%" }} spacing={2}>
                 <Alert variant="filled" severity="error">
                   Profile is not updated!
+                </Alert>
+              </Stack>
+            ) : null}
+            {noChangeField ? (
+              <Stack sx={{ width: "100%" }} spacing={2}>
+                <Alert variant="filled" severity="warning">
+                  No any change to update!
+                </Alert>
+              </Stack>
+            ) : null}
+            {notresigned ? (
+              <Stack sx={{ width: "100%" }} spacing={2}>
+                <Alert variant="filled" severity="warning">
+                  Risigning employee is not allowed, assets are not released
+                  yet!
                 </Alert>
               </Stack>
             ) : null}

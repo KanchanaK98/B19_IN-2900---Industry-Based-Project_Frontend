@@ -48,13 +48,10 @@ import UpdateExamForm from "./Components/PromotionModule/Exam/UpdateExamForm/Upd
 import AddMoreQuestionsForm from "./Pages/PromotionModule/Paper/AddMoreQuestions";
 import RecentSection from "./Pages/ReportersManagementModule/DashBoard/RecentSection";
 import SessionExpiryDialog from "./Components/SessionExpiry/SessionExpiryDialog";
-
 import CreateSalaryRates from "./Components/SalaryPaymentModule/SalaryRates/CreateSalaryRates/CreateSalaryRates";
 import ViewSalaryRatesTable from "./Components/SalaryPaymentModule/SalaryRates/ViewSalaryRates/ViewSalaryRatesTable";
-import { LogoutApi } from "./Api/Login/LogoutApi";
-
 import AvailableAssets from "./Components/AssetManagementModule/AvailableAssetList";
-
+import { LogoutApi } from "./Api/Login/LogoutApi";
 
 function App() {
   const [open, setOpen] = useState(true);

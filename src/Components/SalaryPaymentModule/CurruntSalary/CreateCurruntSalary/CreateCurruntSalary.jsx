@@ -17,6 +17,7 @@ import Select from "@mui/material/Select";
 import { createCurruntSalaryApi } from "../../../../Api/SalaryPaymentModule/CurruntSalaryApi/createCurruntSalaryApi";
 import { viewCurruntSalaryApi } from "../../../../Api/SalaryPaymentModule/CurruntSalaryApi/viewCurruntSalaryApi";
 import { viewAllEmployees } from "../../../../Api/ReportersManagementModule/EmployeeApi";
+import { viewSalaryRatesApi } from "../../../../Api/SalaryPaymentModule/SalaryRatesApi/viewSalaryRatesApi";
 import AttachMoneyRoundedIcon from "@mui/icons-material/AttachMoneyRounded";
 import Stack from "@mui/material/Stack";
 import FormHelperText from "@mui/material/FormHelperText";
@@ -29,6 +30,8 @@ export default function CreateCurruntSalary() {
   const [fill, setFill] = useState(false);
   const [profiles, setProfiles] = useState([]);
   const [curruntSalaryList, setCurruntSalaryList] = useState([]);
+  const [rates, setRates] = useState([]);
+
   const [record, setRecord] = useState({
     EmployeeID: "",
     BasicSalary: "",
@@ -59,6 +62,14 @@ export default function CreateCurruntSalary() {
       !curruntSalaryList.find((q2) => q1.user.employeeID === q2.EmployeeID)
   );
   //console.log("comparedeid", comparedEid);
+
+  useEffect(() => {
+    async function fetchData() {
+      const result = await viewSalaryRatesApi();
+      setRates(result[result.length - 1], rates);
+    }
+    fetchData();
+  }, []);
 
   //--------------validation-----------------------
   const [inputErrors, setInputErrors] = useState({
@@ -122,19 +133,19 @@ export default function CreateCurruntSalary() {
         setadded(true);
         setTimeout(() => {
           setadded(false);
-        }, 2000);
+        }, 4000);
       } else {
         console.log("error");
         seterror(true);
         setTimeout(() => {
           seterror(false);
-        }, 2000);
+        }, 4000);
       }
     } else {
       setFill(true);
       setTimeout(() => {
         setFill(false);
-      }, 2000);
+      }, 4000);
     }
   };
 
@@ -149,6 +160,16 @@ export default function CreateCurruntSalary() {
         >
           View Salarysheets
         </Button>
+      </Grid>
+      <Grid container marginTop={4}>
+        <Grid item xs={12} align="right">
+          <Typography className={classes.ratesfont}>
+            <i>( Rates that Salary is calculated on :</i>
+            <i>Employee EPF : {rates.EmoloyeeEpfRate}</i>|
+            <i>Company EPF : {rates.CompanyEPFRate}</i>|
+            <i>ETF : {rates.ETFRate} )</i>
+          </Typography>
+        </Grid>
       </Grid>
 
       <Paper elevation={5} className={classes.form}>
@@ -314,7 +335,7 @@ export default function CreateCurruntSalary() {
           <Alert severity="success">
             <AlertTitle>Success</AlertTitle>
             The new Salarysheet for {record.EmployeeID} is successfully created!
-          </Alert>{" "}
+          </Alert>
         </Stack>
       ) : null}
       {error ? (

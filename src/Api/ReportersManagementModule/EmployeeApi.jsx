@@ -87,13 +87,12 @@ export const getCandidates = async () => {
   }
 };
 
-
-export const resignStatus = async () => {
+export const resignStatus = async (empID) => {
   try {
-    const { data } = await api.resignStatus();
+    const { data } = await api.resignStatus(empID);
+
     return data;
   } catch (err) {
     console.log(err);
   }
 };
-

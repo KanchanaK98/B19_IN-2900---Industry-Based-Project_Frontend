@@ -10,12 +10,14 @@ const useStyles = makeStyles((theme) => ({
   },
 
   form: {
-    // padding: theme.spacing(3),
-    //margin: theme.spacing(3),
+    padding: theme.spacing(3),
+    margin: theme.spacing(3),
     "& .MuiTextField-root": {
       margin: theme.spacing(2),
     },
     backgroundColor: "#e1f5fe",
+    width: "60%",
+    marginLeft: "20%",
   },
   formHeader: {
     display: "flex",
@@ -55,14 +57,10 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "flex-end",
     margin: theme.spacing(2, 5, 1),
   },
-  ratesfont: {
-    paddingLeft: "50%",
-    paddingRight: "5%",
-    display: "flex",
-    justifyContent: "space-between",
-    textAlign: "center",
-    fontSize: "13px",
-    color: "#78909C",
+  dialogBoxTopic: {
+    justifyContent: "center",
+    paddingLeft: "85px",
+    color: "red",
   },
 }));
 

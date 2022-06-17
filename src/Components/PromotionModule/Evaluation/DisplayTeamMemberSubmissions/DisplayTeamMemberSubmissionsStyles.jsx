@@ -4,6 +4,7 @@ const useStyles = makeStyles(() => ({
   Box: {
     width: "100%",
     backgroundColor: "#d7dde0",
+    height: "100%",
   },
   topic: {
     fontSize: "30px",
@@ -29,7 +30,7 @@ const useStyles = makeStyles(() => ({
     fontWeight: "medium",
   },
   text: {
-    marginLeft: "32%",
+    marginLeft: "28%",
   },
   content2: {
     fontSize: "20px",

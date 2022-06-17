@@ -29,6 +29,7 @@ export default function AssetUpdateModule({handleClose,data,show,updateFun}) {
     const [status, setStatus] = useState(data.status);
     const [error, seterror] = useState(false);
     const [added, setadded] = useState(false);
+    const [isDisabled, setIsDisabled] = useState(true);
 
  
     const open = show ? true : false;
@@ -146,7 +147,7 @@ export default function AssetUpdateModule({handleClose,data,show,updateFun}) {
                               variant="outlined"
                               name="model"
                               value={model}
-                              onChange={(e)=>{setModel(e.target.value)}}
+                              onChange={(e)=>{setModel(e.target.value);setIsDisabled(false)}}
                               fullWidth
                             />
                       </Grid>
@@ -160,7 +161,7 @@ export default function AssetUpdateModule({handleClose,data,show,updateFun}) {
                               variant="outlined"
                               name="serialNumber"
                               value={serialNumber}
-                              onChange={(e)=>{setSerialNumber(e.target.value)}}
+                              onChange={(e)=>{setSerialNumber(e.target.value);setIsDisabled(false)}}
                               fullWidth
                             />
                       </Grid>
@@ -200,6 +201,7 @@ export default function AssetUpdateModule({handleClose,data,show,updateFun}) {
                       variant="contained"
                       size="large"
                       type="submit"
+                      disabled={isDisabled?true:false}
                     >
                       Update Asset
                     </Button>

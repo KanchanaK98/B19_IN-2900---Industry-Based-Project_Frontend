@@ -49,6 +49,10 @@ import AddMoreQuestionsForm from "./Pages/PromotionModule/Paper/AddMoreQuestions
 import SessionExpiryDialog from "./Components/SessionExpiry/SessionExpiryDialog";
 import {LogoutApi} from "./Api/Login/LogoutApi";
 import Organization from "./Components/ReportersManagementModule/OrganizationStructure/Organization";
+import CreateSalaryRates from "./Components/SalaryPaymentModule/SalaryRates/CreateSalaryRates/CreateSalaryRates";
+import ViewSalaryRatesTable from "./Components/SalaryPaymentModule/SalaryRates/ViewSalaryRates/ViewSalaryRatesTable";
+import AvailableAssets from "./Components/AssetManagementModule/AvailableAssetList";
+
 
 function App() {
   const [open, setOpen] = useState(true);
@@ -59,7 +63,7 @@ function App() {
     setOpen(!open);
   };
   const handleLogOut = () => {
-LogoutApi();
+    LogoutApi();
     sessionStorage.clear();
     window.location.replace("/");
   };
@@ -153,6 +157,7 @@ LogoutApi();
               {/* Assets management */}
               <Route path="/asset" element={<ViewAsset user={user} />} />
               <Route path="/assetInsertion" element={<AssetInsertion />} />
+              <Route path="/availableAssets" element={<AvailableAssets />} />
               {/* Leave management */}
               <Route path="/requestLeave" element={<RequestLeaves />} />
               <Route path="/leaveHistory" element={<LeaveHistory />} />
@@ -247,6 +252,15 @@ LogoutApi();
               <Route
                 path="/promotion/evaluation/exam/updateExam/:EmployeeID/:ExamID"
                 element={<UpdateExamForm />}
+              />
+              {/* Salary rates */}
+              <Route
+                path="/salary/salaryPercentages/create/:EmployeeID"
+                element={<CreateSalaryRates />}
+              />
+              <Route
+                path="/salary/salaryPercentages/:EmployeeID"
+                element={<ViewSalaryRatesTable />}
               />
             </Routes>
           </Grid>

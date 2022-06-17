@@ -11,6 +11,8 @@ import { Button, Box } from "@mui/material/";
 import { Grid } from "@mui/material";
 import { deleteCurrentSalaryApi } from "../../../../Api/SalaryPaymentModule/CurruntSalaryApi/deleteCurrentSalaryApi";
 import { viewCurruntSalaryApi } from "../../../../Api/SalaryPaymentModule/CurruntSalaryApi/viewCurruntSalaryApi";
+import { viewSalaryRatesApi } from "../../../../Api/SalaryPaymentModule/SalaryRatesApi/viewSalaryRatesApi";
+import { viewAllEmployees } from "../../../../Api/ReportersManagementModule/EmployeeApi";
 import { styled } from "@mui/material/styles";
 import useStyles from "./ViewCurruntSalaryTableStyles";
 
@@ -45,6 +47,7 @@ export default function ViewCurruntSalaryTable() {
   const [curruntSalaryList, setCurruntSalaryList] = useState([]);
   const [search, setSearch] = useState("");
   const [filteredRecords, setFilteredRecords] = useState([]);
+  const [rates, setRates] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -53,6 +56,18 @@ export default function ViewCurruntSalaryTable() {
     fetchData();
   }, []);
 
+  //----------------------------------------
+  const [profiles, setProfiles] = useState([]);
+  useEffect(() => {
+    async function fetchData() {
+      setProfiles(await viewAllEmployees());
+    }
+    fetchData();
+  }, []);
+  const filteredEmps = profiles.filter((emp) => emp.user.status !== "Resign");
+  console.log("emp", filteredEmps);
+  //-------------------------------------------
+
   useEffect(() => {
     setFilteredRecords(
       curruntSalaryList.filter((record) =>
@@ -60,6 +75,16 @@ export default function ViewCurruntSalaryTable() {
       )
     );
   }, [search, curruntSalaryList]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const result = await viewSalaryRatesApi();
+      setRates(result[result.length - 1], rates);
+    }
+    fetchData();
+  }, []);
+
+  console.log("rates", rates);
 
   return (
     <div>
@@ -94,6 +119,17 @@ export default function ViewCurruntSalaryTable() {
               </div>
               <br />
             </Grid>
+            <Grid container marginBottom={1}>
+              <Grid item xs={12} align="right">
+                <Typography className={classes.ratesfont}>
+                  <i>( Rates: </i>
+                  <i>Employee EPF : {rates.EmoloyeeEpfRate}</i>|
+                  <i>Company EPF : {rates.CompanyEPFRate}</i>|
+                  <i>ETF : {rates.ETFRate} )</i>
+                </Typography>
+              </Grid>
+            </Grid>
+
             <TableContainer component={Paper}>
               <Table className={classes.table} aria-label="customized table">
                 <TableHead>

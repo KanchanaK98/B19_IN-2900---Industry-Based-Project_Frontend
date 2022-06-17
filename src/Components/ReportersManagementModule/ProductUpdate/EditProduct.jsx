@@ -83,7 +83,7 @@ function EditProduct() {
           setAddSuccessfully(false);
         }, 2000);
       }
-      if (response.success === false) {
+      if (response.status === 400) {
         setDuplicated(true);
         setTimeout(() => {
           setDuplicated(false);

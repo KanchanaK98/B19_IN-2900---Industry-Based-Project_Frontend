@@ -23,7 +23,7 @@ function AllEmployees({ setEmployee, profiles }) {
                 sx={{ mb: 1, backgroundColor: "#e4ecf7" }}
               >
                 <CardActionArea sx={{ p: 2 }}>
-                  <Grid container s>
+                  <Grid container>
                     <Grid item md={2}>
                       <Avatar src={profile.user.profilePic} />
                     </Grid>

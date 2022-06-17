@@ -136,7 +136,7 @@ function EditTeam() {
                       variant="filled"
                       name="teamName"
                       value={editTeam.teamName}
-                      onChange={handleChange}
+                      onChange={handleChange }
                       error={inputErrors.teamName ? true : false}
                       helperText={inputErrors.teamName}
                       fullWidth

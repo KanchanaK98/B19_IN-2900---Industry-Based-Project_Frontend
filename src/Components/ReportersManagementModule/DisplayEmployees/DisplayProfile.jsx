@@ -131,7 +131,7 @@ function DisplayProfile({ employee }) {
                 &nbsp;&nbsp;{user.companyEmail}
               </Typography>
 
-              <Grid>
+              
                 {user.birthday && (
                   <Typography>
                     <CakeIcon sx={{ color: "#183d78" }} />
@@ -143,7 +143,7 @@ function DisplayProfile({ employee }) {
                   <PermIdentityIcon sx={{ color: "#183d78" }} />
                   &nbsp;{user.NIC}
                 </Typography>
-              </Grid>
+              
             </Grid>
           </Grid>
           <Grid item md={6} padding={1}>

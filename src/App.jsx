@@ -51,7 +51,7 @@ import SessionExpiryDialog from "./Components/SessionExpiry/SessionExpiryDialog"
 import CreateSalaryRates from "./Components/SalaryPaymentModule/SalaryRates/CreateSalaryRates/CreateSalaryRates";
 import ViewSalaryRatesTable from "./Components/SalaryPaymentModule/SalaryRates/ViewSalaryRates/ViewSalaryRatesTable";
 import AvailableAssets from "./Components/AssetManagementModule/AvailableAssetList";
-import {LogoutApi} from "./Api/Login/LogoutApi";
+import { LogoutApi } from "./Api/Login/LogoutApi";
 
 function App() {
   const [open, setOpen] = useState(true);

@@ -26,7 +26,8 @@ export const updateProduct = async (updateProdData, id) => {
     const { data } = await api.updateProduct(updateProd, id);
     return data;
   } catch (err) {
-    console.log(err);
+    return err.response;
+    // console.log(err);
   }
 };
 

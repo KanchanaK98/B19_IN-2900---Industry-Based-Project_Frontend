@@ -47,6 +47,7 @@ export const updateEmployee = async (employeeData) => {
     return data;
   } catch (error) {
     console.log(error);
+    return error.response;
   }
 };
 
@@ -85,3 +86,14 @@ export const getCandidates = async () => {
     console.log(err);
   }
 };
+
+
+export const resignStatus = async () => {
+  try {
+    const { data } = await api.resignStatus();
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+

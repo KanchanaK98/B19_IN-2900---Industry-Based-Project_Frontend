@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 9,
     maxWidth: 380,
     minWidth: 380,
-    backgroundColor:"#787a7d"
+    backgroundColor:"#aab0b3"
    // backgroundImage: `linear-gradient(to right, rgba(170, 247, 250), rgba(30, 208, 214))`,
   },
 

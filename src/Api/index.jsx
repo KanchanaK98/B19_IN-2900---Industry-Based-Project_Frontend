@@ -268,6 +268,8 @@ export const createOrganization = (createOrg) =>
   export const updateOrganization = (updateOrg, id) =>
   API.put(`/employee/updateOrganization/${id}`, updateOrg);
 
+  export const getLevels = () =>
+API.get(`/employee/getLevels`)
 
 //product api
 

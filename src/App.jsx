@@ -52,6 +52,7 @@ import Organization from "./Components/ReportersManagementModule/OrganizationStr
 import CreateSalaryRates from "./Components/SalaryPaymentModule/SalaryRates/CreateSalaryRates/CreateSalaryRates";
 import ViewSalaryRatesTable from "./Components/SalaryPaymentModule/SalaryRates/ViewSalaryRates/ViewSalaryRatesTable";
 import AvailableAssets from "./Components/AssetManagementModule/AvailableAssetList";
+import Levels from "./Components/ReportersManagementModule/DisplayAndUpdateLevels/Levels";
 
 
 function App() {
@@ -141,6 +142,8 @@ function App() {
               <Route path="/user" element={<UserProfile user={user} />} />
               <Route path="/products/update/:id" element={<EditProduct />} />
               <Route path="/dashboard/organization/create" element={<Organization />} />
+              <Route path="/dashboard/organization/level" element={<Levels />} />
+
 
               {/* Recruitment management */}
               <Route path="/candidate" element={<CreateCandidate />} />

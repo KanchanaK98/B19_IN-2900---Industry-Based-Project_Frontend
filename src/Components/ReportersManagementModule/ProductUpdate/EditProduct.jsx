@@ -15,11 +15,14 @@ import {
 } from "@mui/material";
 import InventoryIcon from "@mui/icons-material/Inventory";
 import { updateProduct } from "../../../Api/ReportersManagementModule/ProductApi";
-
+import DeleteIcon from "@mui/icons-material/Delete";
+import { add } from "date-fns";
 function EditProduct() {
   const [addSuccessfully, setAddSuccessfully] = useState(false);
   const [notAdded, setnotAdded] = useState(false);
   const [duplicated, setDuplicated] = useState(false);
+  const [noChangeField, setNoChangeField] = useState(false);
+  const [updateField, setUpdateField] = useState(false);
   const [inputErrors, setInputErrors] = useState({
     productID: "",
     productName: "",
@@ -42,6 +45,7 @@ function EditProduct() {
       ...prevState,
       [e.target.name]: e.target.value,
     }));
+    setUpdateField(true);
   };
 
   const errorHandle = () => {
@@ -77,7 +81,7 @@ function EditProduct() {
 
     if (!errorHandle()) {
       const response = await updateProduct(products, product._id);
-      if (response.success === true) {
+      if (response.success === true && updateField) {
         setAddSuccessfully(true);
         setTimeout(() => {
           setAddSuccessfully(false);
@@ -87,6 +91,12 @@ function EditProduct() {
         setDuplicated(true);
         setTimeout(() => {
           setDuplicated(false);
+        }, 2000);
+      }
+      if (!updateField) {
+        setNoChangeField(true);
+        setTimeout(() => {
+          setNoChangeField(false);
         }, 2000);
       }
     } else {
@@ -126,7 +136,7 @@ function EditProduct() {
                           variant="filled"
                           name="productID"
                           value={products.productID}
-                          onChange={handleChange}
+                          onChange={handleChange || add(this)}
                           error={inputErrors.productID ? true : false}
                           helperText={inputErrors.productID}
                           fullWidth
@@ -150,7 +160,7 @@ function EditProduct() {
                           value={products.productName}
                           error={inputErrors.productName ? true : false}
                           helperText={inputErrors.productName}
-                          onChange={handleChange}
+                          onChange={handleChange || add(this)}
                           fullWidth
                         />
                       </Grid>
@@ -175,7 +185,7 @@ function EditProduct() {
                       value={products.description}
                       error={inputErrors.description ? true : false}
                       helpertext={inputErrors.description}
-                      onChange={handleChange}
+                      onChange={handleChange || add(this)}
                       fullWidth
                     />
                   </Grid>
@@ -239,6 +249,13 @@ function EditProduct() {
                 <Stack sx={{ width: "100%" }} spacing={2}>
                   <Alert variant="filled" severity="error">
                     Details are duplicated,Product is not updated!
+                  </Alert>
+                </Stack>
+              ) : null}
+              {noChangeField ? (
+                <Stack sx={{ width: "100%" }} spacing={2}>
+                  <Alert variant="filled" severity="warning">
+                    No any change to update!
                   </Alert>
                 </Stack>
               ) : null}

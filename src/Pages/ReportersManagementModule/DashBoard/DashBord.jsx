@@ -35,7 +35,7 @@ function DashBord() {
 
   return (
     <div>
-      <Box padding={2}>
+      <Box padding={2} bgcolor="#d7dde0">
         <Grid container>
           <Grid item sm={12} md={2.5} sx={{ mb: 5 }}>
             <Button
@@ -56,9 +56,9 @@ function DashBord() {
               type="button"
               variant="contained"
               sx={{ backgroundColor: "#183d78" }}
-              startIcon={<AddBoxIcon />}
+             
             >
-              CAREATE Organization Structure
+              Organization levels
             </Button>
           </Grid>
         </Grid>

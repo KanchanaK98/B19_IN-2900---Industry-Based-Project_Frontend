@@ -74,7 +74,7 @@ function EditEmployee() {
   const [noChangeField, setNoChangeField] = useState(false);
   const [notUpdated, setNotUpdated] = useState(false);
   const [updateField, setUpdateField] = useState(false);
-  const [notresigned, setNotresigned] = useState(false)
+  const [notresigned, setNotresigned] = useState(false);
 
   const jobRoles = [
     "Software Engineer",
@@ -188,8 +188,8 @@ function EditEmployee() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(inputs.employeeID);
- const empID=inputs.employeeID
+ 
+    const empID = inputs.employeeID;
     console.log(empID);
     if (inputs.status === "Resigned") {
       const response = await resignStatus(empID);
@@ -197,13 +197,13 @@ function EditEmployee() {
       if (response.success === false) {
         console.log("error");
       }
-      if(response.success==="true1"){
+      if (response.success === "true1") {
         setAddSuccessfully(true);
         setTimeout(() => {
           setAddSuccessfully(false);
         }, 2000);
       }
-      if(response.success===true){
+      if (response.success === true) {
         setNotresigned(true);
         setTimeout(() => {
           setNotresigned(false);

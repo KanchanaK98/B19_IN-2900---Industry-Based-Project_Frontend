@@ -1,9 +1,7 @@
 import * as api from "../index";
 export const createOrganization = async (levelData) => {
-    console.log(levelData)
+  console.log(levelData);
   try {
-  
-
     const { data } = await api.createOrganization(levelData);
     console.log(data);
     return data;
@@ -25,5 +23,15 @@ export const updateOrganization = async (updateorg, id) => {
   } catch (error) {
     return error.response;
     //   console.log(error);
+  }
+};
+
+export const getLevels = async () => {
+  try {
+    const { data } = await api.getLevels();
+    console.log(data)
+    return data.data;
+  } catch (err) {
+    console.log(err);
   }
 };

@@ -16,6 +16,7 @@ import useStyles from "./OrganizationStyles";
 import GridViewIcon from "@mui/icons-material/GridView";
 import { createOrganization } from "../../../Api/ReportersManagementModule/OrganizationApi";
 import JobRoleDialogBox from "./JobRoleDialogBox";
+import { Link } from "react-router-dom";
 function Organization() {
   const [organizationInputs, setOrganizationInputs] = useState({
     level: "",
@@ -47,7 +48,7 @@ function Organization() {
     <div>
       <Box padding={8} bgcolor="#d7dde0" mt={5}>
         <form>
-          <Paper sx={{ padding: 8 }}>
+          <Paper sx={{ padding: 8,backgroundColor:"#e4ecf7" }}>
             <Typography variant="h5" fontWeight="bold" className={classes.head}>
               <GridViewIcon />
               &nbsp; Create Organization Structure
@@ -76,7 +77,7 @@ function Organization() {
               </Grid>
               <Grid item md={6} textAlign="right">
                 <Button className={classes.button} variant="contained">
-                  Organization structure
+               view   Organization structure
                 </Button>
               </Grid>
             </Grid>
@@ -135,19 +136,40 @@ function Organization() {
                 </Grid>
               </Grid>
               <Grid item md={6} textAlign="right">
+              <Button      
+             
+                  className={classes.button}
+                  variant="contained"
+                  component={Link}
+                  to={"/dashboard/organization/level"}
+                >
+                  Update organization levels
+                </Button>
+                
+              </Grid>
+            </Grid>
+
+            <Grid container sx={{ mt: 2 }}>
+              <Grid item md={6}>
                 <Button
+              component={Link}
+              to={"/dashboard"}
+                  className={classes.button}
+                  variant="contained"
+                >
+                 dashboard
+                </Button></Grid>
+              <Grid item md={6} textAlign="right">
+
+              <Button
                   onClick={handleSubmit}
                   className={classes.button}
                   variant="contained"
                 >
                   create
                 </Button>
+               
               </Grid>
-            </Grid>
-
-            <Grid container sx={{ mt: 10 }}>
-              <Grid item md={6}></Grid>
-              <Grid item md={6}></Grid>
             </Grid>
           </Paper>
         </form>

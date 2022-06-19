@@ -23,6 +23,8 @@ import EditIcon from "@mui/icons-material/Edit";
 import TeamMemberDialog from "./TeamMemberDialog";
 import { updateTeam } from "../../../Api/ReportersManagementModule/TeamsApi";
 import { getEmployeesWithoutTeam } from "../../../Api/ReportersManagementModule/TeamsApi";
+import { add } from "date-fns";
+
 function EditTeam() {
   const [addSuccessfully, setAddSuccessfully] = useState(false);
   const [notAdded, setnotAdded] = useState(false);
@@ -32,6 +34,8 @@ function EditTeam() {
     teamLeader: "",
   });
   const [members, setMembers] = useState([]);
+  const [updateField, setUpdateField] = useState(false);
+  const [noChangeField, setNoChangeField] = useState(false);
   const location = useLocation();
   const { team } = location.state;
   const [editTeam, setEditTeam] = useState({
@@ -51,6 +55,7 @@ function EditTeam() {
       ...prevState,
       [e.target.name]: e.target.value,
     }));
+    setUpdateField(true);
   };
 
   const errorHandle = () => {
@@ -77,10 +82,16 @@ function EditTeam() {
     e.preventDefault();
     if (!errorHandle()) {
       const response = await updateTeam(editTeam, team._id);
-      if (response.success === true) {
+      if (response.success === true && updateField) {
         setAddSuccessfully(true);
         setTimeout(() => {
           setAddSuccessfully(false);
+        }, 2000);
+      }
+      if (!updateField) {
+        setNoChangeField(true);
+        setTimeout(() => {
+          setNoChangeField(false);
         }, 2000);
       }
       if (response.success === false) {
@@ -136,7 +147,7 @@ function EditTeam() {
                       variant="filled"
                       name="teamName"
                       value={editTeam.teamName}
-                      onChange={handleChange }
+                      onChange={handleChange || add(this)}
                       error={inputErrors.teamName ? true : false}
                       helperText={inputErrors.teamName}
                       fullWidth
@@ -163,6 +174,8 @@ function EditTeam() {
                   setEditTeam={setEditTeam}
                   employees={members}
                   setEmployee={setMembers}
+                  setUpdateField={setUpdateField}
+                  updateField={updateField}
                 />
 
                 <Grid container sx={{ mb: 5 }}>
@@ -202,7 +215,7 @@ function EditTeam() {
                       name="teamLeader"
                       select
                       value={editTeam.teamLeader}
-                      onChange={handleChange}
+                      onChange={handleChange || add(this)}
                       error={inputErrors.teamLeader ? true : false}
                       helperText={inputErrors.teamLeader}
                       fullWidth
@@ -286,6 +299,13 @@ function EditTeam() {
           <Stack sx={{ width: "100%" }} spacing={2}>
             <Alert variant="filled" severity="error">
               Team details are duplicated!
+            </Alert>
+          </Stack>
+        ) : null}
+        {noChangeField ? (
+          <Stack sx={{ width: "100%" }} spacing={2}>
+            <Alert variant="filled" severity="warning">
+              No any change to update!
             </Alert>
           </Stack>
         ) : null}

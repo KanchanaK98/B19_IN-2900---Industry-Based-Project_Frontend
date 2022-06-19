@@ -236,6 +236,10 @@ export const getJobRoles = () => {
 export const getCandidates = () => {
   return API.get(`/employee/candidateData`);
 };
+
+export const resignStatus = (empID) => 
+   API.get(`/assets/isAssigned/`+ empID);
+
 //teams api
 export const createTeams = (teamcreate) =>
   API.post(`/employee/teamAdd`, teamcreate);
@@ -254,6 +258,17 @@ export const viewAllTeams = () => {
 export const getAllTeams = () => {
   return API.get(`/employee/getTeam`);
 };
+
+
+//organization api
+
+export const createOrganization = (createOrg) =>
+  API.post(`/employee/organization/create`, createOrg);
+
+  export const updateOrganization = (updateOrg, id) =>
+  API.put(`/employee/updateOrganization/${id}`, updateOrg);
+
+
 //product api
 
 export const createProduct = (productcreate) =>

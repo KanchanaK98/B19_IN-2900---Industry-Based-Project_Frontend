@@ -11,7 +11,8 @@ export const createTeams = async (teamCreateData) => {
     const {data} = await api.createTeams(teamcreate);
     return data;
   } catch (error) {
-    console.log(error);
+    return error.response
+    // console.log(error);
   }
 };
 

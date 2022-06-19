@@ -83,7 +83,7 @@ function EditProduct() {
           setAddSuccessfully(false);
         }, 2000);
       }
-      if (response.success === false) {
+      if (response.status === 400) {
         setDuplicated(true);
         setTimeout(() => {
           setDuplicated(false);
@@ -103,7 +103,7 @@ function EditProduct() {
         {products && (
           <form>
             <Box>
-              <Card sx={{ padding: 5, backgroundColor: "#e4ecf7" }}>
+              <Card sx={{ padding: 8, backgroundColor: "#e4ecf7" }}>
                 <Typography
                   variant="h5"
                   sx={{ fontWeight: "bold", color: "#183d78" }}
@@ -116,7 +116,9 @@ function EditProduct() {
                   <Grid item md={6}>
                     <Grid container sx={{ mb: 5 }}>
                       <Grid item md={3}>
-                        <FormLabel>Product ID:</FormLabel>
+                        <FormLabel sx={{ fontWeight: "bold" }}>
+                          Product ID:
+                        </FormLabel>
                       </Grid>
                       <Grid item md={9}>
                         <TextField
@@ -136,7 +138,9 @@ function EditProduct() {
                   <Grid item md={6}>
                     <Grid container>
                       <Grid item md={3}>
-                        <FormLabel>Product Name:</FormLabel>
+                        <FormLabel sx={{ fontWeight: "bold" }}>
+                          Product Name:
+                        </FormLabel>
                       </Grid>
                       <Grid item md={9}>
                         <TextField
@@ -156,7 +160,9 @@ function EditProduct() {
 
                 <Grid container>
                   <Grid item md={1.5}>
-                    <FormLabel>Description:</FormLabel>
+                    <FormLabel sx={{ fontWeight: "bold" }}>
+                      Description:
+                    </FormLabel>
                   </Grid>
                   <Grid item md={10.5}>
                     <TextField
@@ -177,7 +183,9 @@ function EditProduct() {
 
                 <Grid container sx={{ mb: 5, mt: 2 }}>
                   <Grid item md={1.5}>
-                    <FormLabel>Team Name:</FormLabel>
+                    <FormLabel sx={{ fontWeight: "bold" }}>
+                      Team Name:
+                    </FormLabel>
                   </Grid>
 
                   <Grid item md={4.5}>

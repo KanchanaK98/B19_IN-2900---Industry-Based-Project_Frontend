@@ -47,7 +47,9 @@ import ScheduleExamForm from "./Components/PromotionModule/Exam/ScheduleExamForm
 import UpdateExamForm from "./Components/PromotionModule/Exam/UpdateExamForm/UpdateExamForm";
 import AddMoreQuestionsForm from "./Pages/PromotionModule/Paper/AddMoreQuestions";
 import SessionExpiryDialog from "./Components/SessionExpiry/SessionExpiryDialog";
-import {LogoutApi} from "./Api/Login/LogoutApi";
+import { LogoutApi } from "./Api/Login/LogoutApi";
+import HistoryPromotion from "./Pages/PromotionModule/HistoryPromotion/HistoryPromotion";
+import PromoteEmployees from "./Pages/PromotionModule/PromoteEmployees/PromoteEmployees";
 import Organization from "./Components/ReportersManagementModule/OrganizationStructure/Organization";
 import CreateSalaryRates from "./Components/SalaryPaymentModule/SalaryRates/CreateSalaryRates/CreateSalaryRates";
 import ViewSalaryRatesTable from "./Components/SalaryPaymentModule/SalaryRates/ViewSalaryRates/ViewSalaryRatesTable";
@@ -256,6 +258,9 @@ function App() {
                 path="/promotion/evaluation/exam/updateExam/:EmployeeID/:ExamID"
                 element={<UpdateExamForm />}
               />
+
+              <Route path="/promotions" element={<HistoryPromotion />} />
+              <Route path="/promotions/promoteEmployees" element={<PromoteEmployees />} />
               {/* Salary rates */}
               <Route
                 path="/salary/salaryPercentages/create/:EmployeeID"

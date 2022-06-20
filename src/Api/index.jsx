@@ -9,7 +9,6 @@ const API = axios.create({
 
 API.interceptors.request.use(
   (config) => {
-   
     if (!config.headers["Authorization"]) {
       config.headers["Authorization"] = `Bearer ${JSON.parse(
         sessionStorage.getItem("access")
@@ -38,7 +37,18 @@ API.interceptors.response.use(
   },
   async (error) => {
     const previousRequest = error.config;
-
+    if (
+      error.response.status === 401 &&
+      error.response.data.message === "Unauthenticated"
+    ) {
+      window.location.replace("/");
+    }
+    if (
+      error.response.status === 403 &&
+      error.response.data.message === "Unauthorized"
+    ) {
+      window.location.replace("/dashboard");
+    }
     if (error.response.status === 403 && !previousRequest._retry) {
       previousRequest._retry = true;
       try {

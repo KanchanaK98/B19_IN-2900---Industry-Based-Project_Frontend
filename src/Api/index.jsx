@@ -271,6 +271,9 @@ export const createOrganization = (createOrg) =>
   export const getLevels = () =>
 API.get(`/employee/getLevels`)
 
+export const countEmployees = () =>
+API.get(`/employee/count`)
+
 //product api
 
 export const createProduct = (productcreate) =>

@@ -13,15 +13,16 @@ export const createOrganization = async (levelData) => {
 
 export const updateOrganization = async (updateorg, id) => {
   try {
-    const updateOrg = {
+    // const updateOrg = {
       // level: updateorg.level,
 
-      jobRole: updateorg.jobRole.map((job) => job),
-    };
-    const { data } = await api.updateOrganization(updateOrg, id);
+      // jobRole: updateorg.jobRole.map((job) => job),
+    // };
+    console.log(updateorg)
+    const { data } = await api.updateOrganization(updateorg, id);
     return data;
   } catch (error) {
-    return error.response;
+    return error;
     //   console.log(error);
   }
 };
@@ -29,7 +30,7 @@ export const updateOrganization = async (updateorg, id) => {
 export const getLevels = async () => {
   try {
     const { data } = await api.getLevels();
-    console.log(data)
+    // console.log(data)
     return data.data;
   } catch (err) {
     console.log(err);

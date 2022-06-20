@@ -50,6 +50,7 @@ const InterviewList = ({ open }) => {
       interviewList.filter((Interview) => selectedInterview !== Interview)
     );
     handleCloseDialog();
+    setOpenConfirmation(false);
     location.state = response;
     setOpenSnackBar(true);
   };

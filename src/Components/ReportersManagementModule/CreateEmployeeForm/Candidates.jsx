@@ -65,6 +65,11 @@ function Candidates({ candidates, setInputs, isDisableCandidate }) {
         variant="contained"
         sx={{
           backgroundColor: "#183d78",
+          color: "#fff",
+          "&:hover": {
+            backgroundColor: "#4d5575",
+            color: "#fff",
+          },
         }}
       >
         Selected Candidates

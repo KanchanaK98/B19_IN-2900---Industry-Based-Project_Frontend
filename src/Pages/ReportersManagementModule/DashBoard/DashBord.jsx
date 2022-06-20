@@ -11,6 +11,7 @@ import OrganizationStructure from "../../../Components/ReportersManagementModule
 import DisplayAllEmployees from "./DisplayAllEmployees";
 import { viewAllEmployees } from "../../../Api/ReportersManagementModule/EmployeeApi";
 import RecentSection from "./RecentSection";
+import useStyles from "./DashboardStyles";
 function DashBord() {
   const location = useLocation();
 
@@ -32,13 +33,13 @@ function DashBord() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
+  const classes = useStyles();
   return (
     <div>
       <Box padding={2} bgcolor="#d7dde0">
         <Grid container>
           <Grid item sm={12} md={2.5} sx={{ mb: 5 }}>
-            <Button
+            <Button  className={classes.button}
               LinkComponent={Link}
               to={"/dashboard/create"}
               type="button"
@@ -50,7 +51,7 @@ function DashBord() {
             </Button>
           </Grid>
           <Grid item sm={12} md={4} sx={{ mb: 5 }}>
-            <Button
+            <Button className={classes.button}
               LinkComponent={Link}
               to={"/dashboard/organization/create"}
               type="button"

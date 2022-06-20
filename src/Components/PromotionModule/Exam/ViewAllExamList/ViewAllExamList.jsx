@@ -152,22 +152,35 @@ export default function ViewAllExamList() {
                       <StyledTableCell align="left">
                         {element.Status}
                       </StyledTableCell>
-                      <StyledTableCell align="left">
-                        <Button
-                          className={classes.Button}
-                          variant="contained"
-                          onClick={() => {
-                            deleteScheduledExamApi(
-                              EmployeeID,
-                              element.ExamID
-                            ).then(() => {
-                              window.location.reload(false);
-                            });
-                          }}
-                        >
-                          Delete
-                        </Button>
-                      </StyledTableCell>
+                      {element.Status === "Completed" ? (
+                        <StyledTableCell align="left">
+                          <Button
+                            className={classes.Button}
+                            variant="contained"
+                            disabled
+                          >
+                            Delete
+                          </Button>
+                        </StyledTableCell>
+                      ) : (
+                        <StyledTableCell align="left">
+                          <Button
+                            className={classes.Button}
+                            variant="contained"
+                            onClick={() => {
+                              deleteScheduledExamApi(
+                                EmployeeID,
+                                element.ExamID
+                              ).then(() => {
+                                window.location.reload(false);
+                              });
+                            }}
+                          >
+                            Delete
+                          </Button>
+                        </StyledTableCell>
+                      )}
+
                       {element.Status === "Completed" ? (
                         <StyledTableCell align="left">
                           <Button disabled variant="contained">

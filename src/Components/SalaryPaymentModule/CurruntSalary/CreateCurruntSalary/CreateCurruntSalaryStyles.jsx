@@ -1,9 +1,17 @@
 import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles((theme) => ({
+  Box: {
+    backgroundColor: "#d7dde0",
+    width: "100%",
+    height: "100%",
+    padding: 25,
+    paddingBottom: "10%",
+  },
+
   form: {
-    padding: theme.spacing(3),
-    margin: theme.spacing(3),
+    // padding: theme.spacing(3),
+    //margin: theme.spacing(3),
     "& .MuiTextField-root": {
       margin: theme.spacing(2),
     },
@@ -46,6 +54,15 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "flex-end",
     margin: theme.spacing(2, 5, 1),
+  },
+  ratesfont: {
+    paddingLeft: "50%",
+    paddingRight: "5%",
+    display: "flex",
+    justifyContent: "space-between",
+    textAlign: "center",
+    fontSize: "13px",
+    color: "#78909C",
   },
 }));
 

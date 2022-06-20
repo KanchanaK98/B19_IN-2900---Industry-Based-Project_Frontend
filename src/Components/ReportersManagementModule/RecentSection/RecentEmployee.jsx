@@ -4,23 +4,14 @@ import React, { useEffect, useState } from "react";
 import { getAllTeams } from "../../../Api/ReportersManagementModule/TeamsApi";
 function RecentEmployee({ profile }) {
   const [teams, setTeams] = useState();
-  // const handleUpdate = () => {
-  //   setUpdateEmployee(profile);
-  //   setUpdateState(true);
-  // };
+
   const {
     employeeFirstName,
     employeeLastName,
-    birthday,
-    streetNo,
-    city,
     phoneNumber,
-    NIC,
     companyEmail,
     jobRole,
-    jobType,
     profilePic,
-    status,
     teamID,
   } = profile;
   useEffect(() => {
@@ -64,10 +55,6 @@ function RecentEmployee({ profile }) {
               })}
           </Grid>
         </Grid>
-
-        {/* <Button onClick={handleUpdate} sx={{ mt: 5 }} fullWidth  variant="contained" size="medium">
-          Update
-        </Button> */}
       </Card>
     </div>
   );

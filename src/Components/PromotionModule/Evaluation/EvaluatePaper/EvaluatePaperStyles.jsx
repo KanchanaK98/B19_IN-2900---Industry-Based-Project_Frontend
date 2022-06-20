@@ -39,7 +39,7 @@ const useStyles = makeStyles({
   Box: {
     width: "100%",
     backgroundColor: "#d7dde0",
-    marginTop: 10,
+    //marginTop: 10,
     paddingBottom: "50px",
   },
 
@@ -74,6 +74,12 @@ const useStyles = makeStyles({
       backgroundColor: "#D7CCC8",
       borderWidth: "0",
     },
+  },
+  backButton: {
+    display: "flex",
+    justifyContent: "flex-end",
+    paddingTop: 15,
+    paddingRight: 25,
   },
 });
 export default useStyles;

@@ -22,12 +22,15 @@ const TeamMemberDialog = ({
   editTeam,
   setEditTeam,
   employees,
+  updateField,
+  setUpdateField,
 }) => {
   const [members, setMembers] = useState(editTeam.teamMembers);
 
   const handleSave = () => {
     setEditTeam({ ...editTeam, teamMembers: members });
     setOpenDialog(false);
+    setUpdateField(true);
   };
 
   const handleDelete = (member) => {
@@ -102,7 +105,10 @@ const TeamMemberDialog = ({
                   }}
                 >
                   <Grid item>
-                    <Avatar sx={{ height: 35, width: 35 }}>
+                    <Avatar
+                      src={employee.profilePic}
+                      sx={{ height: 35, width: 35 }}
+                    >
                       {employee.employeeName.toUpperCase()}
                     </Avatar>
                   </Grid>

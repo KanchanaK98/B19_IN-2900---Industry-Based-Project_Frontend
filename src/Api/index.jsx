@@ -111,6 +111,14 @@ export const searchAssetCategory = (assetCategory) =>
 export const insertAsset = (asset) => API.post("/assets/add", asset);
 export const updateAsset = (id, asset) =>
   API.patch("/assets/update/" + id, asset);
+export const availableAssetCategory = (assetCategories) => 
+  API.get("assets/availableAssets/category/"+ assetCategories)
+
+//salary percentages API
+export const viewSalaryRates = (EmployeeID) =>
+  API.get(`/salary/salaryPercentages/${EmployeeID}`);
+export const createSalaryPercentages = (EmployeeID, rates) =>
+  API.post(`/salary/salaryPercentages/create/${EmployeeID}`, rates);
 
 //Current Salary API
 export const viewCurrentSalarySheet = () => API.get("/salary/currentSalary");
@@ -229,6 +237,10 @@ export const getJobRoles = () => {
 export const getCandidates = () => {
   return API.get(`/employee/candidateData`);
 };
+
+export const resignStatus = (empID) => 
+   API.get(`/assets/isAssigned/`+ empID);
+
 //teams api
 export const createTeams = (teamcreate) =>
   API.post(`/employee/teamAdd`, teamcreate);
@@ -247,6 +259,19 @@ export const viewAllTeams = () => {
 export const getAllTeams = () => {
   return API.get(`/employee/getTeam`);
 };
+
+
+//organization api
+
+export const createOrganization = (createOrg) =>
+  API.post(`/employee/organization/create`, createOrg);
+
+  export const updateOrganization = (updateOrg, id) =>
+  API.put(`/employee/updateOrganization/${id}`, updateOrg);
+
+  export const getLevels = () =>
+API.get(`/employee/getLevels`)
+
 //product api
 
 export const createProduct = (productcreate) =>

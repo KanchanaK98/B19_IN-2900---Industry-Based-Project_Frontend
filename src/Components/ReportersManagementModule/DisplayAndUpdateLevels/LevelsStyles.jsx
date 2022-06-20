@@ -19,10 +19,10 @@ const useStyles = makeStyles((theme) => ({
     padding:25,
     backgroundColor:"#58a9cc",
     marginTop:8,
-    maxWidth:250,
-    minWidth:250,
-    minHeight:300,
-    maxHeight:400,
+    maxWidth:350,
+    minWidth:350,
+    minHeight:250,
+    maxHeight:250,
     display:"flex"
     
     

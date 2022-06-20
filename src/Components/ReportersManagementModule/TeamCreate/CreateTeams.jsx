@@ -116,15 +116,17 @@ function CreateTeams() {
   useEffect(() => {
     async function fetchData() {
       setMembers(await getEmployeesWithoutTeam());
+      // setMembers(response.filter((members)=>members.jobRole !==("CTO"||"IT Employee"||"HR Manager")))
     }
+  
     fetchData();
   }, []);
-
+ 
   const [openDialog, setOpenDialog] = useState(false);
   const handleOpenDialog = () => {
     setOpenDialog(true);
   };
-
+console.log(members)
   return (
     <div>
       <Box padding={4}>
@@ -233,7 +235,7 @@ function CreateTeams() {
                               }}
                             >
                               <Grid item>
-                                <Avatar sx={{ height: 35, width: 35 }}>
+                                <Avatar src={mem.profilePic} sx={{ height: 35, width: 35 }}>
                                   {mem.employeeFirstName}
                                 </Avatar>
                               </Grid>

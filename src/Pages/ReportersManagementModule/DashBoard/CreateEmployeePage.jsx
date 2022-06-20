@@ -18,9 +18,9 @@ function CreateEmployeePage() {
   console.log(candidates)
   return (
     <div>
-      <Grid container>
+      <Grid container  sx={{backgroundColor:"#dcdfe0"}}>
         <Grid item md={8}>
-          <Box padding={2} sx={{mb:7}}>
+          <Box padding={2} sx={{mb:7}} >
             <ProductCountUp />
             <Grid sx={{ mt: 2 }}>
               <CreateEmployee candidates={candidates}/>

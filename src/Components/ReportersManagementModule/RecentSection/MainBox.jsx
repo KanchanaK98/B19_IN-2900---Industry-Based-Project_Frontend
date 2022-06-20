@@ -47,7 +47,7 @@ function MainBox() {
     >
       <Typography
         variant="h2"
-        sx={{ fontWeight: "bold", textAlign: "center", color: "white" }}
+        sx={{ fontWeight: "bold", textAlign: "center", color: "#ac89e8",fontFamily:"'Ultra', serif" }}
       >
         Welcome to DirectFN Pvt(Ltd)
       </Typography>
@@ -65,16 +65,17 @@ function MainBox() {
       > */}
       <Typography
         variant="h5"
-        sx={{ color: "white", fontWeight: "bold", mt: 4, textAlign: "center" }}
+        sx={{ color: "#a4edf5", fontWeight: "bold", mt: 4, textAlign: "center",fontFamily:" 'Poiret One', cursive" }}
       >
         Our Vision
       </Typography>
       <Typography
-        sx={{ color: "white", fontWeight: "bold", mt: 2, textAlign: "center" }}
+        sx={{ color: "white", fontWeight: "bold", mt: 2, textAlign: "center" ,fontFamily
+    :"'Fascinate', cursive"}}
       >
         To be the most sought after Sri Lankan Company providing prefferred
         solutions for personal care cleaning needs of customers in both local
-        and selected international makerts.
+        and selected international makerts....
       </Typography>
 
       {/* {topics.map((topic) => (

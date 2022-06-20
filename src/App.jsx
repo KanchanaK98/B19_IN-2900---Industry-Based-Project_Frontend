@@ -161,8 +161,8 @@ function App() {
               <Route path="/interview/start/:id" element={<StartInterview />} />
               {/* Assets management */}
               <Route path="/asset" element={<ViewAsset user={user} />} />
-              <Route path="/assetInsertion" element={<AssetInsertion />} />
-              <Route path="/availableAssets" element={<AvailableAssets />} />
+              <Route path="/assetInsertion" element={<AssetInsertion user={user} />}  />
+              <Route path="/availableAssets" element={<AvailableAssets user={user} />} />
               {/* Leave management */}
               <Route path="/requestLeave" element={<RequestLeaves />} />
               <Route path="/leaveHistory" element={<LeaveHistory />} />

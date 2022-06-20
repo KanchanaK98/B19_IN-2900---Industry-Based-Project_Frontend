@@ -174,8 +174,8 @@ const SideBar = ({ open, toggleDrawer, user, handleLogOut }) => {
                     <ListItemText primary="Asset Insertion" />
                   </ListItem2>
                 )}
-
-                <ListItem2
+                { (user.jobRole === "IT Employee" || user.jobRole === "HR Manager") && (
+                  <ListItem2
                   component={Link}
                   to="/asset"
                   selected={selectedIndex2 === 1}
@@ -189,6 +189,24 @@ const SideBar = ({ open, toggleDrawer, user, handleLogOut }) => {
                   </ListItemIcon>
                   <ListItemText primary="Asset List" />
                 </ListItem2>
+                )}
+                { (user.jobRole !== "IT Employee" && user.jobRole !== "HR Manager") && (
+                  <ListItem2
+                  component={Link}
+                  to="/availableAssets"
+                  selected={selectedIndex2 === 1}
+                  onClick={() => {
+                    handleListItemClick2(1);
+                  }}
+                  className={classes.navButton2}
+                >
+                  <ListItemIcon>
+                    <StarBorder />
+                  </ListItemIcon>
+                  <ListItemText primary="Available Asset" />
+                </ListItem2>
+                )}
+                
               </List>
             </Collapse>
           </Grid>

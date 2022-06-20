@@ -19,6 +19,7 @@ import useStyles from "./AssetViewListStyles";
 import AssetViewStats from './AssetViewStats';
 import ConfirmationBox from './ConfirmationBox';
 import { styled } from "@mui/material/styles";
+import {API} from '../../Api/index';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -46,7 +47,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     },
   }));
 
-const  ViewAsset = () => {
+const  ViewAsset = ({user}) => {
     const [assets,setAssets] = useState([]);
     const [eachAsset, setEachAsset] = useState([]);
     const [show,setShow] = useState(false);
@@ -58,8 +59,12 @@ const  ViewAsset = () => {
     const [error,seterror] = useState(false);
     const [number,setNumber] = useState({available:0,nonAvailable:0,fault:0})
     const [showConfirmation, setShowConfirmation] = useState(false);
+    if(!user)
+    {
+       window.location.replace('/');
+    }
     useEffect(()=>{
-        axios.get("http://localhost:8070/assets/").then((res)=>{
+        API.get("http://localhost:8070/assets/").then((res)=>{
             // console.log(res)
             setAssets(res.data.assets);
             setNumber({available:res.data.availableCount,nonAvailable:res.data.nonavblCount,fault:res.data.faultCount})
@@ -291,7 +296,8 @@ const  ViewAsset = () => {
                     <StyledTableCell align="center">MODEL</StyledTableCell>
                     <StyledTableCell align="center">SERIAL NUMBER</StyledTableCell>
                     <StyledTableCell align="center">STATUS</StyledTableCell>
-                    <StyledTableCell align="center">ACTION</StyledTableCell>
+                    {user.jobRole === "IT Employee"&&(<StyledTableCell align="center">ACTION</StyledTableCell>)}
+                    
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -314,8 +320,8 @@ const  ViewAsset = () => {
                         {asset.status === 'Available'&&(<Typography style={{ color:'blue' }}>Available</Typography>)}
                         {asset.status === 'Non-Available'&&(<Typography style={{ color:'green' }}> Not-Available</Typography>)}
                       </StyledTableCell>
-                      
-                      {asset.status === 'Available'?
+                      {user.jobRole === "IT Employee"&&(
+                        asset.status === 'Available'?
                             (<TableCell align="center">
                                 <button className='btn btn-primary announce' onClick={()=>{showModal(asset._id);setAssignAsset(asset._id);}}>Assign</button>
                                  <button className='btn btn-danger' onClick={()=>{confirmBox(asset._id);setType("fault");}} style={{ marginLeft:"5px" }}>Fault</button>
@@ -332,7 +338,9 @@ const  ViewAsset = () => {
                                  <button className='btn btn-danger btn-block' onClick={()=>{confirmBox(asset._id);setType("fault");}} style={{ marginLeft:"5px" }}>Fault</button>
                                  <button className='btn btn-success btn-block' onClick={()=>{ShowModalView(asset._id)}} style={{ marginLeft:"5px" }}>Update</button>
                              </TableCell>)
-                 }
+                 
+                      )}
+                      
                       
                       
                     </StyledTableRow>

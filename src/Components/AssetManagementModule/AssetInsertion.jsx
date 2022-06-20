@@ -20,7 +20,7 @@ import Select from '@mui/material/Select';
 import useStyles from "./AssetInsertionStyles";
 import { assetInsertionApi } from '../../Api/AssetManagementModule/assetInsertionApi';
 
-function AssetInsertion() {
+function AssetInsertion({user}) {
     const [assetID, setAssetID] = useState("");
     const [assetCategory, setAssetCategory] = useState("");
     const [model, setModel] = useState("");
@@ -31,6 +31,16 @@ function AssetInsertion() {
     const [alreadyID, setalreadyID] = useState(false);
     const [inputErrors, setInputErrors] = useState({assetID:false});
 
+    if(!user)
+    {
+      window.location.replace('/');
+    }else{
+      if(user.jobRole !== "IT Employee")
+      {
+        window.location.href = "/dashboard";
+      }
+    }
+    
     const sendData = async (e) =>
     {
         e.preventDefault();

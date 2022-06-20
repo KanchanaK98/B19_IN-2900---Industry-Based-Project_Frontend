@@ -48,7 +48,9 @@ import UpdateExamForm from "./Components/PromotionModule/Exam/UpdateExamForm/Upd
 import AddMoreQuestionsForm from "./Pages/PromotionModule/Paper/AddMoreQuestions";
 import RecentSection from "./Pages/ReportersManagementModule/DashBoard/RecentSection";
 import SessionExpiryDialog from "./Components/SessionExpiry/SessionExpiryDialog";
-import {LogoutApi} from "./Api/Login/LogoutApi";
+import { LogoutApi } from "./Api/Login/LogoutApi";
+import HistoryPromotion from "./Pages/PromotionModule/HistoryPromotion/HistoryPromotion";
+import PromoteEmployees from "./Pages/PromotionModule/PromoteEmployees/PromoteEmployees";
 
 function App() {
   const [open, setOpen] = useState(true);
@@ -59,7 +61,7 @@ function App() {
     setOpen(!open);
   };
   const handleLogOut = () => {
-LogoutApi();
+    LogoutApi();
     sessionStorage.clear();
     window.location.replace("/");
   };
@@ -248,6 +250,9 @@ LogoutApi();
                 path="/promotion/evaluation/exam/updateExam/:EmployeeID/:ExamID"
                 element={<UpdateExamForm />}
               />
+
+              <Route path="/promotions" element={<HistoryPromotion />} />
+              <Route path="/promotions/promoteEmployees" element={<PromoteEmployees />} />
             </Routes>
           </Grid>
         </Grid>

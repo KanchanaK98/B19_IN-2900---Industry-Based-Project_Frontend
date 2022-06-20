@@ -9,6 +9,7 @@ const API = axios.create({
 
 API.interceptors.request.use(
   (config) => {
+   
     if (!config.headers["Authorization"]) {
       config.headers["Authorization"] = `Bearer ${JSON.parse(
         sessionStorage.getItem("access")
@@ -275,3 +276,13 @@ export const responseRequestedLeave = (id, reason) =>
 
 export const getTeamLead = (employeeId) =>
   API.get("/leave/request/teamLead/" + employeeId);
+
+//promotion API
+export const getEvaluationData = () => API.get("/promotion/evaluation/details");
+export const promoteEmployees = (employeeID, promotionData) => {
+  return API.post(`/promotion/evaluation/promote/${employeeID}`, promotionData);
+};
+
+export const getPromotionHistory = () => {
+  return API.get(`/promotion/history`);
+};

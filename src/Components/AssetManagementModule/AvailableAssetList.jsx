@@ -16,6 +16,7 @@ import {Typography} from "@mui/material";
 import useStyles from "./AssetViewListStyles";
 import AvailableAssetStats from './AvailableAssetStats';
 import { styled } from "@mui/material/styles";
+import {API} from '../../Api/index';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -43,22 +44,34 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     },
   }));
 
-const  AvailableAssetList = () => {
+const  AvailableAssetList = ({user}) => {
     const [assets,setAssets] = useState([]);
     const [error,seterror] = useState(false);
     const [number,setNumber] = useState({available:0});
     let [ count,setCount ] = useState(0);
+    if(!user)
+    {
+      window.location.replace('/');
+    }
+    else
+    {
+      if(user.jobRole=== "IT Employee"||user.jobRole==="HR Manager")
+      {
+        window.location.href = "/dashboard";
+      }
+    }
+    
     useEffect(()=>{
         if(count===0)
         {
-            axios.get("http://localhost:8070/assets/available").then((res)=>{
+            API.get("http://localhost:8070/assets/available").then((res)=>{
             setAssets(res.data);
             setNumber({available:res.data.length})
             }).catch((err)=>{
                 alert(err.message);
             })
         }else{
-            axios.get("http://localhost:8070/assets/available").then((res)=>{
+            API.get("http://localhost:8070/assets/available").then((res)=>{
             setNumber({available:res.data.length})
             }).catch((err)=>{
                 alert(err.message);

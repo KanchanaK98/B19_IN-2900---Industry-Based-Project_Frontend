@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API = axios.create({
+export const API = axios.create({
   baseURL: "http://localhost:8070",
   headers: {
     "Content-Type": "application/json",
@@ -47,7 +47,7 @@ API.interceptors.response.use(
       error.response.status === 403 &&
       error.response.data.message === "Unauthorized"
     ) {
-      window.location.replace("/dashboard");
+      window.location.href = "/dashboard";
     }
     if (error.response.status === 403 && !previousRequest._retry) {
       previousRequest._retry = true;

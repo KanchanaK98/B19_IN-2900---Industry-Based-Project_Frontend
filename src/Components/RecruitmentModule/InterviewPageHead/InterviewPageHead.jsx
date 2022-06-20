@@ -1,7 +1,6 @@
-import { Box, Button, Grid, Paper, Typography } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import React from "react";
 import useStyles from "./InterviewPageHeadStyles";
-import AppsIcon from "@mui/icons-material/Apps";
 import { Link } from "react-router-dom";
 
 const InterviewPageHead = () => {
@@ -18,7 +17,6 @@ const InterviewPageHead = () => {
           </Grid>
           <Grid md={6} item className={classes.button}>
             <Button
-            
               component={Link}
               to={"/interview/create"}
               variant="contained"

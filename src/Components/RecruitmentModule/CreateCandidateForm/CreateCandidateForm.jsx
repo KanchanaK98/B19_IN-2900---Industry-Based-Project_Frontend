@@ -104,6 +104,14 @@ const CreateCandidateForm = ({
       }));
       isError = true;
     }
+    const NICFormat = /^([0-9]{9}[x|X|v|V]|[0-9]{12})$/;
+    if (candidateData.NIC && !candidateData.NIC.match(NICFormat)) {
+      setCandidateErrors((prevState) => ({
+        ...prevState,
+        NIC: "Invalid NIC format",
+      }));
+      isError = true;
+    }
     return isError;
   };
   const handleSubmit = async (event) => {

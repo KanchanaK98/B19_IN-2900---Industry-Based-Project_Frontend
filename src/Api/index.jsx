@@ -37,7 +37,18 @@ API.interceptors.response.use(
   },
   async (error) => {
     const previousRequest = error.config;
-
+    if (
+      error.response.status === 401 &&
+      error.response.data.message === "Unauthenticated"
+    ) {
+      window.location.replace("/");
+    }
+    if (
+      error.response.status === 403 &&
+      error.response.data.message === "Unauthorized"
+    ) {
+      window.location.replace("/dashboard");
+    }
     if (error.response.status === 403 && !previousRequest._retry) {
       previousRequest._retry = true;
       try {
@@ -300,3 +311,13 @@ export const responseRequestedLeave = (id, reason) =>
 
 export const getTeamLead = (employeeId) =>
   API.get("/leave/request/teamLead/" + employeeId);
+
+//promotion API
+export const getEvaluationData = () => API.get("/promotion/evaluation/details");
+export const promoteEmployees = (employeeID, promotionData) => {
+  return API.post(`/promotion/evaluation/promote/${employeeID}`, promotionData);
+};
+
+export const getPromotionHistory = () => {
+  return API.get(`/promotion/history`);
+};

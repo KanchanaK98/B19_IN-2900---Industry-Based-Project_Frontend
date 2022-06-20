@@ -7,11 +7,12 @@ import Grid from "@mui/material/Grid";
 import PersonIcon from "@mui/icons-material/Person";
 import Paper from "@mui/material/Paper";
 import {
+  countEmployees,
   createEmployee,
-  getCandidates,
 } from "../../../Api/ReportersManagementModule/EmployeeApi";
-import { Alert, AlertTitle, MenuItem, Stack, Typography } from "@mui/material";
+import { Alert, AlertTitle, Stack, Typography } from "@mui/material";
 import CredentialCard from "./CredentialCard";
+import useStyles from "./CreateFormStyles";
 import Candidates from "./Candidates";
 import { Link } from "react-router-dom";
 const jobRoles = [
@@ -37,7 +38,7 @@ function CreateEmployee({ candidates }) {
   const [addSuccessfully, setAddSuccessfully] = useState(false);
   const [duplicated, setDuplicated] = useState(false);
   const [notAdded, setnotAdded] = useState(false);
-
+  const [count, setCount] = useState("");
   const [inputErrors, setInputErrors] = useState({
     employeeID: "",
     employeeFirstName: "",
@@ -46,6 +47,7 @@ function CreateEmployee({ candidates }) {
     NIC: "",
     companyEmail: "",
   });
+
   const [inputs, setInputs] = useState({
     employeeID: "",
     employeeFirstName: "",
@@ -54,6 +56,21 @@ function CreateEmployee({ candidates }) {
     NIC: "",
     companyEmail: "",
   });
+
+  useEffect(() => {
+    async function fetchData() {
+      let ID = await countEmployees();
+
+      setInputs((prevState) => ({
+        ...prevState,
+        employeeID: ID,
+      }));
+
+      // console.log(count, { message: "Hi" });
+    }
+    fetchData();
+  }, []);
+
   const handleChange = (e) => {
     setInputs((prevState) => ({
       ...prevState,
@@ -104,7 +121,7 @@ function CreateEmployee({ candidates }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    console.log(inputs);
     if (!errorHandle()) {
       const response = await createEmployee(inputs);
 
@@ -115,6 +132,8 @@ function CreateEmployee({ candidates }) {
         setTimeout(() => {
           setAddSuccessfully(false);
         }, 2000);
+        //----------------------------------------------------------------------------
+      
       }
 
       if (response.status === 400) {
@@ -146,7 +165,9 @@ function CreateEmployee({ candidates }) {
       setIsDisableCandidate(true);
     }
   }, []);
-  console.log(candidates, { message: "hi" });
+
+  // console.log(candidates, { message: "hi" });
+  const classes = useStyles();
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -199,7 +220,7 @@ function CreateEmployee({ candidates }) {
                         label="employeeID"
                         variant="filled"
                         name="employeeID"
-                        value={inputs.employeeID}
+                        value={inputs.employeeID || (count && String(count))}
                         onChange={handleChange}
                         error={inputErrors.employeeID ? true : false}
                         helperText={inputErrors.employeeID}
@@ -349,7 +370,7 @@ function CreateEmployee({ candidates }) {
                   component={Link}
                   to="/dashboard"
                   variant="contained"
-                  sx={{ backgroundColor: "#183d78" }}
+                  className={classes.button}
                 >
                   DASHBOARD
                 </Button>
@@ -370,9 +391,7 @@ function CreateEmployee({ candidates }) {
                   <Grid item md={6} textAlign="right">
                     <Button
                       variant="contained"
-                      sx={{
-                        backgroundColor: "#183d78",
-                      }}
+                      className={classes.button}
                       type="submit"
                     >
                       CREATE EMPLOYEE

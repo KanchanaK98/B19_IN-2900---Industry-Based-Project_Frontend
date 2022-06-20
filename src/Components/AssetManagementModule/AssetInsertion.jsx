@@ -30,7 +30,7 @@ function AssetInsertion({user}) {
     const [added, setadded] = useState(false);
     const [alreadyID, setalreadyID] = useState(false);
     const [inputErrors, setInputErrors] = useState({assetID:false});
-
+    const [isDisabled, setIsDisabled] = useState(true);
     if(!user)
     {
       window.location.replace('/');
@@ -119,7 +119,7 @@ function AssetInsertion({user}) {
                         variant="outlined"
                         name="assetID"
                         value={assetID}
-                        onChange={(e)=>{setAssetID(e.target.value)}}
+                        onChange={(e)=>{setAssetID(e.target.value);setIsDisabled(false)}}
                         fullWidth
                         error={inputErrors.assetID ? true : false}
                         helperText="Ex - A0123"
@@ -137,7 +137,7 @@ function AssetInsertion({user}) {
                         id="demo-simple-select-helper"
                         value={assetCategory}
                         label="Category"
-                        onChange={(e)=>{setAssetCategory(e.target.value)}}
+                        onChange={(e)=>{setAssetCategory(e.target.value);setIsDisabled(false)}}
                         >
                         
                         <MenuItem value="Laptop">Laptop</MenuItem>
@@ -165,7 +165,7 @@ function AssetInsertion({user}) {
                           variant="outlined"
                           name="model"
                           value={model}
-                          onChange={(e)=>{setModel(e.target.value)}}
+                          onChange={(e)=>{setModel(e.target.value);setIsDisabled(false)}}
                           fullWidth
                           helperText="Ex - Asus,Hp,Apple"
                         />
@@ -180,7 +180,7 @@ function AssetInsertion({user}) {
                           variant="outlined"
                           name="serialNumber"
                           value={serialNumber}
-                          onChange={(e)=>{setSerialNumber(e.target.value)}}
+                          onChange={(e)=>{setSerialNumber(e.target.value);setIsDisabled(false)}}
                           fullWidth
                         />
                   </Grid>
@@ -199,7 +199,7 @@ function AssetInsertion({user}) {
                             id="demo-simple-select-helper"
                             value={status}
                             label="Status"
-                            onChange={(e)=>{setStatus(e.target.value)}}
+                            onChange={(e)=>{setStatus(e.target.value);setIsDisabled(false)}}
                             >
                             <MenuItem value="">
                                 <em>None</em>
@@ -219,6 +219,7 @@ function AssetInsertion({user}) {
                   variant="contained"
                   size="large"
                   type="submit"
+                  disabled={isDisabled?true:false}
                 >
                   Add Asset
                 </Button>

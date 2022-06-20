@@ -22,6 +22,7 @@ function Organization() {
     level: "",
     jobRole: [],
   });
+  const [inputErrors, setIputErrors] = useState(false);
   const handleChange = (e) => {
     setOrganizationInputs((prevState) => ({
       ...prevState,
@@ -31,13 +32,28 @@ function Organization() {
   const handleClear = () => {
     setOrganizationInputs({ level: "", jobRole: [] });
   };
+  const errorHandle = () => {
+    let isError = false;
+    Object.keys(organizationInputs).map((property) => {
+      if (!organizationInputs[property]) {
+        setIputErrors((prevState) => ({
+          ...prevState,
+          [property]: property + " is required",
+        }));
+        isError = true;
+      }
+    });
+    return isError;
+  };
   const handleSubmit = async (e) => {
-    console.log("hi");
+    // console.log("hi");
     e.preventDefault();
-    const response = await createOrganization(organizationInputs);
-    console.log(response);
-    console.log(organizationInputs);
-    handleClear();
+    if (!errorHandle()) {
+      const response = await createOrganization(organizationInputs);
+      // console.log(response);
+      // console.log(organizationInputs);
+      handleClear();
+    }
   };
   const [openDialog, setOpenDialog] = useState(false);
   const handleOpenDialog = () => {
@@ -48,7 +64,7 @@ function Organization() {
     <div>
       <Box padding={8} bgcolor="#d7dde0" mt={5}>
         <form>
-          <Paper sx={{ padding: 8,backgroundColor:"#e4ecf7" }}>
+          <Paper sx={{ padding: 8, backgroundColor: "#e4ecf7" }}>
             <Typography variant="h5" fontWeight="bold" className={classes.head}>
               <GridViewIcon />
               &nbsp; Create Organization Structure
@@ -70,6 +86,8 @@ function Organization() {
                       name="level"
                       onChange={handleChange}
                       value={organizationInputs.level}
+                      error={inputErrors.level ? true : false}
+                      helperText={inputErrors.level}
                       fullWidth
                     ></TextField>
                   </Grid>
@@ -77,7 +95,7 @@ function Organization() {
               </Grid>
               <Grid item md={6} textAlign="right">
                 <Button className={classes.button} variant="contained">
-               view   Organization structure
+                  view Organization structure
                 </Button>
               </Grid>
             </Grid>
@@ -136,8 +154,7 @@ function Organization() {
                 </Grid>
               </Grid>
               <Grid item md={6} textAlign="right">
-              <Button      
-             
+                <Button
                   className={classes.button}
                   variant="contained"
                   component={Link}
@@ -145,30 +162,28 @@ function Organization() {
                 >
                   Update organization levels
                 </Button>
-                
               </Grid>
             </Grid>
 
             <Grid container sx={{ mt: 2 }}>
               <Grid item md={6}>
                 <Button
-              component={Link}
-              to={"/dashboard"}
+                  component={Link}
+                  to={"/dashboard"}
                   className={classes.button}
                   variant="contained"
                 >
-                 dashboard
-                </Button></Grid>
+                  dashboard
+                </Button>
+              </Grid>
               <Grid item md={6} textAlign="right">
-
-              <Button
+                <Button
                   onClick={handleSubmit}
                   className={classes.button}
                   variant="contained"
                 >
                   create
                 </Button>
-               
               </Grid>
             </Grid>
           </Paper>

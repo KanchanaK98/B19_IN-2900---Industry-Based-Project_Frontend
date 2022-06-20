@@ -16,7 +16,6 @@ import {
 } from "@mui/material";
 import { Close, Send } from "@mui/icons-material";
 
-
 const TeamMemberDialog = ({
   openDialog,
   setOpenDialog,
@@ -25,7 +24,6 @@ const TeamMemberDialog = ({
   employees,
 }) => {
   const [members, setMembers] = useState([]);
-  
 
   const handleSave = () => {
     setTeaminputs({ ...teaminputs, teamMembers: members });
@@ -33,22 +31,18 @@ const TeamMemberDialog = ({
   };
 
   const handleDelete = (member) => {
-    setMembers(members.filter((membr)=> membr !== member))
+    setMembers(members.filter((membr) => membr !== member));
   };
-
-  
-
 
   return (
     <Dialog fullWidth open={openDialog}>
       <DialogTitle>
         <Grid container sx={{ display: "flex", alignItems: "center" }}>
-          <Grid  md={10} item>
+          <Grid md={10} item>
             <Typography variant="h5">Team Members</Typography>
           </Grid>
 
           <Grid
-            
             md={2}
             item
             sx={{ display: "flex", justifyContent: "flex-end" }}
@@ -62,25 +56,22 @@ const TeamMemberDialog = ({
       <Divider variant="middle" />
       <Divider variant="middle" />
       <DialogContent>
-        <Typography variant="subTitle">
-          Add Team Members
-        </Typography>
+        <Typography variant="subTitle">Add Team Members</Typography>
         <Grid>
           {members &&
             members.map((member) => (
               <Chip
                 label={member.employeeName}
                 key={member.employeeID}
-                onDelete={()=> handleDelete(member)}
+                onDelete={() => handleDelete(member)}
                 sx={{
                   mr: 0.5,
                   mt: 1,
                   bgcolor: "rgba(49, 24, 62, 1)",
                   color: "white",
-                  "& .MuiSvgIcon-root" : {
-                  color: "white",
-
-                  }
+                  "& .MuiSvgIcon-root": {
+                    color: "white",
+                  },
                 }}
               />
             ))}
@@ -88,7 +79,7 @@ const TeamMemberDialog = ({
         <TextField
           label="Team Members"
           variant="filled"
-          name="interviewers"
+          name="members"
           select
           value=""
           onChange={(event) => {
@@ -109,7 +100,7 @@ const TeamMemberDialog = ({
                   }}
                 >
                   <Grid item>
-                    <Avatar sx={{ height: 35, width: 35 }}>
+                    <Avatar sx={{ height: 35, width: 35 }} src={employee.profilePic}>
                       {employee.employeeName.toUpperCase()}
                     </Avatar>
                   </Grid>
@@ -130,7 +121,7 @@ const TeamMemberDialog = ({
       <DialogActions>
         <Grid container sx={{ display: "flex", justifyContent: "flex-end" }}>
           <Button
-           onClick={handleSave}
+            onClick={handleSave}
             variant="contained"
             color="success"
             sx={{ borderRadius: 8 }}

@@ -49,10 +49,23 @@ export default function ViewCurruntSalaryTable() {
   const [filteredRecords, setFilteredRecords] = useState([]);
   const [rates, setRates] = useState([]);
 
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     setCurruntSalaryList(await viewCurruntSalaryApi());
+  //   }
+  //   fetchData();
+  // }, []);
+
   useEffect(() => {
     async function fetchData() {
-      setCurruntSalaryList(await viewCurruntSalaryApi());
+      const res = await viewCurruntSalaryApi();
+      const descending = res.sort((a, b) =>
+        a.EmployeeID < b.EmployeeID ? -1 : 1
+      );
+      setCurruntSalaryList(descending, curruntSalaryList);
+      console.log(descending);
     }
+
     fetchData();
   }, []);
 

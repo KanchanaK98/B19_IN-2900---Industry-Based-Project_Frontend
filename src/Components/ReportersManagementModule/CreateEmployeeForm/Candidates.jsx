@@ -54,6 +54,7 @@ function Candidates({ candidates, setInputs, isDisableCandidate }) {
       jobRole: candidate.appliedPosition,
       employeeFirstName: candidate.candidateName.split(" ")[0],
       employeeLastName: candidate.candidateName.split(" ")[1],
+      companyEmail: candidate.email,
     }));
   };
 
@@ -105,6 +106,7 @@ function Candidates({ candidates, setInputs, isDisableCandidate }) {
                 <Typography>{candidate.candidateName}</Typography>
                 <Typography>{candidate.appliedPosition}</Typography>
                 <Typography>{candidate.NIC}</Typography>
+                <Typography>{candidate.email}</Typography>
               </Card>
             ))}
         </DialogContent>

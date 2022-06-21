@@ -7,16 +7,17 @@ import useStyles from "../DisplayAndUpdateLevels/LevelsStyles";
 import CreditScoreIcon from "@mui/icons-material/CreditScore";
 import LevelUpdateDialog from "./LevelUpdateDialog";
 import { Link } from "react-router-dom";
+import Level from "./Level";
 function Levels() {
   const [levels, setLevels] = useState([]);
-   const[count,setCount]=useState(0);
+   const[render,setRender]=useState(true);
 
   useEffect(() => {
     async function fetchData() {
       setLevels(await getLevels());
     }
     fetchData();
-  }, [count]);
+  }, [render]);
   const classes = useStyles();
   //----------------------------
   // console.log(levels);
@@ -43,7 +44,8 @@ function Levels() {
               levels.map((level) => {
                 return (
                   <Grid padding={2} key={level._id}>
-                    <Paper className={classes.paper}>
+                    <Level level={level} setRender={setRender} render={render}/>
+                    {/* <Paper className={classes.paper}>
                       <Grid container>
                         <Grid item md={12}>
                           <Typography
@@ -53,10 +55,10 @@ function Levels() {
                             {level.level}
                           </Typography>
                           <br />
-                         {/* {console.log(level.jobRole)} */}
+                        
                           {
                             level.jobRole.map((job) => {
-                              // console.log(job,{message:"jjjjj"})
+                             
                               return ( 
                                
                                 <Typography
@@ -69,7 +71,7 @@ function Levels() {
                                   key={job}
                                 >
                                   {job}
-                                {  console.log(job,{message:"jjjjj"})}
+                              
                                 </Typography>
                               );
                             })}
@@ -86,7 +88,7 @@ function Levels() {
                           />
                         </Grid>
                       </Grid>
-                    </Paper>
+                    </Paper> */}
                   </Grid>
                 );
               })}

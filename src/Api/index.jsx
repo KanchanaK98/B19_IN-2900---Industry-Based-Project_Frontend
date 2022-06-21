@@ -282,6 +282,9 @@ export const createOrganization = (createOrg) =>
   export const getLevels = () =>
 API.get(`/employee/getLevels`)
 
+export const getOrganizationStructure = () =>
+API.get(`/employee/organizationStructure`)
+
 export const countEmployees = () =>
 API.get(`/employee/count`)
 

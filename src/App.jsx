@@ -140,7 +140,7 @@ function App() {
               <Route path="/products" element={<ProductPage />} />
               <Route path="/products/create" element={<CreateProductPage />} />
               <Route path="/teams/create" element={<CreateTeamPage />} />
-              <Route path="/pro" element={<CreateProduct />} />
+              {/* <Route path="/pro" element={<CreateProduct />} /> */}
               <Route path="/user" element={<UserProfile user={user} />} />
               <Route path="/products/update/:id" element={<EditProduct />} />
               <Route path="/dashboard/organization/create" element={<Organization />} />

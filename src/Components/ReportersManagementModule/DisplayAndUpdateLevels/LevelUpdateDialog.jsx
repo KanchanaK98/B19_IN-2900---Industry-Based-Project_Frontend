@@ -33,38 +33,30 @@ const positions = [
 ];
 
 function LevelUpdateDialog({
-  jobrole,
-  setLevels,
-  levels,
+  setRender,
   level,
-  count,
-  setCount,
+  render
+
 }) {
   const [open, setOpen] = useState(false);
   const [scroll, setScroll] = useState("paper");
+  const [jobRoles, setjobRoles] = useState(level.jobRole);
 
-  const [levelInputs, setLevelInputs] = useState(jobrole);
-  const [tempLevel, setTempLevel] = useState(level);
+
+  
   const handleClickOpen = (scrollType) => () => {
     setOpen(true);
     setScroll(scrollType);
   };
 
   const handleClose = async (position) => {
-    setLevelInputs({ ...levelInputs, jobRole: position });
-    //setLevelInputs({levelInputs:[...levelInputs.jobRole,position]})
-    // fruits: [ ...this.state.fruits, e.target.value],
-    console.log(levelInputs);
-    setLevels(levels.filter((Level) => Level !== level));
-
-    // console.log(tempLevel, { message: "jjjjjjjj" });
-    setLevels(levels.concat(tempLevel));
-    setOpen(false);
-    //  console.log(levels)
-
-    const response = await updateOrganization(levelInputs, level._id);
-    setCount(++count);
-    console.log(response);
+    
+    const response = await updateOrganization(jobRoles, level._id);
+    if(response.success) {
+      setRender(!render)
+      setOpen(false);
+    }
+    
   };
 
   const descriptionElementRef = useRef(null);
@@ -77,15 +69,13 @@ function LevelUpdateDialog({
       }
     }
   }, [open]);
-  const classes = useStyles();
-
+  
   const handleDelete = (job) => {
-    setLevelInputs(levelInputs.filter((level) => level !== job));
+    setjobRoles(jobRoles.filter((role) => role !== job));
   };
-  const handleSave = (position) => {
-    setLevelInputs({ ...levelInputs, jobRole: position });
-  };
-  // console.log(levelInputs, { message: "hi" });
+  
+
+  const classes = useStyles();
   return (
     <div>
       <Button
@@ -118,22 +108,8 @@ function LevelUpdateDialog({
               variant="filled"
               name="jobRole"
               select
-              //   value={levelInputs}
-              // onChange={handleChange}
               onChange={(event) => {
-                // console.log(levelInputs, { message: "yyyyy" });
-                setLevelInputs(levelInputs.concat(event.target.value));
-
-                setTempLevel((prevState) => ({
-                  ...prevState,
-                  jobRole: [...levels],
-                }));
-
-                //   const handleUpdate = (index, todo) => {
-                //     const newTodos = [...todos];
-                //     newTodos[index] = todo;
-                //     setTodos(newTodos);
-                //   }
+                setjobRoles(jobRoles.concat(event.target.value));
               }}
               //   error={inputErrors.teamName ? true : false}
               //   helperText={inputErrors.teamName}
@@ -146,8 +122,8 @@ function LevelUpdateDialog({
               ))}
             </TextField>
             <Grid>
-              {levelInputs.length > 0 &&
-                levelInputs.map((job, i) => (
+              {jobRoles &&
+                jobRoles.map((job, i) => (
                   //    console.log(job.jobRole)
                   <Chip
                     label={job}
@@ -170,6 +146,7 @@ function LevelUpdateDialog({
         <DialogActions>
           <Button
             onClick={handleClose}
+            disabled={jobRoles.length === 0? true: false}
             sx={{
               display: "flex",
               justifyContent: "center",

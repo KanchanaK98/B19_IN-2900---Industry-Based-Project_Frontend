@@ -16,7 +16,7 @@ import useStyles from "./ViewSalaryRatesTableStyles";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: "#F48FB1",
+    backgroundColor: "#00acc1",
     color: theme.palette.common.white,
   },
   [`&.${tableCellClasses.body}`]: {
@@ -26,10 +26,10 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 
 const StyledTableRow = styled(TableRow)(() => ({
   "&:nth-of-type(odd)": {
-    backgroundColor: "#FFCDD2",
+    backgroundColor: "#b2dfdb",
   },
   "&:nth-of-type(even)": {
-    backgroundColor: "#FCE4EC",
+    backgroundColor: "#e0f2f1",
   },
   "&:hover": {
     backgroundColor: "#fafafa",
@@ -52,8 +52,6 @@ export default function ViewSalaryRatesTable() {
     fetchData();
   }, []);
 
-  
-
   return (
     <div>
       <Box className={classes.Box}>
@@ -70,7 +68,7 @@ export default function ViewSalaryRatesTable() {
             <Grid className={classes.btngrid}>
               <div style={{ marginLeft: 10 }}>
                 <Button
-                  className={classes.btn}
+                  className={classes.button}
                   align="center"
                   variant="contained"
                   onClick={() =>

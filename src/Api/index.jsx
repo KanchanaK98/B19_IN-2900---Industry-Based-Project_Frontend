@@ -2,9 +2,9 @@ import axios from "axios";
 
 const API = axios.create({
   baseURL: "http://localhost:8070",
-  headers: {
-    "Content-Type": "application/json",
-  },
+  // headers: {
+  //   "Content-Type": "application/json",
+  // },
 });
 
 API.interceptors.request.use(
@@ -275,3 +275,13 @@ export const responseRequestedLeave = (id, reason) =>
 
 export const getTeamLead = (employeeId) =>
   API.get("/leave/request/teamLead/" + employeeId);
+
+  export const getEmployees = () =>
+  API.get("/leave/increaseLeaves/employees");
+
+ 
+  export const increaseLeaves = (employeeID,leaveType,data) =>
+  API.post(`/leave/entitledLeaves/increaseLeaves/${employeeID}`, {leaveType,data});
+
+
+

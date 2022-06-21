@@ -49,6 +49,7 @@ import AddMoreQuestionsForm from "./Pages/PromotionModule/Paper/AddMoreQuestions
 import RecentSection from "./Pages/ReportersManagementModule/DashBoard/RecentSection";
 import SessionExpiryDialog from "./Components/SessionExpiry/SessionExpiryDialog";
 import {LogoutApi} from "./Api/Login/LogoutApi";
+import IncreaseLeavesHr from "./Pages/LeaveManagementModule/IncreaseEntitledLeaves/IncreaseLeavesHr";
 
 function App() {
   const [open, setOpen] = useState(true);
@@ -153,10 +154,16 @@ LogoutApi();
               {/* Assets management */}
               <Route path="/asset" element={<ViewAsset user={user} />} />
               <Route path="/assetInsertion" element={<AssetInsertion />} />
+
+
+
               {/* Leave management */}
               <Route path="/requestLeave" element={<RequestLeaves />} />
               <Route path="/leaveHistory" element={<LeaveHistory />} />
               <Route path="/requestedLeaves" element={<RequestedLeaveList />} />
+              <Route path="/increaseLeaves" element={<IncreaseLeavesHr/>} />
+
+              
 
               {/* Payrolls management */}
               <Route

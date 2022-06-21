@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     "& .MuiTextField-root": {
       margin: theme.spacing(2),
     },
-    backgroundColor: "#e1f5fe",
+    backgroundColor: "#e0f2f1",
     width: "60%",
     marginLeft: "20%",
   },
@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
       fontSize: theme.spacing(5),
       marginLeft: theme.spacing(2),
     },
-    color: "#0d47a1",
+    color: "#00acc1",
   },
   inputs: {
     display: "flex",
@@ -55,12 +55,19 @@ const useStyles = makeStyles((theme) => ({
   createButton: {
     display: "flex",
     justifyContent: "flex-end",
+    width: "60%",
+    marginLeft: "20%",
     margin: theme.spacing(2, 5, 1),
   },
-  dialogBoxTopic: {
-    justifyContent: "center",
-    paddingLeft: "85px",
-    color: "red",
+  button: {
+    align: "center",
+    marginLeft: 2,
+    backgroundColor: "#00acc1",
+    color: "#e0f2f1",
+    "&:hover": {
+      color: "#fafafa",
+      backgroundColor: "#00838f",
+    },
   },
 }));
 

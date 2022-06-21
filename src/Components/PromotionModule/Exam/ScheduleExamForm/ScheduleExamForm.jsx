@@ -392,7 +392,7 @@ function ScheduleExamForm() {
         </Grid>
       </Paper>
       {added ? (
-        <Stack sx={{ width: "100%" }} spacing={2}>
+        <Stack sx={{ marginLeft: "2%", width: "85%" }} spacing={2}>
           <Alert severity="success">
             <AlertTitle>Success</AlertTitle>
             The new Exam is successfully scheduled!
@@ -400,7 +400,7 @@ function ScheduleExamForm() {
         </Stack>
       ) : null}
       {error ? (
-        <Stack sx={{ width: "100%" }} spacing={2}>
+        <Stack sx={{ marginLeft: "2%", width: "85%" }} spacing={2}>
           <Alert variant="filled" severity="error">
             Please enter all the details!
           </Alert>
@@ -409,7 +409,7 @@ function ScheduleExamForm() {
       {fill ? (
         <Stack
           className={classes.dialog}
-          // sx={{ marginLeft: "2%", width: "85%", paddingTop: false }}
+          sx={{ marginLeft: "2%", width: "85%", paddingTop: false }}
           spacing={2}
         >
           <Alert variant="filled" severity="warning">

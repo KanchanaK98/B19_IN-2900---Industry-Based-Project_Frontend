@@ -14,7 +14,7 @@ import {
 import { viewOnePaperApi } from "../../../../Api/PromotionModule/PaperApi/viewOnePaperApi";
 import Paper from "@mui/material/Paper";
 import Checkbox from "@mui/material/Checkbox";
-import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
+import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import { viewAllQuestionsApi } from "../../../../Api/PromotionModule/QuestionApi/viewAllQuestionsApi";
 import { addMoreQuestionsApi } from "../../../../Api/PromotionModule/PaperApi/addMoreQuestionsApi";
 import useStyles from "./AddMoreQuestionsStyles";
@@ -29,8 +29,6 @@ export default function AddMoreQuestions() {
   const [spinner, setSpinner] = useState(true);
   const [plselect, setPlselect] = useState(false);
   const [record, setRecord] = useState([]);
-  const [comparedQ, setComparedQ] = useState([]);
-
   const [QuestionList, setQuestionList] = useState([]);
   const [selectedQuestions, setSelectedQuestions] = useState([]);
 
@@ -42,12 +40,13 @@ export default function AddMoreQuestions() {
     async function fetchData() {
       const result = await viewOnePaperApi(PaperID);
       setRecord(result[0], record);
-      // console.log(result);
+      console.log(result);
     }
     fetchData();
   }, []);
+
   const recordQuestions = record.Questions;
-  //console.log(recordQuestions"questions", recordQuestions);
+  //console.log("paper questions:", recordQuestions);
 
   useEffect(() => {
     async function fetchData() {
@@ -55,27 +54,6 @@ export default function AddMoreQuestions() {
     }
     fetchData();
   }, []);
-
-  useEffect(() => {
-    const resultComp = QuestionList.filter(
-      (q1) => !recordQuestions.find((q2) => q1.QuestionID === q2.QuestionID)
-    );
-    console.log(resultComp);
-    setComparedQ(resultComp, comparedQ);
-    // let newArray = [];
-    // for (let i = 0; i < QuestionList.length; i++) {
-    //   for (let j = 0; j < recordQuestions.length; j++) {
-    //     if (QuestionList[i].QuestionID !== recordQuestions[j].QuestionID) {
-    //       newArray.push(QuestionList[i].QuestionID);
-    //     }
-    //     break;
-    //   }
-    // }
-    // console.log("hi");
-    // setComparedQ(newArray, comparedQ);
-  }, []);
-
-  console.log("compared", comparedQ);
 
   const addMoreQues = async (e) => {
     e.preventDefault();
@@ -110,7 +88,7 @@ export default function AddMoreQuestions() {
             <Grid>
               <Grid item paddingLeft={35}>
                 <Typography variant="h4" className={classes.topic}>
-                  <PlaylistAddIcon /> Add More Questions
+                  <AddOutlinedIcon /> Add More Questions
                 </Typography>
               </Grid>
             </Grid>
@@ -132,7 +110,6 @@ export default function AddMoreQuestions() {
               <Grid container>
                 <Grid item sm={12} md={12}>
                   <form autoComplete="off" onSubmit={addMoreQues}>
-                    {/* ----------------------------------------------------------- */}
                     <Grid>
                       <Grid
                         container
@@ -161,9 +138,6 @@ export default function AddMoreQuestions() {
                           </Typography>
                         </Grid>
                       </Grid>
-
-                      {/* ----------------------------------------------------------- */}
-                      {/* <Card className={classes.cardq}> */}
                       <Grid className={classes.gridq}>
                         {record.Questions.map((ques, key) => (
                           <Grid container key={key}>
@@ -189,7 +163,12 @@ export default function AddMoreQuestions() {
                           <Divider sx={{ mt: 1, mb: 1 }}></Divider>
                         </Grid>
                         <Grid container padding={5}>
-                          {QuestionList.map((ques, key) => (
+                          {QuestionList.filter(
+                            (q1) =>
+                              !recordQuestions.find(
+                                (q2) => q1.QuestionID === q2.QuestionID
+                              )
+                          ).map((ques, key) => (
                             <Grid item sm={12} md={12} key={key}>
                               <Card className={classes.card2}>
                                 <Typography className={classes.text}>
@@ -232,12 +211,14 @@ export default function AddMoreQuestions() {
                           md={12}
                         >
                           <Typography align="center" className={classes.name}>
-                            Selectes Questions
+                            Selected Questions
                           </Typography>
-                          {selectedQuestions == null ? (
+                          {selectedQuestions.length === 0 ? (
                             <Card className={classes.card2}>
-                              <CardContent>
-                                <Typography>No questions selected</Typography>
+                              <CardContent align="center">
+                                <Typography className={classes.none}>
+                                  No questions selected
+                                </Typography>
                               </CardContent>
                             </Card>
                           ) : (
@@ -285,6 +266,13 @@ export default function AddMoreQuestions() {
             <Stack sx={{ width: "100%" }} spacing={2}>
               <Alert variant="filled" severity="error">
                 Please Try again!
+              </Alert>
+            </Stack>
+          ) : null}
+          {plselect ? (
+            <Stack sx={{ width: "100%" }} spacing={2}>
+              <Alert variant="filled" severity="warning">
+                Please Select questions to ADD!
               </Alert>
             </Stack>
           ) : null}

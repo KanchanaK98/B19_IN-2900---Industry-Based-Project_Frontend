@@ -325,7 +325,7 @@ const SideBar = ({ open, toggleDrawer, user, handleLogOut }) => {
               <List component="div" disablePadding>
                 <ListItem2
                   component={Link}
-                  to= {`/salary/employeeSalary/${user.employeeID}`}
+                  to={`/salary/employeeSalary/${user.employeeID}`}
                   selected={selectedIndex2 === 0}
                   onClick={() => {
                     handleListItemClick2(0);
@@ -366,6 +366,20 @@ const SideBar = ({ open, toggleDrawer, user, handleLogOut }) => {
                     <StarBorder />
                   </ListItemIcon>
                   <ListItemText primary="Summary" />
+                </ListItem2>
+                <ListItem2
+                  component={Link}
+                  to={`/salary/salaryPercentages/${user.employeeID}`}
+                  selected={selectedIndex2 === 3}
+                  onClick={() => {
+                    handleListItemClick2(3);
+                  }}
+                  className={classes.navButton2}
+                >
+                  <ListItemIcon>
+                    <StarBorder />
+                  </ListItemIcon>
+                  <ListItemText primary="Rates" />
                 </ListItem2>
               </List>
             </Collapse>

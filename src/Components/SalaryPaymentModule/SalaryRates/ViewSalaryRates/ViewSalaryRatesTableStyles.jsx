@@ -8,18 +8,10 @@ const useStyles = makeStyles(() => ({
   },
   topic: {
     fontSize: "30px",
-    color: "#880E4F",
+    color: "#0097a7",
     textAlign: "center",
     fontWeight: "bold",
     marginTop: 15,
-  },
-  search: {
-    marginLeft: 50,
-    color: "d7dde0",
-    padding: 5,
-    border: "2px solid #3f51b5",
-    borderRadius: 5,
-    backgroundColor: "#d7dde0",
   },
   table: {
     minWidth: 700,
@@ -28,17 +20,24 @@ const useStyles = makeStyles(() => ({
     width: "60%",
     position: "relative",
     marginLeft: "20%",
-    marginBottom: "1%",
+    marginBottom: "5%",
   },
   btngrid: {
     marginLeft: "20%",
     marginBottom: "1%",
+    width: "60%",
+    display: "flex",
+    justifyContent: "flex-end",
   },
-  btn: {
-    backgroundColor: "#EC407A",
+
+  button: {
+    align: "center",
+    marginLeft: 2,
+    backgroundColor: "#00acc1",
+    color: "#fafafa",
     "&:hover": {
-      color: "#d7dde0",
-      backgroundColor: "#757575",
+      color: "#fafafa",
+      backgroundColor: "#00838f",
     },
   },
 }));

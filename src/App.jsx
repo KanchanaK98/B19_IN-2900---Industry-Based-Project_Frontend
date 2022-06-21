@@ -57,6 +57,7 @@ import CreateSalaryRates from "./Components/SalaryPaymentModule/SalaryRates/Crea
 import ViewSalaryRatesTable from "./Components/SalaryPaymentModule/SalaryRates/ViewSalaryRates/ViewSalaryRatesTable";
 import AvailableAssets from "./Components/AssetManagementModule/AvailableAssetList";
 import Levels from "./Components/ReportersManagementModule/DisplayAndUpdateLevels/Levels";
+import Signup from "./Components/Signup/Signup";
 
 
 function App() {
@@ -122,6 +123,11 @@ function App() {
                 exact
                 path="/"
                 element={<Login setUser={setUser} user={user} />}
+              />
+              <Route
+                exact
+                path="/signup"
+                element={<Signup setUser={setUser} user={user} />}
               />
               <Route
                 exact

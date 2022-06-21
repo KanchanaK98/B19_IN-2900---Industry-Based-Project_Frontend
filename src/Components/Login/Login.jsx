@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect} from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -19,8 +19,8 @@ import InputAdornment from "@mui/material/InputAdornment";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import loginImg from "./login.png";
-import { LoginApi } from "../../Api/Login/LoginApi";
-
+import { LoginApi,countEmployees } from "../../Api/Login/LoginApi";
+import axios from 'axios';
 function Copyright(props) {
   return (
     <Typography
@@ -46,6 +46,18 @@ export default function Login({ setUser, user }) {
     password: "",
     showPassword: false,
   });
+  useEffect(() => {
+    axios.get("http://localhost:8070/countEmployees/").then((res)=>{
+      console.log(res.data.counts);
+      if(res.data.counts===0)
+      {
+        window.location.replace('/signup')
+      }
+    }).catch((err) => {
+      console.log(err);
+    })
+    
+  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();

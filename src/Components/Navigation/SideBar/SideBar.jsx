@@ -158,35 +158,56 @@ const SideBar = ({ open, toggleDrawer, user, handleLogOut }) => {
             </ListItem>
             <Collapse in={openCollapse.Assets} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
-                <ListItem2
-                  component={Link}
-                  to="/assetInsertion"
-                  selected={selectedIndex2 === 0}
-                  onClick={() => {
-                    handleListItemClick2(0);
-                  }}
-                  className={classes.navButton2}
-                >
-                  <ListItemIcon>
-                    <StarBorder />
-                  </ListItemIcon>
-                  <ListItemText primary="Asset Insertion" />
-                </ListItem2>
-
-                <ListItem2
-                  component={Link}
-                  to="/asset"
-                  selected={selectedIndex2 === 1}
-                  onClick={() => {
-                    handleListItemClick2(1);
-                  }}
-                  className={classes.navButton2}
-                >
-                  <ListItemIcon>
-                    <StarBorder />
-                  </ListItemIcon>
-                  <ListItemText primary="Asset List" />
-                </ListItem2>
+                {user.jobRole === "IT Employee" && (
+                  <ListItem2
+                    component={Link}
+                    to="/assetInsertion"
+                    selected={selectedIndex2 === 0}
+                    onClick={() => {
+                      handleListItemClick2(0);
+                    }}
+                    className={classes.navButton2}
+                  >
+                    <ListItemIcon>
+                      <StarBorder />
+                    </ListItemIcon>
+                    <ListItemText primary="Asset Insertion" />
+                  </ListItem2>
+                )}
+                {(user.jobRole === "IT Employee" ||
+                  user.jobRole === "HR Manager") && (
+                  <ListItem2
+                    component={Link}
+                    to="/asset"
+                    selected={selectedIndex2 === 1}
+                    onClick={() => {
+                      handleListItemClick2(1);
+                    }}
+                    className={classes.navButton2}
+                  >
+                    <ListItemIcon>
+                      <StarBorder />
+                    </ListItemIcon>
+                    <ListItemText primary="Asset List" />
+                  </ListItem2>
+                )}
+                {user.jobRole !== "IT Employee" &&
+                  user.jobRole !== "HR Manager" && (
+                    <ListItem2
+                      component={Link}
+                      to="/availableAssets"
+                      selected={selectedIndex2 === 1}
+                      onClick={() => {
+                        handleListItemClick2(1);
+                      }}
+                      className={classes.navButton2}
+                    >
+                      <ListItemIcon>
+                        <StarBorder />
+                      </ListItemIcon>
+                      <ListItemText primary="Available Asset" />
+                    </ListItem2>
+                  )}
               </List>
             </Collapse>
           </Grid>
@@ -288,20 +309,22 @@ const SideBar = ({ open, toggleDrawer, user, handleLogOut }) => {
                   <ListItemText primary="Request Leave" />
                 </ListItem2>
 
-                <ListItem2
-                  component={Link}
-                  to="/requestedLeaves"
-                  selected={selectedIndex2 === 2}
-                  onClick={() => {
-                    handleListItemClick2(2);
-                  }}
-                  className={classes.navButton2}
-                >
-                  <ListItemIcon>
-                    <StarBorder />
-                  </ListItemIcon>
-                  <ListItemText primary="Requested Leave" />
-                </ListItem2>
+                {user.teamLead && (
+                  <ListItem2
+                    component={Link}
+                    to="/requestedLeaves"
+                    selected={selectedIndex2 === 2}
+                    onClick={() => {
+                      handleListItemClick2(2);
+                    }}
+                    className={classes.navButton2}
+                  >
+                    <ListItemIcon>
+                      <StarBorder />
+                    </ListItemIcon>
+                    <ListItemText primary="Requested Leave" />
+                  </ListItem2>
+                )}
               </List>
             </Collapse>
           </Grid>
@@ -338,20 +361,22 @@ const SideBar = ({ open, toggleDrawer, user, handleLogOut }) => {
                   <ListItemText primary="Salary Sheet" />
                 </ListItem2>
 
-                <ListItem2
-                  component={Link}
-                  to="/salary/currentSalary"
-                  selected={selectedIndex2 === 1}
-                  onClick={() => {
-                    handleListItemClick2(1);
-                  }}
-                  className={classes.navButton2}
-                >
-                  <ListItemIcon>
-                    <StarBorder />
-                  </ListItemIcon>
-                  <ListItemText primary="Current" />
-                </ListItem2>
+                {user.jobRole === "HR Manager" && (
+                  <ListItem2
+                    component={Link}
+                    to="/salary/currentSalary"
+                    selected={selectedIndex2 === 1}
+                    onClick={() => {
+                      handleListItemClick2(1);
+                    }}
+                    className={classes.navButton2}
+                  >
+                    <ListItemIcon>
+                      <StarBorder />
+                    </ListItemIcon>
+                    <ListItemText primary="Current" />
+                  </ListItem2>
+                )}
 
                 <ListItem2
                   component={Link}
@@ -402,64 +427,72 @@ const SideBar = ({ open, toggleDrawer, user, handleLogOut }) => {
             </ListItem>
             <Collapse in={openCollapse.Promotion} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
-                <ListItem2
-                  component={Link}
-                  to="/promotion/Questions"
-                  selected={selectedIndex2 === 0}
-                  onClick={() => {
-                    handleListItemClick2(0);
-                  }}
-                  className={classes.navButton2}
-                >
-                  <ListItemIcon>
-                    <StarBorder />
-                  </ListItemIcon>
-                  <ListItemText primary="Question" />
-                </ListItem2>
+                {(user.JobRole === "HR Manager" || user.teamLead) && (
+                  <ListItem2
+                    component={Link}
+                    to="/promotion/Questions"
+                    selected={selectedIndex2 === 0}
+                    onClick={() => {
+                      handleListItemClick2(0);
+                    }}
+                    className={classes.navButton2}
+                  >
+                    <ListItemIcon>
+                      <StarBorder />
+                    </ListItemIcon>
+                    <ListItemText primary="Question" />
+                  </ListItem2>
+                )}
 
-                <ListItem2
-                  component={Link}
-                  to="/promotion/Paper"
-                  selected={selectedIndex2 === 1}
-                  onClick={() => {
-                    handleListItemClick2(1);
-                  }}
-                  className={classes.navButton2}
-                >
-                  <ListItemIcon>
-                    <StarBorder />
-                  </ListItemIcon>
-                  <ListItemText primary="Paper" />
-                </ListItem2>
+                {(user.JobRole === "HR Manager" || user.teamLead) && (
+                  <ListItem2
+                    component={Link}
+                    to="/promotion/Paper"
+                    selected={selectedIndex2 === 1}
+                    onClick={() => {
+                      handleListItemClick2(1);
+                    }}
+                    className={classes.navButton2}
+                  >
+                    <ListItemIcon>
+                      <StarBorder />
+                    </ListItemIcon>
+                    <ListItemText primary="Paper" />
+                  </ListItem2>
+                )}
 
-                <ListItem2
-                  component={Link}
-                  to={`/promotion/evaluation/exam/viewExam/${user.employeeID}`}
-                  selected={selectedIndex2 === 2}
-                  onClick={() => {
-                    handleListItemClick2(2);
-                  }}
-                  className={classes.navButton2}
-                >
-                  <ListItemIcon>
-                    <StarBorder />
-                  </ListItemIcon>
-                  <ListItemText primary="Exam" />
-                </ListItem2>
-                <ListItem2
-                  component={Link}
-                  to={`/promotion/evaluation/allSubmissions/${user.employeeID}`}
-                  selected={selectedIndex2 === 3}
-                  onClick={() => {
-                    handleListItemClick2(3);
-                  }}
-                  className={classes.navButton2}
-                >
-                  <ListItemIcon>
-                    <StarBorder />
-                  </ListItemIcon>
-                  <ListItemText primary="Evaluation" />
-                </ListItem2>
+                {user.jobRole === "HR Manager" && (
+                  <ListItem2
+                    component={Link}
+                    to={`/promotion/evaluation/exam/viewExam/${user.employeeID}`}
+                    selected={selectedIndex2 === 2}
+                    onClick={() => {
+                      handleListItemClick2(2);
+                    }}
+                    className={classes.navButton2}
+                  >
+                    <ListItemIcon>
+                      <StarBorder />
+                    </ListItemIcon>
+                    <ListItemText primary="Exam" />
+                  </ListItem2>
+                )}
+                {user.teamLead && (
+                  <ListItem2
+                    component={Link}
+                    to={`/promotion/evaluation/allSubmissions/${user.employeeID}`}
+                    selected={selectedIndex2 === 3}
+                    onClick={() => {
+                      handleListItemClick2(3);
+                    }}
+                    className={classes.navButton2}
+                  >
+                    <ListItemIcon>
+                      <StarBorder />
+                    </ListItemIcon>
+                    <ListItemText primary="Evaluation" />
+                  </ListItem2>
+                )}
 
                 <ListItem2
                   component={Link}
@@ -476,77 +509,98 @@ const SideBar = ({ open, toggleDrawer, user, handleLogOut }) => {
                   <ListItemText primary="Evaluation Test" />
                 </ListItem2>
 
-                <ListItem2
-                  component={Link}
-                  to={`/promotion/evaluation/allSubmissions`}
-                  selected={selectedIndex2 === 5}
-                  onClick={() => {
-                    handleListItemClick2(5);
-                  }}
-                  className={classes.navButton2}
-                >
-                  <ListItemIcon>
-                    <StarBorder />
-                  </ListItemIcon>
-                  <ListItemText primary="All Submission" />
-                </ListItem2>
+                {(user.jobRole === "CTO" || user.jobRole === "HR Manager") && (
+                  <ListItem2
+                    component={Link}
+                    to={`/promotion/evaluation/allSubmissions`}
+                    selected={selectedIndex2 === 5}
+                    onClick={() => {
+                      handleListItemClick2(5);
+                    }}
+                    className={classes.navButton2}
+                  >
+                    <ListItemIcon>
+                      <StarBorder />
+                    </ListItemIcon>
+                    <ListItemText primary="All Submission" />
+                  </ListItem2>
+                )}
+
+                {(user.jobRole === "HR Manager" || user.jobRole === "CTO") && (
+                  <ListItem2
+                    component={Link}
+                    to={`/promotions`}
+                    selected={selectedIndex2 === 6}
+                    onClick={() => {
+                      handleListItemClick2(6);
+                    }}
+                    className={classes.navButton2}
+                  >
+                    <ListItemIcon>
+                      <StarBorder />
+                    </ListItemIcon>
+                    <ListItemText primary="Promotions" />
+                  </ListItem2>
+                )}
               </List>
             </Collapse>
           </Grid>
 
-          <Grid className={classes.navItem}>
-            <ListItem
-              selected={selectedIndex === 6}
-              onClick={() => {
-                handleListItemClick(6);
-                setOpenCollapse({ Recruitment: !openCollapse.Recruitment });
-              }}
-              className={classes.navButton}
-            >
-              <ListItemIcon>
-                <PeopleAltIcon />
-              </ListItemIcon>
-              <ListItemText primary="Recruitment" />
-              {openCollapse.Recruitment ? <ExpandLess /> : <ExpandMore />}
-            </ListItem>
-            <Collapse
-              in={openCollapse.Recruitment}
-              timeout="auto"
-              unmountOnExit
-            >
-              <List component="div" disablePadding>
-                <ListItem2
-                  component={Link}
-                  to="/interview"
-                  selected={selectedIndex2 === 0}
-                  onClick={() => {
-                    handleListItemClick2(0);
-                  }}
-                  className={classes.navButton2}
-                >
-                  <ListItemIcon>
-                    <StarBorder />
-                  </ListItemIcon>
-                  <ListItemText primary="Interviews" />
-                </ListItem2>
+          {user.jobRole === "HR Manager" && (
+            <Grid className={classes.navItem}>
+              <ListItem
+                selected={selectedIndex === 6}
+                onClick={() => {
+                  handleListItemClick(6);
+                  setOpenCollapse({ Recruitment: !openCollapse.Recruitment });
+                }}
+                className={classes.navButton}
+              >
+                <ListItemIcon>
+                  <PeopleAltIcon />
+                </ListItemIcon>
+                <ListItemText primary="Recruitment" />
+                {openCollapse.Recruitment ? <ExpandLess /> : <ExpandMore />}
+              </ListItem>
+              <Collapse
+                in={openCollapse.Recruitment}
+                timeout="auto"
+                unmountOnExit
+              >
+                <List component="div" disablePadding>
+                  <ListItem2
+                    component={Link}
+                    to="/interview"
+                    selected={selectedIndex2 === 0}
+                    onClick={() => {
+                      handleListItemClick2(0);
+                    }}
+                    className={classes.navButton2}
+                  >
+                    <ListItemIcon>
+                      <StarBorder />
+                    </ListItemIcon>
+                    <ListItemText primary="Interviews" />
+                  </ListItem2>
 
-                <ListItem2
-                  component={Link}
-                  to="/candidate"
-                  selected={selectedIndex2 === 1}
-                  onClick={() => {
-                    handleListItemClick2(1);
-                  }}
-                  className={classes.navButton2}
-                >
-                  <ListItemIcon>
-                    <StarBorder />
-                  </ListItemIcon>
-                  <ListItemText primary="Candidates" />
-                </ListItem2>
-              </List>
-            </Collapse>
-          </Grid>
+                  <ListItem2
+                    component={Link}
+                    to="/candidate"
+                    selected={selectedIndex2 === 1}
+                    onClick={() => {
+                      handleListItemClick2(1);
+                    }}
+                    className={classes.navButton2}
+                  >
+                    <ListItemIcon>
+                      <StarBorder />
+                    </ListItemIcon>
+                    <ListItemText primary="Candidates" />
+                  </ListItem2>
+                </List>
+              </Collapse>
+            </Grid>
+          )}
         </Scrollbars>
 
         <Divider variant="middle" classes={{ root: classes.divider }} />

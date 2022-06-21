@@ -15,11 +15,14 @@ import {
 } from "@mui/material";
 import InventoryIcon from "@mui/icons-material/Inventory";
 import { updateProduct } from "../../../Api/ReportersManagementModule/ProductApi";
-
+import DeleteIcon from "@mui/icons-material/Delete";
+import { add } from "date-fns";
 function EditProduct() {
   const [addSuccessfully, setAddSuccessfully] = useState(false);
   const [notAdded, setnotAdded] = useState(false);
   const [duplicated, setDuplicated] = useState(false);
+  const [noChangeField, setNoChangeField] = useState(false);
+  const [updateField, setUpdateField] = useState(false);
   const [inputErrors, setInputErrors] = useState({
     productID: "",
     productName: "",
@@ -42,6 +45,7 @@ function EditProduct() {
       ...prevState,
       [e.target.name]: e.target.value,
     }));
+    setUpdateField(true);
   };
 
   const errorHandle = () => {
@@ -77,16 +81,22 @@ function EditProduct() {
 
     if (!errorHandle()) {
       const response = await updateProduct(products, product._id);
-      if (response.success === true) {
+      if (response.success === true && updateField) {
         setAddSuccessfully(true);
         setTimeout(() => {
           setAddSuccessfully(false);
         }, 2000);
       }
-      if (response.success === false) {
+      if (response.status === 400) {
         setDuplicated(true);
         setTimeout(() => {
           setDuplicated(false);
+        }, 2000);
+      }
+      if (!updateField) {
+        setNoChangeField(true);
+        setTimeout(() => {
+          setNoChangeField(false);
         }, 2000);
       }
     } else {
@@ -103,7 +113,7 @@ function EditProduct() {
         {products && (
           <form>
             <Box>
-              <Card sx={{ padding: 5, backgroundColor: "#e4ecf7" }}>
+              <Card sx={{ padding: 8, backgroundColor: "#e4ecf7" }}>
                 <Typography
                   variant="h5"
                   sx={{ fontWeight: "bold", color: "#183d78" }}
@@ -116,7 +126,9 @@ function EditProduct() {
                   <Grid item md={6}>
                     <Grid container sx={{ mb: 5 }}>
                       <Grid item md={3}>
-                        <FormLabel>Product ID:</FormLabel>
+                        <FormLabel sx={{ fontWeight: "bold" }}>
+                          Product ID:
+                        </FormLabel>
                       </Grid>
                       <Grid item md={9}>
                         <TextField
@@ -124,7 +136,7 @@ function EditProduct() {
                           variant="filled"
                           name="productID"
                           value={products.productID}
-                          onChange={handleChange}
+                          onChange={handleChange || add(this)}
                           error={inputErrors.productID ? true : false}
                           helperText={inputErrors.productID}
                           fullWidth
@@ -136,7 +148,9 @@ function EditProduct() {
                   <Grid item md={6}>
                     <Grid container>
                       <Grid item md={3}>
-                        <FormLabel>Product Name:</FormLabel>
+                        <FormLabel sx={{ fontWeight: "bold" }}>
+                          Product Name:
+                        </FormLabel>
                       </Grid>
                       <Grid item md={9}>
                         <TextField
@@ -146,7 +160,7 @@ function EditProduct() {
                           value={products.productName}
                           error={inputErrors.productName ? true : false}
                           helperText={inputErrors.productName}
-                          onChange={handleChange}
+                          onChange={handleChange || add(this)}
                           fullWidth
                         />
                       </Grid>
@@ -156,7 +170,9 @@ function EditProduct() {
 
                 <Grid container>
                   <Grid item md={1.5}>
-                    <FormLabel>Description:</FormLabel>
+                    <FormLabel sx={{ fontWeight: "bold" }}>
+                      Description:
+                    </FormLabel>
                   </Grid>
                   <Grid item md={10.5}>
                     <TextField
@@ -169,7 +185,7 @@ function EditProduct() {
                       value={products.description}
                       error={inputErrors.description ? true : false}
                       helpertext={inputErrors.description}
-                      onChange={handleChange}
+                      onChange={handleChange || add(this)}
                       fullWidth
                     />
                   </Grid>
@@ -177,7 +193,9 @@ function EditProduct() {
 
                 <Grid container sx={{ mb: 5, mt: 2 }}>
                   <Grid item md={1.5}>
-                    <FormLabel>Team Name:</FormLabel>
+                    <FormLabel sx={{ fontWeight: "bold" }}>
+                      Team Name:
+                    </FormLabel>
                   </Grid>
 
                   <Grid item md={4.5}>
@@ -231,6 +249,13 @@ function EditProduct() {
                 <Stack sx={{ width: "100%" }} spacing={2}>
                   <Alert variant="filled" severity="error">
                     Details are duplicated,Product is not updated!
+                  </Alert>
+                </Stack>
+              ) : null}
+              {noChangeField ? (
+                <Stack sx={{ width: "100%" }} spacing={2}>
+                  <Alert variant="filled" severity="warning">
+                    No any change to update!
                   </Alert>
                 </Stack>
               ) : null}

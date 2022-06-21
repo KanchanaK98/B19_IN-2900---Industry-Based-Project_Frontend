@@ -13,7 +13,12 @@ import Button from "@mui/material/Button";
 
 import { useTheme } from "@mui/material/styles";
 
-function CredentialCard({ credentials, setIsDisable, isDisable }) {
+function CredentialCard({
+  credentials,
+  setIsDisable,
+  isDisable,
+  setCredentials,
+}) {
   const [open, setOpen] = React.useState(false);
 
   const theme = useTheme();
@@ -25,7 +30,7 @@ function CredentialCard({ credentials, setIsDisable, isDisable }) {
 
   const handleClose = () => {
     setOpen(false);
-    credentials(null);
+    setCredentials(false);
     setIsDisable(true);
   };
 
@@ -37,6 +42,11 @@ function CredentialCard({ credentials, setIsDisable, isDisable }) {
         sx={{
           marginBottom: "20px",
           backgroundColor: "#183d78",
+          color: "#fff",
+          "&:hover": {
+            backgroundColor: "#4d5575",
+            color: "#fff",
+          },
         }}
         onClick={handleClickOpen}
       >
@@ -53,10 +63,11 @@ function CredentialCard({ credentials, setIsDisable, isDisable }) {
         </DialogTitle>
         <DialogContent sx={{ padding: 2 }}>
           <DialogContentText>
-            <Typography sx={{ fontWeight: "bold" }}>
+            <Typography sx={{ fontWeight: "bold" }} component={"span"}>
               User Name :{credentials && credentials.username}
             </Typography>
-            <Typography sx={{ fontWeight: "bold" }}>
+            <br />
+            <Typography sx={{ fontWeight: "bold" }} component={"span"}>
               Password :{credentials && credentials.password}
             </Typography>
           </DialogContentText>

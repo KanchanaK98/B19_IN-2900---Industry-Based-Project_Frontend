@@ -95,7 +95,7 @@ function CreateTeams() {
         }, 2000);
         handleClear();
       }
-      if (response.success === false) {
+      if (response.status === 400) {
         setError(true);
         setTimeout(() => {
           setError(false);
@@ -116,15 +116,17 @@ function CreateTeams() {
   useEffect(() => {
     async function fetchData() {
       setMembers(await getEmployeesWithoutTeam());
+      // setMembers(response.filter((members)=>members.jobRole !==("CTO"||"IT Employee"||"HR Manager")))
     }
+  
     fetchData();
   }, []);
-
+ 
   const [openDialog, setOpenDialog] = useState(false);
   const handleOpenDialog = () => {
     setOpenDialog(true);
   };
-
+console.log(members)
   return (
     <div>
       <Box padding={4}>
@@ -142,7 +144,7 @@ function CreateTeams() {
               <Grid item sm={12} md={6}>
                 <Grid container sx={{ mb: 5 }}>
                   <Grid item sm={4} md={4}>
-                    <FormLabel>Team Name:</FormLabel>
+                    <FormLabel sx={{fontWeight:"bold"}}>Team Name:</FormLabel>
                   </Grid>
                   <Grid item sm={8} md={8}>
                     <TextField
@@ -159,7 +161,7 @@ function CreateTeams() {
                 </Grid>
                 <Grid container sx={{ display: "flex", alignItems: "center" }}>
                   <Grid item sm={4} md={4}>
-                    <FormLabel>Team Members:</FormLabel>
+                    <FormLabel  sx={{fontWeight:"bold"}}>Team Members:</FormLabel>
                   </Grid>
 
                   <Grid item sm={8} md={8}>
@@ -203,7 +205,7 @@ function CreateTeams() {
               <Grid item sm={12} md={6}>
                 <Grid container>
                   <Grid item sm={4} md={4}>
-                    <FormLabel>Team Lead :</FormLabel>
+                    <FormLabel  sx={{fontWeight:"bold"}}>Team Lead :</FormLabel>
                   </Grid>
                   <Grid item sm={8} md={8}>
                     <TextField
@@ -233,7 +235,7 @@ function CreateTeams() {
                               }}
                             >
                               <Grid item>
-                                <Avatar sx={{ height: 35, width: 35 }}>
+                                <Avatar src={mem.profilePic} sx={{ height: 35, width: 35 }}>
                                   {mem.employeeFirstName}
                                 </Avatar>
                               </Grid>

@@ -33,6 +33,9 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "bold",
     color: "#183d78",
   },
+  typographyJob:{
+    fontSize:13
+  }
 }));
 
 export default useStyles;

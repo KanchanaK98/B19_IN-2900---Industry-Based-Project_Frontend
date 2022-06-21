@@ -47,6 +47,7 @@ export const updateEmployee = async (employeeData) => {
     return data;
   } catch (error) {
     console.log(error);
+    return error.response;
   }
 };
 
@@ -81,6 +82,26 @@ export const getCandidates = async () => {
   try {
     const { data } = await api.getCandidates();
     return data.candidateData;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const resignStatus = async (empID) => {
+  try {
+    const { data } = await api.resignStatus(empID);
+
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const countEmployees = async (empID) => {
+  try {
+    const { data } = await api.countEmployees(empID);
+
+    return data.count;
   } catch (err) {
     console.log(err);
   }

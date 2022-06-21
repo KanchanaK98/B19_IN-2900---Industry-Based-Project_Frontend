@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API = axios.create({
+export const API = axios.create({
   baseURL: "http://localhost:8070",
   headers: {
     "Content-Type": "application/json",
@@ -37,7 +37,18 @@ API.interceptors.response.use(
   },
   async (error) => {
     const previousRequest = error.config;
-
+    if (
+      error.response.status === 401 &&
+      error.response.data.message === "Unauthenticated"
+    ) {
+      window.location.replace("/");
+    }
+    if (
+      error.response.status === 403 &&
+      error.response.data.message === "Unauthorized"
+    ) {
+      window.location.href = "/dashboard";
+    }
     if (error.response.status === 403 && !previousRequest._retry) {
       previousRequest._retry = true;
       try {
@@ -236,6 +247,10 @@ export const getJobRoles = () => {
 export const getCandidates = () => {
   return API.get(`/employee/candidateData`);
 };
+
+export const resignStatus = (empID) => 
+   API.get(`/assets/isAssigned/`+ empID);
+
 //teams api
 export const createTeams = (teamcreate) =>
   API.post(`/employee/teamAdd`, teamcreate);
@@ -254,6 +269,22 @@ export const viewAllTeams = () => {
 export const getAllTeams = () => {
   return API.get(`/employee/getTeam`);
 };
+
+
+//organization api
+
+export const createOrganization = (createOrg) =>
+  API.post(`/employee/organization/create`, createOrg);
+
+  export const updateOrganization = (updateOrg, id) =>
+  API.put(`/employee/updateOrganization/${id}`, updateOrg);
+
+  export const getLevels = () =>
+API.get(`/employee/getLevels`)
+
+export const countEmployees = () =>
+API.get(`/employee/count`)
+
 //product api
 
 export const createProduct = (productcreate) =>
@@ -283,3 +314,13 @@ export const responseRequestedLeave = (id, reason) =>
 
 export const getTeamLead = (employeeId) =>
   API.get("/leave/request/teamLead/" + employeeId);
+
+//promotion API
+export const getEvaluationData = () => API.get("/promotion/evaluation/details");
+export const promoteEmployees = (employeeID, promotionData) => {
+  return API.post(`/promotion/evaluation/promote/${employeeID}`, promotionData);
+};
+
+export const getPromotionHistory = () => {
+  return API.get(`/promotion/history`);
+};

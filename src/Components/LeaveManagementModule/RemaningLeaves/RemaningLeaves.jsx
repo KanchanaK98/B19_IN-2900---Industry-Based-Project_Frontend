@@ -12,7 +12,7 @@ const RemaningLeaves = () => {
   const classes = useStyles();
 
   const fetchData = async () => {
-    setLeaveBalance(await getLeaveBalance());
+    setLeaveBalance(await getLeaveBalance(null));
   };
   useEffect(() => {
     fetchData();

@@ -7,10 +7,11 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     borderRadius: theme.spacing(4),
+    backgroundColor:"#f3e5f5",
     padding: theme.spacing(1, 2, 2, 4),
     margin: theme.spacing(2, 2, 10, 4),
     "& .MuiSvgIcon-root": {
-      color: "#607d8b",
+      color: "#4a148c",
       fontSize: theme.spacing(5),
       fontWeight: 200,
       margin: theme.spacing(1, 1, 1, 2),
@@ -21,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     height: 120,
     marginTop: theme.spacing(4),
     marginBottom: theme.spacing(4),
-    border: "2px solid #607d8b",
+    border: "3px solid white",
 
     /*"&.MuiAvatar-root":{
             alignItems: "center",

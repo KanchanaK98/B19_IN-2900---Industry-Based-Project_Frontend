@@ -18,6 +18,8 @@ import React, { useState } from "react";
 import useStyles from "./RequestFormStyles";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { requestLeave } from "../../../Api/LeaveManagementModule/LeaveApi";
+import moment from "moment";
+import { isMoment } from "moment";
 
 const RequestLeaveForm = () => {
   const classes = useStyles();
@@ -46,8 +48,19 @@ const RequestLeaveForm = () => {
         }));
         error = true;
       }
+      if(leave.startDate < new Date()){
+        setLeaveErrors((prevState) =>({
+
+          ...prevState,
+          startDate: "can not select previous dates."
+
+        }) );
+        error=true;
+      }
     });
+   
     return error;
+    
   };
 
   const handleOnChange = (event) => {
@@ -130,11 +143,13 @@ const RequestLeaveForm = () => {
                         inputFormat="MM/dd/yyyy"
                         name="startDate"
                         value={leave.startDate}
+                        disablePast
                         error={leaveErrors.startDate ? true : false}
                         helperText={leaveErrors.startDate}
                         onChange={(newValue) => {
                           setLeave({ ...leave, startDate: newValue });
                         }}
+                        
                         renderInput={(params) => (
                           <TextField variant="filled" {...params} />
                         )}
@@ -198,6 +213,7 @@ const RequestLeaveForm = () => {
                           label="Select End Date"
                           inputFormat="MM/dd/yyyy"
                           name="endDate"
+                          // minDate={{new Date()}+1}
                           value={leave.endDate}
                           error={leaveErrors.endDate ? true : false}
                           helperText={leaveErrors.endDate}
@@ -218,10 +234,11 @@ const RequestLeaveForm = () => {
           <Grid container className={classes.button}>
             <Button
               onClick={clearForm}
-              color="warning"
+            sx={{backgroundColor:"#b71c1c", mr: 2}}
               variant="contained"
               size="large"
-              sx={{ mr: 2 }}
+              color="error"
+              // sx={{ mr: 2 }}
             >
               Clear
             </Button>
@@ -230,6 +247,7 @@ const RequestLeaveForm = () => {
               color="secondary"
               variant="contained"
               size="large"
+              sx={{backgroundColor:"#4a148c"}}
             >
               Apply
             </Button>

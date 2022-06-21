@@ -336,7 +336,7 @@ function CreatePaperForm() {
         <Stack sx={{ width: "100%" }} spacing={2}>
           <Alert severity="success">
             <AlertTitle>Success</AlertTitle>
-            The new Exam is successfully scheduled!
+            New Paper created successfully!
           </Alert>{" "}
         </Stack>
       ) : null}

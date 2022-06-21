@@ -11,7 +11,8 @@ export const createTeams = async (teamCreateData) => {
     const {data} = await api.createTeams(teamcreate);
     return data;
   } catch (error) {
-    console.log(error);
+    return error.response
+    // console.log(error);
   }
 };
 
@@ -44,13 +45,14 @@ export const viewAllTeams = async (displayTeams) => {
     data.data.map((team) => {
       let teamMembers = [];
       team.TeamWithEmp.map((member) => {
-        const { employeeFirstName, employeeLastName, employeeID, profilePic } =
+        const { employeeFirstName, employeeLastName, employeeID, profilePic,jobRole } =
           member;
 
         teamMembers.push({
           employeeName: employeeFirstName + " " + employeeLastName,
           employeeID,
           profilePic,
+          jobRole
         });
       });
       team.TeamWithEmp = teamMembers;

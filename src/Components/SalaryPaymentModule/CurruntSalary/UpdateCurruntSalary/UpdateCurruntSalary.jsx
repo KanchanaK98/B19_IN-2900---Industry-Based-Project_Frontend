@@ -117,7 +117,7 @@ export default function CreateCurruntSalary() {
   };
 
   return (
-    <Box>
+    <Box className={classes.Box}>
       <Grid item sm={12} md={12} className={classes.createButton}>
         <Button
           color="primary"

@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Box, Grid, Card, Typography, Button, Divider } from "@mui/material";
+import {
+  Box,
+  Grid,
+  Card,
+  Typography,
+  Button,
+  Divider,
+  Alert,
+  AlertTitle,
+} from "@mui/material";
 import CardContent from "@mui/material/CardContent";
 import { useParams } from "react-router-dom";
 import { evaluatePaperApi } from "../../../../Api/PromotionModule/EvaluateApi/evaluatePaperApi";
@@ -10,6 +19,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
 import useStyles from "./EvaluatePaperStyles";
+import Stack from "@mui/material/Stack";
 
 export default function DispalyAndSubmitPaper() {
   const classes = useStyles();
@@ -28,18 +38,52 @@ export default function DispalyAndSubmitPaper() {
 
   const [Questions, setQuestions] = useState([]);
   const [Feedback, setFeedback] = useState([]);
+  const [added, setadded] = useState(false);
+  const [error, seterror] = useState(false);
 
-  const EvaluatePaperFunc = () => {
-    evaluatePaperApi(TeamLeadID, EmployeeID, PaperID, Questions, Feedback).then(
-      (response) => {
-        console.log("from response", response);
-      }
+  const EvaluatePaperFunc = async () => {
+    const response = await evaluatePaperApi(
+      TeamLeadID,
+      EmployeeID,
+      PaperID,
+      Questions,
+      Feedback
     );
-    // console.log(Paper[0].PaperID);
+    if (response.success === true) {
+      setadded(true);
+      setTimeout(() => {
+        setadded(false);
+      }, 4000);
+    } else {
+      console.log("error");
+      seterror(true);
+      setTimeout(() => {
+        seterror(false);
+      }, 4000);
+    }
+
+    console.log("from response", response);
   };
 
   return (
     <Box className={classes.Box}>
+      <Grid item sm={12} md={12} className={classes.backButton}>
+        <Button
+          className={classes.Button}
+          size="large"
+          variant="contained"
+          sx={{ backgroundColor: "#183d78" }}
+          onClick={() =>
+            window.open(
+              `/promotion/evaluation/allSubmissions/${EmployeeID}`,
+              "_self"
+            )
+          }
+        >
+          View Team-member Submissions
+        </Button>
+      </Grid>
+
       <Grid>
         <Grid item xs={12} md={12}>
           <Grid
@@ -55,7 +99,6 @@ export default function DispalyAndSubmitPaper() {
         </Grid>
 
         <Grid container className={classes.gridContainer} justify="center">
-          {" "}
           {Paper.map((p, key) => (
             <Grid item xs={12} key={key}>
               <Card className={classes.root} variant="outlined">
@@ -164,6 +207,21 @@ export default function DispalyAndSubmitPaper() {
           ))}
         </Grid>
       </Grid>
+      {added ? (
+        <Stack sx={{ width: "100%" }} spacing={2}>
+          <Alert severity="success">
+            <AlertTitle>Success</AlertTitle>
+            The paper evaluated successfully!
+          </Alert>{" "}
+        </Stack>
+      ) : null}
+      {error ? (
+        <Stack sx={{ width: "100%" }} spacing={2}>
+          <Alert variant="filled" severity="error">
+            Please Try again!
+          </Alert>
+        </Stack>
+      ) : null}
     </Box>
   );
 }

@@ -1,4 +1,3 @@
-// import useStyles from "./DisplayProfileCardStyles";
 import {
   Divider,
   Typography,
@@ -21,14 +20,9 @@ import { getAllTeams } from "../../../Api/ReportersManagementModule/TeamsApi";
 
 function DisplayProfile({ employee }) {
   const [teams, setTeams] = useState();
-  
-  // const handleUpdate = () => {
-  //   setUpdateEmployee(profile);
-  //   setUpdateState(true);
-  // };
 
   const { user, EmployeeWithAcc, EmpWithProf } = employee;
-  // console.log(user);
+
   useEffect(() => {
     async function fetchData() {
       setTeams(await getAllTeams());
@@ -46,8 +40,8 @@ function DisplayProfile({ employee }) {
           maxWidth: 750,
           minWidth: 750,
           minHeight: 450,
-          // backgroundColor: "#e4ecf7",
           cursor: "pointer",
+          backgroundColor:"#e4ecf7"
         }}
       >
         <Grid container>
@@ -62,14 +56,6 @@ function DisplayProfile({ employee }) {
                 fontFamily: "Kdam Thmor Pro",
               }}
             >
-              {/* {user &&
-                user.employeeFirstName[0].toUpperCase() +
-                  user.employeeFirstName.slice(1) +
-                  " " +
-                  user.employeeLastName[0].toUpperCase() +
-                  user.employeeLastName.slice(1) +
-                  " | " +
-                  user.jobRole.replace(/\w\S* */}
               {user &&
                 user.employeeFirstName +
                   " " +
@@ -111,10 +97,6 @@ function DisplayProfile({ employee }) {
                 EmployeeWithAcc={EmployeeWithAcc}
                 EmpWithProf={EmpWithProf}
                 user={user}
-                // birthday={user.birthday}
-                // streetNo={user.streetNo}
-                // city={user.city}
-                // phoneNumber={user.phoneNumber}
               />
               <Typography
                 textAlign="center"
@@ -148,8 +130,8 @@ function DisplayProfile({ employee }) {
                 <ContactMailIcon sx={{ color: "#183d78" }} />
                 &nbsp;&nbsp;{user.companyEmail}
               </Typography>
-             
-              <Grid>
+
+              
                 {user.birthday && (
                   <Typography>
                     <CakeIcon sx={{ color: "#183d78" }} />
@@ -161,8 +143,7 @@ function DisplayProfile({ employee }) {
                   <PermIdentityIcon sx={{ color: "#183d78" }} />
                   &nbsp;{user.NIC}
                 </Typography>
-              </Grid>
-             
+              
             </Grid>
           </Grid>
           <Grid item md={6} padding={1}>
@@ -279,10 +260,6 @@ function DisplayProfile({ employee }) {
           </Grid>
         </Grid>
 
-        {/* <Button onClick={handleUpdate} sx={{ mt: 5 }} fullWidth  variant="contained" size="medium">
-          Update
-        </Button> */}
-       
         <Button
           component={Link}
           to={`/profile/update`}
@@ -294,7 +271,6 @@ function DisplayProfile({ employee }) {
         >
           Update
         </Button>
-        
       </Card>
     </div>
   );

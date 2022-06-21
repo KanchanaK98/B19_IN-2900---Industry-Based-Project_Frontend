@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -6,9 +6,13 @@ import FormLabel from "@mui/material/FormLabel";
 import Grid from "@mui/material/Grid";
 import PersonIcon from "@mui/icons-material/Person";
 import Paper from "@mui/material/Paper";
-import { createEmployee } from "../../../Api/ReportersManagementModule/EmployeeApi";
-import { Alert, AlertTitle, MenuItem, Stack, Typography } from "@mui/material";
+import {
+  countEmployees,
+  createEmployee,
+} from "../../../Api/ReportersManagementModule/EmployeeApi";
+import { Alert, AlertTitle, Stack, Typography } from "@mui/material";
 import CredentialCard from "./CredentialCard";
+import useStyles from "./CreateFormStyles";
 import Candidates from "./Candidates";
 import { Link } from "react-router-dom";
 const jobRoles = [
@@ -25,7 +29,7 @@ const jobRoles = [
   "Intern",
   "Product Manager",
 ];
-function CreateEmployee() {
+function CreateEmployee({ candidates }) {
   const [credentials, setCredentials] = useState({
     username: "",
     password: "",
@@ -34,6 +38,7 @@ function CreateEmployee() {
   const [addSuccessfully, setAddSuccessfully] = useState(false);
   const [duplicated, setDuplicated] = useState(false);
   const [notAdded, setnotAdded] = useState(false);
+  const [count, setCount] = useState("");
   const [inputErrors, setInputErrors] = useState({
     employeeID: "",
     employeeFirstName: "",
@@ -41,9 +46,8 @@ function CreateEmployee() {
     jobRole: "",
     NIC: "",
     companyEmail: "",
-    // status: "",
-    // jobType: "",
   });
+
   const [inputs, setInputs] = useState({
     employeeID: "",
     employeeFirstName: "",
@@ -51,9 +55,22 @@ function CreateEmployee() {
     jobRole: "",
     NIC: "",
     companyEmail: "",
-    // status: "",
-    // jobType: "",
   });
+
+  useEffect(() => {
+    async function fetchData() {
+      let ID = await countEmployees();
+
+      setInputs((prevState) => ({
+        ...prevState,
+        employeeID: ID,
+      }));
+
+      // console.log(count, { message: "Hi" });
+    }
+    fetchData();
+  }, []);
+
   const handleChange = (e) => {
     setInputs((prevState) => ({
       ...prevState,
@@ -91,12 +108,20 @@ function CreateEmployee() {
       }));
       isError = true;
     }
+    let NICformat = /^([0-9]{9}[x|X|v|V]|[0-9]{12})$/;
+    if (inputs.NIC && !inputs.NIC.match(NICformat)) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        NIC: "Invalid NIC Entered",
+      }));
+      isError = true;
+    }
     return isError;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    console.log(inputs);
     if (!errorHandle()) {
       const response = await createEmployee(inputs);
 
@@ -107,8 +132,9 @@ function CreateEmployee() {
         setTimeout(() => {
           setAddSuccessfully(false);
         }, 2000);
+        //----------------------------------------------------------------------------
+      
       }
-      console.log(response.status);
 
       if (response.status === 400) {
         setDuplicated(true);
@@ -125,7 +151,23 @@ function CreateEmployee() {
       }, 2000);
     }
   };
+  // const [candidates, setCandidates] = useState();
+  const [isDisableCandidate, setIsDisableCandidate] = useState(true);
+  useEffect(() => {
+    // async function fetchData() {
+    //   setCandidates(await getCandidates());
+    // }
+    // fetchData();
+    if (!(candidates && candidates.length > 0)) {
+      setIsDisableCandidate(false);
+    }
+    if (candidates && candidates.length === 0) {
+      setIsDisableCandidate(true);
+    }
+  }, []);
 
+  // console.log(candidates, { message: "hi" });
+  const classes = useStyles();
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -152,7 +194,11 @@ function CreateEmployee() {
                   </Typography>
                 </Grid>
                 <Grid item md={6} textAlign="right">
-                  <Candidates />
+                  <Candidates
+                    candidates={candidates}
+                    isDisableCandidate={isDisableCandidate}
+                    setInputs={setInputs}
+                  />
                 </Grid>
               </Grid>
 
@@ -174,7 +220,7 @@ function CreateEmployee() {
                         label="employeeID"
                         variant="filled"
                         name="employeeID"
-                        value={inputs.employeeID}
+                        value={inputs.employeeID || (count && String(count))}
                         onChange={handleChange}
                         error={inputErrors.employeeID ? true : false}
                         helperText={inputErrors.employeeID}
@@ -297,14 +343,14 @@ function CreateEmployee() {
                         onChange={handleChange}
                         error={inputErrors.jobRole ? true : false}
                         helperText={inputErrors.jobRole}
-                        select
+                        // select
                         fullWidth
                       >
-                        {jobRoles.map((jobRole) => (
+                        {/* {jobRoles.map((jobRole) => (
                           <MenuItem value={jobRole} key={jobRole}>
                             {jobRole}
                           </MenuItem>
-                        ))}
+                        ))} */}
                       </TextField>
                     </Grid>
                   </Grid>
@@ -324,7 +370,7 @@ function CreateEmployee() {
                   component={Link}
                   to="/dashboard"
                   variant="contained"
-                  sx={{ backgroundColor: "#183d78" }}
+                  className={classes.button}
                 >
                   DASHBOARD
                 </Button>
@@ -336,6 +382,7 @@ function CreateEmployee() {
                     {credentials && (
                       <CredentialCard
                         credentials={credentials}
+                        setCredentials={setCredentials}
                         isDisable={isDisable}
                         setIsDisable={setIsDisable}
                       />
@@ -344,9 +391,7 @@ function CreateEmployee() {
                   <Grid item md={6} textAlign="right">
                     <Button
                       variant="contained"
-                      sx={{
-                        backgroundColor: "#183d78",
-                      }}
+                      className={classes.button}
                       type="submit"
                     >
                       CREATE EMPLOYEE

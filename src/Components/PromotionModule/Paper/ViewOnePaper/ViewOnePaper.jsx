@@ -1,4 +1,4 @@
-import React,  { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Grid, Card, Typography, Button, Divider } from "@mui/material";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
@@ -6,6 +6,8 @@ import { viewOnePaperApi } from "../../../../Api/PromotionModule/PaperApi/viewOn
 import { useParams } from "react-router-dom";
 import ArrowBackIosSharpIcon from "@mui/icons-material/ArrowBackIosSharp";
 import { deletePaperAPi } from "../../../../Api/PromotionModule/PaperApi/deletePaperAPi";
+import { viewAllExamsApi } from "../../../../Api/PromotionModule/ExamApi/viewAllExamsApi";
+import Link from "@mui/material/Link";
 import useStyles from "./ViewOnePaperStyles";
 
 export default function ViewOnePaper() {
@@ -13,12 +15,25 @@ export default function ViewOnePaper() {
   const classes = useStyles();
   const [Paper, setPaper] = useState([]);
 
+  const [examlist, setExamsList] = useState([]);
+
   useEffect(() => {
     async function fetchData() {
       setPaper(await viewOnePaperApi(PaperID));
     }
     fetchData();
   }, [PaperID]);
+
+  useEffect(() => {
+    async function fetchData() {
+      setExamsList(await viewAllExamsApi());
+    }
+    fetchData();
+  }, []);
+
+  const filteredExams = examlist.filter((exam) => exam.PaperID === PaperID);
+
+  console.log("filteredExam", filteredExams);
 
   return (
     <Box className={classes.Box}>
@@ -86,44 +101,53 @@ export default function ViewOnePaper() {
                   </Card>
                 ))}
               </CardContent>
-              <CardActions className={classes.pos}>
-                <Button
-                  variant="contained"
-                  sx={{ backgroundColor: "#183d78" }}
-                  onClick={() =>
-                    window.open(
-                      `/promotion/Paper/updatePaperDetails/${PaperID}`,
-                      "_self"
-                    )
-                  }
-                >
-                  Edit Paper Details&nbsp;
-                </Button>
-                <Button
-                  variant="contained"
-                  sx={{ backgroundColor: "#183d78" }}
-                  onClick={() => {
-                    window.open(
-                      `/promotion/Paper/addMoreQuestions/${PaperID}`,
-                      "_self"
-                    );
-                  }}
-                >
-                  Add More Questions&nbsp;
-                </Button>
+              {filteredExams.length > 0 ? (
+                <Typography color="#90A4AE" align="center" paddingBottom="5px">
+                  Reserved for an Exam
+                </Typography>
+              ) : (
+                <CardActions className={classes.pos}>
+                  <Button
+                    className={classes.btn}
+                    variant="contained"
+                    sx={{ backgroundColor: "#183d78" }}
+                    onClick={() =>
+                      window.open(
+                        `/promotion/Paper/updatePaperDetails/${PaperID}`,
+                        "_self"
+                      )
+                    }
+                  >
+                    Edit Paper Details&nbsp;
+                  </Button>
+                  <Button
+                    className={classes.btn}
+                    variant="contained"
+                    sx={{ backgroundColor: "#183d78" }}
+                    onClick={() => {
+                      window.open(
+                        `/promotion/Paper/addMoreQuestions/${PaperID}`,
+                        "_self"
+                      );
+                    }}
+                  >
+                    Add More Questions&nbsp;
+                  </Button>
 
-                <Button
-                  variant="contained"
-                  sx={{ backgroundColor: "#183d78" }}
-                  onClick={() => {
-                    deletePaperAPi(p.PaperID).then(() => {
-                      window.open("/promotion/Paper", "_self");
-                    });
-                  }}
-                >
-                  Delete&nbsp;
-                </Button>
-              </CardActions>
+                  <Button
+                    className={classes.btn}
+                    variant="contained"
+                    sx={{ backgroundColor: "#183d78" }}
+                    onClick={() => {
+                      deletePaperAPi(p.PaperID).then(() => {
+                        window.open("/promotion/Paper", "_self");
+                      });
+                    }}
+                  >
+                    Delete&nbsp;
+                  </Button>
+                </CardActions>
+              )}
             </Card>
           </Grid>
         ))}

@@ -68,8 +68,11 @@ function ViewAllProducts() {
   //------------------------
   useEffect(() => {
     setRows(
-      products.filter((record) =>
-        record.productID.toLowerCase().includes(search.toLowerCase())
+      products.filter(
+        (record) =>
+          record.productID.toLowerCase().includes(search.toLowerCase()) ||
+          record.productName.toLowerCase().includes(search.toLowerCase()) ||
+          record.teamName.toLowerCase().includes(search.toLowerCase())
       )
     );
   }, [search, products]);
@@ -86,9 +89,7 @@ function ViewAllProducts() {
     setSelectedProduct(product);
     setOpenDialog(true);
   };
-  // const handleCancelMenu=()=>{
 
-  // }
   const handleClose = () => {
     setAnchorEl(null);
   };

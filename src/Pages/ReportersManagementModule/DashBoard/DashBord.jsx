@@ -11,9 +11,10 @@ import OrganizationStructure from "../../../Components/ReportersManagementModule
 import DisplayAllEmployees from "./DisplayAllEmployees";
 import { viewAllEmployees } from "../../../Api/ReportersManagementModule/EmployeeApi";
 import RecentSection from "./RecentSection";
+import useStyles from "./DashboardStyles";
 function DashBord() {
   const location = useLocation();
-  //const { allEmployees } = location.state;
+
   const [value, setValue] = React.useState("1");
   const [profiles, setProfiles] = useState([]);
 
@@ -32,13 +33,15 @@ function DashBord() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
+  const classes = useStyles();
   return (
     <div>
-      <Box padding={2}>
-        <Grid item sm={12} md={12} sx={{ mb: 5 }}>
-          <Link to="/dashboard/create">
-            <Button
+      <Box padding={2} bgcolor="#d7dde0">
+        <Grid container>
+          <Grid item sm={12} md={2.5} sx={{ mb: 5 }}>
+            <Button  className={classes.button}
+              LinkComponent={Link}
+              to={"/dashboard/create"}
               type="button"
               variant="contained"
               sx={{ backgroundColor: "#183d78" }}
@@ -46,9 +49,20 @@ function DashBord() {
             >
               CAREATE NEW EMPLOYEE
             </Button>
-          </Link>
+          </Grid>
+          <Grid item sm={12} md={4} sx={{ mb: 5 }}>
+            <Button className={classes.button}
+              LinkComponent={Link}
+              to={"/dashboard/organization/create"}
+              type="button"
+              variant="contained"
+              sx={{ backgroundColor: "#183d78" }}
+             
+            >
+              Organization levels
+            </Button>
+          </Grid>
         </Grid>
-
         <Grid item sm={12} md={12}>
           <Box sx={{ width: "100%", typography: "body1" }}>
             <TabContext value={value}>

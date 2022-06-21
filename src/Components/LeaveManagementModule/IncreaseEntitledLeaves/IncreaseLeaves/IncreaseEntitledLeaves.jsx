@@ -1,0 +1,241 @@
+import {
+  Avatar,
+  Box,
+  Button,
+  Card,
+  CardActionArea,
+  Divider,
+  Grid,
+  LinearProgress,
+  Paper,
+  Typography,
+} from "@mui/material";
+import React from "react";
+import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
+
+import TimeToLeaveIcon from "@mui/icons-material/TimeToLeave";
+import MedicalServicesIcon from "@mui/icons-material/MedicalServices";
+import LuggageIcon from "@mui/icons-material/Luggage";
+import useStyles from "./IncreaseEntitledLeavesStyles";
+import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
+import { useState } from "react";
+import IncreaseDialogBox from "../IncreaseDialogBox/IncreaseDialogBox";
+
+const IncreaseEntitledLeaves = ({ employee, leaveBalance, setRender }) => {
+  const [open, setOpen] = useState(false);
+  const [leaveType, setLeaveType] = useState(null);
+  const[popUp,setPopUp]= useState(null);
+
+  const handleClickOpen = (type) => {
+    setOpen(true);
+    setLeaveType(type);
+    setPopUp(true);
+  };
+  const classes = useStyles();
+  // console.log(leaveBalance);
+  return (
+    <Box sx={{ mt: 2 }}>
+      {!employee ? (
+        <Grid
+          container
+          spacing={3}
+          // sx={{ ml: 0, mr: 8, mb: 3,mt:2 }}
+          sx={{
+            justifyContent: "center",
+            alignItems: "center",
+            height: 700,
+            ml: 8,
+            // flexDirection: "column",
+          }}
+        >
+          <Grid item md={12}>
+            <Card sx={{ mr: 4 }} className={classes.cardGuid}>
+              <Typography>Do You Want to Increase Entitled Leaves?</Typography>
+              <Typography>Select the Employee </Typography>
+
+              <LinearProgress color="secondary" />
+            </Card>
+          </Grid>
+          <Grid item md={12} className={classes.icon}>
+            {" "}
+            <LibraryAddIcon color="secondary" />{" "}
+          </Grid>
+        </Grid>
+      ) : (
+        <Grid>
+          <Grid container spacing={3} sx={{ ml: 0, mr: 8, mb: 3 }}>
+            <Grid item md={12}>
+              <Card
+                elevation={6}
+                sx={{ mr: 4, p: 4 }}
+                className={classes.cardEmp}
+              >
+                <Grid container>
+                  <Grid item md={2}>
+                    <Avatar
+                      src={employee.profilePic}
+                      className={classes.large}
+                    ></Avatar>
+                  </Grid>
+                  <Grid item md={4}>
+                    <Typography>
+                      {employee.employeeFirstName +
+                        " " +
+                        employee.employeeLastName}
+                    </Typography>
+                    <Typography>{employee.employeeID}</Typography>
+                  </Grid>
+
+                  <Grid item md={6}>
+                    <Typography>{employee.jobRole}</Typography>
+                  </Grid>
+                </Grid>
+              </Card>
+            </Grid>
+          </Grid>
+
+          <Grid container className={classes.step}>
+            <Typography variant="h5"> Select Leave Type</Typography>
+          </Grid>
+
+          <Grid container spacing={3} sx={{ ml: 0, mr: 8, mb: 3 }}>
+            <Grid item md={3.9}>
+              <Card
+                elevation={6}
+                
+                onClick={() => handleClickOpen("Annual")}
+              >
+                <CardActionArea className={classes.card1}>
+                  <Grid container>
+                    <Grid item md={4} className={classes.cardIcon}>
+                      <LuggageIcon />
+                    </Grid>
+                    <Grid item md={8} className={classes.title}>
+                      <Typography variant="h5">Annual</Typography>
+                    </Grid>
+                    <Grid item md={12} sx={{ mt: 2, mb: 2 }}>
+                      <Divider />
+                      <Divider />
+                      <Divider />
+                    </Grid>
+                    <Grid item md={12} className={classes.cardText}>
+                      <Grid container>
+                        <Grid item md={12}>
+                          <Typography>
+                            Remaining Leaves:{" "}
+                            {leaveBalance.remainingAnnual &&
+                            leaveBalance.remainingAnnual < 10
+                              ? "0" + leaveBalance.remainingAnnual
+                              : leaveBalance.remainingAnnual}
+                          </Typography>
+                        </Grid>
+                        <Grid item md={12}>
+                          <Typography>
+                            Entitled Leaves: {leaveBalance.entitledAnnualLeave}
+                          </Typography>
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                </CardActionArea>
+              </Card>
+            </Grid>
+
+            <Grid item md={3.9}>
+              <Card
+                elevation={6}
+               
+                onClick={() => handleClickOpen("Casual")}
+              >
+                <CardActionArea  className={classes.card2}>
+                  <Grid container>
+                    <Grid item md={4} className={classes.cardIcon}>
+                      <TimeToLeaveIcon />
+                    </Grid>
+                    <Grid item md={8} className={classes.title}>
+                      <Typography variant="h5">Casual</Typography>
+                    </Grid>
+                    <Grid item md={12} sx={{ mt: 2, mb: 2 }}>
+                      <Divider />
+                      <Divider />
+                      <Divider />
+                    </Grid>
+                    <Grid item md={12} className={classes.cardText}>
+                      <Grid container>
+                        <Grid item md={12}>
+                          <Typography>
+                            Remaining Leaves:{" "}
+                            {leaveBalance.remainingCasual &&
+                            leaveBalance.remainingCasual < 10
+                              ? "0" + leaveBalance.remainingCasual
+                              : leaveBalance.remainingCasual}
+                          </Typography>
+                        </Grid>
+                        <Grid item md={12}>
+                          <Typography>
+                            Entitled Leaves: {leaveBalance.entitledCasualLeave}
+                          </Typography>
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                </CardActionArea>
+              </Card>
+            </Grid>
+
+            <Grid item md={3.9}>
+              <Card
+                elevation={6}
+               
+                onClick={() => handleClickOpen("Medical")}
+              >
+                <CardActionArea  className={classes.card3}>
+                  <Grid container>
+                    <Grid item md={4} className={classes.cardIcon}>
+                      <MedicalServicesIcon />
+                    </Grid>
+                    <Grid item md={8} className={classes.title}>
+                      <Typography variant="h5">Medical</Typography>
+                    </Grid>
+                    <Grid item md={12} sx={{ mt: 2, mb: 2 }}>
+                      <Divider />
+                      <Divider />
+                      <Divider />
+                    </Grid>
+                    <Grid item md={12} className={classes.cardText}>
+                      <Grid container>
+                        <Grid item md={12}>
+                          <Typography>
+                            Remaining Leaves:{" "}
+                            {leaveBalance.remainingMedical &&
+                            leaveBalance.remainingMedical < 10
+                              ? "0" + leaveBalance.remainingMedical
+                              : leaveBalance.remainingMedical}
+                          </Typography>
+                        </Grid>
+                        <Grid item md={12}>
+                          <Typography>
+                            Entitled Leaves: {leaveBalance.entitledCasualLeave}
+                          </Typography>
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                </CardActionArea>
+              </Card>
+            </Grid>
+          </Grid>
+        </Grid>
+      )}
+      {popUp &&(<IncreaseDialogBox
+        open={open}
+        setOpen={setOpen}
+        leaveType={leaveType}
+        employee={employee}
+        setRender={setRender}
+      />)}
+    </Box>
+  );
+};
+
+export default IncreaseEntitledLeaves;

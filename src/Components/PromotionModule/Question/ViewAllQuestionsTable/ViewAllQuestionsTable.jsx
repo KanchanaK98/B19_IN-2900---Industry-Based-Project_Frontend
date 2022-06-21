@@ -19,7 +19,7 @@ import useStyles from "./ViewAllQuestionsTableStyles";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: "#455a64",
+    backgroundColor: "#183d78",
     color: theme.palette.common.white,
   },
   [`&.${tableCellClasses.body}`]: {
@@ -29,13 +29,13 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 
 const StyledTableRow = styled(TableRow)(() => ({
   "&:nth-of-type(odd)": {
-    backgroundColor: "#cfd8dc",
-  },
-  "&:nth-of-type(even)": {
     backgroundColor: "#e0e0e0",
   },
+  "&:nth-of-type(even)": {
+    backgroundColor: "#e1f5fe",
+  },
   "&:hover": {
-    backgroundColor: "#90a4ae",
+    backgroundColor: "#fafafa",
   },
   // hide last border
   "&:last-child td, &:last-child th": {
@@ -59,7 +59,7 @@ export default function ViewAllQuestionsTable() {
   useEffect(() => {
     setFilteredRecords(
       QuestionList.filter((question) =>
-        question.QuestionCatogory.toLowerCase().includes(search.toLowerCase())
+        question.QuestionCatogory.includes(search)
       )
     );
   }, [search, QuestionList]);
@@ -101,11 +101,11 @@ export default function ViewAllQuestionsTable() {
                     <MenuItem value="">
                       <em>None</em>
                     </MenuItem>
-                    <MenuItem value="SE">SE</MenuItem>
                     <MenuItem value="SSE">SSE</MenuItem>
                     <MenuItem value="BA">BA</MenuItem>
                     <MenuItem value="QA">QA</MenuItem>
                     <MenuItem value="HR">HR</MenuItem>
+                    <MenuItem value="SE">SE</MenuItem>
                     <MenuItem value="UI/UX">UI/UX</MenuItem>
                     <MenuItem value="SA">SA</MenuItem>
                     <MenuItem value="TL">TL</MenuItem>

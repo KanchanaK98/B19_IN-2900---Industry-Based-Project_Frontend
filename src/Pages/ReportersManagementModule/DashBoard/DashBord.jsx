@@ -13,6 +13,7 @@ import { viewAllEmployees } from "../../../Api/ReportersManagementModule/Employe
 import RecentSection from "./RecentSection";
 import useStyles from "./DashboardStyles";
 function DashBord() {
+  const jobRole = JSON.parse(sessionStorage.getItem("user")).jobRole;
   const location = useLocation();
 
   const [value, setValue] = React.useState("1");
@@ -39,28 +40,33 @@ function DashBord() {
       <Box padding={2} bgcolor="#d7dde0">
         <Grid container>
           <Grid item sm={12} md={2.5} sx={{ mb: 5 }}>
-            <Button  className={classes.button}
-              LinkComponent={Link}
-              to={"/dashboard/create"}
-              type="button"
-              variant="contained"
-              sx={{ backgroundColor: "#183d78" }}
-              startIcon={<AddBoxIcon />}
-            >
-              CAREATE NEW EMPLOYEE
-            </Button>
+            {jobRole === "HR Manager" && (
+              <Button
+                className={classes.button}
+                LinkComponent={Link}
+                to={"/dashboard/create"}
+                type="button"
+                variant="contained"
+                sx={{ backgroundColor: "#183d78" }}
+                startIcon={<AddBoxIcon />}
+              >
+                CAREATE NEW EMPLOYEE
+              </Button>
+            )}
           </Grid>
           <Grid item sm={12} md={4} sx={{ mb: 5 }}>
-            <Button className={classes.button}
-              LinkComponent={Link}
-              to={"/dashboard/organization/create"}
-              type="button"
-              variant="contained"
-              sx={{ backgroundColor: "#183d78" }}
-             
-            >
-              Organization levels
-            </Button>
+            {/* {jobRole === "HR Manager" && (
+              <Button
+                className={classes.button}
+                LinkComponent={Link}
+                to={"/dashboard/organization/create"}
+                type="button"
+                variant="contained"
+                sx={{ backgroundColor: "#183d78" }}
+              >
+                Organization levels
+              </Button>
+            )} */}
           </Grid>
         </Grid>
         <Grid item sm={12} md={12}>

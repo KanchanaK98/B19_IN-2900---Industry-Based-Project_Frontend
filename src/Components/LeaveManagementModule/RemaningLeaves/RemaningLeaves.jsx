@@ -7,17 +7,10 @@ import TimeToLeaveIcon from "@mui/icons-material/TimeToLeave";
 import MedicalServicesIcon from "@mui/icons-material/MedicalServices";
 import LuggageIcon from "@mui/icons-material/Luggage";
 
-const RemaningLeaves = () => {
-  const [leaveBalance, setLeaveBalance] = useState({});
+const RemaningLeaves = ({leaveBalance}) => {
+  
+  
   const classes = useStyles();
-
-  const fetchData = async () => {
-    setLeaveBalance(await getLeaveBalance(null));
-  };
-  useEffect(() => {
-    fetchData();
-  }, []);
-
   return (
     <Box>
       <Typography className={classes.title} variant="h5">

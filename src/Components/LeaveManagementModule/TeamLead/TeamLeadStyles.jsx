@@ -7,7 +7,8 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     borderRadius: theme.spacing(4),
-    backgroundColor:"#f3e5f5",
+   
+    background: "linear-gradient(45deg,rgb(255, 255, 179),rgb(198, 216, 236))",
     padding: theme.spacing(1, 2, 2, 4),
     margin: theme.spacing(2, 2, 10, 4),
     "& .MuiSvgIcon-root": {
@@ -15,6 +16,10 @@ const useStyles = makeStyles((theme) => ({
       fontSize: theme.spacing(5),
       fontWeight: 200,
       margin: theme.spacing(1, 1, 1, 2),
+    },
+    '&:hover': {
+      background: "linear-gradient(45deg,rgb(224, 235, 235),rgb(255, 255, 230))",
+      transform: "scale3d(1.05, 1.05, 1)",
     },
   },
   image: {

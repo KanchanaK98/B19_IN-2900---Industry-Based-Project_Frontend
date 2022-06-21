@@ -1,10 +1,11 @@
-import { Send } from "@mui/icons-material";
+import { BorderColorTwoTone, Send } from "@mui/icons-material";
 import {
   Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
+  Divider,
   Grid,
   InputLabel,
   MenuItem,
@@ -16,6 +17,7 @@ import React from "react";
 import { useState } from "react";
 import { increaseLeaves } from "../../../../Api/LeaveManagementModule/LeaveApi";
 import useStyles from "./IncreaseDialogBoxStyles";
+
 
 const IncreaseDialogBox = ({
   open,
@@ -29,6 +31,7 @@ const IncreaseDialogBox = ({
     increasedDates: "",
     reason: "",
   });
+  const [openSnackBar, setOpenSnackBar] = useState(false);
 
   const handleSubmit = async (event) => {
     await increaseLeaves(employee.employeeID, leaveType, data);
@@ -51,9 +54,14 @@ const IncreaseDialogBox = ({
         }}
       >
         <DialogTitle>
+          <Grid container sx={{mt:3}}>
+          <BorderColorTwoTone/>
           <Typography className={classes.title} variant="h5">
             Increase Entitled Leaves
           </Typography>
+          </Grid>
+          <Divider/>
+          <Divider/>
         </DialogTitle>
         <DialogContent>
           <form className={classes.form}>
@@ -157,8 +165,8 @@ const IncreaseDialogBox = ({
           </form>
         </DialogContent>
         <DialogActions>
-          <Button
-            fullWidth
+          <Button className={classes.button}
+            
             disabled={data.increasedDates ? false : true}
             variant="contained"
             endIcon={<Send />}

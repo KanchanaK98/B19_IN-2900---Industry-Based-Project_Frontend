@@ -20,11 +20,16 @@ import useStyles from "./IncreaseEntitledLeavesStyles";
 import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
 import { useState } from "react";
 import IncreaseDialogBox from "../IncreaseDialogBox/IncreaseDialogBox";
+import {  FastRewindTwoTone,HealingTwoTone,AccessibleTwoTone ,AirplanemodeActiveTwoTone} from "@mui/icons-material";
+
+
+
+
 
 const IncreaseEntitledLeaves = ({ employee, leaveBalance, setRender }) => {
   const [open, setOpen] = useState(false);
   const [leaveType, setLeaveType] = useState(null);
-  const[popUp,setPopUp]= useState(null);
+  const [popUp, setPopUp] = useState(null);
 
   const handleClickOpen = (type) => {
     setOpen(true);
@@ -49,16 +54,36 @@ const IncreaseEntitledLeaves = ({ employee, leaveBalance, setRender }) => {
           }}
         >
           <Grid item md={12}>
-            <Card sx={{ mr: 4 }} className={classes.cardGuid}>
-              <Typography>Do You Want to Increase Entitled Leaves?</Typography>
-              <Typography>Select the Employee </Typography>
+            <Card className={classes.cardGuid}>
+              <Grid container className={classes.textContainer}>
+                <Grid item md={12}>
+                  <Typography>
+                    Do You Want to Increase Entitled Leaves?
+                  </Typography>
+                </Grid>
+                <Grid item md={12}>
+                  <Typography>Select the Employee </Typography>
+                </Grid>
+                <Grid item md={12} className={classes.icon}>
+                  <FastRewindTwoTone />
+                  <LinearProgress color="error" className={classes.progressIcon}/>
+                </Grid>
+              </Grid>
 
-              <LinearProgress color="secondary" />
+             
             </Card>
           </Grid>
-          <Grid item md={12} className={classes.icon}>
-            {" "}
-            <LibraryAddIcon color="secondary" />{" "}
+          <Grid container className={classes. iconContainer}>
+            <Grid item md={1}>
+            <HealingTwoTone></HealingTwoTone>
+            </Grid>
+            <Grid item md={1}>
+            <AccessibleTwoTone></AccessibleTwoTone>
+            </Grid>
+            <Grid item md={1}>
+            <AirplanemodeActiveTwoTone></AirplanemodeActiveTwoTone>
+            </Grid>
+           
           </Grid>
         </Grid>
       ) : (
@@ -100,11 +125,7 @@ const IncreaseEntitledLeaves = ({ employee, leaveBalance, setRender }) => {
 
           <Grid container spacing={3} sx={{ ml: 0, mr: 8, mb: 3 }}>
             <Grid item md={3.9}>
-              <Card
-                elevation={6}
-                
-                onClick={() => handleClickOpen("Annual")}
-              >
+              <Card elevation={6} onClick={() => handleClickOpen("Annual")}>
                 <CardActionArea className={classes.card1}>
                   <Grid container>
                     <Grid item md={4} className={classes.cardIcon}>
@@ -142,12 +163,8 @@ const IncreaseEntitledLeaves = ({ employee, leaveBalance, setRender }) => {
             </Grid>
 
             <Grid item md={3.9}>
-              <Card
-                elevation={6}
-               
-                onClick={() => handleClickOpen("Casual")}
-              >
-                <CardActionArea  className={classes.card2}>
+              <Card elevation={6} onClick={() => handleClickOpen("Casual")}>
+                <CardActionArea className={classes.card2}>
                   <Grid container>
                     <Grid item md={4} className={classes.cardIcon}>
                       <TimeToLeaveIcon />
@@ -184,12 +201,8 @@ const IncreaseEntitledLeaves = ({ employee, leaveBalance, setRender }) => {
             </Grid>
 
             <Grid item md={3.9}>
-              <Card
-                elevation={6}
-               
-                onClick={() => handleClickOpen("Medical")}
-              >
-                <CardActionArea  className={classes.card3}>
+              <Card elevation={6} onClick={() => handleClickOpen("Medical")}>
+                <CardActionArea className={classes.card3}>
                   <Grid container>
                     <Grid item md={4} className={classes.cardIcon}>
                       <MedicalServicesIcon />
@@ -227,13 +240,15 @@ const IncreaseEntitledLeaves = ({ employee, leaveBalance, setRender }) => {
           </Grid>
         </Grid>
       )}
-      {popUp &&(<IncreaseDialogBox
-        open={open}
-        setOpen={setOpen}
-        leaveType={leaveType}
-        employee={employee}
-        setRender={setRender}
-      />)}
+      {popUp && (
+        <IncreaseDialogBox
+          open={open}
+          setOpen={setOpen}
+          leaveType={leaveType}
+          employee={employee}
+          setRender={setRender}
+        />
+      )}
     </Box>
   );
 };

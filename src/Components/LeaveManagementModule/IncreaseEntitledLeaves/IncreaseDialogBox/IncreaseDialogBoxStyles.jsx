@@ -24,13 +24,20 @@ const useStyles = makeStyles((theme) => ({
     "& .MuiFormLabel-root": {
       
       fontSize: 19,
-      color:"black"
+      color:"rgb(0, 68, 102)"
       
     },
   },
   button: {
     display: "flex",
     justifyContent: "flex-end",
+    color:"white",
+    background:"rgb(0, 85, 128)",
+    marginBottom:theme.spacing(4),
+    '&:hover':{
+      color:"black",
+    background:"rgb(179, 230, 255)",
+    },
   },
 }));
 

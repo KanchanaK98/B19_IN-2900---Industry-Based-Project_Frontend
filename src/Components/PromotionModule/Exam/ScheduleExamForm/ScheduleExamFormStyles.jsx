@@ -62,5 +62,9 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: "#2f375e",
     },
   },
+  dialog: {
+    //align-items to flex-start
+    //  alignItems: "flex-start",
+  },
 }));
 export default useStyles;

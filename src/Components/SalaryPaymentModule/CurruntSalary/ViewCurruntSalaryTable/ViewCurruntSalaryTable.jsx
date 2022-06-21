@@ -64,8 +64,9 @@ export default function ViewCurruntSalaryTable() {
     }
     fetchData();
   }, []);
+
   const filteredEmps = profiles.filter((emp) => emp.user.status !== "Resign");
-  console.log("emp", filteredEmps);
+  console.log("empsNotResigned", filteredEmps);
   //-------------------------------------------
 
   useEffect(() => {
@@ -84,7 +85,7 @@ export default function ViewCurruntSalaryTable() {
     fetchData();
   }, []);
 
-  console.log("rates", rates);
+  //console.log("rates", rates);
 
   return (
     <div>
@@ -146,8 +147,7 @@ export default function ViewCurruntSalaryTable() {
                     <StyledTableCell align="left">Net Salary</StyledTableCell>
                     <StyledTableCell align="left">Company EPF</StyledTableCell>
                     <StyledTableCell align="left">ETF</StyledTableCell>
-                    <StyledTableCell align="left">Update</StyledTableCell>
-                    <StyledTableCell align="left">Delete</StyledTableCell>
+                    <StyledTableCell></StyledTableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -177,30 +177,48 @@ export default function ViewCurruntSalaryTable() {
                       <StyledTableCell align="left">
                         {record.ETF}
                       </StyledTableCell>
-                      <StyledTableCell align="left">
-                        <Button
-                          variant="contained"
-                          onClick={() =>
-                            window.open(
-                              `/salary/currentSalary/update/${record.EmployeeID}`,
-                              "_self"
-                            )
-                          }
-                        >
-                          Edit
-                        </Button>
-                      </StyledTableCell>
-                      <StyledTableCell align="left">
-                        <Button
-                          variant="contained"
-                          onClick={() => {
-                            deleteCurrentSalaryApi(record.EmployeeID);
-                            window.location.reload(false);
-                          }}
-                        >
-                          Delete
-                        </Button>
-                      </StyledTableCell>
+
+                      {filteredEmps.find(
+                        (element) =>
+                          element.user.employeeID === record.EmployeeID
+                      ) ? (
+                        <StyledTableCell align="center">
+                          <Button
+                            sx={{
+                              maxWidth: "60px",
+                              maxHeight: "30px",
+                              padding: 2,
+                            }}
+                            variant="contained"
+                            onClick={() =>
+                              window.open(
+                                `/salary/currentSalary/update/${record.EmployeeID}`,
+                                "_self"
+                              )
+                            }
+                          >
+                            Edit
+                          </Button>
+                        </StyledTableCell>
+                      ) : (
+                        <StyledTableCell align="center">
+                          <Button
+                            sx={{
+                              maxWidth: "60px",
+                              maxHeight: "30px",
+                              padding: 2,
+                              backgroundColor: "red",
+                            }}
+                            variant="contained"
+                            onClick={() => {
+                              deleteCurrentSalaryApi(record.EmployeeID);
+                              window.location.reload(false);
+                            }}
+                          >
+                            Delete
+                          </Button>
+                        </StyledTableCell>
+                      )}
                     </StyledTableRow>
                   ))}
                 </TableBody>

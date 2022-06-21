@@ -18,8 +18,10 @@ import React, { useState } from "react";
 import useStyles from "./RequestFormStyles";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { requestLeave } from "../../../Api/LeaveManagementModule/LeaveApi";
+import moment from "moment";
+import { isMoment } from "moment";
 
-const RequestLeaveForm = () => {
+const RequestLeaveForm = ({ leaveBalance }) => {
   const classes = useStyles();
   const [leave, setLeave] = useState({
     leaveType: "",
@@ -29,6 +31,8 @@ const RequestLeaveForm = () => {
     leaveMethod: "",
   });
   const [openSnackBar, setOpenSnackBar] = useState(false);
+  const [notEnough, setNotEnough] = useState(false);
+  const [leaveOverMessage, setLeaveOverMessage] = useState(null);
   const [leaveErrors, setLeaveErrors] = useState({
     leaveType: "",
     reason: "",
@@ -46,7 +50,15 @@ const RequestLeaveForm = () => {
         }));
         error = true;
       }
+      if (leave.startDate < new Date()) {
+        setLeaveErrors((prevState) => ({
+          ...prevState,
+          startDate: "can not select previous dates.",
+        }));
+        error = true;
+      }
     });
+
     return error;
   };
 
@@ -58,15 +70,74 @@ const RequestLeaveForm = () => {
     }));
   };
 
+  const handleRemaining = () => {
+    let isEnough = true;
+
+    let numberOfLeaveDates = 0;
+    let holidays = 0;
+
+    if (leave.leaveMethod === "multiple Day") {
+      for (
+        let index = new Date(leave.startDate);
+        index <= new Date(leave.endDate);
+        index.setDate(index.getDate() + 1)
+      ) {
+        if (index.getDay() == 0 || index.getDay() == 6) {
+          holidays++;
+        }
+
+        numberOfLeaveDates++;
+      }
+
+      numberOfLeaveDates -= holidays;
+    } else if (leave.leaveMethod === "full Day") {
+      numberOfLeaveDates = 1;
+    } else if (leave.leaveMethod === "half Day") {
+      numberOfLeaveDates = 0.5;
+    }
+    switch (leave.leaveType) {
+      case "Annual":
+        if (leaveBalance.remainingAnnual - numberOfLeaveDates < 0) {
+          isEnough = false;
+          setLeaveOverMessage("Remaining Annual leaves are not enough");
+        }
+        break;
+      case "Casual":
+        if (leaveBalance.remainingCasual - numberOfLeaveDates < 0) {
+          isEnough = false;
+          setLeaveOverMessage("Remaining Casual leaves are not enough");
+        }
+        break;
+      case "Medical":
+        if (leaveBalance.remainingMedical - numberOfLeaveDates < 0) {
+          isEnough = false;
+          setLeaveOverMessage("Remaining Medical leaves are not enough");
+        }
+        break;
+
+      default:
+        break;
+    }
+
+    return isEnough;
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (!errorHandle()) {
-      const response = await requestLeave(leave);
-      console.log(response);
-      clearForm();
+      if (handleRemaining()) {
+        const response = await requestLeave(leave);
+        console.log(response);
+        clearForm();
 
-      if (response.success === true) {
-        setOpenSnackBar(true);
+        if (response.success === true) {
+          setOpenSnackBar(true);
+        }
+      } else {
+        setNotEnough(true);
+        setTimeout(() => {
+          setNotEnough(false);
+        }, 5000);
       }
     }
     console.log(leaveErrors);
@@ -130,6 +201,7 @@ const RequestLeaveForm = () => {
                         inputFormat="MM/dd/yyyy"
                         name="startDate"
                         value={leave.startDate}
+                        disablePast
                         error={leaveErrors.startDate ? true : false}
                         helperText={leaveErrors.startDate}
                         onChange={(newValue) => {
@@ -198,6 +270,7 @@ const RequestLeaveForm = () => {
                           label="Select End Date"
                           inputFormat="MM/dd/yyyy"
                           name="endDate"
+                          // minDate={{new Date()}+1}
                           value={leave.endDate}
                           error={leaveErrors.endDate ? true : false}
                           helperText={leaveErrors.endDate}
@@ -218,10 +291,11 @@ const RequestLeaveForm = () => {
           <Grid container className={classes.button}>
             <Button
               onClick={clearForm}
-              color="warning"
+              sx={{ backgroundColor: "#b71c1c", mr: 2 }}
               variant="contained"
               size="large"
-              sx={{ mr: 2 }}
+              color="error"
+              // sx={{ mr: 2 }}
             >
               Clear
             </Button>
@@ -230,11 +304,20 @@ const RequestLeaveForm = () => {
               color="secondary"
               variant="contained"
               size="large"
+              sx={{ backgroundColor: "#4a148c" }}
             >
               Apply
             </Button>
           </Grid>
         </form>
+
+        {notEnough && (
+        <Stack sx={{ width: "100%" }} spacing={2}>
+          <Alert variant="filled" severity="error">
+          {leaveOverMessage}
+          </Alert>
+        </Stack>
+        )}
 
         <Snackbar
           anchorOrigin={{ vertical: "bottom", horizontal: "left" }}

@@ -43,11 +43,15 @@ const ViewMoreDialog = ({
       ia-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title" className={classes.title}>
+      <DialogTitle
+        id="alert-dialog-title"
+        className={classes.title}
+        sx={{ backgroundColor: "#fff8e1" }}
+      >
         <Grid container>
           <Grid item md={12} className={classes.closeButton}>
             <IconButton onClick={handleClose}>
-              <Close fontSize="large" />
+              <Close fontSize="small" />
             </IconButton>
           </Grid>
           <Grid item md={12} sx={{ mt: 1 }}>
@@ -57,33 +61,44 @@ const ViewMoreDialog = ({
               justifyContent="center"
               alignItems="center"
             >
-              <Typography variant="h5" fontFamily="Rubik" sx={{ fontSize: 25, color:"#880e4f" }}>
+              <Typography
+                variant="h5"
+                fontFamily="Rubik"
+                sx={{ fontSize: 25, color: "#4a148c" }}
+              >
                 Leave Details
               </Typography>
             </Grid>
           </Grid>
         </Grid>
+        <Divider sx={{ mt: 2 }}></Divider>
+        <Divider></Divider>
+        <Divider></Divider>
       </DialogTitle>
-      <DialogContent className={classes.root}>
+      <DialogContent
+        className={classes.root}
+        sx={{ backgroundColor: "#fff8e1" }}
+      >
         <Grid container>
           <Grid item md={12} className={classes.content}>
             <Typography
               fontFamily="Segoe UI Emoji"
-              sx={{ mr: 2, fontSize: 20, color: "#607d8b" }}
+              sx={{ mr: 2, fontSize: 20, color: "#4a148c" }}
             >
               Leave type{" "}
             </Typography>
-          
-          <Grid item md={12}>
-            <Card className={classes.card}>
-              <Typography fontFamily="Rubik" >{leave.leaveHistory.leaveType}</Typography>
-            </Card>
-          </Grid>
+            <Grid item md={12}>
+              <Card className={classes.card}>
+                <Typography fontFamily="Rubik">
+                  {leave.leaveHistory.leaveType}
+                </Typography>
+              </Card>
+            </Grid>
           </Grid>
           <Grid item md={12} className={classes.content}>
             <Typography
               fontFamily="Segoe UI Emoji"
-              sx={{ mr: 2, fontSize: 20, color: "#607d8b" }}
+              sx={{ mr: 2, fontSize: 20, color: "#4a148c" }}
             >
               Start date{" "}
             </Typography>
@@ -96,12 +111,12 @@ const ViewMoreDialog = ({
           <Grid item md={12} className={classes.content}>
             <Typography
               fontFamily="Segoe UI Emoji"
-              sx={{ mr: 2, fontSize: 20, color: "#607d8b" }}
+              sx={{ mr: 2, fontSize: 20, color: "#4a148c" }}
             >
               End Date{" "}
             </Typography>
             <Card className={classes.card}>
-              <Typography fontFamily="Rubik" >
+              <Typography fontFamily="Rubik">
                 {new Date(leave.leaveHistory.endDate).toDateString()}
               </Typography>
             </Card>
@@ -109,12 +124,14 @@ const ViewMoreDialog = ({
           <Grid item md={12} className={classes.content}>
             <Typography
               fontFamily="Segoe UI Emoji"
-              sx={{ mr: 2, fontSize: 20, color: "#607d8b" }}
+              sx={{ mr: 2, fontSize: 20, color: "#4a148c" }}
             >
               Reason{" "}
             </Typography>
             <Card className={classes.card}>
-              <Typography fontFamily="Rubik">{leave.leaveHistory.reason}</Typography>
+              <Typography fontFamily="Rubik">
+                {leave.leaveHistory.reason}
+              </Typography>
             </Card>
           </Grid>
         </Grid>
@@ -131,44 +148,44 @@ const ViewMoreDialog = ({
           />
         )}
       </DialogContent>
-      <DialogActions>
+      <DialogActions sx={{ backgroundColor: "#fff8e1" }}>
         {leave.leaveHistory.status === "Pending" && !cancel && (
           <Grid
-          container
-          direction="row"
-          justifyContent="center"
-          alignItems="center"
-        >
-          <Button
-          
-            sx={{ m: 2 ,borderRadius:16}}
-            variant="contained"
-            minWidth="60px"
-            color="error"
-            
-            onClick={() => setCancel(true)}
+            container
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
           >
-            Cancel Leave
-          </Button>
+            <Button
+              fullWidth
+              sx={{mt:2,mb:2,mr:10,ml:10 }}
+              variant="contained"
+              minWidth="60px"
+              color="error"
+              onClick={() => setCancel(true)}
+            >
+              Cancel Leave
+            </Button>
           </Grid>
         )}
         {cancel && (
-           <Grid
-           container
-           direction="row"
-           justifyContent="center"
-           alignItems="center"
-         >
-          <Button
-             name="reason"
-            sx={{ mt: 2, mr: 3, mb: 2,borderRadius:16,minWidth:50 }}
-            disabled={reason ? false : true} 
-            variant="contained"
-            color="success"
-            onClick={handleSubmit}
+          <Grid
+            container
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
           >
-            Submit
-          </Button>
+            <Button
+              fullWidth
+              name="reason"
+              sx={{ mt: 2, mr: 10, mb: 2,ml:10  }}
+              disabled={reason ? false : true}
+              variant="contained"
+              
+              onClick={handleSubmit}
+            >
+              Submit
+            </Button>
           </Grid>
         )}
       </DialogActions>

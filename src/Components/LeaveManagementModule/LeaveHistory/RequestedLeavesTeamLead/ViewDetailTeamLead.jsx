@@ -19,6 +19,8 @@ import useStyles from "../ViewDetailDialogStyles";
 import ConfirmApproval from "./ConfirmApproval";
 import { responseRequestedLeave } from "../../../../Api/LeaveManagementModule/LeaveApi";
 
+
+
 const ViewDetailTeamLead = ({
   open,
   onClose,
@@ -49,7 +51,7 @@ const ViewDetailTeamLead = ({
 
   return (
     <Dialog open={open} onClose={onClose} fullWidth>
-      <DialogTitle>
+      <DialogTitle sx={{backgroundColor:"#fff8e1"}}>
         <Grid container>
           {reject && (
             <Grid item md={6}>
@@ -75,7 +77,7 @@ const ViewDetailTeamLead = ({
               <Typography
                 variant="h5"
                 fontFamily="Rubik"
-                sx={{ fontSize: 25, color: "#880e4f" }}
+                sx={{ fontSize: 25, color: "#4a148c" }}
               >
                 Leave Details
               </Typography>
@@ -83,8 +85,9 @@ const ViewDetailTeamLead = ({
           </Grid>
         </Grid>
       </DialogTitle>
-      <DialogContent>
+      <DialogContent sx={{backgroundColor:"#fff8e1"}}>
         <Grid container>
+          <Card  sx={{ m: "auto", padding:2 }}>
           <Grid item md={12} className={classes.content}>
             <Avatar
               sx={{ m: "auto" }}
@@ -92,6 +95,7 @@ const ViewDetailTeamLead = ({
               src={leaveDetail.employee.profilePic}
             />
           </Grid>
+          </Card>
           <Grid item md={12} className={classes.content}>
             <Grid
               container
@@ -107,17 +111,20 @@ const ViewDetailTeamLead = ({
                   leaveDetail.employee.employeeLastName}
               </Typography>
             </Grid>
-            <Divider sx={{ mt: 2 }}></Divider>
+            <Divider sx={{ mt: 2 , fontWeight:"bold"}}></Divider>
+            <Divider></Divider>
+            <Divider></Divider>
+
           </Grid>
 
           <Grid item md={12} className={classes.content}>
             <Typography
               fontFamily="Segoe UI Emoji"
-              sx={{ mr: 2, fontSize: 20, color: "#607d8b" }}
+              sx={{ mr: 2, fontSize: 20, color: "#4a148c" }}
             >
               Leave Type:
             </Typography>
-            <Card className={classes.card}>
+            <Card className={classes.card} >
               <Typography fontFamily="Rubik">
                 {leaveDetail.leave.leaveType}
               </Typography>
@@ -126,11 +133,11 @@ const ViewDetailTeamLead = ({
           <Grid item md={12} className={classes.content}>
             <Typography
               fontFamily="Segoe UI Emoji"
-              sx={{ mr: 2, fontSize: 20, color: "#607d8b" }}
+              sx={{ mr: 2, fontSize: 20, color: "#4a148c" }}
             >
               Leave Method:
             </Typography>
-            <Card className={classes.card}>
+            <Card className={classes.card} >
               <Typography fontFamily="Rubik">
                 {leaveDetail.leave.leaveMethod}
               </Typography>
@@ -139,7 +146,7 @@ const ViewDetailTeamLead = ({
           <Grid item md={12} className={classes.content}>
             <Typography
               fontFamily="Segoe UI Emoji"
-              sx={{ mr: 2, fontSize: 20, color: "#607d8b" }}
+              sx={{ mr: 2, fontSize: 20, color: "#4a148c" }}
             >
               Start Date:
             </Typography>
@@ -152,7 +159,7 @@ const ViewDetailTeamLead = ({
           <Grid item md={12} className={classes.content}>
             <Typography
               fontFamily="Segoe UI Emoji"
-              sx={{ mr: 2, fontSize: 20, color: "#607d8b" }}
+              sx={{ mr: 2, fontSize: 20, color: "#4a148c" }}
             >
               {" "}
               End Date:
@@ -166,7 +173,7 @@ const ViewDetailTeamLead = ({
           <Grid item md={12} className={classes.content}>
             <Typography
               fontFamily="Segoe UI Emoji"
-              sx={{ mr: 2, fontSize: 20, color: "#607d8b" }}
+              sx={{ mr: 2, fontSize: 20, color: "#4a148c" }}
             >
               Reason:
             </Typography>
@@ -190,7 +197,7 @@ const ViewDetailTeamLead = ({
           />
         )}
       </DialogContent>
-      <DialogActions>
+      <DialogActions sx={{backgroundColor:"#fff8e1"}}>
         {leaveDetail.leave.status === "Pending" && !(approve || reject) && (
           <Grid container>
             <Grid
@@ -202,8 +209,8 @@ const ViewDetailTeamLead = ({
               fullWidth
                 onClick={handleConfirmOpen}
                 variant="contained"
-                color="success"
-                sx={{ mt: 2, mr: 1, mb: 2,ml:2 ,borderRadius:16}}
+                color="secondary"
+                sx={{ mt: 2, mr: 1, mb: 2,ml:2}}
               >
                 Approve
               </Button>
@@ -219,7 +226,7 @@ const ViewDetailTeamLead = ({
                 onClick={() => setReject(true)}
                 variant="contained"
                 color="error"
-                sx={{ mt: 2, mr: 3, mb: 2,borderRadius:16 }}
+                sx={{ mt: 2, mr: 3, mb: 2 }}
               >
                 Reject
               </Button>
@@ -234,7 +241,7 @@ const ViewDetailTeamLead = ({
             variant="contained"
             onClick={handleResponse}
             endIcon={<Send />}
-            sx={{ mt: 2, mr: 4, mb: 2 ,ml:3,borderRadius:16}}
+            sx={{ mt: 2, mr: 4, mb: 2 ,ml:3}}
           >
             Send
           </Button>

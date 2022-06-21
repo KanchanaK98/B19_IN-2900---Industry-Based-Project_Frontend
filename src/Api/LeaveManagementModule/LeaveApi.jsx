@@ -1,4 +1,3 @@
-
 import * as api from "../index";
 
 export const requestLeave = async (leave) => {
@@ -13,17 +12,21 @@ export const requestLeave = async (leave) => {
       employeeId: JSON.parse(sessionStorage.getItem("user")).employeeID,
     };
     const response = await api.requestLeave(leaveData);
-    console.log(response)
+    console.log(response);
     return response.data;
   } catch (error) {
     console.log(error);
   }
 };
 
-export const getLeaveBalance = async () => {
+export const getLeaveBalance = async (employeeID) => {
   try {
-    const { data } = await api.getLeaveBalance(JSON.parse(sessionStorage.getItem("user")).employeeID);
-    console.log(data);
+    const id = employeeID
+      ? employeeID
+      : JSON.parse(sessionStorage.getItem("user")).employeeID;
+
+    const { data } = await api.getLeaveBalance(id);
+
     return data.remainingLeaves;
   } catch (error) {
     console.log(error);
@@ -44,7 +47,11 @@ export const getLeaveHistory = async () => {
 
 export const cancelLeave = async (reason, leaveID) => {
   try {
-    const { data } = await api.cancelLeave(leaveID, reason, JSON.parse(sessionStorage.getItem("user")).employeeID);
+    const { data } = await api.cancelLeave(
+      leaveID,
+      reason,
+      JSON.parse(sessionStorage.getItem("user")).employeeID
+    );
 
     return data;
   } catch (error) {
@@ -75,6 +82,31 @@ export const getTeamLead = async () => {
   );
 
   //const TeamLead = object.assign(response.data.teamLeader,response.data.teamName);
-console.log(response.data.teamLeader);
+  console.log(response.data.teamLeader);
   return response.data.teamLeader;
 };
+
+export const getEmployees = async () => {
+  try {
+    const response = await api.getEmployees();
+
+    console.log(response);
+    return response.data.NonHrEmployees;
+  } catch (error) {
+    console.log(error);
+  }
+
+  
+};
+export const increaseLeaves = async (employeeID, leaveType, data) =>{
+ 
+  try{
+    const response = await api.increaseLeaves(employeeID,leaveType,data);
+    
+
+  }catch(error){
+    console.log(error);
+  }
+
+    
+}

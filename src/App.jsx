@@ -47,6 +47,8 @@ import ScheduleExamForm from "./Components/PromotionModule/Exam/ScheduleExamForm
 import UpdateExamForm from "./Components/PromotionModule/Exam/UpdateExamForm/UpdateExamForm";
 import AddMoreQuestionsForm from "./Pages/PromotionModule/Paper/AddMoreQuestions";
 import SessionExpiryDialog from "./Components/SessionExpiry/SessionExpiryDialog";
+
+import IncreaseLeavesHr from "./Pages/LeaveManagementModule/IncreaseEntitledLeaves/IncreaseLeavesHr";
 import { LogoutApi } from "./Api/Login/LogoutApi";
 import HistoryPromotion from "./Pages/PromotionModule/HistoryPromotion/HistoryPromotion";
 import PromoteEmployees from "./Pages/PromotionModule/PromoteEmployees/PromoteEmployees";
@@ -167,12 +169,19 @@ function App() {
               <Route path="/interview/start/:id" element={<StartInterview />} />
               {/* Assets management */}
               <Route path="/asset" element={<ViewAsset user={user} />} />
+              
+
+
+
               <Route path="/assetInsertion" element={<AssetInsertion user={user} />}  />
               <Route path="/availableAssets" element={<AvailableAssets user={user} />} />
               {/* Leave management */}
               <Route path="/requestLeave" element={<RequestLeaves />} />
               <Route path="/leaveHistory" element={<LeaveHistory />} />
               <Route path="/requestedLeaves" element={<RequestedLeaveList />} />
+              <Route path="/increaseLeaves" element={<IncreaseLeavesHr/>} />
+
+              
 
               {/* Payrolls management */}
               <Route

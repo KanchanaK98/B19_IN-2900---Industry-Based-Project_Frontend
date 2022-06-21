@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
         "& .MuiTypography-root" : {
            fontFamily: 'Source Sans Pro',
            fontSize: "20px",
-           color: "rgba(4, 8, 91, 0.8)"
+           color: "white"
         },
         "& .MuiTableCell-root" : {
            // borderLeft: "1px solid",

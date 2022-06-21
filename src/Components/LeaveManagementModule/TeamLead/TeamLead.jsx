@@ -55,7 +55,7 @@ const TeamLead = () => {
           <Grid container md={12} sx={{ justifyContent: "center" }}>
             <Typography
               fontFamily="Segoe UI Emoji"
-              sx={{ color: "#607d8b", fontWeight: "bold" }}
+              sx={{ color: "#4a148c", fontWeight: "bold" }}
             >
               Last Active Time{" "}
               {": " +
@@ -63,7 +63,8 @@ const TeamLead = () => {
             </Typography>
           </Grid>
         </Grid>
-        <Divider sx={{ mt: 2, mb: 2, ml: 2, mr: 2 }}></Divider>
+        <Divider sx={{ mt: 2,ml: 2, mr: 2 }}></Divider>
+        <Divider sx={{ ml: 2, mr: 2 ,mb:2}}></Divider>
         <Grid container className={classes.detail}>
           <Grid>
             <Typography fontFamily="Rubik" sx={{ mb: 2, fontSize: 20 }}>
@@ -80,7 +81,7 @@ const TeamLead = () => {
             <Typography
               fontFamily="Segoe UI Emoji"
               sx={{
-                color: "#607d8b",
+                color: "#4a148c",
                 mt: 1,
                 ml: 2,
                 fontSize: 18,
@@ -93,11 +94,11 @@ const TeamLead = () => {
         )}
         {teamLead.companyEmail && (
           <Grid container>
-            <AttachEmailIcon />
+            <AttachEmailIcon  color="white"/>
             <Typography
               fontFamily="Segoe UI Emoji"
               sx={{
-                color: "#607d8b",
+                color: "#4a148c",
                 mt: 1,
                 ml: 2,
                 fontSize: 18,
@@ -115,7 +116,7 @@ const TeamLead = () => {
             <Typography
               fontFamily="Segoe UI Emoji"
               sx={{
-                color: "#607d8b",
+                color: "#4a148c",
                 mt: 1,
                 ml: 2,
                 fontSize: 18,

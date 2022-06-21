@@ -1,14 +1,41 @@
 import React, { useEffect, useState } from "react";
-import { Avatar, Button, Typography } from "@mui/material";
+import { Avatar, Button, styled, TableContainer, Typography } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
+import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { getRequestedLeaves } from "../../../../Api/LeaveManagementModule/LeaveApi";
 import ViewDetailTeamLead from "./ViewDetailTeamLead";
 import useStyles from "./RequestedLeavesStyles";
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor:"#4a148c",
+    // backgroundColor: theme.palette.primary.light,
+    color: theme.palette.common.white,
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 16,
+  },
+}));
+
+const StyledTableRow = styled(TableRow)(() => ({
+  "&:nth-of-type(odd)": {
+    backgroundColor: "#f3e5f5",
+  },
+  "&:nth-of-type(even)": {
+    backgroundColor: "#fffde7",
+  },
+  "&:hover": {
+    backgroundColor: "#fafafa",
+  },
+  // hide last border
+  "&:last-child td, &:last-child th": {
+    border: 0,
+  },
+}));
 
 const RequestedLeavesTeamLead = () => {
   const classes = useStyles();
@@ -41,30 +68,24 @@ const RequestedLeavesTeamLead = () => {
   };
   
   return (
-    <Paper elevation={4} sx={{ width: "100%", overflow: "hidden", p: 2 }} className={classes.paper}>
-      <Table >
+    <TableContainer component={Paper}>
+      <Table>
         <TableHead className={classes.tableHead}>
           <TableRow>
-            <TableCell><Typography>Employee</Typography></TableCell>
-            <TableCell><Typography>Leave Type</Typography></TableCell>
-            <TableCell><Typography>Leave Method</Typography></TableCell>
-            <TableCell><Typography>Start Date</Typography></TableCell>
-            <TableCell><Typography>End Date</Typography></TableCell>
-            <TableCell><Typography>Status</Typography></TableCell>
-            <TableCell> </TableCell>
+            <StyledTableCell><Typography>Employee</Typography></StyledTableCell>
+            <StyledTableCell><Typography>Leave Type</Typography></StyledTableCell>
+            <StyledTableCell><Typography>Leave Method</Typography></StyledTableCell>
+            <StyledTableCell><Typography>Start Date</Typography></StyledTableCell>
+            <StyledTableCell><Typography>End Date</Typography></StyledTableCell>
+            <StyledTableCell><Typography>Status</Typography></StyledTableCell>
+            <StyledTableCell> </StyledTableCell>
           </TableRow>
-          <TableRow>
-            <TableCell></TableCell>
-            <TableCell></TableCell>
-            <TableCell></TableCell>
-            <TableCell></TableCell>
-            <TableCell></TableCell>
-          </TableRow>
+          
         </TableHead>
         <TableBody>
           {requestedLeaves &&
             requestedLeaves.map((requestedLeave) => (
-              <TableRow key={requestedLeave.leave._id} className={classes.tableRow}>
+              <StyledTableRow key={requestedLeave.leave._id} className={classes.tableRow}>
                 <TableCell sx={{display:"flex",alignItems:"center"}}><Avatar sx={{mr:1}} src ={requestedLeave.employee.profilePic}/>{requestedLeave.employee.employeeFirstName+" "+requestedLeave.employee.employeeLastName}</TableCell>
                 <TableCell>{requestedLeave.leave.leaveType}</TableCell>
                 <TableCell>{requestedLeave.leave.leaveMethod}</TableCell>
@@ -79,15 +100,16 @@ const RequestedLeavesTeamLead = () => {
                   <Button
                     onClick={() => handleClickOpen(requestedLeave)}
                     variant="contained"
+                    color="secondary"
                   >
                     View
                   </Button>
 
                 </TableCell>
-              </TableRow>
+              </StyledTableRow>
             ))}
         </TableBody>
-      </Table>
+      
       {leaveDetail && 
       (<ViewDetailTeamLead open={open} onClose={onClose} 
         leaveDetail={leaveDetail}
@@ -109,7 +131,9 @@ const RequestedLeavesTeamLead = () => {
       onPageChange={handleChangePage}
       onRowsPerPageChange={handleChangeRowsPerPage}
     /> */}
-    </Paper>
+    </Table>
+    </TableContainer>
+   
   );
 };
 

@@ -12,6 +12,7 @@ const useStyles = makeStyles(() => ({
     textAlign: "center",
     fontWeight: "bold",
     marginTop: 10,
+    paddingTop: "3%",
   },
   search: {
     marginLeft: 50,
@@ -36,11 +37,11 @@ const useStyles = makeStyles(() => ({
   btn: {
     align: "center",
     marginLeft: 2,
-    backgroundColor: "#2f375e",
+    backgroundColor: "#183d78",
     color: "#e0f2f1",
     "&:hover": {
-      color: "#d7dde0",
-      backgroundColor: "#757575",
+      color: "#183d78",
+      backgroundColor: "#b0bec5",
     },
   },
 }));

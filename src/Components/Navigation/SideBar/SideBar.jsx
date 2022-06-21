@@ -174,39 +174,40 @@ const SideBar = ({ open, toggleDrawer, user, handleLogOut }) => {
                     <ListItemText primary="Asset Insertion" />
                   </ListItem2>
                 )}
-                { (user.jobRole === "IT Employee" || user.jobRole === "HR Manager") && (
+                {(user.jobRole === "IT Employee" ||
+                  user.jobRole === "HR Manager") && (
                   <ListItem2
-                  component={Link}
-                  to="/asset"
-                  selected={selectedIndex2 === 1}
-                  onClick={() => {
-                    handleListItemClick2(1);
-                  }}
-                  className={classes.navButton2}
-                >
-                  <ListItemIcon>
-                    <StarBorder />
-                  </ListItemIcon>
-                  <ListItemText primary="Asset List" />
-                </ListItem2>
+                    component={Link}
+                    to="/asset"
+                    selected={selectedIndex2 === 1}
+                    onClick={() => {
+                      handleListItemClick2(1);
+                    }}
+                    className={classes.navButton2}
+                  >
+                    <ListItemIcon>
+                      <StarBorder />
+                    </ListItemIcon>
+                    <ListItemText primary="Asset List" />
+                  </ListItem2>
                 )}
-                { (user.jobRole !== "IT Employee" && user.jobRole !== "HR Manager") && (
-                  <ListItem2
-                  component={Link}
-                  to="/availableAssets"
-                  selected={selectedIndex2 === 1}
-                  onClick={() => {
-                    handleListItemClick2(1);
-                  }}
-                  className={classes.navButton2}
-                >
-                  <ListItemIcon>
-                    <StarBorder />
-                  </ListItemIcon>
-                  <ListItemText primary="Available Asset" />
-                </ListItem2>
-                )}
-                
+                {user.jobRole !== "IT Employee" &&
+                  user.jobRole !== "HR Manager" && (
+                    <ListItem2
+                      component={Link}
+                      to="/availableAssets"
+                      selected={selectedIndex2 === 1}
+                      onClick={() => {
+                        handleListItemClick2(1);
+                      }}
+                      className={classes.navButton2}
+                    >
+                      <ListItemIcon>
+                        <StarBorder />
+                      </ListItemIcon>
+                      <ListItemText primary="Available Asset" />
+                    </ListItem2>
+                  )}
               </List>
             </Collapse>
           </Grid>
@@ -359,7 +360,6 @@ const SideBar = ({ open, toggleDrawer, user, handleLogOut }) => {
                   </ListItemIcon>
                   <ListItemText primary="Salary Sheet" />
                 </ListItem2>
-
                 {user.jobRole === "HR Manager" && (
                   <ListItem2
                     component={Link}
@@ -376,7 +376,6 @@ const SideBar = ({ open, toggleDrawer, user, handleLogOut }) => {
                     <ListItemText primary="Current" />
                   </ListItem2>
                 )}
-
                 {user.jobRole === "HR Manager" && (
                   <ListItem2
                     component={Link}
@@ -391,6 +390,22 @@ const SideBar = ({ open, toggleDrawer, user, handleLogOut }) => {
                       <StarBorder />
                     </ListItemIcon>
                     <ListItemText primary="Summary" />
+                  </ListItem2>
+                )}
+                {user.jobRole === "HR Manager" && (
+                  <ListItem2
+                    component={Link}
+                    to={`/salary/salaryPercentages/${user.employeeID}`}
+                    selected={selectedIndex2 === 3}
+                    onClick={() => {
+                      handleListItemClick2(3);
+                    }}
+                    className={classes.navButton2}
+                  >
+                    <ListItemIcon>
+                      <StarBorder />
+                    </ListItemIcon>
+                    <ListItemText primary="Rates" />
                   </ListItem2>
                 )}
               </List>
@@ -509,7 +524,7 @@ const SideBar = ({ open, toggleDrawer, user, handleLogOut }) => {
                     <ListItemIcon>
                       <StarBorder />
                     </ListItemIcon>
-                    <ListItemText primary="All Submission" /> 
+                    <ListItemText primary="All Submission" />
                   </ListItem2>
                 )}
 

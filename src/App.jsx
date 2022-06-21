@@ -59,7 +59,6 @@ import AvailableAssets from "./Components/AssetManagementModule/AvailableAssetLi
 import Levels from "./Components/ReportersManagementModule/DisplayAndUpdateLevels/Levels";
 import Signup from "./Components/Signup/Signup";
 
-
 function App() {
   const [open, setOpen] = useState(true);
   const [user, setUser] = useState(JSON.parse(sessionStorage.getItem("user")));
@@ -151,9 +150,14 @@ function App() {
               <Route path="/pro" element={<CreateProduct />} />
               <Route path="/user" element={<UserProfile user={user} />} />
               <Route path="/products/update/:id" element={<EditProduct />} />
-              <Route path="/dashboard/organization/create" element={<Organization />} />
-              <Route path="/dashboard/organization/level" element={<Levels />} />
-
+              <Route
+                path="/dashboard/organization/create"
+                element={<Organization />}
+              />
+              <Route
+                path="/dashboard/organization/level"
+                element={<Levels />}
+              />
 
               {/* Recruitment management */}
               <Route path="/candidate" element={<CreateCandidate />} />
@@ -169,19 +173,19 @@ function App() {
               <Route path="/interview/start/:id" element={<StartInterview />} />
               {/* Assets management */}
               <Route path="/asset" element={<ViewAsset user={user} />} />
-              
-
-
-
-              <Route path="/assetInsertion" element={<AssetInsertion user={user} />}  />
-              <Route path="/availableAssets" element={<AvailableAssets user={user} />} />
+              <Route
+                path="/assetInsertion"
+                element={<AssetInsertion user={user} />}
+              />
+              <Route
+                path="/availableAssets"
+                element={<AvailableAssets user={user} />}
+              />
               {/* Leave management */}
               <Route path="/requestLeave" element={<RequestLeaves />} />
               <Route path="/leaveHistory" element={<LeaveHistory />} />
               <Route path="/requestedLeaves" element={<RequestedLeaveList />} />
-              <Route path="/increaseLeaves" element={<IncreaseLeavesHr/>} />
-
-              
+              <Route path="/increaseLeaves" element={<IncreaseLeavesHr />} />
 
               {/* Payrolls management */}
               <Route
@@ -275,7 +279,10 @@ function App() {
               />
 
               <Route path="/promotions" element={<HistoryPromotion />} />
-              <Route path="/promotions/promoteEmployees" element={<PromoteEmployees />} />
+              <Route
+                path="/promotions/promoteEmployees"
+                element={<PromoteEmployees />}
+              />
               {/* Salary rates */}
               <Route
                 path="/salary/salaryPercentages/create/:EmployeeID"

@@ -1,69 +1,3 @@
-// import { useState, useEffect } from "react";
-// // import axios from "axios";
-// import Table from "@mui/material/Table";
-// import TableBody from "@mui/material/TableBody";
-// import TableCell from "@mui/material/TableCell";
-// import TableContainer from "@mui/material/TableContainer";
-// import TableHead from "@mui/material/TableHead";
-// import TableRow from "@mui/material/TableRow";
-// import Paper from "@mui/material/Paper";
-// import { Button } from "@mui/material/";
-// import { viewAllQuestionsApi } from "../../../Api/PromotionModule/QuestionApi/viewAllQuestionsApi";
-
-// const ViewAllQuestionsTable = () => {
-//   const [QuestionList, setQuestionList] = useState([]); //
-
-//   useEffect(() => {
-//     async function fetchData() {
-//       setQuestionList(await viewAllQuestionsApi());
-//     }
-//     fetchData();
-//   }, []);
-
-//   return (
-//     <div>
-//       <TableContainer component={Paper}>
-//         <Table sx={{ minWidth: 650 }} aria-label="simple table">
-//           <TableHead>
-//             <TableRow>
-//               <TableCell>QuestionID</TableCell>
-//               <TableCell align="right">QuestionCatogory</TableCell>
-//               <TableCell align="right">QuestionBody</TableCell>
-//             </TableRow>
-//           </TableHead>
-//           <TableBody>
-//             {QuestionList.map((question, key) => (
-//               <TableRow
-//                 key={key}
-//                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-//               >
-//                 <TableCell component="th" scope="row">
-//                   {question.QuestionID}
-//                 </TableCell>
-//                 <TableCell align="right">{question.QuestionCatogory}</TableCell>
-//                 <TableCell align="right">{question.QuestionBody}</TableCell>
-//               </TableRow>
-//             ))}
-//           </TableBody>
-//         </Table>
-//       </TableContainer>
-//       {/* <Button variant="contained" color="primary" onClick={createQuestionApi}>
-//         {" "}
-//         Create using API
-//       </Button> */}
-//       <Button
-//         variant="contained"
-//         color="primary"
-//         onClick={() => window.open("/promotion/Questions/create", "_self")}
-//       >
-//         {" "}
-//         Create
-//       </Button>
-//     </div>
-//   );
-// };
-// export default ViewAllQuestionsTable;
-
 import React, { useState, useEffect } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -73,6 +7,10 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import InputLabel from "@mui/material/InputLabel";
 import { Button, Box } from "@mui/material/";
 import { Grid } from "@mui/material";
 import { viewAllQuestionsApi } from "../../../../Api/PromotionModule/QuestionApi/viewAllQuestionsApi";
@@ -143,12 +81,36 @@ export default function ViewAllQuestionsTable() {
                 >
                   Create New
                 </Button>
-                <input
+                {/* <input
                   type="text"
                   placeholder="Search by Q-Catogory"
                   className={classes.search}
                   onChange={(e) => setSearch(e.target.value)}
-                />
+                /> */}
+                <FormControl sx={{ ml: 10, minWidth: 120 }} size="small">
+                  <InputLabel id="demo-simple-select-helper-label">
+                    Filter
+                  </InputLabel>
+                  <Select
+                    labelId="demo-select-small"
+                    id="demo-select-small"
+                    value={search}
+                    label="Filter"
+                    onChange={(e) => setSearch(e.target.value)}
+                  >
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    <MenuItem value="SE">SE</MenuItem>
+                    <MenuItem value="SSE">SSE</MenuItem>
+                    <MenuItem value="BA">BA</MenuItem>
+                    <MenuItem value="QA">QA</MenuItem>
+                    <MenuItem value="HR">HR</MenuItem>
+                    <MenuItem value="UI/UX">UI/UX</MenuItem>
+                    <MenuItem value="SA">SA</MenuItem>
+                    <MenuItem value="TL">TL</MenuItem>
+                  </Select>
+                </FormControl>
               </div>
               <br />
             </Grid>

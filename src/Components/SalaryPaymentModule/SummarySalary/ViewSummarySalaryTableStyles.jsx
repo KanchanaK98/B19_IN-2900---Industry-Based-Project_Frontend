@@ -25,6 +25,22 @@ const useStyles = makeStyles(() => ({
     minWidth: 700,
     paddingLeft: 50,
   },
+  select: {
+    "&:before": {
+      borderColor: "#9c27b0",
+    },
+    "&:after": {
+      borderColor: "#9c27b0",
+    },
+  },
+  btn: {
+    backgroundColor: "#ab47bc",
+    color: "#e0f2f1",
+    "&:hover": {
+      color: "#d7dde0",
+      backgroundColor: "#2f375e",
+    },
+  },
 }));
 
 export default useStyles;

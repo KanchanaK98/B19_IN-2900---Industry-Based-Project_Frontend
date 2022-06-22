@@ -22,6 +22,7 @@ const TeamMemberDialog = ({
   teaminputs,
   setTeaminputs,
   employees,
+  setEmployee,
 }) => {
   const [members, setMembers] = useState([]);
 
@@ -32,6 +33,7 @@ const TeamMemberDialog = ({
 
   const handleDelete = (member) => {
     setMembers(members.filter((membr) => membr !== member));
+    setEmployee(employees.concat(member));
   };
 
   return (
@@ -84,6 +86,8 @@ const TeamMemberDialog = ({
           value=""
           onChange={(event) => {
             setMembers(members.concat(event.target.value));
+
+            setEmployee(employees.filter((mem) => mem !== event.target.value));
           }}
           fullWidth
           sx={{ mt: 3 }}
@@ -100,7 +104,10 @@ const TeamMemberDialog = ({
                   }}
                 >
                   <Grid item>
-                    <Avatar sx={{ height: 35, width: 35 }} src={employee.profilePic}>
+                    <Avatar
+                      sx={{ height: 35, width: 35 }}
+                      src={employee.profilePic}
+                    >
                       {employee.employeeName.toUpperCase()}
                     </Avatar>
                   </Grid>

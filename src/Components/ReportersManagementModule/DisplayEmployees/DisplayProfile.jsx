@@ -19,6 +19,7 @@ import React, { useEffect, useState } from "react";
 import { getAllTeams } from "../../../Api/ReportersManagementModule/TeamsApi";
 
 function DisplayProfile({ employee }) {
+  const jobRole = JSON.parse(sessionStorage.getItem("user")).jobRole;
   const [teams, setTeams] = useState();
 
   const { user, EmployeeWithAcc, EmpWithProf } = employee;
@@ -41,7 +42,7 @@ function DisplayProfile({ employee }) {
           minWidth: 750,
           minHeight: 450,
           cursor: "pointer",
-          backgroundColor:"#e4ecf7"
+          backgroundColor: "#e4ecf7",
         }}
       >
         <Grid container>
@@ -100,14 +101,14 @@ function DisplayProfile({ employee }) {
               />
               <Typography
                 textAlign="center"
-                sx={{ fontWeight: "bold", color: "#183d78", mb: 1 }}
+                sx={{ fontWeight: "bold", color: "#183d78", mb: 1,fontStyle:"italic" }}
               >
                 Completeness of the Profile
               </Typography>
             </Grid>
             {/* <Typography>{moment("lastSeen", "YYYYMMDD").fromNow()}</Typography> */}
             <Typography>
-              {moment(user.lastSeen).format("ddd MMM DD YYYY hh:mm:ss")}
+           Last Seen :   {moment(user.lastSeen).format("ddd MMM DD YYYY hh:mm:ss")}
             </Typography>
             <Divider sx={{ mt: 2, mb: 2 }}></Divider>
             <Typography sx={{ fontWeight: "bold", mb: 1, color: "#183d78" }}>
@@ -131,19 +132,17 @@ function DisplayProfile({ employee }) {
                 &nbsp;&nbsp;{user.companyEmail}
               </Typography>
 
-              
-                {user.birthday && (
-                  <Typography>
-                    <CakeIcon sx={{ color: "#183d78" }} />
-                    &nbsp; {new Date(user.birthday).toDateString()}
-                    {/* {momen{user.birthday).format("MMM DD YYYY")} */}
-                  </Typography>
-                )}
+              {jobRole === "HR Manager" &&(user.birthday && (
                 <Typography>
-                  <PermIdentityIcon sx={{ color: "#183d78" }} />
-                  &nbsp;{user.NIC}
+                  <CakeIcon sx={{ color: "#183d78" }} />
+                  &nbsp; {new Date(user.birthday).toDateString()}
+                  {/* {momen{user.birthday).format("MMM DD YYYY")} */}
                 </Typography>
-              
+              ))}
+             {jobRole === "HR Manager" &&( <Typography>
+                <PermIdentityIcon sx={{ color: "#183d78" }} />
+                &nbsp;{user.NIC}
+              </Typography>)}
             </Grid>
           </Grid>
           <Grid item md={6} padding={1}>
@@ -260,18 +259,26 @@ function DisplayProfile({ employee }) {
           </Grid>
         </Grid>
 
-        <Button
+       {jobRole === "HR Manager" &&( <Button
           component={Link}
           to={`/profile/update`}
           state={{ employee }}
-          sx={{ mt: 5, backgroundColor: "#183d78" }}
+          sx={{
+            mt: 5,
+            backgroundColor: "#183d78",
+            color: "#fff",
+            "&:hover": {
+              backgroundColor: "#4d5575",
+              color: "#fff",
+            },
+          }}
           fullWidth
           variant="contained"
           size="medium"
         >
           Update
         </Button>
-      </Card>
+  )}    </Card>
     </div>
   );
 }

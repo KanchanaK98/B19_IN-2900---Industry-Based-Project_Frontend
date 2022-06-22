@@ -21,6 +21,7 @@ import PlaceIcon from "@mui/icons-material/Place";
 import { viewAllEmployees } from "../../../Api/ReportersManagementModule/EmployeeApi";
 import moment from "moment";
 import ProgressBar from "../DisplayEmployees/ProgressBar";
+import useStyles from "./UserProfileStyles";
 
 function UserProfile({ user }) {
   const [profiles, setProfiles] = useState([]);
@@ -38,7 +39,7 @@ function UserProfile({ user }) {
     fetchData();
   }, []);
   let employee = { ...employeeInfo[0] };
-
+  const classes = useStyles();
   return (
     <div>
       {employee && (
@@ -58,7 +59,7 @@ function UserProfile({ user }) {
                     to={`/user/update`}
                     state={{ employee }}
                     variant="contained"
-                    sx={{ backgroundColor: "#183d78" }}
+                    className={classes.button}
                   >
                     <EditIcon />
                     Edit
@@ -85,7 +86,16 @@ function UserProfile({ user }) {
                 }
                 user={employeeInfo[0] && employeeInfo[0].user}
               />
-              <Card sx={{ padding: 3, mt: 2 }}>
+              <Typography
+                sx={{
+                  textAlign: "center",
+                  fontStyle: "italic",
+                  color: "#708bb8",
+                }}
+              >
+                Completeness of Profile
+              </Typography>
+              <Card sx={{ padding: 3, mt: 2 }} className={classes.card}>
                 <Typography variant="h6" sx={{ color: "#708bb8" }}>
                   <AccountCircleIcon />
                   &nbsp;Profile Info
@@ -95,7 +105,7 @@ function UserProfile({ user }) {
                   employeeInfo[0].user &&
                   employeeInfo[0].user.streetNo && (
                     <Typography>
-                      <PlaceIcon />
+                      <PlaceIcon sx={{ color: "#183d78" }} />
                       &nbsp;
                       {employeeInfo[0].user.streetNo} &nbsp;&nbsp;
                       {employeeInfo[0] &&
@@ -107,7 +117,7 @@ function UserProfile({ user }) {
                   employeeInfo[0].user &&
                   employeeInfo[0].user.companyEmail && (
                     <Typography sx={{ mb: 1 }}>
-                      <ContactMailIcon />
+                      <ContactMailIcon sx={{ color: "#183d78" }} />
                       &nbsp;&nbsp;
                       {employeeInfo[0].user.companyEmail}
                     </Typography>
@@ -116,7 +126,7 @@ function UserProfile({ user }) {
                   employeeInfo[0].user &&
                   employeeInfo[0].user.phoneNumber && (
                     <Typography sx={{ mb: 1 }}>
-                      <ContactPhoneIcon />
+                      <ContactPhoneIcon sx={{ color: "#183d78" }} />
                       &nbsp;&nbsp;
                       {employeeInfo[0].user.phoneNumber}
                     </Typography>
@@ -125,7 +135,7 @@ function UserProfile({ user }) {
                   employeeInfo[0].user &&
                   employeeInfo[0].user.birthday && (
                     <Typography sx={{ mb: 1 }}>
-                      <CakeIcon />
+                      <CakeIcon sx={{ color: "#183d78" }} />
                       &nbsp;
                       {moment(employeeInfo[0].user.birthday).format(
                         "MMM DD YYYY"
@@ -134,7 +144,9 @@ function UserProfile({ user }) {
                   )}
                 <Divider sx={{ mt: 1, mb: 1 }}></Divider>
 
-                <Typography sx={{ mb: 1 }}>
+                <Typography
+                  sx={{ mb: 1, color: "#183d78", fontWeight: "bold" }}
+                >
                   {employeeInfo[0] &&
                     employeeInfo[0].user &&
                     employeeInfo[0].user.jobType}
@@ -154,7 +166,7 @@ function UserProfile({ user }) {
                 {user.employeeFirstName + " " + user.employeeLastName}|{" "}
                 {user.jobRole}
               </Typography>
-              <Card sx={{ padding: 3 }}>
+              <Card sx={{ padding: 3 }} className={classes.card}>
                 <Typography variant="h6" sx={{ color: "#708bb8" }}>
                   <SchoolIcon />
                   &nbsp;Professional Qualification
@@ -196,7 +208,7 @@ function UserProfile({ user }) {
                   </Grid>
                 </Grid>
               </Card>
-              <Card sx={{ padding: 3, mt: 2 }}>
+              <Card sx={{ padding: 3, mt: 2 }} className={classes.card}>
                 <Typography variant="h6" sx={{ color: "#708bb8" }}>
                   <MenuBookIcon />
                   &nbsp;Academic Qualification

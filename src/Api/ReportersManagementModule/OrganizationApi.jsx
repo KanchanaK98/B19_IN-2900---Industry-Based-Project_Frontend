@@ -36,3 +36,13 @@ export const getLevels = async () => {
     console.log(err);
   }
 };
+
+export const getOrganizationStructure = async () => {
+  try {
+    const { data } = await api.getOrganizationStructure();
+     console.log(data)
+   
+  } catch (err) {
+    console.log(err);
+  }
+};

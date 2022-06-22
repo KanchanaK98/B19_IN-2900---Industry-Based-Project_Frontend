@@ -27,6 +27,7 @@ import {
   getEmployeesWithoutTeam,
 } from "../../../Api/ReportersManagementModule/TeamsApi";
 import { Link } from "react-router-dom";
+import useStyles from "./CreateTeamStyles";
 
 function CreateTeams() {
   const [addSuccessfully, setAddSuccessfully] = useState(false);
@@ -49,7 +50,7 @@ function CreateTeams() {
       [e.target.name]: e.target.value,
     }));
     if (e.target.name === "teamLead") {
-      setMembers(members.filter((mem) => mem !== e.target.value));
+      setMembers(leader.filter((lead) => lead !== e.target.value));
     }
   };
 
@@ -108,25 +109,29 @@ function CreateTeams() {
         setnotAdded(false);
       }, 2000);
       handleClear();
+      setTimeout(() => {
+        window.location.reload(false);
+      }, 1000);
     }
   };
 
-  const [members, setMembers] = useState([]);
+  const [members, setMembers] = useState([]); //member
+  const [leader, setLeader] = useState([]); //leader
 
   useEffect(() => {
     async function fetchData() {
       setMembers(await getEmployeesWithoutTeam());
-      // setMembers(response.filter((members)=>members.jobRole !==("CTO"||"IT Employee"||"HR Manager")))
+      setLeader(await getEmployeesWithoutTeam());
     }
-  
+
     fetchData();
   }, []);
- 
+
   const [openDialog, setOpenDialog] = useState(false);
   const handleOpenDialog = () => {
     setOpenDialog(true);
   };
-console.log(members)
+  const classes = useStyles();
   return (
     <div>
       <Box padding={4}>
@@ -144,7 +149,9 @@ console.log(members)
               <Grid item sm={12} md={6}>
                 <Grid container sx={{ mb: 5 }}>
                   <Grid item sm={4} md={4}>
-                    <FormLabel sx={{fontWeight:"bold"}}>Team Name:</FormLabel>
+                    <FormLabel sx={{ fontWeight: "bold" }}>
+                      Team Name:
+                    </FormLabel>
                   </Grid>
                   <Grid item sm={8} md={8}>
                     <TextField
@@ -161,7 +168,9 @@ console.log(members)
                 </Grid>
                 <Grid container sx={{ display: "flex", alignItems: "center" }}>
                   <Grid item sm={4} md={4}>
-                    <FormLabel  sx={{fontWeight:"bold"}}>Team Members:</FormLabel>
+                    <FormLabel sx={{ fontWeight: "bold" }}>
+                      Team Members:
+                    </FormLabel>
                   </Grid>
 
                   <Grid item sm={8} md={8}>
@@ -205,7 +214,9 @@ console.log(members)
               <Grid item sm={12} md={6}>
                 <Grid container>
                   <Grid item sm={4} md={4}>
-                    <FormLabel  sx={{fontWeight:"bold"}}>Team Lead :</FormLabel>
+                    <FormLabel sx={{ fontWeight: "bold" }}>
+                      Team Lead :
+                    </FormLabel>
                   </Grid>
                   <Grid item sm={8} md={8}>
                     <TextField
@@ -223,9 +234,9 @@ console.log(members)
                         renderValue: (mem) => mem.employeeName,
                       }}
                     >
-                      {members &&
-                        members.map((mem) => (
-                          <MenuItem value={mem} key={mem.employeeID}>
+                      {leader &&
+                        leader.map((lead) => (
+                          <MenuItem value={lead} key={lead.employeeID}>
                             <Grid
                               container
                               sx={{
@@ -235,16 +246,19 @@ console.log(members)
                               }}
                             >
                               <Grid item>
-                                <Avatar src={mem.profilePic} sx={{ height: 35, width: 35 }}>
-                                  {mem.employeeFirstName}
+                                <Avatar
+                                  src={lead.profilePic}
+                                  sx={{ height: 35, width: 35 }}
+                                >
+                                  {lead.employeeFirstName}
                                 </Avatar>
                               </Grid>
                               <Grid item>
                                 <Typography sx={{ mb: -0.7, ml: 1 }}>
-                                  {mem.employeeName}
+                                  {lead.employeeName}
                                 </Typography>
                                 <Typography variant="body2" sx={{ ml: 1.3 }}>
-                                  {mem.employeeID}
+                                  {lead.employeeID}
                                 </Typography>
                               </Grid>
                             </Grid>
@@ -256,13 +270,13 @@ console.log(members)
               </Grid>
             </Grid>
 
-            <Grid container>
+            <Grid container sx={{ mt: 2 }}>
               <Grid item md={6} sx={{ textAlign: "left" }}>
                 <Button
                   component={Link}
                   to="/teams"
                   variant="contained"
-                  sx={{ mt: 2, backgroundColor: "#183d78" }}
+                  className={classes.button}
                 >
                   View Teams
                 </Button>
@@ -271,7 +285,7 @@ console.log(members)
                 <Button
                   onClick={handleSubmit}
                   variant="contained"
-                  sx={{ mt: 2, backgroundColor: "#183d78" }}
+                  className={classes.button}
                 >
                   Save New Team
                 </Button>

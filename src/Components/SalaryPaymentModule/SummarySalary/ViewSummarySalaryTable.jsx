@@ -42,13 +42,21 @@ const StyledTableRow = styled(TableRow)(() => ({
   },
 }));
 
-export default function ViewCurruntSalaryTable() {
+export default function ViewSummarySalaryTable({ user }) {
   const classes = useStyles();
   const [summarySalaryList, setSummarySalaryList] = useState([]);
   const [search, setSearch] = useState("");
   const [selectYear, setSelectYear] = useState("");
   const [selectMonth, setSelectMonth] = useState("");
   const [filteredRecords, setFilteredRecords] = useState([]);
+
+  if (!user) {
+    window.location.replace("/");
+  } else {
+    if (user.jobRole !== "HR Manager") {
+      window.location.href = "/dashboard";
+    }
+  }
 
   useEffect(() => {
     async function fetchData() {

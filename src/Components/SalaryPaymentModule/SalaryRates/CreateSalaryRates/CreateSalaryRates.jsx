@@ -17,13 +17,18 @@ import Stack from "@mui/material/Stack";
 import useStyles from "./CreateSalaryRatesStyles";
 import { useParams } from "react-router-dom";
 
-export default function CreateSalaryRates() {
+export default function CreateSalaryRates({ user }) {
   const { EmployeeID } = useParams();
   const classes = useStyles();
   const [error, seterror] = useState(false);
   const [added, setadded] = useState(false);
   const [fill, setFill] = useState(false);
 
+  if (!user) {
+    window.location.replace("/");
+  } else if (user.jobRole !== "HR Manager") {
+    window.location.href = "/dashboard";
+  }
   const [rates, setRates] = useState({
     EmoloyeeEpfRate: "",
     CompanyEPFRate: "",
@@ -64,6 +69,27 @@ export default function CreateSalaryRates() {
       isError = true;
     }
 
+    if (rates.EmoloyeeEpfRate >= 0) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        emoloyeeEpfRate: "Value should be less than 0",
+      }));
+      isError = true;
+    }
+    if (rates.CompanyEPFRate >= 0) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        companyEPFRate: "Value should be less than 0",
+      }));
+      isError = true;
+    }
+    if (rates.ETFRate >= 0) {
+      setInputErrors((prevState) => ({
+        ...prevState,
+        eTFRate: "Value should be less than 0",
+      }));
+      isError = true;
+    }
     return isError;
   };
   //-----------------------------------------------------

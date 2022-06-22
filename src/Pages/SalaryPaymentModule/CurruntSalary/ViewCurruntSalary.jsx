@@ -3,11 +3,11 @@ import ViewCurruntSalaryTable from "../../../Components/SalaryPaymentModule/Curr
 
 import { Grid } from "@mui/material";
 
-const ViewCurruntSalary = () => {
+const ViewCurruntSalary = ({ user }) => {
   return (
     <Grid container>
       <Grid item sm={12} md={12}>
-        <ViewCurruntSalaryTable />
+        <ViewCurruntSalaryTable user={user} />
       </Grid>
     </Grid>
   );

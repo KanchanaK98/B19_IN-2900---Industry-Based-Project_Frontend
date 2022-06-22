@@ -40,12 +40,22 @@ const StyledTableRow = styled(TableRow)(() => ({
   },
 }));
 
-const DisplayMyFeedback = () => {
+const AllSubmissionsTable = ({ user }) => {
   const classes = useStyles();
   const [submissionList, setsubmissionList] = useState([]);
 
   const { EmployeeID } = useParams();
   //console.log("eid", EmployeeID);
+
+  if (!user) {
+    window.location.replace("/");
+  } else {
+    if (user.jobRole !== "HR Manager") {
+      if (user.jobRole !== "CTO") {
+        window.location.href = "/dashboard";
+      }
+    }
+  }
 
   useEffect(() => {
     async function fetchData() {
@@ -167,7 +177,7 @@ const DisplayMyFeedback = () => {
                                 sx={{ backgroundColor: "#183d78" }}
                                 onClick={() =>
                                   window.open(
-                                    ` /promotion/evaluation/evaluatePaper/${EmployeeID}/${record.EmployeeID}/${record.PaperID}`,
+                                    ` /promotion/evaluation/evaluatePaper/${user.employeeID}/${record.EmployeeID}/${record.PaperID}`,
                                     "_self"
                                   )
                                 }
@@ -197,4 +207,4 @@ const DisplayMyFeedback = () => {
     </div>
   );
 };
-export default DisplayMyFeedback;
+export default AllSubmissionsTable;

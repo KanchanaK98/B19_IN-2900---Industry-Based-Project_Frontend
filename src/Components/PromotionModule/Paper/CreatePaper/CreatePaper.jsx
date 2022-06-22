@@ -25,7 +25,7 @@ import { viewAllQuestionsApi } from "../../../../Api/PromotionModule/QuestionApi
 import { viewAllPapersListApi } from "../../../../Api/PromotionModule/PaperApi/viewAllPapersListApi";
 import useStyles from "./CreatePaperStyles";
 
-function CreatePaperForm() {
+function CreatePaperForm({ user }) {
   const classes = useStyles();
   const [paperId, setPaperID] = useState("");
   const [papername, setPaperName] = useState("");
@@ -47,6 +47,14 @@ function CreatePaperForm() {
       },
     },
   };
+
+  if (!user) {
+    window.location.replace("/");
+  } else {
+    if (user.teamLead === false) {
+      window.location.href = "/dashboard";
+    }
+  }
 
   useEffect(() => {
     async function fetchData() {

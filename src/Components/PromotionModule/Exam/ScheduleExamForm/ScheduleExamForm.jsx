@@ -44,7 +44,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import useStyles from "./ScheduleExamFormStyles";
 
-function ScheduleExamForm() {
+function ScheduleExamForm({user}) {
   const classes = useStyles();
 
   const [ExamName, setExamName] = useState("");
@@ -61,6 +61,15 @@ function ScheduleExamForm() {
 
   const { EmployeeID } = useParams();
 
+  if(!user)
+  {
+    window.location.replace('/');
+  }else{
+    if(user.jobRole !== "HR Manager")
+    {
+      window.location.href = "/dashboard";
+    }
+  }
   useEffect(() => {
     async function fetchData() {
       setPaperList(await viewAllPapersListApi());
@@ -94,33 +103,6 @@ function ScheduleExamForm() {
 
   //console.log("examsCompleted", examsCompleted);
   //console.log("listJobRoles", listJobRoles);
-
-  //---------------------auto generated id----------------------
-
-  // get total employees saved to database...
-
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     const totalNumberOfExamInDb = ExamsList.length;
-  //     console.log("totalNumberOfExamInDb", totalNumberOfExamInDb);
-  //     let numberToString = totalNumberOfExamInDb.toString();
-  //     if (numberToString.length < 4) {
-  //       for (let i = numberToString.length; i < 4; i++) {
-  //         numberToString = "0" + numberToString;
-  //       }
-  //     }
-  //     const examID = `EXAM-00${numberToString}`;
-  //     console.log("examID", examID);
-  //     setExamID(examID);
-  //   }
-  //   fetchData();
-  // }, []);
-  // const id =`EXAM-${(ExamsList.length).toString()}`
-
-  //
-  //    setExamID(`(EXAM-00${ExamsList.length+1).toString()}`);
-
-  //------------------------------------------------------
 
   //--------------validation-----------------------
   const [inputErrors, setInputErrors] = useState({

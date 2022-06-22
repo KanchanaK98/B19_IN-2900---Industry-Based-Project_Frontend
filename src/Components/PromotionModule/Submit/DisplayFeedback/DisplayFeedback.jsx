@@ -43,11 +43,19 @@ const StyledTableRow = styled(TableRow)(() => ({
   },
 }));
 
-const DisplayMyFeedback = () => {
+const DisplayMyFeedback = ({ user }) => {
   const classes = useStyles();
   const { EmployeeID } = useParams();
   const [mysubmissionList, setmysubmissionList] = useState([]);
   const [isPaper, setIsPaper] = useState([]);
+
+  if (!user) {
+    window.location.replace("/");
+  } else {
+    if (user.employeeID !== EmployeeID) {
+      window.location.href = "/dashboard";
+    }
+  }
 
   // useEffect(() => {
   //   async function fetchData() {

@@ -24,12 +24,12 @@ const useStyles = makeStyles((theme) => ({
       fontFamily: "Kanit",
     },
     '&:hover': {
-      background: "linear-gradient(45deg, rgb(255, 0, 102),	rgb(255, 0, 255))",
+     
       transform: "scale3d(1.05, 1.05, 1)",
     },
   },
   card2: {
-    background: "linear-gradient(45deg,rgb(255, 153, 0) ,rgb(255, 153, 102))",
+    background: "linear-gradient(45deg, rgb(255, 102, 0),	rgb(255, 255, 0))",
     borderRadius: theme.spacing(4),
     padding: theme.spacing(2),
     "& .MuiTypography-body1": {
@@ -48,12 +48,12 @@ const useStyles = makeStyles((theme) => ({
       fontWeight: 200,
     },
     '&:hover': {
-      background: "linear-gradient(45deg, rgb(255, 102, 0),	rgb(255, 255, 0))",
+      
       transform: "scale3d(1.05, 1.05, 1)",
     },
   },
   card3: {
-    background: "linear-gradient(45deg,rgb(0, 179, 0), rgb(179, 255, 236))",
+    background: "linear-gradient(45deg, rgb(0, 51, 0),	rgb(102, 255, 51))",
     borderRadius: theme.spacing(4),
     padding: theme.spacing(2),
     "& .MuiTypography-body1": {
@@ -72,7 +72,7 @@ const useStyles = makeStyles((theme) => ({
       fontWeight: 200,
     },
     '&:hover': {
-      background: "linear-gradient(45deg, rgb(0, 51, 0),	rgb(102, 255, 51))",
+     
       transform: "scale3d(1.05, 1.05, 1)",
     },
   },

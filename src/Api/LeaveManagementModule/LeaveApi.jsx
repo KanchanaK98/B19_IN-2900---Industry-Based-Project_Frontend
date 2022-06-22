@@ -35,8 +35,9 @@ export const getLeaveBalance = async (employeeID) => {
   }
 };
 
-export const getLeaveBalanceOfEmployee = async (employeeID) => {
+export const getLeaveBalanceOfEmployee = async (employee) => {
   try {
+    const employeeID = {id : employee};
     const { data } = await api.getLeaveBalanceOfEmployee(employeeID);
 
     return data.remainingLeaves;
@@ -110,6 +111,7 @@ export const getEmployees = async () => {
   }
 };
 export const increaseLeaves = async (employeeID, leaveType, data) => {
+  console.log(employeeID, leaveType,data)
   try {
     const response = await api.increaseLeaves(employeeID, leaveType, data);
   } catch (error) {

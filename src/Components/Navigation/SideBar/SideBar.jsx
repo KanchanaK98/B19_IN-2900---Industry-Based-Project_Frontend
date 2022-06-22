@@ -259,20 +259,22 @@ const SideBar = ({ open, toggleDrawer, user, handleLogOut }) => {
                   <ListItemText primary="Products" />
                 </ListItem2>
 
-                <ListItem2
-                  component={Link}
-                  to="/dashboard/create"
-                  selected={selectedIndex2 === 2}
-                  onClick={() => {
-                    handleListItemClick2(2);
-                  }}
-                  className={classes.navButton2}
-                >
-                  <ListItemIcon>
-                    <StarBorder />
-                  </ListItemIcon>
-                  <ListItemText primary="Create Employee" />
-                </ListItem2>
+                {user.jobRole === "HR Manager" && (
+                  <ListItem2
+                    component={Link}
+                    to="/dashboard/create"
+                    selected={selectedIndex2 === 2}
+                    onClick={() => {
+                      handleListItemClick2(2);
+                    }}
+                    className={classes.navButton2}
+                  >
+                    <ListItemIcon>
+                      <StarBorder />
+                    </ListItemIcon>
+                    <ListItemText primary="Create Employee" />
+                  </ListItem2>
+                )}
               </List>
             </Collapse>
           </Grid>

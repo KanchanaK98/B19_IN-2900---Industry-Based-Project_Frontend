@@ -1,10 +1,23 @@
-import React, { useState } from "react";
+import React from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
-import { Button, Divider, Grid, IconButton, Typography } from "@mui/material";
-import { Close } from "@mui/icons-material";
+import {
+  Avatar,
+  Button,
+  Divider,
+  Grid,
+  IconButton,
+  Typography,
+} from "@mui/material";
+import {
+  AccessTime,
+  AccountCircle,
+  CalendarMonth,
+  CallSplit,
+  Close,
+} from "@mui/icons-material";
 import useStyles from "./InterviewDetailsDialogStyles";
 import { Link } from "react-router-dom";
 import ConfirmationDialog from "../ConfirmationDialog/ConfirmationDialog";
@@ -20,11 +33,20 @@ const InterviewDetailsDialog = ({
   const classes = useStyles();
 
   return (
-    <Dialog fullWidth open={openDialog} onClose={handleCloseDialog}>
-      <DialogTitle>
+    <Dialog
+      fullWidth
+      open={openDialog}
+      onClose={handleCloseDialog}
+      PaperProps={{
+        style: { borderRadius: 40 },
+      }}
+    >
+      <DialogTitle sx={{ background: "linear-gradient(45deg, rgba(39, 200, 245, 0.8), rgba(7, 57, 172, 0.8))",}}>
         <Grid container sx={{ display: "flex", alignItems: "center" }}>
           <Grid sm={10} md={10} item>
-            <Typography variant="h5">Interview</Typography>
+            <Typography color="white" fontWeight={500} variant="h5">
+              Interview
+            </Typography>
           </Grid>
 
           <Grid
@@ -33,7 +55,7 @@ const InterviewDetailsDialog = ({
             item
             sx={{ display: "flex", justifyContent: "flex-end" }}
           >
-            <IconButton onClick={handleCloseDialog}>
+            <IconButton sx={{ color: "white" }} onClick={handleCloseDialog}>
               <Close />
             </IconButton>
           </Grid>
@@ -42,40 +64,56 @@ const InterviewDetailsDialog = ({
       <Divider variant="middle" />
       <DialogContent>
         <Grid className={classes.item}>
-          <Typography>Candidate : </Typography>
-          <Typography sx={{ ml: 2 }}>
+          <Typography fontFamily={"Rubik"}>
+            <AccountCircle sx={{ mr: 1 }} /> Candidate :{" "}
+          </Typography>
+          <Typography fontWeight={600} sx={{ ml: 2 }}>
             {interview && interview.candidate.candidateName}
           </Typography>
         </Grid>
 
         <Grid className={classes.item}>
-          <Typography>Interview Type : </Typography>
-          <Typography sx={{ ml: 2 }}>
-            {interview && interview.InterviewType}
+          <Typography fontFamily={"Rubik"}>
+            {" "}
+            <CallSplit sx={{ mr: 1 }} /> Interview Type :
+          </Typography>
+          <Typography fontWeight={600} sx={{ ml: 2 }}>
+            {interview && interview.InterviewType} Interview
           </Typography>
         </Grid>
 
         <Grid className={classes.item}>
-          <Typography>Interview Date : </Typography>
-          <Typography sx={{ ml: 2 }}>
+          <Typography fontFamily={"Rubik"}>
+            {" "}
+            <CalendarMonth sx={{ mr: 1 }} />
+            Interview Date :{" "}
+          </Typography>
+          <Typography fontWeight={600} sx={{ ml: 2 }}>
             {interview && new Date(interview.InterviewDate).toDateString()}
           </Typography>
         </Grid>
         <Grid className={classes.item}>
-          <Typography>Interview Time : </Typography>
-          <Typography sx={{ ml: 2 }}>
+          <Typography fontFamily={"Rubik"}>
+            <AccessTime sx={{ mr: 1 }} />
+            Interview Time :{" "}
+          </Typography>
+          <Typography fontWeight={600} sx={{ ml: 2 }}>
             {interview && interview.InterviewTime}
           </Typography>
         </Grid>
+        <Divider />
         <Grid className={classes.item}>
-          <Typography>Interviewers : </Typography>
-          <Typography sx={{ ml: 2 }}>
+          <Typography fontFamily={"Rubik"}>Interviewers : </Typography>
+          <Typography sx={{ ml: 2, listStyle: "none" }}>
             {interview &&
               interview.Interviewers.map((interviewer) => (
                 <li key={interviewer._id} component="span">
-                  {interviewer.employeeFirstName +
-                    " " +
-                    interviewer.employeeLastName}
+                  <Grid sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+                    <Avatar src={interviewer.profilePic} sx={{ mr: 1 }} />
+                    {interviewer.employeeFirstName +
+                      " " +
+                      interviewer.employeeLastName}
+                  </Grid>
                 </li>
               ))}
           </Typography>
@@ -125,8 +163,8 @@ const InterviewDetailsDialog = ({
       </DialogActions>
 
       <ConfirmationDialog
-       setOpenConfirmation ={setOpenConfirmation}
-       openConfirmation = {openConfirmation}
+        setOpenConfirmation={setOpenConfirmation}
+        openConfirmation={openConfirmation}
         handleCancelInterview={handleCancelInterview}
       />
     </Dialog>

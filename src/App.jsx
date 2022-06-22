@@ -55,6 +55,7 @@ import CreateSalaryRates from "./Components/SalaryPaymentModule/SalaryRates/Crea
 import ViewSalaryRatesTable from "./Components/SalaryPaymentModule/SalaryRates/ViewSalaryRates/ViewSalaryRatesTable";
 import AvailableAssets from "./Components/AssetManagementModule/AvailableAssetList";
 import Levels from "./Components/ReportersManagementModule/DisplayAndUpdateLevels/Levels";
+import UserEdit from "./Components/ReportersManagementModule/UserEdit/UserEdit";
 
 
 function App() {
@@ -129,7 +130,7 @@ function App() {
               {/* Reporter management */}
               <Route path="/dashboard" element={<DashBord />} />
               <Route path="/profile/update/" element={<EditEmployee />} />
-              <Route path="/user/update/" element={<EditEmployee />} />
+              <Route path="/user/update/" element={<UserEdit/>} />
               <Route
                 path="/dashboard/create"
                 element={<CreateEmployeePage />}

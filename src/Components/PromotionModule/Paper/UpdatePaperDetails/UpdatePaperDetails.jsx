@@ -23,13 +23,12 @@ import { useParams } from "react-router-dom";
 import { viewOnePaperApi } from "../../../../Api/PromotionModule/PaperApi/viewOnePaperApi";
 import { updatePaperDetailsApi } from "../../../../Api/PromotionModule/PaperApi/updatePaperDetailsApi";
 
-export default function CreateCurruntSalary() {
+export default function CreateCurruntSalary({ user }) {
   const classes = useStyles();
 
   const [error, seterror] = useState(false);
   const [added, setadded] = useState(false);
   const [fill, setFill] = useState(false);
-
   const [record, setRecord] = useState({
     PaperID: "",
     PaperType: "",
@@ -37,6 +36,14 @@ export default function CreateCurruntSalary() {
   });
 
   const { PaperID } = useParams();
+
+  if (!user) {
+    window.location.replace("/");
+  } else {
+    if (user.teamLead === false) {
+      window.location.href = "/dashboard";
+    }
+  }
 
   useEffect(() => {
     async function fetchData() {
@@ -140,7 +147,7 @@ export default function CreateCurruntSalary() {
           <Grid item sm={12} md={12}>
             <form autoComplete="off" onSubmit={UpdatePaperDetails}>
               <Grid container>
-                <Grid item sm={12} md={6} className={classes.inputs}>
+                <Grid item sm={12} md={12} className={classes.inputs}>
                   <Grid container>
                     <Grid item sm={4} md={4} className={classes.texFieldLabel}>
                       <InputLabel>Paper ID</InputLabel>

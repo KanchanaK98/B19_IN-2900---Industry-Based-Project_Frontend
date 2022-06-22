@@ -40,11 +40,22 @@ const StyledTableRow = styled(TableRow)(() => ({
   },
 }));
 
-const DisplayMyFeedback = () => {
+const DisplayTeamMemberSubmissions = ({ user }) => {
   const classes = useStyles();
   const [mysubmissionList, setmysubmissionList] = useState([]);
 
   const { EmployeeID } = useParams();
+
+  if (!user) {
+    window.location.replace("/");
+  } else {
+    if (user.teamLead === false) {
+      window.location.href = "/dashboard";
+    } else if (user.employeeID !== EmployeeID) {
+      window.location.href = "/dashboard";
+    }
+  }
+
   useEffect(() => {
     async function fetchData() {
       setmysubmissionList(await displayTeamMemberSubmissionsApi(EmployeeID));
@@ -126,15 +137,42 @@ const DisplayMyFeedback = () => {
                           <StyledTableCell align="left">
                             {record.DateAttempted}
                           </StyledTableCell>
-                          <StyledTableCell align="left">
-                            {record.TeamLeadID}
-                          </StyledTableCell>
-                          <StyledTableCell align="left">
-                            {record.Feedback}
-                          </StyledTableCell>
-                          <StyledTableCell align="left">
-                            {record.DateOfEvaluation}
-                          </StyledTableCell>
+                          {record.TeamLeadID ? (
+                            <StyledTableCell align="left">
+                              {record.TeamLeadID}
+                            </StyledTableCell>
+                          ) : (
+                            <StyledTableCell
+                              align="left"
+                              sx={{ color: "red", fontWeight: "bold" }}
+                            >
+                              Pending
+                            </StyledTableCell>
+                          )}
+                          {record.Feedback ? (
+                            <StyledTableCell align="left">
+                              {record.Feedback}
+                            </StyledTableCell>
+                          ) : (
+                            <StyledTableCell
+                              align="left"
+                              sx={{ color: "red", fontWeight: "bold" }}
+                            >
+                              Pending
+                            </StyledTableCell>
+                          )}
+                          {record.DateOfEvaluation ? (
+                            <StyledTableCell align="left">
+                              {record.DateOfEvaluation}
+                            </StyledTableCell>
+                          ) : (
+                            <StyledTableCell
+                              align="left"
+                              sx={{ color: "red", fontWeight: "bold" }}
+                            >
+                              Pending
+                            </StyledTableCell>
+                          )}
                           <StyledTableCell align="center">
                             {record.DateOfEvaluation == null ? (
                               <Button
@@ -172,4 +210,4 @@ const DisplayMyFeedback = () => {
     </div>
   );
 };
-export default DisplayMyFeedback;
+export default DisplayTeamMemberSubmissions;

@@ -138,7 +138,7 @@ function App() {
               {/* Reporter management */}
               <Route path="/dashboard" element={<DashBord />} />
               <Route path="/profile/update/" element={<EditEmployee />} />
-              <Route path="/user/update/" element={<UserEdit/>} />
+              <Route path="/user/update/" element={<UserEdit />} />
               <Route
                 path="/dashboard/create"
                 element={<CreateEmployeePage />}
@@ -192,92 +192,92 @@ function App() {
               {/* Payrolls management */}
               <Route
                 path="/salary/currentSalary"
-                element={<ViewCurruntSalary />}
+                element={<ViewCurruntSalary user={user} />}
               />
               <Route
                 path="/salary/currentSalary/create"
-                element={<CreateCurruntSalary />}
+                element={<CreateCurruntSalary user={user} />}
               />
 
               <Route
                 path="/salary/currentSalary/update/:EmployeeID"
-                element={<UpdateCurruntSalary />}
+                element={<UpdateCurruntSalary user={user} />}
               />
               <Route
                 path="/salary/summarySalary"
-                element={<ViewSummarySalary />}
+                element={<ViewSummarySalary user={user} />}
               />
               <Route
                 path="/salary/employeeSalary/:EmployeeID"
-                element={<ViewCurrentEmployeeSalary />}
+                element={<ViewCurrentEmployeeSalary user={user} />}
               />
 
               <Route
                 path="/salary/employeeSalary/:EmployeeID/previous"
-                element={<FindEmployeeSalary />}
+                element={<FindEmployeeSalary user={user} />}
               />
 
               {/* Promotion management */}
               <Route
                 path="/promotion/Questions"
-                element={<ViewAllQuestions />}
+                element={<ViewAllQuestions user={user} />}
               />
               <Route
                 path="/promotion/Questions/create"
-                element={<CreateQuestions />}
+                element={<CreateQuestions user={user} />}
               />
               <Route
                 path="/promotion/Paper"
-                element={<ViewAllPapersDelete />}
+                element={<ViewAllPapersDelete user={user} />}
               />
               <Route
                 path="/promotion/Paper/createPaper"
-                element={<CreateNewPaper />}
+                element={<CreateNewPaper user={user} />}
               />
               <Route
                 path="/promotion/Paper/addMoreQuestions/:PaperID"
-                element={<AddMoreQuestionsForm />}
+                element={<AddMoreQuestionsForm user={user} />}
               />
               <Route
                 path="/promotion/Paper/display/:PaperID"
-                element={<ViewOnePaper />}
+                element={<ViewOnePaper user={user} />}
               />
               <Route
                 path="/promotion/Paper/updatePaperDetails/:PaperID"
-                element={<UpdatePaperDetails />}
+                element={<UpdatePaperDetails user={user} />}
               />
               <Route
                 path="/promotion/evaluation/allSubmissions"
-                element={<AllSubmissions />}
+                element={<AllSubmissions user={user} />}
               />
               <Route
                 path="/promotion/evaluation/allSubmissions/:EmployeeID"
-                element={<DisplayTeamMemberSubmissions />}
+                element={<DisplayTeamMemberSubmissions user={user} />}
               />
               <Route
                 path="/promotion/Paper/:EmployeeID"
-                element={<DispalyAndSubmitPaper />} //
+                element={<DispalyAndSubmitPaper user={user} />} //
               />
               <Route
                 path="/promotion/evaluation/evaluatePaper/:TeamLeadID/:EmployeeID/:PaperID"
-                element={<EvaluatePaper />}
+                element={<EvaluatePaper user={user} />}
               />
               <Route
                 path="/promotion/evaluation/mySubmissions/:EmployeeID"
-                element={<DisplayMyFeedback />}
+                element={<DisplayMyFeedback user={user} />}
               />
               <Route
                 path="/promotion/evaluation/exam/viewExam/:EmployeeID"
-                element={<ViewAllExamList />}
+                element={<ViewAllExamList user={user} />}
               />
               <Route
                 path="/promotion/evaluation/exam/scheduleExam/:EmployeeID"
-                element={<ScheduleExamForm />}
+                element={<ScheduleExamForm user={user} />}
               />
 
               <Route
                 path="/promotion/evaluation/exam/updateExam/:EmployeeID/:ExamID"
-                element={<UpdateExamForm />}
+                element={<UpdateExamForm user={user} />}
               />
 
               <Route path="/promotions" element={<HistoryPromotion />} />
@@ -288,11 +288,11 @@ function App() {
               {/* Salary rates */}
               <Route
                 path="/salary/salaryPercentages/create/:EmployeeID"
-                element={<CreateSalaryRates />}
+                element={<CreateSalaryRates user={user} />}
               />
               <Route
                 path="/salary/salaryPercentages/:EmployeeID"
-                element={<ViewSalaryRatesTable />}
+                element={<ViewSalaryRatesTable user={user} />}
               />
             </Routes>
           </Grid>

@@ -21,13 +21,17 @@ import TextareaAutosize from "@mui/material/TextareaAutosize";
 import useStyles from "./EvaluatePaperStyles";
 import Stack from "@mui/material/Stack";
 
-export default function DispalyAndSubmitPaper() {
+export default function EvaluatePaper({ user }) {
   const classes = useStyles();
   const { EmployeeID } = useParams();
   const { PaperID } = useParams();
   const { TeamLeadID } = useParams();
 
   const [Paper, setPaper] = useState([]);
+
+  if (!user) {
+    window.location.replace("/");
+  }
 
   useEffect(() => {
     async function fetchData() {

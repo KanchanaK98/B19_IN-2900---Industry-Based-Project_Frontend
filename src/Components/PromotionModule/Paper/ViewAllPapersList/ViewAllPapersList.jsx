@@ -5,9 +5,19 @@ import CardActions from "@mui/material/CardActions";
 import { viewAllPapersListApi } from "../../../../Api/PromotionModule/PaperApi/viewAllPapersListApi";
 import useStyles from "./ViewAllPapersListStyles";
 
-const ViewAllPapersList = () => {
+const ViewAllPapersList = ({ user }) => {
   const classes = useStyles();
   const [PaperList, setPaperList] = useState([]);
+
+  if (!user) {
+    window.location.replace("/");
+  } else {
+    if (user.teamLead === false) {
+      if (user.jobRole !== "HR Manager") {
+        window.location.href = "/dashboard";
+      }
+    }
+  }
 
   useEffect(() => {
     async function fetchData() {

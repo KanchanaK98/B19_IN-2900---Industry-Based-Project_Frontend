@@ -38,7 +38,7 @@ function MainBox() {
     <Card
       sx={{
         width: 620,
-        height: 380,
+        height: 388,
         animation: `${kenburnsTopLeft} 1s ease-out both`,
         padding: 5,
         mt: 3.5,

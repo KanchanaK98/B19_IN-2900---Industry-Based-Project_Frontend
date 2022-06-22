@@ -15,12 +15,13 @@ function DisplayTeam({ team }) {
           padding: 3,
           minHeight: 500,
           minWidth: 320,
-          backgroundColor: "#e4ecf7",
+          // backgroundColor: "#e4ecf7",
+          backgroundImage: `linear-gradient(to right, rgba(214, 243, 255), rgba(94, 204, 247))`,
 
           transition: "transform 0.15s ease-in-out",
           "&:hover": {
             transform: "scale3d(1.05, 1.05, 1)",
-            backgroundColor: "#38bff5",
+            backgroundImage: "#38bff5",
           },
         }}
       >

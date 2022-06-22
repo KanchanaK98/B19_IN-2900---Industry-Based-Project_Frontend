@@ -1,11 +1,21 @@
 import { Box, Grid } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AllEmployees from "../../../Components/ReportersManagementModule/DisplayEmployees/AllEmployees";
 import DisplayProfile from "../../../Components/ReportersManagementModule/DisplayEmployees/DisplayProfile";
 
-function DisplayAllEmployees({ profiles }) {
+function DisplayAllEmployees({ profiles, setProfiles }) {
+  const user = JSON.parse(sessionStorage.getItem("user"));
   const [employee, setEmployee] = useState(profiles[0]);
-
+  
+  const filterLoggedUser = () => {
+    setProfiles(
+      profiles.filter((profile) => profile.user.employeeID !== user.employeeID)
+    );
+  };
+  useEffect(() => {
+    filterLoggedUser();
+  }, []);
+  
   return (
     <Box sx={{ backgroundColor: "#d7dde0", padding: 2 }}>
       <Grid container>

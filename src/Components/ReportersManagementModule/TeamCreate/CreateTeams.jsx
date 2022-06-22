@@ -49,6 +49,7 @@ function CreateTeams() {
       ...prevState,
       [e.target.name]: e.target.value,
     }));
+    setTeaminputErrors({ ...teaminputErrors, [e.target.name]: "" });
     if (e.target.name === "teamLead") {
       setMembers(leader.filter((lead) => lead !== e.target.value));
     }
@@ -102,7 +103,6 @@ function CreateTeams() {
           setError(false);
         }, 2000);
         handleClear();
-        
       }
     } else {
       setnotAdded(true);
@@ -110,9 +110,7 @@ function CreateTeams() {
         setnotAdded(false);
       }, 2000);
       handleClear();
-      setTimeout(() => {
-        window.location.reload(false);
-      }, 1000);
+     
     }
   };
 

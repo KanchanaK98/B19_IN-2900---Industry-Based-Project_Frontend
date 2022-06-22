@@ -99,6 +99,7 @@ function EditEmployee() {
     }));
 
     setUpdateField(true);
+    setInputErrors({ ...inputErrors, [e.target.name]: "" });
   };
 
   //----------validation-----------------------------

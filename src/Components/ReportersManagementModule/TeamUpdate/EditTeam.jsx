@@ -58,6 +58,7 @@ function EditTeam() {
       [e.target.name]: e.target.value,
     }));
     setUpdateField(true);
+    setInputErrors({ ...inputErrors, [e.target.name]: "" });
   };
 
   const errorHandle = () => {

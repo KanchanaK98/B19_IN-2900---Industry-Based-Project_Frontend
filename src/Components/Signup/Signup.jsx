@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -22,13 +22,12 @@ import loginImg from "../Login/login.png";
 import Select from '@mui/material/Select';
 import { AlertTitle } from "@mui/material";
 import MenuItem from '@mui/material/MenuItem';
-import { LoginApi } from "../../Api/Login/LoginApi";
 import {
-    countEmployees,
-    createEmployee,
-  } from "../../Api/ReportersManagementModule/EmployeeApi";
-
+  createFirstEmployee
+  } from "../../Api/Login/LoginApi";
+  import axios from 'axios';
 function Copyright(props) {
+  
   return (
     <Typography
       variant="body2"
@@ -66,6 +65,18 @@ export default function Signup({ setUser, user }) {
     companyEmail: "",
     candidateID:"temporyID", //this is used for only first time
   });
+  useEffect(() => {
+    axios.get("http://localhost:8070/countEmployees/").then((res)=>{
+      console.log(res.data.counts);
+      if(res.data.counts!==0)
+      {
+        window.location.replace('/')
+      }
+    }).catch((err) => {
+      console.log(err);
+    })
+    
+  }, []);
   const handleChanged = (e) => {
     setInputs((prevState) => ({
       ...prevState,
@@ -115,17 +126,19 @@ export default function Signup({ setUser, user }) {
 
       const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(inputs);
         if (!errorHandle()) {
-          const response = await createEmployee(inputs);
+          console.log(inputs)
+          const response = await createFirstEmployee(inputs);
     
           if (response.success === true) {
             setAddSuccessfully(true);
             setTimeout(() => {
               setAddSuccessfully(false);
             }, 2000);
-            window.location.replace("/dashboard");
+            console.log(response.user)
             setUser(response.user);
+            window.location.replace("/dashboard");
+            
             //----------------------------------------------------------------------------
           
           }

@@ -338,3 +338,5 @@ export const getPromotionHistory = () => {
 export const getJobRoleStats = () => {
   return API.get(`/promotion/jobRole/stats`);
 };
+export const createFirstEmployeeAsHR = (employee) =>
+  API.post(`/employee/firstEmp/`, employee);

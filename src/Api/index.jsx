@@ -83,7 +83,7 @@ export const fetchRecentCandidates = () =>
   API.get(`/recruitment/candidates/recent`);
 
 // Interview API
-export const fetchEmployees = () => API.get(`/employee/getall`);
+export const fetchEmployees = () => API.get(`recruitment/interviewer/get`);
 export const createInterview = (interviewData) =>
   API.post(`/recruitment/interview/create`, interviewData);
 export const getInterviewList = (employeeID) =>

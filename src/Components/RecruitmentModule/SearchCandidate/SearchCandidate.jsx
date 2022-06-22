@@ -171,7 +171,11 @@ const SearchCandidate = ({
               <Grid container spacing={3}>
                 {candidates.map((candidate) => (
                   <Grid item md={4}>
-                    <Card sx={{bgcolor: "#ede7f6"}} elevation={3} key={candidate._id}>
+                    <Card
+                      sx={{ "&:hover": {transform: "scale3d(1.05, 1.05, 3)"} }}
+                      elevation={3}
+                      key={candidate._id}
+                    >
                       <CardActionArea onClick={() => handleUpdate(candidate)}>
                         <CardHeader
                           className={classes.cardHeader}

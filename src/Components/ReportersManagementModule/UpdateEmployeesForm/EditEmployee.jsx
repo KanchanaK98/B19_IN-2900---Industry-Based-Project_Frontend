@@ -23,8 +23,10 @@ import {
 } from "../../../Api/ReportersManagementModule/EmployeeApi";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { add } from "date-fns";
+import useStyles from "./EditEmployeeStyles";
 
 function EditEmployee() {
+  const jobRole = JSON.parse(sessionStorage.getItem("user")).jobRole;
   const [inputErrors, setInputErrors] = useState({
     employeeFirstName: "",
     employeeLastName: "",
@@ -188,7 +190,7 @@ function EditEmployee() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
- 
+
     const empID = inputs.employeeID;
     console.log(empID);
     if (inputs.status === "Resigned") {
@@ -272,17 +274,21 @@ function EditEmployee() {
       setUpdateField(true);
     }
   };
+  const classes = useStyles();
   return (
     <div>
       {inputs && (
         <form>
           <Box padding={6} sx={{ mb: 4 }}>
-            <Paper elevation={3} sx={{ padding: 4.5 }}>
+            <Paper
+              elevation={3}
+              sx={{ padding: 4.5, backgroundColor: "#e4ecf7" }}
+            >
               <Grid container>
-                <Grid item sm={12} md={12}>
-                  <Typography variant="h5">
+                <Grid item sm={12} md={12} sx={{ color: "#183d78" }}>
+                  <Typography variant="h5" fontWeight="bold">
                     <PersonIcon sx={{ width: 50, height: 50 }} />
-                    MY PROFILE
+                    USER PROFILE
                   </Typography>
                 </Grid>
                 <Grid container>
@@ -438,7 +444,7 @@ function EditEmployee() {
                           </FormLabel>
                         </Grid>
                         <Grid item xs={6} md={9}>
-                          <TextField
+                         {jobRole === "HR Manager" ?( <TextField
                             id="filled-basic"
                             variant="filled"
                             name="NIC"
@@ -448,7 +454,18 @@ function EditEmployee() {
                             error={inputErrors.NIC ? true : false}
                             helperText={inputErrors.NIC}
                             fullWidth
-                          />
+                          />):(<TextField
+                            id="filled-basic"
+                            variant="filled"
+                            name="NIC"
+                            disabled
+                            sx={{ backgroundColor: "#c7fcf7" }}
+                            value={inputs.NIC}
+                            onChange={handleChange || add(this)}
+                            error={inputErrors.NIC ? true : false}
+                            helperText={inputErrors.NIC}
+                            fullWidth
+                          />)}
                         </Grid>
                       </Grid>
                     </Grid>
@@ -559,92 +576,104 @@ function EditEmployee() {
                     <Grid item xs={6}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={3}>
-                          <FormLabel
-                            sx={{ fontWeight: "bold", ml: 1, mt: 2 }}
-                            className="label"
-                          >
-                            Job Role :
-                          </FormLabel>
+                          {jobRole === "HR Manager" && (
+                            <FormLabel
+                              sx={{ fontWeight: "bold", ml: 1, mt: 2 }}
+                              className="label"
+                            >
+                              Job Role :
+                            </FormLabel>
+                          )}
                         </Grid>
                         <Grid item xs={6} md={9}>
-                          <TextField
-                            id="data"
-                            label="Job Role"
-                            variant="filled"
-                            name="jobRole"
-                            select
-                            sx={{ backgroundColor: "#c7fcf7" }}
-                            value={inputs.jobRole}
-                            onChange={handleChange || add(this)}
-                            fullWidth
-                            SelectProps={{
-                              renderValue: (job) => job,
-                            }}
-                          >
-                            {jobRoles.map((job) => (
-                              <MenuItem value={job} key={job}>
-                                {job}
+                          {jobRole === "HR Manager" && (
+                            <TextField
+                              id="data"
+                              label="Job Role"
+                              variant="filled"
+                              name="jobRole"
+                              select
+                              sx={{ backgroundColor: "#c7fcf7" }}
+                              value={inputs.jobRole}
+                              onChange={handleChange || add(this)}
+                              fullWidth
+                              SelectProps={{
+                                renderValue: (job) => job,
+                              }}
+                            >
+                              {jobRoles.map((job) => (
+                                <MenuItem value={job} key={job}>
+                                  {job}
+                                </MenuItem>
+                              ))}
+                            </TextField>
+                          )}
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Grid container spacing={2}>
+                        <Grid item xs={6} md={3}>
+                          {jobRole === "HR Manager" && (
+                            <FormLabel
+                              sx={{ fontWeight: "bold", ml: 1, mt: 2 }}
+                              className="label"
+                            >
+                              Job Type:
+                            </FormLabel>
+                          )}
+                        </Grid>
+                        <Grid item xs={6} md={9}>
+                          {jobRole === "HR Manager" && (
+                            <TextField
+                              id="filled-basic"
+                              label=" Job Type"
+                              variant="filled"
+                              name="jobType"
+                              sx={{ backgroundColor: "#c7fcf7" }}
+                              value={inputs.jobType}
+                              onChange={handleChange || add(this)}
+                              error={inputErrors.jobType ? true : false}
+                              helperText={inputErrors.jobType}
+                              fullWidth
+                            />
+                          )}
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Grid container spacing={2}>
+                        <Grid item xs={6} md={3}>
+                          {jobRole === "HR Manager" && (
+                            <FormLabel
+                              sx={{ fontWeight: "bold", ml: 1, mt: 2 }}
+                              className="label"
+                            >
+                              Status :
+                            </FormLabel>
+                          )}
+                        </Grid>
+                        <Grid item xs={6} md={9}>
+                          {jobRole === "HR Manager" && (
+                            <TextField
+                              id="filled-basic"
+                              label="Status"
+                              variant="filled"
+                              name="status"
+                              sx={{ backgroundColor: "#c7fcf7" }}
+                              value={inputs.status}
+                              onChange={handleChange || add(this)}
+                              select
+                              selectprops={{ renderValue: inputs.status }}
+                              fullWidth
+                            >
+                              <MenuItem value={"Probationary"}>
+                                Probationary
                               </MenuItem>
-                            ))}
-                          </TextField>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                    <Grid item xs={6}>
-                      <Grid container spacing={2}>
-                        <Grid item xs={6} md={3}>
-                          <FormLabel
-                            sx={{ fontWeight: "bold", ml: 1, mt: 2 }}
-                            className="label"
-                          >
-                            Job Type:
-                          </FormLabel>
-                        </Grid>
-                        <Grid item xs={6} md={9}>
-                          <TextField
-                            id="filled-basic"
-                            label=" Job Type"
-                            variant="filled"
-                            name="jobType"
-                            sx={{ backgroundColor: "#c7fcf7" }}
-                            value={inputs.jobType}
-                            onChange={handleChange || add(this)}
-                            error={inputErrors.jobType ? true : false}
-                            helperText={inputErrors.jobType}
-                            fullWidth
-                          />
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                    <Grid item xs={6}>
-                      <Grid container spacing={2}>
-                        <Grid item xs={6} md={3}>
-                          <FormLabel
-                            sx={{ fontWeight: "bold", ml: 1, mt: 2 }}
-                            className="label"
-                          >
-                            Status :
-                          </FormLabel>
-                        </Grid>
-                        <Grid item xs={6} md={9}>
-                          <TextField
-                            id="filled-basic"
-                            label="Status"
-                            variant="filled"
-                            name="status"
-                            sx={{ backgroundColor: "#c7fcf7" }}
-                            value={inputs.status}
-                            onChange={handleChange || add(this)}
-                            select
-                            selectprops={{ renderValue: inputs.status }}
-                            fullWidth
-                          >
-                            <MenuItem value={"Probationary"}>
-                              Probationary
-                            </MenuItem>
-                            <MenuItem value={"Permenent"}>Permenent</MenuItem>
-                            <MenuItem value={"Resigned"}>Resigned</MenuItem>
-                          </TextField>
+                              <MenuItem value={"Permenent"}>Permenent</MenuItem>
+                              <MenuItem value={"Resigned"}>Resigned</MenuItem>
+                            </TextField>
+                          )}
                         </Grid>
                       </Grid>
                     </Grid>
@@ -814,7 +843,7 @@ function EditEmployee() {
                     <Button
                       onClick={handleSubmit}
                       variant="contained"
-                      sx={{ backgroundColor: "#183d78" }}
+                      className={classes.button}
                       fullWidth
                     >
                       UPDATE
@@ -826,7 +855,7 @@ function EditEmployee() {
                       to={`/dashboard`}
                       state={{ allEmployees: true }}
                       variant="contained"
-                      sx={{ backgroundColor: "#183d78" }}
+                      className={classes.button}
                       fullWidth
                     >
                       VIEW ALL EMPLOYEES
@@ -838,7 +867,7 @@ function EditEmployee() {
                       to={`/dashboard`}
                       state={{ allEmployees: true }}
                       variant="contained"
-                      sx={{ backgroundColor: "#183d78" }}
+                      className={classes.button}
                       fullWidth
                     >
                       CANCEL

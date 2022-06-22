@@ -3,6 +3,7 @@ import useStyles from "../OrganizationStructure/OrganizationStructureStyles";
 import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import { getJobRoles } from "../../../Api/ReportersManagementModule/EmployeeApi";
+import { getOrganizationStructure } from "../../../Api/ReportersManagementModule/OrganizationApi";
 
 function OrganizationStructure() {
   const [organization, setOrganization] = useState();
@@ -12,6 +13,7 @@ function OrganizationStructure() {
       setOrganization(await getJobRoles());
     }
     fetchData();
+    getOrganizationStructure()
   }, []);
 
   const classes = useStyles();

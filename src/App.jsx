@@ -57,6 +57,8 @@ import CreateSalaryRates from "./Components/SalaryPaymentModule/SalaryRates/Crea
 import ViewSalaryRatesTable from "./Components/SalaryPaymentModule/SalaryRates/ViewSalaryRates/ViewSalaryRatesTable";
 import AvailableAssets from "./Components/AssetManagementModule/AvailableAssetList";
 import Levels from "./Components/ReportersManagementModule/DisplayAndUpdateLevels/Levels";
+import UserEdit from "./Components/ReportersManagementModule/UserEdit/UserEdit";
+
 import Signup from "./Components/Signup/Signup";
 
 function App() {
@@ -136,7 +138,7 @@ function App() {
               {/* Reporter management */}
               <Route path="/dashboard" element={<DashBord />} />
               <Route path="/profile/update/" element={<EditEmployee />} />
-              <Route path="/user/update/" element={<EditEmployee />} />
+              <Route path="/user/update/" element={<UserEdit/>} />
               <Route
                 path="/dashboard/create"
                 element={<CreateEmployeePage />}
@@ -147,7 +149,7 @@ function App() {
               <Route path="/products" element={<ProductPage />} />
               <Route path="/products/create" element={<CreateProductPage />} />
               <Route path="/teams/create" element={<CreateTeamPage />} />
-              <Route path="/pro" element={<CreateProduct />} />
+              {/* <Route path="/pro" element={<CreateProduct />} /> */}
               <Route path="/user" element={<UserProfile user={user} />} />
               <Route path="/products/update/:id" element={<EditProduct />} />
               <Route

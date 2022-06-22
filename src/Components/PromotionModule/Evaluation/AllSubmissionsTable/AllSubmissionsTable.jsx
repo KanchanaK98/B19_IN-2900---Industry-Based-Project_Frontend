@@ -9,7 +9,7 @@ import Paper from "@mui/material/Paper";
 import { useParams } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import { Box } from "@mui/material/";
-import { Grid } from "@mui/material";
+import { Grid, Button } from "@mui/material";
 import useStyles from "./AllSubmissionsTableStyles";
 import { styled } from "@mui/material/styles";
 import { allSubmissionsApi } from "../../../../Api/PromotionModule/EvaluateApi/allSubmissionsApi";
@@ -45,6 +45,8 @@ const DisplayMyFeedback = () => {
   const [submissionList, setsubmissionList] = useState([]);
 
   const { EmployeeID } = useParams();
+  //console.log("eid", EmployeeID);
+
   useEffect(() => {
     async function fetchData() {
       setsubmissionList(await allSubmissionsApi());
@@ -101,14 +103,13 @@ const DisplayMyFeedback = () => {
                           Date Attempted
                         </StyledTableCell>
                         <StyledTableCell align="left">
-                          TeamLead ID
-                        </StyledTableCell>
-                        <StyledTableCell align="left">
-                          Feed back
+                          Evaluater ID
                         </StyledTableCell>
                         <StyledTableCell align="left">
                           Date Of Evaluation
                         </StyledTableCell>
+                        <StyledTableCell align="left">Feedback</StyledTableCell>
+                        <StyledTableCell align="left"></StyledTableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -123,14 +124,65 @@ const DisplayMyFeedback = () => {
                           <StyledTableCell align="left">
                             {record.DateAttempted}
                           </StyledTableCell>
-                          <StyledTableCell align="left">
-                            {record.TeamLeadID}
-                          </StyledTableCell>
-                          <StyledTableCell align="left">
-                            {record.DateOfEvaluation}
-                          </StyledTableCell>
-                          <StyledTableCell align="left">
-                            {record.Feedback}
+                          {record.TeamLeadID ? (
+                            <StyledTableCell align="left">
+                              {record.TeamLeadID}
+                            </StyledTableCell>
+                          ) : (
+                            <StyledTableCell
+                              align="left"
+                              sx={{ color: "red", fontWeight: "bold" }}
+                            >
+                              Pending
+                            </StyledTableCell>
+                          )}
+                          {record.DateOfEvaluation ? (
+                            <StyledTableCell align="left">
+                              {record.DateOfEvaluation}
+                            </StyledTableCell>
+                          ) : (
+                            <StyledTableCell
+                              align="left"
+                              sx={{ color: "red", fontWeight: "bold" }}
+                            >
+                              Pending
+                            </StyledTableCell>
+                          )}
+                          {record.Feedback ? (
+                            <StyledTableCell align="left">
+                              {record.Feedback}
+                            </StyledTableCell>
+                          ) : (
+                            <StyledTableCell
+                              align="left"
+                              sx={{ color: "red", fontWeight: "bold" }}
+                            >
+                              Pending
+                            </StyledTableCell>
+                          )}
+                          <StyledTableCell align="center">
+                            {record.DateOfEvaluation == null ? (
+                              <Button
+                                variant="contained"
+                                sx={{ backgroundColor: "#183d78" }}
+                                onClick={() =>
+                                  window.open(
+                                    ` /promotion/evaluation/evaluatePaper/${EmployeeID}/${record.EmployeeID}/${record.PaperID}`,
+                                    "_self"
+                                  )
+                                }
+                              >
+                                Evaluate&nbsp;
+                              </Button>
+                            ) : (
+                              <Button
+                                variant="contained"
+                                disabled
+                                sx={{ backgroundColor: "#183d78" }}
+                              >
+                                Evaluated&nbsp;
+                              </Button>
+                            )}
                           </StyledTableCell>
                         </StyledTableRow>
                       ))}

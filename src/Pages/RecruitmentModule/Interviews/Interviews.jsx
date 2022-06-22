@@ -9,7 +9,7 @@ import RecentCandidate from "../../../Components/RecruitmentModule/RecentCandida
 const Interviews = ({ open }) => {
   return (
     <Grid container sx={{ p: 4 }} spacing={3}>
-      <Grid item md={8.6}>
+      <Grid item md={8}>
         <Grid container>
           <Grid item sm={12} md={12}>
             <InterviewStats />
@@ -29,13 +29,13 @@ const Interviews = ({ open }) => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid item md={3.4}>
+      <Grid item md={4}>
         {/* <Grid>
         <InterviewerCalender />
 
         </Grid> */}
         <Grid>
-          <RecentCandidate />
+          <RecentCandidate createFrom={false}/>
         </Grid>
       </Grid>
     </Grid>

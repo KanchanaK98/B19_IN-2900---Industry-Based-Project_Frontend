@@ -23,7 +23,9 @@ export const getLeaveBalance = async (employeeID) => {
   try {
     const id = employeeID
       ? employeeID
-      : JSON.parse(sessionStorage.getItem("user")).employeeID;
+      : JSON.parse(sessionStorage.getItem("user"))
+      ? JSON.parse(sessionStorage.getItem("user")).employeeID
+      : null;
 
     const { data } = await api.getLeaveBalance(id);
 
@@ -33,11 +35,21 @@ export const getLeaveBalance = async (employeeID) => {
   }
 };
 
+export const getLeaveBalanceOfEmployee = async (employeeID) => {
+  try {
+    const { data } = await api.getLeaveBalanceOfEmployee(employeeID);
+
+    return data.remainingLeaves;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const getLeaveHistory = async () => {
   try {
-    const { data } = await api.getLeaveList(
-      JSON.parse(sessionStorage.getItem("user")).employeeID
-    );
+    const user = JSON.parse(sessionStorage.getItem("user"));
+    const employeeID = user ? user.employeeID : null;
+    const { data } = await api.getLeaveList(employeeID);
     //console.log(data.leaveHistory);
     return data.leaveHistory;
   } catch (error) {
@@ -60,11 +72,11 @@ export const cancelLeave = async (reason, leaveID) => {
 };
 
 export const getRequestedLeaves = async () => {
-  console.log("first")
+  const user = JSON.parse(sessionStorage.getItem("user"));
+  const employeeID = user ? user.employeeID : null;
   const response = await api.getRequestedLeave(
-    JSON.parse(sessionStorage.getItem("user")).employeeID
+    employeeID
   );
-  //console.log(response);
   return response.data.requestedLeave;
 };
 
@@ -96,18 +108,11 @@ export const getEmployees = async () => {
   } catch (error) {
     console.log(error);
   }
-
-  
 };
-export const increaseLeaves = async (employeeID, leaveType, data) =>{
- 
-  try{
-    const response = await api.increaseLeaves(employeeID,leaveType,data);
-    
-
-  }catch(error){
+export const increaseLeaves = async (employeeID, leaveType, data) => {
+  try {
+    const response = await api.increaseLeaves(employeeID, leaveType, data);
+  } catch (error) {
     console.log(error);
   }
-
-    
-}
+};

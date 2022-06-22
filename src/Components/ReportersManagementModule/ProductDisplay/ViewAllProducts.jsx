@@ -49,6 +49,7 @@ const StyledTableRow = styled(TableRow)(() => ({
 }));
 //----------------------------------------
 function ViewAllProducts() {
+  const jobRole = JSON.parse(sessionStorage.getItem("user")).jobRole;
   const [products, setProducts] = useState([]);
   const [openDialog, setOpenDialog] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -117,9 +118,22 @@ function ViewAllProducts() {
                 backgroundColor: "#d7dde0",
               }}
               type="text"
-              placeholder="Search by Product ID"
+              placeholder="Search...."
               onChange={(e) => setSearch(e.target.value)}
             />
+            <Grid>
+              <Typography
+                textAlign="right"
+                sx={{
+                  fontSize: 13,
+                  color: "#b5b6ba",
+                  fontStyle: "italic",
+                  mt: 1,
+                }}
+              >
+                Search by Product ID, Product Name, Team Name
+              </Typography>
+            </Grid>
           </Grid>
         </Grid>
       </Paper>
@@ -140,14 +154,14 @@ function ViewAllProducts() {
                 <StyledTableRow key={product._id} className={classes.tableRow}>
                   <StyledTableCell>
                     <Grid item md={3}>
-                      <IconButton
+                     {jobRole === "HR Manager" &&( <IconButton
                         sx={{ backgroundColor: "#183d78" }}
                         component={Link}
                         to={`/products/update/${products._id}`}
                         state={{ product }}
                       >
                         <EditIcon sx={{ color: "white" }} fontSize="large" />
-                      </IconButton>
+                      </IconButton>)}
                     </Grid>
                   </StyledTableCell>
                   <StyledTableCell>

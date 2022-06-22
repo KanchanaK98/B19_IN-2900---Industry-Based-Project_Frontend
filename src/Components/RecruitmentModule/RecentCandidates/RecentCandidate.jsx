@@ -17,7 +17,7 @@ import { Scrollbars } from "react-custom-scrollbars";
 import { getInterviewResult } from "../../../Api/RecruitmentModule/InterviewApi";
 import InterviewResult from "../InterviewResult/InterviewResult";
 
-const RecentCandidate = () => {
+const RecentCandidate = ({createFrom}) => {
   const [candidates, setCandidates] = useState(null);
   const [selectedCandidates, setSelectedCandidates] = useState(null);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -60,13 +60,17 @@ const RecentCandidate = () => {
         Recent Candidates
       </Typography>
       <Paper elevation={5} className={classes.paper}>
-        <Scrollbars style={{ height: 600 }}>
+        <Scrollbars style={{ height: createFrom?520: 645 }}>
           {!candidates ? (
             <Grid className={classes.skeleton}>
-              <Skeleton variant="rectangular" width={310} height={60} />
-              <Skeleton variant="rectangular" width={310} height={60} />
-              <Skeleton variant="rectangular" width={310} height={60} />
-              <Skeleton variant="rectangular" width={310} height={60} />
+              <Skeleton variant="rectangular" width={410} height={60} />
+              <Skeleton variant="rectangular" width={410} height={60} />
+              <Skeleton variant="rectangular" width={410} height={60} />
+              <Skeleton variant="rectangular" width={410} height={60} />
+              <Skeleton variant="rectangular" width={410} height={60} />
+              <Skeleton variant="rectangular" width={410} height={60} />
+              <Skeleton variant="rectangular" width={410} height={60} />
+              <Skeleton variant="rectangular" width={410} height={60} />
             </Grid>
           ) : candidates.length === 0 ? (
             <Typography sx={{ mt: 1 }}>Candidate not available</Typography>
@@ -106,7 +110,7 @@ const RecentCandidate = () => {
                     {candidate.status}
                   </Typography>
                 </Grid>
-                <Grid item md={1}>
+                <Grid item md={1} className={classes.MoreVert} >
                   <IconButton
                     onClick={(event) => {
                       handleOpenMenu(event, candidate);
@@ -164,7 +168,7 @@ const RecentCandidate = () => {
           )}
         </Scrollbars>
       </Paper>
-      {selectedCandidates && interviewResult && (
+      {selectedCandidates && (
         <InterviewResult
           openDialog={openDialog}
           handleCloseDialog={handleCloseDialog}

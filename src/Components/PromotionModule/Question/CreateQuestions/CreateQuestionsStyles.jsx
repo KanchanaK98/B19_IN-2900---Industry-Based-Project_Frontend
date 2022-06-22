@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
       fontSize: theme.spacing(5),
       marginLeft: theme.spacing(2),
     },
-    color: "#395e5e",
+    color: "#183d78",
   },
   inputs: {
     display: "flex",
@@ -62,8 +62,8 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#2f375e",
     color: "#e0f2f1",
     "&:hover": {
-      color: "#d7dde0",
-      backgroundColor: "#757575",
+      color: "#183d78",
+      backgroundColor: "#b0bec5",
     },
   },
 }));

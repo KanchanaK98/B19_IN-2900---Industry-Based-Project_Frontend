@@ -121,7 +121,12 @@ function CreateEmployee({ candidates }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(inputs);
+  
+    //-----------------------------------
+    if (candidates && candidates.length === 0) {
+      setIsDisableCandidate(true);
+    }
+    //---------------------------------------
     if (!errorHandle()) {
       const response = await createEmployee(inputs);
 
@@ -133,7 +138,6 @@ function CreateEmployee({ candidates }) {
           setAddSuccessfully(false);
         }, 2000);
         //----------------------------------------------------------------------------
-      
       }
 
       if (response.status === 400) {
@@ -158,14 +162,15 @@ function CreateEmployee({ candidates }) {
     //   setCandidates(await getCandidates());
     // }
     // fetchData();
-    if (!(candidates && candidates.length > 0)) {
+    if (candidates && candidates.length > 0) {
+      console.log("hiii")
       setIsDisableCandidate(false);
     }
     if (candidates && candidates.length === 0) {
       setIsDisableCandidate(true);
     }
-  }, []);
-
+  }, [candidates]);
+console.log(candidates)
   // console.log(candidates, { message: "hi" });
   const classes = useStyles();
   return (
@@ -379,14 +384,12 @@ function CreateEmployee({ candidates }) {
               <Grid item md={6}>
                 <Grid container>
                   <Grid item md={6} textAlign="right">
-                    {credentials && (
-                      <CredentialCard
-                        credentials={credentials}
-                        setCredentials={setCredentials}
-                        isDisable={isDisable}
-                        setIsDisable={setIsDisable}
-                      />
-                    )}
+                    <CredentialCard
+                      credentials={credentials}
+                      setCredentials={setCredentials}
+                      isDisable={isDisable}
+                      setIsDisable={setIsDisable}
+                    />
                   </Grid>
                   <Grid item md={6} textAlign="right">
                     <Button

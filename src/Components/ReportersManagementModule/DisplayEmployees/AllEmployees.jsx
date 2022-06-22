@@ -20,7 +20,15 @@ function AllEmployees({ setEmployee, profiles }) {
                 onClick={() => {
                   handleClick(profile);
                 }}
-                sx={{ mb: 1, backgroundColor: "#e4ecf7" }}
+                sx={{
+                  mb: 1,
+                  backgroundColor: "#e4ecf7",
+                  transition: "transform 0.15s ease-in-out",
+                  "&:hover": {
+                    transform: "scale3d(1.05, 1.05, 1)",
+                    backgroundColor: "#38bff5",
+                  },
+                }}
               >
                 <CardActionArea sx={{ p: 2 }}>
                   <Grid container>

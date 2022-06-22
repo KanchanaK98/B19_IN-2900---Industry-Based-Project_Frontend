@@ -3,11 +3,11 @@ import { makeStyles } from "@mui/styles";
 const useStyles = makeStyles((theme) => ({
   title: {
     fontFamily: "Rubik",
-    margin: theme.spacing(0, 0, 2, 2),
+    margin: theme.spacing(0, 0, 3.3, 2),
   },
   paper: {
     borderRadius: theme.spacing(4),
-    padding: theme.spacing(1, 2, 2, 2),
+    padding: theme.spacing(1, 3, 2, 2),
   },
   candidate: {
     marginTop: theme.spacing(2),
@@ -42,6 +42,10 @@ const useStyles = makeStyles((theme) => ({
       margin: theme.spacing(1, 0),
       borderRadius: theme.spacing(2),
     }
+  },
+  MoreVert : {
+    display: "flex",
+    justifyContent: "flex-end"
   }
 }));
 

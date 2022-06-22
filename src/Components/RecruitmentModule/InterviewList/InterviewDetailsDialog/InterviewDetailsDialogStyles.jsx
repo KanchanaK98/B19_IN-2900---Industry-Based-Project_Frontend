@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'flex-end'
     },
     buttons: {
-        margin: theme.spacing(1)
+        margin: theme.spacing(0, 3, 3, 3)
     },
     yesNoButtons : {
         display: 'flex',

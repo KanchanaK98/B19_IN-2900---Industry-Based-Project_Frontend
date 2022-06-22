@@ -178,6 +178,7 @@ const SearchCandidate = ({
                     >
                       <CardActionArea onClick={() => handleUpdate(candidate)}>
                         <CardHeader
+                        sx={{bgcolor: "rgba(119, 120, 135, 0.2)"}}
                           className={classes.cardHeader}
                           avatar={
                             <Avatar sx={{ bgcolor: "purple" }}>
@@ -200,6 +201,7 @@ const SearchCandidate = ({
                             <Typography>{candidate.phoneNumber}</Typography>
                           </Grid>
                         </Grid>
+                        <Divider />
                       </CardActionArea>
                       <Grid container className={classes.cvButton}>
                         <Button onClick={() => handleOpenDialog(candidate)}>

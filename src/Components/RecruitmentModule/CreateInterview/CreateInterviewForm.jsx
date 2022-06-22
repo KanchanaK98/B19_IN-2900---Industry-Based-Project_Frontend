@@ -266,6 +266,7 @@ const CreateInterviewForm = () => {
                         setInterview={setInterview}
                         interview={interview}
                         employees={employees}
+                        setEmployees={setEmployees}
                         setInterviewErrors={setInterviewErrors}
                       />
                     </Grid>
@@ -302,6 +303,7 @@ const CreateInterviewForm = () => {
                             label="Select Interview Date"
                             name="InterviewDate"
                             inputFormat="MM/dd/yyyy"
+                            minDate={new Date()}
                             value={interview.InterviewDate}
                             onChange={(newValue) => {
                               setInterview({
@@ -340,6 +342,7 @@ const CreateInterviewForm = () => {
                             label="Select Interview Time"
                             name="InterviewTime"
                             value={interview.InterviewTime}
+                            minTime={new Date()}
                             onChange={(newValue) => {
                               setInterview({
                                 ...interview,

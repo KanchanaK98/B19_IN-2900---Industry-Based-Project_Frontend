@@ -451,7 +451,7 @@ const SideBar = ({ open, toggleDrawer, user, handleLogOut }) => {
             </Collapse>
           </Grid>
 
-          <Grid className={classes.navItem}>
+          {user.jobRole !== "IT Employee" && (<Grid className={classes.navItem}>
             <ListItem
               selected={selectedIndex === 5}
               onClick={() => {
@@ -534,7 +534,8 @@ const SideBar = ({ open, toggleDrawer, user, handleLogOut }) => {
                     <ListItemText primary="Evaluation" />
                   </ListItem2>
                 )}
-                {user.jobRole !== "CTO" && (
+
+                {(user.jobRole !== "CTO" || user.jobRole !== "IT Employee") && (
                   <ListItem2
                     component={Link}
                     to={`/promotion/evaluation/mySubmissions/${user.employeeID}`}
@@ -586,7 +587,7 @@ const SideBar = ({ open, toggleDrawer, user, handleLogOut }) => {
                 )}
               </List>
             </Collapse>
-          </Grid>
+          </Grid>)}
 
           {(user.jobRole === "HR Manager" ||
             user.jobRole === "CTO" ||

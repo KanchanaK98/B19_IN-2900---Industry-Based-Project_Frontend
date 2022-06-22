@@ -8,6 +8,8 @@ import {
   Typography,
   MenuItem,
   InputLabel,
+  Stack,
+  Alert,
 } from "@mui/material";
 import React, { useState } from "react";
 import useStyles from "./CreateCandidateFormStyles";
@@ -33,7 +35,7 @@ const jobPositions = [
   "Product manager",
   "Associate Software engineer",
   "Intern",
-  "Software Architect"
+  "Software Architect",
 ];
 
 const CreateCandidateForm = ({
@@ -43,6 +45,7 @@ const CreateCandidateForm = ({
 }) => {
   const [openDialog, setOpenDialog] = useState(false);
   const [openSnackBar, setOpenSnackBar] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
   const [candidateErrors, setCandidateErrors] = useState({
     firstName: "",
     lastName: "",
@@ -52,8 +55,7 @@ const CreateCandidateForm = ({
     email: "",
     cv: "",
   });
-  
-  
+
   const handleOpenDialog = () => {
     setOpenDialog(true);
   };
@@ -107,6 +109,7 @@ const CreateCandidateForm = ({
       }));
       isError = true;
     }
+    //eslint-disable-next-line
     const NICFormat = /^([0-9]{9}[x|X|v|V]|[0-9]{12})$/;
     if (candidateData.NIC && !candidateData.NIC.match(NICFormat)) {
       setCandidateErrors((prevState) => ({
@@ -115,7 +118,34 @@ const CreateCandidateForm = ({
       }));
       isError = true;
     }
+    //eslint-disable-next-line
+    const phoneFormat = /^\+947[125678][0-9]{7}$/;
+    if (
+      candidateData.phoneNumber &&
+      !candidateData.phoneNumber.match(phoneFormat)
+    ) {
+      setCandidateErrors((prevState) => ({
+        ...prevState,
+        phoneNumber: "Invalid phone number format",
+      }));
+      isError = true;
+    }
     if (candidateErrors.cv) {
+      isError = true;
+    }
+    const nameFormat = /^[a-zA-Z]*$/;
+    if (candidateData.firstName && !candidateData.firstName.match(nameFormat)) {
+      setCandidateErrors((prevState) => ({
+        ...prevState,
+        firstName: "Invalid name format",
+      }));
+      isError = true;
+    }
+    if (candidateData.lastName && !candidateData.lastName.match(nameFormat)) {
+      setCandidateErrors((prevState) => ({
+        ...prevState,
+        lastName: "Invalid name format",
+      }));
       isError = true;
     }
     return isError;
@@ -127,6 +157,11 @@ const CreateCandidateForm = ({
         const createResponse = await createCandidate(candidateData);
         if (createResponse.success === true) {
           setOpenSnackBar(true);
+        } else {
+          setErrorMessage(createResponse.message);
+          setTimeout(() => {
+            setErrorMessage(null);
+          }, 5000);
         }
       } else {
         const updateResponse = await updateCandidate(
@@ -135,7 +170,7 @@ const CreateCandidateForm = ({
         );
         if (updateResponse.success === true) {
           setOpenSnackBar(true);
-        }
+        } 
       }
       handleClear();
       window.location.reload();
@@ -155,8 +190,10 @@ const CreateCandidateForm = ({
         setCandidateErrors({ ...candidateErrors, cv: "" });
       };
     } else {
-      setCandidateErrors({ ...candidateErrors, [event.target.name]: "Only pdf file type is allowed"});
-      
+      setCandidateErrors({
+        ...candidateErrors,
+        [event.target.name]: "Only pdf file type is allowed",
+      });
     }
   };
 
@@ -313,7 +350,7 @@ const CreateCandidateForm = ({
                     </Grid>
                     <Grid item sm={8} md={8}>
                       <TextField
-                      id="cv"
+                        id="cv"
                         label="Upload Your CV"
                         variant="filled"
                         name="cv"
@@ -329,16 +366,16 @@ const CreateCandidateForm = ({
                 </Grid>
               </Grid>
               <Grid item sm={12} md={12} className={classes.createButton}>
-              <Button
+                <Button
                   color="inherit"
                   variant="contained"
                   size="large"
                   onClick={handleClear}
-                  sx={{mr: 1}}
+                  sx={{ mr: 1 }}
                 >
                   Clear
                 </Button>
-                 <Button
+                <Button
                   color="secondary"
                   variant="contained"
                   size="large"
@@ -364,6 +401,14 @@ const CreateCandidateForm = ({
                   candidateData={candidateData}
                 />
               </>
+            )}
+
+            {errorMessage && (
+              <Stack sx={{ width: "100%" }} spacing={2}>
+                <Alert variant="filled" severity="error">
+                  {errorMessage}
+                </Alert>
+              </Stack>
             )}
             <SnackBar
               handleCloseSnackBar={handleCloseSnackBar}

@@ -54,8 +54,13 @@ const DisplayMyFeedback = ({ user }) => {
   } else {
     if (user.employeeID !== EmployeeID) {
       window.location.href = "/dashboard";
+    } else if (user.jobRole === "CTO") {
+      window.location.href = "/dashboard";
+    } else if (user.jobRole === "IT Employee") {
+      window.location.href = "/dashboard";
     }
   }
+
 
   // useEffect(() => {
   //   async function fetchData() {

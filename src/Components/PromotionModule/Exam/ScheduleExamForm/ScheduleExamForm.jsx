@@ -38,6 +38,7 @@ import Select from "@mui/material/Select";
 import { useParams } from "react-router-dom";
 import { scheduleExamApi } from "../../../../Api/PromotionModule/ExamApi/scheduleExamApi";
 import { viewAllPapersListApi } from "../../../../Api/PromotionModule/PaperApi/viewAllPapersListApi";
+import { viewAllExamsApi } from "../../../../Api/PromotionModule/ExamApi/viewAllExamsApi";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -55,6 +56,7 @@ function ScheduleExamForm() {
   const [added, setadded] = useState(false);
   const [Status, setStatus] = useState([]);
   const [fill, setFill] = useState(false);
+  const [ExamsList, setExamsList] = useState([]);
 
   const [PaperList, setPaperList] = useState([]);
 
@@ -66,6 +68,33 @@ function ScheduleExamForm() {
     }
     fetchData();
   }, []);
+
+  useEffect(() => {
+    async function fetchData() {
+      setExamsList(await viewAllExamsApi());
+    }
+    fetchData();
+  }, []);
+
+  const jobRoles = [
+    "Software Engineer",
+    "Senior Software Engineer",
+    "HR Manager",
+    "Associate Software Engineer",
+    "Software Architect",
+    "Tech Lead",
+    "UI/UX Designer",
+    "Business Analyst",
+    "Product Manager",
+  ];
+
+  const examsCompleted = ExamsList.filter((q1) => q1.Status === "Pending");
+  const listJobRoles = jobRoles.filter(
+    (q1) => !examsCompleted.find((q2) => q1 === q2.JobRole)
+  );
+
+  //console.log("examsCompleted", examsCompleted);
+  //console.log("listJobRoles", listJobRoles);
 
   //--------------validation-----------------------
   const [inputErrors, setInputErrors] = useState({
@@ -200,7 +229,7 @@ function ScheduleExamForm() {
                       <InputLabel>Exam ID</InputLabel>
                     </Grid>
                     <TextField
-                      label="ID"
+                      label="Exam-ABC-000XX"
                       variant="outlined"
                       name="ExamID"
                       value={ExamID}
@@ -232,34 +261,11 @@ function ScheduleExamForm() {
                           setJobRole(e.target.value);
                         }}
                       >
-                        {/* <MenuItem value="SE">SE</MenuItem>
-                        <MenuItem value="BA">BA</MenuItem>
-                        <MenuItem value="QA">QA</MenuItem>
-                        <MenuItem value="HR">HR</MenuItem>
-                        <MenuItem value="SSE">SSE</MenuItem> */}
-                        <MenuItem value="Software Engineer">
-                          Software Engineer
-                        </MenuItem>
-                        <MenuItem value="Senior Software Engineer">
-                          Senior Software Engineer
-                        </MenuItem>
-                        <MenuItem value="HR Manager">HR Manager</MenuItem>
-                        <MenuItem value="Associate Software Engineer">
-                          Associate Software Engineer
-                        </MenuItem>
-                        <MenuItem value="Software Architect">
-                          Software Architect
-                        </MenuItem>
-                        <MenuItem value="Tech Lead">Tech Lead</MenuItem>
-                        <MenuItem value="UI/UX Designer">
-                          UI/UX Designer
-                        </MenuItem>
-                        <MenuItem value="Business Analyst">
-                          Business Analyst
-                        </MenuItem>
-                        <MenuItem value="Product Manager">
-                          Product Manager
-                        </MenuItem>
+                        {listJobRoles.map((role, key) => (
+                          <MenuItem value={role} key={key}>
+                            {role}
+                          </MenuItem>
+                        ))}
                       </Select>
                       <FormHelperText style={{ color: "#cf0028" }}>
                         {inputErrors.jobRole}
@@ -386,22 +392,26 @@ function ScheduleExamForm() {
         </Grid>
       </Paper>
       {added ? (
-        <Stack sx={{ width: "100%" }} spacing={2}>
+        <Stack sx={{ marginLeft: "2%", width: "85%" }} spacing={2}>
           <Alert severity="success">
             <AlertTitle>Success</AlertTitle>
             The new Exam is successfully scheduled!
-          </Alert>{" "}
+          </Alert>
         </Stack>
       ) : null}
       {error ? (
-        <Stack sx={{ width: "100%" }} spacing={2}>
+        <Stack sx={{ marginLeft: "2%", width: "85%" }} spacing={2}>
           <Alert variant="filled" severity="error">
             Please enter all the details!
           </Alert>
         </Stack>
       ) : null}
       {fill ? (
-        <Stack sx={{ width: "100%" }} spacing={2}>
+        <Stack
+          className={classes.dialog}
+          sx={{ marginLeft: "2%", width: "85%", paddingTop: false }}
+          spacing={2}
+        >
           <Alert variant="filled" severity="warning">
             Please enter all the details or Check them again!
           </Alert>

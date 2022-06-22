@@ -47,6 +47,8 @@ import ScheduleExamForm from "./Components/PromotionModule/Exam/ScheduleExamForm
 import UpdateExamForm from "./Components/PromotionModule/Exam/UpdateExamForm/UpdateExamForm";
 import AddMoreQuestionsForm from "./Pages/PromotionModule/Paper/AddMoreQuestions";
 import SessionExpiryDialog from "./Components/SessionExpiry/SessionExpiryDialog";
+
+import IncreaseLeavesHr from "./Pages/LeaveManagementModule/IncreaseEntitledLeaves/IncreaseLeavesHr";
 import { LogoutApi } from "./Api/Login/LogoutApi";
 import HistoryPromotion from "./Pages/PromotionModule/HistoryPromotion/HistoryPromotion";
 import PromoteEmployees from "./Pages/PromotionModule/PromoteEmployees/PromoteEmployees";
@@ -55,7 +57,7 @@ import CreateSalaryRates from "./Components/SalaryPaymentModule/SalaryRates/Crea
 import ViewSalaryRatesTable from "./Components/SalaryPaymentModule/SalaryRates/ViewSalaryRates/ViewSalaryRatesTable";
 import AvailableAssets from "./Components/AssetManagementModule/AvailableAssetList";
 import Levels from "./Components/ReportersManagementModule/DisplayAndUpdateLevels/Levels";
-
+import Signup from "./Components/Signup/Signup";
 
 function App() {
   const [open, setOpen] = useState(true);
@@ -123,6 +125,11 @@ function App() {
               />
               <Route
                 exact
+                path="/signup"
+                element={<Signup setUser={setUser} user={user} />}
+              />
+              <Route
+                exact
                 path="/sessionExpired"
                 element={<SessionExpiryDialog />}
               />
@@ -143,9 +150,14 @@ function App() {
               <Route path="/pro" element={<CreateProduct />} />
               <Route path="/user" element={<UserProfile user={user} />} />
               <Route path="/products/update/:id" element={<EditProduct />} />
-              <Route path="/dashboard/organization/create" element={<Organization />} />
-              <Route path="/dashboard/organization/level" element={<Levels />} />
-
+              <Route
+                path="/dashboard/organization/create"
+                element={<Organization />}
+              />
+              <Route
+                path="/dashboard/organization/level"
+                element={<Levels />}
+              />
 
               {/* Recruitment management */}
               <Route path="/candidate" element={<CreateCandidate />} />
@@ -161,12 +173,19 @@ function App() {
               <Route path="/interview/start/:id" element={<StartInterview />} />
               {/* Assets management */}
               <Route path="/asset" element={<ViewAsset user={user} />} />
-              <Route path="/assetInsertion" element={<AssetInsertion />} />
-              <Route path="/availableAssets" element={<AvailableAssets />} />
+              <Route
+                path="/assetInsertion"
+                element={<AssetInsertion user={user} />}
+              />
+              <Route
+                path="/availableAssets"
+                element={<AvailableAssets user={user} />}
+              />
               {/* Leave management */}
               <Route path="/requestLeave" element={<RequestLeaves />} />
               <Route path="/leaveHistory" element={<LeaveHistory />} />
               <Route path="/requestedLeaves" element={<RequestedLeaveList />} />
+              <Route path="/increaseLeaves" element={<IncreaseLeavesHr />} />
 
               {/* Payrolls management */}
               <Route
@@ -260,7 +279,10 @@ function App() {
               />
 
               <Route path="/promotions" element={<HistoryPromotion />} />
-              <Route path="/promotions/promoteEmployees" element={<PromoteEmployees />} />
+              <Route
+                path="/promotions/promoteEmployees"
+                element={<PromoteEmployees />}
+              />
               {/* Salary rates */}
               <Route
                 path="/salary/salaryPercentages/create/:EmployeeID"

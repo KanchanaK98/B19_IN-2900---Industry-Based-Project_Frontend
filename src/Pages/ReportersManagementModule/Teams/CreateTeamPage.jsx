@@ -7,7 +7,7 @@ import CreateTeams from "../../../Components/ReportersManagementModule/TeamCreat
 function CreateTeamPage({ teamcreate }) {
   return (
     <div>
-      <Grid container>
+      <Grid container sx={{backgroundColor:"#dcdfe0"}}>
         <Grid item md={8}>
           <Box padding={2}>
             <ProductCountUp />

@@ -8,7 +8,8 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     borderRadius: theme.spacing(4),
     padding: theme.spacing(1, 2, 2, 2),
-    margin: theme.spacing(0, 0, 0, 4),
+    margin: theme.spacing(4, 0, 0, 4),
+    backgroundColor:"#ede7f6",
   },
   form: {
     padding: theme.spacing(4),
@@ -18,8 +19,10 @@ const useStyles = makeStyles((theme) => ({
   },
   formLabel: {
     "& .MuiFormLabel-root": {
-      fontWeight: 600,
+      fontWeight: "bold",
       fontSize: 19,
+      color:"black"
+      
     },
   },
   button: {

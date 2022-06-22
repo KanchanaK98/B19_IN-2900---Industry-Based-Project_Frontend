@@ -96,3 +96,13 @@ export const resignStatus = async (empID) => {
     console.log(err);
   }
 };
+
+export const countEmployees = async (empID) => {
+  try {
+    const { data } = await api.countEmployees(empID);
+
+    return data.count;
+  } catch (err) {
+    console.log(err);
+  }
+};

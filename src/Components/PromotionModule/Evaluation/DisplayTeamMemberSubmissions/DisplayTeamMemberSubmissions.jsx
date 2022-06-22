@@ -52,7 +52,7 @@ const DisplayMyFeedback = () => {
     }
     fetchData();
   }, [EmployeeID]);
-
+  console.log("data", mysubmissionList);
   return (
     <div>
       {mysubmissionList == null ? (
@@ -154,14 +154,8 @@ const DisplayMyFeedback = () => {
                                 variant="contained"
                                 disabled
                                 sx={{ backgroundColor: "#183d78" }}
-                                onClick={() =>
-                                  window.open(
-                                    ` /promotion/evaluation/evaluatePaper/${EmployeeID}/${record.EmployeeID}/${record.PaperID}`,
-                                    "_self"
-                                  )
-                                }
                               >
-                                Evaluate&nbsp;
+                                Evaluated&nbsp;
                               </Button>
                             )}
                           </StyledTableCell>

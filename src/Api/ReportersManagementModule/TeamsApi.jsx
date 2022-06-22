@@ -45,13 +45,14 @@ export const viewAllTeams = async (displayTeams) => {
     data.data.map((team) => {
       let teamMembers = [];
       team.TeamWithEmp.map((member) => {
-        const { employeeFirstName, employeeLastName, employeeID, profilePic } =
+        const { employeeFirstName, employeeLastName, employeeID, profilePic,jobRole } =
           member;
 
         teamMembers.push({
           employeeName: employeeFirstName + " " + employeeLastName,
           employeeID,
           profilePic,
+          jobRole
         });
       });
       team.TeamWithEmp = teamMembers;

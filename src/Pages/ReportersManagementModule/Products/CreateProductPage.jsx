@@ -7,7 +7,7 @@ import CustomizedTeamView from "../../../Components/ReportersManagementModule/Cu
 function CreateProductPage() {
   return (
     <div>
-      <Grid container>
+      <Grid container sx={{backgroundColor:"#dcdfe0"}}>
         <Grid item md={8}>
           <Box padding={2}>
             <ProductCountUp />

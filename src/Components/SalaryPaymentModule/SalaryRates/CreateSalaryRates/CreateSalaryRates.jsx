@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
 import { createSalaryPercentagesApi } from "../../../../Api/SalaryPaymentModule/SalaryRatesApi/createSalaryPercentagesApi";
-import AttachMoneyRoundedIcon from "@mui/icons-material/AttachMoneyRounded";
+import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlined";
 import Stack from "@mui/material/Stack";
 import useStyles from "./CreateSalaryRatesStyles";
 import { useParams } from "react-router-dom";
@@ -101,7 +101,7 @@ export default function CreateSalaryRates() {
     <Box className={classes.Box}>
       <Grid item sm={12} md={12} className={classes.createButton}>
         <Button
-          color="primary"
+          className={classes.button}
           variant="contained"
           size="large"
           onClick={() =>
@@ -115,7 +115,7 @@ export default function CreateSalaryRates() {
       <Paper elevation={5} className={classes.form}>
         <Grid container>
           <Grid item sm={6} md={12} className={classes.formHeader}>
-            <AttachMoneyRoundedIcon />
+            <MonetizationOnOutlinedIcon />
             <Typography variant="h4">New Salary Rates</Typography>
           </Grid>
 
@@ -218,7 +218,7 @@ export default function CreateSalaryRates() {
                   <Grid>
                     <Grid item sm={6} md={6} className={classes.createButton}>
                       <Button
-                        color="primary"
+                        className={classes.button}
                         variant="contained"
                         size="large"
                         type="submit"

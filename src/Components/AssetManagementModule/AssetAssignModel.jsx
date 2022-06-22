@@ -31,7 +31,7 @@ export default function AssetAssignModel({handleClose,data,show,assignFun}) {
     const [status, setStatus] = useState(data.status);
     const [error, seterror] = useState(false);
     const [added, setadded] = useState(false);
-
+    const [isDisabled, setIsDisabled] = useState(true);
  
     const open = show ? true : false;
 
@@ -181,7 +181,7 @@ export default function AssetAssignModel({handleClose,data,show,assignFun}) {
                                 variant="outlined"
                                 name="empID"
                                 value={empID}
-                                onChange={(e)=>{setEmpID(e.target.value)}}
+                                onChange={(e)=>{setEmpID(e.target.value);setIsDisabled(false)}}
                                 fullWidth
                                 />
                     </Grid>
@@ -193,6 +193,7 @@ export default function AssetAssignModel({handleClose,data,show,assignFun}) {
                       variant="contained"
                       size="large"
                       type="submit"
+                      disabled={isDisabled?true:false}
                     >
                       Assign Asset
                     </Button>

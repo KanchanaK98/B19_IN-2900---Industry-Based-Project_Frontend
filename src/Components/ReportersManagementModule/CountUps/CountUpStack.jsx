@@ -47,7 +47,7 @@ function ProductCountUp() {
         <Paper
           elevation={1}
           sx={{
-            backgroundImage: `linear-gradient(to right, rgba(0, 224, 255, 1), rgba(0, 133, 255, 1))`,
+            backgroundImage: `linear-gradient(to right, rgba(245, 164, 223), rgba(1237, 21, 178))`,
             padding: 2,
             textAlign: "center",
             borderRadius: 5,

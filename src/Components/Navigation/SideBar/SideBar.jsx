@@ -259,7 +259,7 @@ const SideBar = ({ open, toggleDrawer, user, handleLogOut }) => {
                   <ListItemText primary="Products" />
                 </ListItem2>
 
-                <ListItem2
+                {user.jobRole === "HR Manager" && (<ListItem2
                   component={Link}
                   to="/dashboard/create"
                   selected={selectedIndex2 === 2}
@@ -272,7 +272,7 @@ const SideBar = ({ open, toggleDrawer, user, handleLogOut }) => {
                     <StarBorder />
                   </ListItemIcon>
                   <ListItemText primary="Create Employee" />
-                </ListItem2>
+                </ListItem2>)}
 
               </List>
             </Collapse>

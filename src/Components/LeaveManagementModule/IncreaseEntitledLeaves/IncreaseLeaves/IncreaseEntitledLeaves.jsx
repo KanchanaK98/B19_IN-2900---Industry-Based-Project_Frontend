@@ -1,23 +1,19 @@
 import {
   Avatar,
   Box,
-  Button,
   Card,
   CardActionArea,
   Divider,
   Grid,
   LinearProgress,
-  Paper,
   Typography,
 } from "@mui/material";
 import React from "react";
-import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 
 import TimeToLeaveIcon from "@mui/icons-material/TimeToLeave";
 import MedicalServicesIcon from "@mui/icons-material/MedicalServices";
 import LuggageIcon from "@mui/icons-material/Luggage";
 import useStyles from "./IncreaseEntitledLeavesStyles";
-import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
 import { useState } from "react";
 import IncreaseDialogBox from "../IncreaseDialogBox/IncreaseDialogBox";
 import {  FastRewindTwoTone,HealingTwoTone,AccessibleTwoTone ,AirplanemodeActiveTwoTone} from "@mui/icons-material";
@@ -26,7 +22,7 @@ import {  FastRewindTwoTone,HealingTwoTone,AccessibleTwoTone ,AirplanemodeActive
 
 
 
-const IncreaseEntitledLeaves = ({ employee, leaveBalance, setRender }) => {
+const IncreaseEntitledLeaves = ({ employee, leaveBalance, setLeaveBalance, render, setRender }) => {
   const [open, setOpen] = useState(false);
   const [leaveType, setLeaveType] = useState(null);
   const [popUp, setPopUp] = useState(null);
@@ -228,7 +224,7 @@ const IncreaseEntitledLeaves = ({ employee, leaveBalance, setRender }) => {
                         </Grid>
                         <Grid item md={12}>
                           <Typography>
-                            Entitled Leaves: {leaveBalance.entitledCasualLeave}
+                            Entitled Leaves: {leaveBalance.entitledMedicalLeave}
                           </Typography>
                         </Grid>
                       </Grid>
@@ -246,6 +242,8 @@ const IncreaseEntitledLeaves = ({ employee, leaveBalance, setRender }) => {
           setOpen={setOpen}
           leaveType={leaveType}
           employee={employee}
+          setLeaveBalance={setLeaveBalance}
+          render={render}
           setRender={setRender}
         />
       )}

@@ -25,6 +25,22 @@ const useStyles = makeStyles((theme) => ({
             paddingBottom: theme.spacing(1)
         }
     },
+    searchBar:{
+        display:"flex",
+        justifyContent:"flex-end",
+        "& .MuiSvgIcon-root": {
+            
+            fontSize: theme.spacing(5),
+        
+          },
+    },
+    searchArea:{
+        height:theme.spacing(5),
+        '&:hover': {
+            border: "2px solid rgb(153, 0, 204)",
+            backgroundColor:"rgb(249, 230, 255)",
+        },
+    },
 
 }));
 export default useStyles;

@@ -15,7 +15,8 @@ import {
 } from "@mui/material";
 import React from "react";
 import { useState } from "react";
-import { increaseLeaves } from "../../../../Api/LeaveManagementModule/LeaveApi";
+import { render } from "react-dom";
+import { getLeaveBalanceOfEmployee, increaseLeaves } from "../../../../Api/LeaveManagementModule/LeaveApi";
 import useStyles from "./IncreaseDialogBoxStyles";
 
 
@@ -25,6 +26,8 @@ const IncreaseDialogBox = ({
   employee,
   setOpen,
   setRender,
+  render,
+  setLeaveBalance
 }) => {
   const classes = useStyles();
   const [data, setData] = useState({
@@ -37,13 +40,14 @@ const IncreaseDialogBox = ({
     await increaseLeaves(employee.employeeID, leaveType, data);
     setOpen(false);
     setRender(false);
+    setLeaveBalance(await getLeaveBalanceOfEmployee(employee.employeeID))
     setData({ increasedDates: "", reason: "" });
+    setRender(!render)
   };
   const handleOnChange = (event) => {
     setData({ ...data, [event.target.name]: event.target.value });
   };
 
-  console.log(employee);
   return (
     <Paper sx={{ width: 900 }}>
       <Dialog

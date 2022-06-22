@@ -48,7 +48,6 @@ export default function ViewCurruntSalaryTable() {
   const [search, setSearch] = useState("");
   const [filteredRecords, setFilteredRecords] = useState([]);
   const [rates, setRates] = useState([]);
-
   // useEffect(() => {
   //   async function fetchData() {
   //     setCurruntSalaryList(await viewCurruntSalaryApi());
@@ -65,7 +64,6 @@ export default function ViewCurruntSalaryTable() {
       setCurruntSalaryList(descending, curruntSalaryList);
       console.log(descending);
     }
-
     fetchData();
   }, []);
 

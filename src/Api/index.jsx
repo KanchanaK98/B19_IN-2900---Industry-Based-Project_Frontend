@@ -121,8 +121,8 @@ export const searchAssetCategory = (assetCategory) =>
 export const insertAsset = (asset) => API.post("/assets/add", asset);
 export const updateAsset = (id, asset) =>
   API.patch("/assets/update/" + id, asset);
-export const availableAssetCategory = (assetCategories) => 
-  API.get("assets/availableAssets/category/"+ assetCategories)
+export const availableAssetCategory = (assetCategories) =>
+  API.get("assets/availableAssets/category/" + assetCategories);
 
 //salary percentages API
 export const viewSalaryRates = (EmployeeID) =>
@@ -248,8 +248,7 @@ export const getCandidates = () => {
   return API.get(`/employee/candidateData`);
 };
 
-export const resignStatus = (empID) => 
-   API.get(`/assets/isAssigned/`+ empID);
+export const resignStatus = (empID) => API.get(`/assets/isAssigned/` + empID);
 
 //teams api
 export const createTeams = (teamcreate) =>
@@ -270,20 +269,17 @@ export const getAllTeams = () => {
   return API.get(`/employee/getTeam`);
 };
 
-
 //organization api
 
 export const createOrganization = (createOrg) =>
   API.post(`/employee/organization/create`, createOrg);
 
-  export const updateOrganization = (updateOrg, id) =>
+export const updateOrganization = (updateOrg, id) =>
   API.put(`/employee/updateOrganization/${id}`, updateOrg);
 
-  export const getLevels = () =>
-API.get(`/employee/getLevels`)
+export const getLevels = () => API.get(`/employee/getLevels`);
 
-export const countEmployees = () =>
-API.get(`/employee/count`)
+export const countEmployees = () => API.get(`/employee/count`);
 
 //product api
 
@@ -300,6 +296,8 @@ export const viewPProducts = (viewproduct) => {
 // leave API
 export const getLeaveBalance = (employeeID) =>
   API.get(`/leave/leaveBalance/${employeeID}`);
+export const getLeaveBalanceOfEmployee = (employeeID) =>
+  API.get(`/leave/LeaveBalance/teamMember/remaining`, employeeID);
 export const requestLeave = (leaveDetail) =>
   API.post("/leave/request", leaveDetail);
 
@@ -315,14 +313,13 @@ export const responseRequestedLeave = (id, reason) =>
 export const getTeamLead = (employeeId) =>
   API.get("/leave/request/teamLead/" + employeeId);
 
-  export const getEmployees = () =>
-  API.get("/leave/increaseLeaves/employees");
+export const getEmployees = () => API.get("/leave/increaseLeaves/employees");
 
- 
-  export const increaseLeaves = (employeeID,leaveType,data) =>
-  API.post(`/leave/entitledLeaves/increaseLeaves/${employeeID}`, {leaveType,data});
-
-
+export const increaseLeaves = (employeeID, leaveType, data) =>
+  API.post(`/leave/entitledLeaves/increaseLeaves/${employeeID}`, {
+    leaveType,
+    data,
+  });
 
 //promotion API
 export const getEvaluationData = () => API.get("/promotion/evaluation/details");

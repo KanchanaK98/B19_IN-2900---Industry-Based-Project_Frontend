@@ -37,7 +37,7 @@ function DashBord() {
   const classes = useStyles();
   return (
     <div>
-      <Box padding={2} bgcolor="#ccfcff">
+      <Box padding={2} bgcolor="#E0F7FA">
         <Grid container>
           <Grid item sm={12} md={2.5} sx={{ mb: 5 }}>
             {/* {user && user.jobRole === "HR Manager" && (

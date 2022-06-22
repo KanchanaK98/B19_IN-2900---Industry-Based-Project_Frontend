@@ -28,7 +28,7 @@ const NavBar = ({ open, toggleDrawer, user, handleLogOut }) => {
   
   return (
     <>
-      <Paper elevation={0} variant="outlined" square className={classes.root} sx={{backgroundColor:"#03888f"}}>
+      <Paper elevation={0} variant="outlined" square className={classes.root} sx={{backgroundColor:"#E0E0E0"}}>
         <Grid container>
           <Grid item md={11} className={classes.breadcrumb}>
             <Breadcrumbs aria-label="breadcrumb">

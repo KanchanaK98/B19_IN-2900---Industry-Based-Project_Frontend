@@ -33,13 +33,17 @@ const ViewAllPapersList = ({ user }) => {
           <Typography className={classes.topic}>Evaluation Papers</Typography>
         </Grid>
         <Grid item xs={12} align="left" marginLeft={5} marginBottom={2}>
-          <Button
-            variant="contained"
-            sx={{ backgroundColor: "#183d78" }}
-            onClick={() => window.open("/promotion/Paper/CreatePaper", "_self")}
-          >
-            Create Paper
-          </Button>
+          {user.teamLead && (
+            <Button
+              variant="contained"
+              sx={{ backgroundColor: "#183d78" }}
+              onClick={() =>
+                window.open("/promotion/Paper/CreatePaper", "_self")
+              }
+            >
+              Create Paper
+            </Button>
+          )}
         </Grid>
       </Grid>
       <Grid

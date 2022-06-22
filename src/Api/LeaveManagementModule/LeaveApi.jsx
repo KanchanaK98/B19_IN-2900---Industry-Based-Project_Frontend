@@ -60,6 +60,7 @@ export const cancelLeave = async (reason, leaveID) => {
 };
 
 export const getRequestedLeaves = async () => {
+  console.log("first")
   const response = await api.getRequestedLeave(
     JSON.parse(sessionStorage.getItem("user")).employeeID
   );

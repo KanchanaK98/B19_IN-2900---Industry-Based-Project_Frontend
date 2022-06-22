@@ -15,6 +15,7 @@ import CredentialCard from "./CredentialCard";
 import useStyles from "./CreateFormStyles";
 import Candidates from "./Candidates";
 import { Link } from "react-router-dom";
+import { set } from "date-fns";
 const jobRoles = [
   "Software Engineer",
   "Senior Software Engineer",
@@ -38,6 +39,7 @@ function CreateEmployee({ candidates }) {
   const [addSuccessfully, setAddSuccessfully] = useState(false);
   const [duplicated, setDuplicated] = useState(false);
   const [notAdded, setnotAdded] = useState(false);
+  const [render, setRender] = useState(true);
   const [count, setCount] = useState("");
   const [inputErrors, setInputErrors] = useState({
     employeeID: "",
@@ -65,17 +67,16 @@ function CreateEmployee({ candidates }) {
         ...prevState,
         employeeID: ID,
       }));
-
-      // console.log(count, { message: "Hi" });
     }
     fetchData();
-  }, []);
+  }, [render]);
 
   const handleChange = (e) => {
     setInputs((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
     }));
+    setInputErrors({ ...inputErrors, [e.target.name]: "" });
   };
   const handleClear = () => {
     setInputs({
@@ -91,7 +92,7 @@ function CreateEmployee({ candidates }) {
   //--------------validation-----------------------
   const errorHandle = () => {
     let isError = false;
-    Object.keys(inputs).map((property) => {
+    Object.keys(inputs).forEach((property) => {
       if (!inputs[property]) {
         setInputErrors((prevState) => ({
           ...prevState,
@@ -138,6 +139,8 @@ function CreateEmployee({ candidates }) {
           setAddSuccessfully(false);
         }, 2000);
         //----------------------------------------------------------------------------
+        handleClear();
+        setRender(!render);
       }
 
       if (response.status === 400) {
@@ -146,14 +149,13 @@ function CreateEmployee({ candidates }) {
           setDuplicated(false);
         }, 2000);
         handleClear();
+        setRender(!render);
       }
-      handleClear();
     } else {
       setnotAdded(true);
       setTimeout(() => {
         setnotAdded(false);
       }, 2000);
-      handleClear();
     }
   };
 
@@ -199,6 +201,8 @@ function CreateEmployee({ candidates }) {
                     candidates={candidates}
                     isDisableCandidate={isDisableCandidate}
                     setInputs={setInputs}
+                    inputErrors={inputErrors}
+                    setInputErrors={setInputErrors}
                   />
                 </Grid>
               </Grid>

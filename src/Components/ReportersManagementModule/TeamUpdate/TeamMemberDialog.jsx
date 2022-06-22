@@ -24,6 +24,7 @@ const TeamMemberDialog = ({
   employees,
   updateField,
   setUpdateField,
+  setEmployee,
 }) => {
   const [members, setMembers] = useState(editTeam.teamMembers);
 
@@ -35,6 +36,7 @@ const TeamMemberDialog = ({
 
   const handleDelete = (member) => {
     setMembers(members.filter((membr) => membr !== member));
+    setEmployee(employees.concat(member));
   };
 
   return (
@@ -89,6 +91,8 @@ const TeamMemberDialog = ({
           value=""
           onChange={(event) => {
             setMembers(members.concat(event.target.value));
+
+            setEmployee(employees.filter((mem) => mem !== event.target.value));
           }}
           fullWidth
           sx={{ mt: 3 }}

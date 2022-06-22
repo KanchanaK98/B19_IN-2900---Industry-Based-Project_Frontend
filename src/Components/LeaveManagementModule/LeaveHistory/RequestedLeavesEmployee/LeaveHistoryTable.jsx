@@ -1,15 +1,42 @@
-import { Button, Typography } from "@mui/material";
+import { Button, styled, TableContainer, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
+import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { getLeaveHistory } from "../../../Api/LeaveManagementModule/LeaveApi";
+import { getLeaveHistory } from "../../../../Api/LeaveManagementModule/LeaveApi";
 
-import ViewMoreDialog from "./ViewDetailDialog";
-import useStyles from "./RequestedLeavesTeamLead/RequestedLeavesStyles";
+import ViewMoreDialog from "../ViewDetailDialog";
+import useStyles from "../RequestedLeavesTeamLead/RequestedLeavesStyles";
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor:"#4a148c",
+    // backgroundColor: theme.palette.primary.light,
+    color: theme.palette.common.white,
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
+}));
+
+const StyledTableRow = styled(TableRow)(() => ({
+  "&:nth-of-type(odd)": {
+    backgroundColor: "#f3e5f5",
+  },
+  "&:nth-of-type(even)": {
+    backgroundColor: "#dcedc8",
+  },
+  "&:hover": {
+    backgroundColor: "#fafafa",
+  },
+  // hide last border
+  "&:last-child td, &:last-child th": {
+    border: 0,
+  },
+}));
 
 const LeaveHistoryTable = () => {
   const classes = useStyles();
@@ -33,28 +60,29 @@ const LeaveHistoryTable = () => {
     fetchData();
   }, []);
   return (
-    <Paper elevation={4} sx={{ width: "100%", overflow: "hidden", p: 2 }} className={classes.paper}>
+    // <Paper elevation={4} sx={{ width: "100%", overflow: "hidden", p: 2 }} className={classes.paper}>
+    <TableContainer component={Paper}>
       <Table>
         <TableHead className={classes.tableHead}>
           <TableRow>
-            <TableCell><Typography>Leave Type</Typography></TableCell>
-            <TableCell><Typography>Number of Days</Typography></TableCell>
-            <TableCell><Typography>Leave Method</Typography></TableCell>
-            <TableCell><Typography>Status</Typography></TableCell>
-            <TableCell> </TableCell>
+            <StyledTableCell><Typography color={"black"}>Leave Type</Typography></StyledTableCell>
+            <StyledTableCell><Typography>Number of Days</Typography></StyledTableCell>
+            <StyledTableCell><Typography>Leave Method</Typography></StyledTableCell>
+            <StyledTableCell><Typography>Status</Typography></StyledTableCell>
+            <StyledTableCell> </StyledTableCell>
           </TableRow>
-          <TableRow>
+          {/* <TableRow>
             <TableCell></TableCell>
             <TableCell></TableCell>
             <TableCell></TableCell>
             <TableCell></TableCell>
             <TableCell></TableCell>
-          </TableRow>
+          </TableRow> */}
         </TableHead>
         <TableBody>
           {leaveHistory &&
             leaveHistory.map((leave) => (
-              <TableRow key={leave.leaveHistory._id}>
+              <StyledTableRow key={leave.leaveHistory._id}>
                 <TableCell>{leave.leaveHistory.leaveType}</TableCell>
                 <TableCell>{leave.numberOfLeaveDates}</TableCell>
                 <TableCell>{leave.leaveHistory.leaveMethod}</TableCell>
@@ -68,17 +96,18 @@ const LeaveHistoryTable = () => {
                     View Details
                   </Button>
                 </TableCell>
-              </TableRow>
+              </StyledTableRow>
             ))}
         </TableBody>
+                   
       </Table>
       {leave && (
         <ViewMoreDialog
           open={open}
           handleClose={handleClose}
-          leaveHistory={leaveHistory}
+          leaveHistory={leaveHistory} 
           setLeaveHistory={setLeaveHistory}
-          leave={leave}
+          leave={leave} 
           setCancel={setCancel}
           cancel={cancel}
         />
@@ -93,7 +122,8 @@ const LeaveHistoryTable = () => {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       /> */}
-    </Paper>
+      </TableContainer>
+    // </Paper>
   );
 };
 

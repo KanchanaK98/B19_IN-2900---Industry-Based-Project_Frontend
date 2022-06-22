@@ -35,6 +35,9 @@ export default function DispalyAndSubmitPaper() {
     }
     fetchData();
   }, [EmployeeID, PaperID]);
+  const tid = EmployeeID;
+
+  console.log("tid=" + tid);
 
   const [Questions, setQuestions] = useState([]);
   const [Feedback, setFeedback] = useState([]);
@@ -67,22 +70,19 @@ export default function DispalyAndSubmitPaper() {
 
   return (
     <Box className={classes.Box}>
-      <Grid item sm={12} md={12} className={classes.backButton}>
+      {/* <Grid item sm={12} md={12} className={classes.backButton}>
         <Button
           className={classes.Button}
           size="large"
           variant="contained"
           sx={{ backgroundColor: "#183d78" }}
           onClick={() =>
-            window.open(
-              `/promotion/evaluation/allSubmissions/${EmployeeID}`,
-              "_self"
-            )
+            window.open(`/promotion/evaluation/allSubmissions/${TeamLeadID}`, "_self")
           }
         >
           View Team-member Submissions
         </Button>
-      </Grid>
+      </Grid> */}
 
       <Grid>
         <Grid item xs={12} md={12}>

@@ -13,21 +13,31 @@ const useStyles = makeStyles((theme) => ({
   },
   form: {
     padding: theme.spacing(4),
+   
   },
   input: {
     margin: theme.spacing(4, 4, 2, 2),
   },
   formLabel: {
+    marginRight:4,
+    marginBottom:4,
     "& .MuiFormLabel-root": {
-      fontWeight: "bold",
+      
       fontSize: 19,
-      color:"black"
+      color:"rgb(0, 68, 102)"
       
     },
   },
   button: {
     display: "flex",
     justifyContent: "flex-end",
+    color:"white",
+    background:"rgb(0, 85, 128)",
+    marginBottom:theme.spacing(4),
+    '&:hover':{
+      color:"black",
+    background:"rgb(179, 230, 255)",
+    },
   },
 }));
 

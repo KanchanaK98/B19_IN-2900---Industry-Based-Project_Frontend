@@ -22,29 +22,7 @@ const useStyles = makeStyles((theme) => ({
     width: "75%",
     justifyContent: "center",
   },
-  formHeader: {
-    display: "flex",
-    alignItems: "center",
-    marginBottom: theme.spacing(1),
-    "& .MuiTypography-h4": {
-      margin: theme.spacing(1, 1),
-      fontWeight: 500,
-    },
-    "& .MuiSvgIcon-root": {
-      fontSize: theme.spacing(5),
-      marginLeft: theme.spacing(2),
-    },
-    color: "#183d78",
-  },
-  inputs: {
-    display: "flex",
-    flexDirection: "column",
-    marginTop: theme.spacing(2),
-    justifyContent: "flex-start",
-    "& .MuiTextField-root": {
-      width: theme.spacing(30),
-    },
-  },
+
   texFieldLabel: {
     display: "flex",
     marginLeft: 15,
@@ -54,17 +32,7 @@ const useStyles = makeStyles((theme) => ({
       fontSize: 19,
     },
   },
-  card1: {
-    marginLeft: 35,
-    marginBottom: 10,
-    marginTop: 10,
-    width: "75%",
-    padding: "3%",
-    backgroundColor: "#e0e0e0",
-    "&:hover": {
-      backgroundColor: "#e8eaf6",
-    },
-  },
+
   card2: {
     marginLeft: 25,
     marginBottom: 10,
@@ -74,6 +42,8 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       backgroundColor: "#e8eaf6",
     },
+    //
+    minheight: "30vw",
   },
 
   checkbox: {
@@ -92,7 +62,6 @@ const useStyles = makeStyles((theme) => ({
   name: {
     fontWeight: "bold",
     color: "#546e7a",
-    margin: "5px",
   },
   text: {
     margin: "20px",
@@ -126,6 +95,11 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: 1,
     paddingLeft: 40,
     width: "95%",
+  },
+  none: {
+    fontWeight: "small",
+    fontSize: "12px",
+    color: "#546e7a",
   },
 }));
 

@@ -55,8 +55,14 @@ export default function ViewAllExamList() {
 
   useEffect(() => {
     async function fetchData() {
-      setExamsList(await viewAllExamsApi());
+      const res = await viewAllExamsApi();
+      const descending = [...res].sort((a, b) =>
+        a.Status > b.Status ? -1 : 1
+      );
+      setExamsList(descending, ExamsList);
+      console.log(descending);
     }
+
     fetchData();
   }, []);
 

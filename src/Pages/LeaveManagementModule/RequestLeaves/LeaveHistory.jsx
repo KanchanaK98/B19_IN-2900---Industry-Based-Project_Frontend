@@ -1,7 +1,7 @@
 import { Box, Grid } from '@mui/material'
 import React from 'react'
-import LeaveHistoryHeader from '../../../Components/LeaveManagementModule/LeaveHistory/LeaveHistoryHeader'
-import LeaveHistoryTable from '../../../Components/LeaveManagementModule/LeaveHistory/LeaveHistoryTable'
+import LeaveHistoryHeader from '../../../Components/LeaveManagementModule/LeaveHistory/RequestedLeavesEmployee/LeaveHistoryHeader'
+import LeaveHistoryTable from '../../../Components/LeaveManagementModule/LeaveHistory/RequestedLeavesEmployee/LeaveHistoryTable'
 
 const LeaveHistory = () => {
   return (

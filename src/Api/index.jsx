@@ -1,10 +1,10 @@
 import axios from "axios";
 
-const API = axios.create({
+export const API = axios.create({
   baseURL: "http://localhost:8070",
-  headers: {
-    "Content-Type": "application/json",
-  },
+  // headers: {
+  //   "Content-Type": "application/json",
+  // },
 });
 
 API.interceptors.request.use(
@@ -47,7 +47,7 @@ API.interceptors.response.use(
       error.response.status === 403 &&
       error.response.data.message === "Unauthorized"
     ) {
-      window.location.replace("/dashboard");
+      window.location.href = "/dashboard";
     }
     if (error.response.status === 403 && !previousRequest._retry) {
       previousRequest._retry = true;
@@ -318,6 +318,15 @@ export const responseRequestedLeave = (id, reason) =>
 export const getTeamLead = (employeeId) =>
   API.get("/leave/request/teamLead/" + employeeId);
 
+  export const getEmployees = () =>
+  API.get("/leave/increaseLeaves/employees");
+
+ 
+  export const increaseLeaves = (employeeID,leaveType,data) =>
+  API.post(`/leave/entitledLeaves/increaseLeaves/${employeeID}`, {leaveType,data});
+
+
+
 //promotion API
 export const getEvaluationData = () => API.get("/promotion/evaluation/details");
 export const promoteEmployees = (employeeID, promotionData) => {
@@ -327,3 +336,4 @@ export const promoteEmployees = (employeeID, promotionData) => {
 export const getPromotionHistory = () => {
   return API.get(`/promotion/history`);
 };
+

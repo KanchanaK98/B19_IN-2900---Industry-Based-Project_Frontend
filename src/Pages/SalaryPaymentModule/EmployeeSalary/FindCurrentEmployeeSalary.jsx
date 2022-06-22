@@ -2,11 +2,11 @@ import React from "react";
 import FindEmployeeSalary from "../../../Components/SalaryPaymentModule/EmployeeSalary/FindEmployeeSalary/FindEmployeeSalary";
 import { Grid } from "@mui/material";
 
-const FindCurrentEmployeeSalary = () => {
+const FindCurrentEmployeeSalary = ({ user }) => {
   return (
     <Grid container>
       <Grid item sm={12} md={12}>
-        <FindEmployeeSalary />
+        <FindEmployeeSalary user={user} />
       </Grid>
     </Grid>
   );

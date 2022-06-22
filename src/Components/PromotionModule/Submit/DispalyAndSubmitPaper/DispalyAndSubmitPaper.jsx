@@ -13,11 +13,22 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import useStyles from "./DispalyAndSubmitPaperStyles";
 
-export default function DispalyAndSubmitPaper() {
+export default function DispalyAndSubmitPaper({ user }) {
   const { EmployeeID } = useParams();
   const classes = useStyles();
 
   const [Paper, setPaper] = useState([]);
+
+  if (!user) {
+    window.location.replace("/");
+  } else {
+    if (user.jobRole === "CTO" || user.jobRole === "IT Employee") {
+      window.location.href = "/dashboard";
+    } else if (user.employeeID !== EmployeeID) {
+      window.location.href = "/dashboard";
+    }
+  }
+
   useEffect(() => {
     async function fetchData() {
       setPaper(await displayPaperApi(EmployeeID));

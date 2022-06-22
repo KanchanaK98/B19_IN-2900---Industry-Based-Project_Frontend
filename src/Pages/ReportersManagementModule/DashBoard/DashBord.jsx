@@ -13,7 +13,7 @@ import { viewAllEmployees } from "../../../Api/ReportersManagementModule/Employe
 import RecentSection from "./RecentSection";
 import useStyles from "./DashboardStyles";
 function DashBord() {
-  const jobRole = JSON.parse(sessionStorage.getItem("user")).jobRole;
+  const user = JSON.parse(sessionStorage.getItem("user"));
   const location = useLocation();
 
   const [value, setValue] = React.useState("1");
@@ -37,10 +37,10 @@ function DashBord() {
   const classes = useStyles();
   return (
     <div>
-      <Box padding={2} bgcolor="#d7dde0">
+      <Box padding={2} bgcolor="#ccfcff">
         <Grid container>
           <Grid item sm={12} md={2.5} sx={{ mb: 5 }}>
-            {jobRole === "HR Manager" && (
+            {/* {user && user.jobRole === "HR Manager" && (
               <Button
                 className={classes.button}
                 LinkComponent={Link}
@@ -52,7 +52,7 @@ function DashBord() {
               >
                 CAREATE NEW EMPLOYEE
               </Button>
-            )}
+            )} */}
           </Grid>
           <Grid item sm={12} md={4} sx={{ mb: 5 }}>
             {/* {jobRole === "HR Manager" && (
@@ -94,7 +94,7 @@ function DashBord() {
                 </Box>
               </TabPanel>
               <TabPanel value="2" sx={{ mt: 1 }}>
-                <DisplayAllEmployees profiles={profiles} />
+                <DisplayAllEmployees profiles={profiles} setProfiles={setProfiles}/>
               </TabPanel>
               <TabPanel value="3">
                 <OrganizationStructure />

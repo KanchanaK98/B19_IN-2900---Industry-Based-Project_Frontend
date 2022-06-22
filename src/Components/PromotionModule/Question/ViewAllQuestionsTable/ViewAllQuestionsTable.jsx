@@ -43,11 +43,20 @@ const StyledTableRow = styled(TableRow)(() => ({
   },
 }));
 
-export default function ViewAllQuestionsTable() {
+export default function ViewAllQuestionsTable({ user }) {
   const classes = useStyles();
   const [QuestionList, setQuestionList] = useState([]);
   const [search, setSearch] = useState("");
   const [filteredRecords, setFilteredRecords] = useState([]);
+
+  //console.log(user);
+  if (!user) {
+    window.location.replace("/");
+  } else {
+    if (user.teamLead === false) {
+      window.location.href = "/dashboard";
+    }
+  }
 
   useEffect(() => {
     async function fetchData() {

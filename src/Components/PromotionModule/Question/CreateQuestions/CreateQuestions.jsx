@@ -20,12 +20,19 @@ import Stack from "@mui/material/Stack";
 import FormHelperText from "@mui/material/FormHelperText";
 import useStyles from "./CreateQuestionsStyles";
 
-export default function CreateCurruntSalary() {
+export default function CreateQuestions({ user }) {
   const classes = useStyles();
   const [error, seterror] = useState(false);
   const [added, setadded] = useState(false);
   const [fill, setFill] = useState(false);
 
+  if (!user) {
+    window.location.replace("/");
+  } else {
+    if (user.teamLead === false) {
+      window.location.href = "/dashboard";
+    }
+  }
   const [question, setQuestion] = useState({
     QuestionID: "",
     QuestionCatogory: "",

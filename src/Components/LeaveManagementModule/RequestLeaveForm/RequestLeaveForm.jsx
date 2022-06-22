@@ -26,8 +26,8 @@ const RequestLeaveForm = ({ leaveBalance }) => {
   const [leave, setLeave] = useState({
     leaveType: "",
     reason: "",
-    startDate: new Date(),
-    endDate: new Date(),
+    startDate: "",
+    endDate: "",
     leaveMethod: "",
   });
   const [openSnackBar, setOpenSnackBar] = useState(false);
@@ -43,20 +43,28 @@ const RequestLeaveForm = ({ leaveBalance }) => {
   const errorHandle = () => {
     var error = false;
     Object.keys(leave).forEach((property) => {
-      if (!leave[property]) {
+      if (!leave[property] ) {
         setLeaveErrors((prevState) => ({
           ...prevState,
           [property]: property + " is required",
         }));
         error = true;
       }
-      if (leave.startDate < new Date()) {
+
+      if(leave.leaveMethod !== "multiple Day") {
         setLeaveErrors((prevState) => ({
           ...prevState,
-          startDate: "can not select previous dates.",
+         endDate: "",
         }));
-        error = true;
+        error = false;
       }
+      // if (leave.startDate < new Date()) {
+      //   setLeaveErrors((prevState) => ({
+      //     ...prevState,
+      //     startDate: "can not select previous dates.",
+      //   }));
+      //   error = true;
+      // }
     });
 
     return error;
@@ -150,8 +158,8 @@ const RequestLeaveForm = ({ leaveBalance }) => {
     setLeave({
       leaveType: "",
       reason: "",
-      startDate: new Date(),
-      endDate: new Date(),
+      startDate: "",
+      endDate: "",
       leaveMethod: "",
     });
   };
@@ -202,13 +210,17 @@ const RequestLeaveForm = ({ leaveBalance }) => {
                         name="startDate"
                         value={leave.startDate}
                         disablePast
-                        error={leaveErrors.startDate ? true : false}
-                        helperText={leaveErrors.startDate}
+                        
                         onChange={(newValue) => {
                           setLeave({ ...leave, startDate: newValue });
+                          setLeaveErrors((prevState) => ({
+                            ...prevState,
+                            startDate: "",
+                          }));
                         }}
                         renderInput={(params) => (
-                          <TextField variant="filled" {...params} />
+                          <TextField variant="filled" {...params} error={leaveErrors.startDate ? true : false}
+                          helperText={leaveErrors.startDate}/>
                         )}
                       />
                     </Stack>
@@ -270,15 +282,18 @@ const RequestLeaveForm = ({ leaveBalance }) => {
                           label="Select End Date"
                           inputFormat="MM/dd/yyyy"
                           name="endDate"
-                          // minDate={{new Date()}+1}
+                          minDate={leave.startDate}
                           value={leave.endDate}
-                          error={leaveErrors.endDate ? true : false}
-                          helperText={leaveErrors.endDate}
                           onChange={(newValue) => {
                             setLeave({ ...leave, endDate: newValue });
+                            setLeaveErrors((prevState) => ({
+                              ...prevState,
+                              endDate: "",
+                            }));
                           }}
                           renderInput={(params) => (
-                            <TextField variant="filled" {...params} />
+                            <TextField variant="filled" {...params} error={leaveErrors.endDate ? true : false}
+                            helperText={leaveErrors.endDate} />
                           )}
                         />
                       </Stack>

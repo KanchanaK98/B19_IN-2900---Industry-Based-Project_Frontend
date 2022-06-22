@@ -20,7 +20,7 @@ import { addMoreQuestionsApi } from "../../../../Api/PromotionModule/PaperApi/ad
 import useStyles from "./AddMoreQuestionsStyles";
 import CardContent from "@mui/material/CardContent";
 
-export default function AddMoreQuestions() {
+export default function AddMoreQuestions({ user }) {
   const classes = useStyles();
   const { PaperID } = useParams();
 
@@ -31,6 +31,14 @@ export default function AddMoreQuestions() {
   const [record, setRecord] = useState([]);
   const [QuestionList, setQuestionList] = useState([]);
   const [selectedQuestions, setSelectedQuestions] = useState([]);
+
+  if (!user) {
+    window.location.replace("/");
+  } else {
+    if (user.teamLead === false) {
+      window.location.href = "/dashboard";
+    }
+  }
 
   useEffect(() => {
     setTimeout(() => setSpinner(false), 4000);

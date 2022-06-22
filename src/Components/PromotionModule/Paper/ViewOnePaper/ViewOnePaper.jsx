@@ -7,15 +7,23 @@ import { useParams } from "react-router-dom";
 import ArrowBackIosSharpIcon from "@mui/icons-material/ArrowBackIosSharp";
 import { deletePaperAPi } from "../../../../Api/PromotionModule/PaperApi/deletePaperAPi";
 import { viewAllExamsApi } from "../../../../Api/PromotionModule/ExamApi/viewAllExamsApi";
-import Link from "@mui/material/Link";
 import useStyles from "./ViewOnePaperStyles";
 
-export default function ViewOnePaper() {
+export default function ViewOnePaper({ user }) {
   const { PaperID } = useParams();
   const classes = useStyles();
   const [Paper, setPaper] = useState([]);
-
   const [examlist, setExamsList] = useState([]);
+
+  if (!user) {
+    window.location.replace("/");
+  } else {
+    if (user.teamLead === false) {
+      if (user.jobRole !== "HR Manager") {
+        window.location.href = "/dashboard";
+      }
+    }
+  }
 
   useEffect(() => {
     async function fetchData() {
@@ -107,45 +115,50 @@ export default function ViewOnePaper() {
                 </Typography>
               ) : (
                 <CardActions className={classes.pos}>
-                  <Button
-                    className={classes.btn}
-                    variant="contained"
-                    sx={{ backgroundColor: "#183d78" }}
-                    onClick={() =>
-                      window.open(
-                        `/promotion/Paper/updatePaperDetails/${PaperID}`,
-                        "_self"
-                      )
-                    }
-                  >
-                    Edit Paper Details&nbsp;
-                  </Button>
-                  <Button
-                    className={classes.btn}
-                    variant="contained"
-                    sx={{ backgroundColor: "#183d78" }}
-                    onClick={() => {
-                      window.open(
-                        `/promotion/Paper/addMoreQuestions/${PaperID}`,
-                        "_self"
-                      );
-                    }}
-                  >
-                    Add More Questions&nbsp;
-                  </Button>
-
-                  <Button
-                    className={classes.btn}
-                    variant="contained"
-                    sx={{ backgroundColor: "#183d78" }}
-                    onClick={() => {
-                      deletePaperAPi(p.PaperID).then(() => {
-                        window.open("/promotion/Paper", "_self");
-                      });
-                    }}
-                  >
-                    Delete&nbsp;
-                  </Button>
+                  {user.teamLead === true && (
+                    <Button
+                      className={classes.btn}
+                      variant="contained"
+                      sx={{ backgroundColor: "#183d78" }}
+                      onClick={() =>
+                        window.open(
+                          `/promotion/Paper/updatePaperDetails/${PaperID}`,
+                          "_self"
+                        )
+                      }
+                    >
+                      Edit Paper Details&nbsp;
+                    </Button>
+                  )}
+                  {user.teamLead === true && (
+                    <Button
+                      className={classes.btn}
+                      variant="contained"
+                      sx={{ backgroundColor: "#183d78" }}
+                      onClick={() => {
+                        window.open(
+                          `/promotion/Paper/addMoreQuestions/${PaperID}`,
+                          "_self"
+                        );
+                      }}
+                    >
+                      Add More Questions&nbsp;
+                    </Button>
+                  )}
+                  {user.teamLead === true && (
+                    <Button
+                      className={classes.btn}
+                      variant="contained"
+                      sx={{ backgroundColor: "#183d78" }}
+                      onClick={() => {
+                        deletePaperAPi(p.PaperID).then(() => {
+                          window.open("/promotion/Paper", "_self");
+                        });
+                      }}
+                    >
+                      Delete&nbsp;
+                    </Button>
+                  )}
                 </CardActions>
               )}
             </Card>

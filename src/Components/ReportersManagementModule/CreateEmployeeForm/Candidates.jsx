@@ -11,7 +11,13 @@ import {
 import React, { useEffect, useRef } from "react";
 import { useState } from "react";
 
-function Candidates({ candidates, setInputs, isDisableCandidate }) {
+function Candidates({
+  candidates,
+  setInputs,
+  isDisableCandidate,
+  inputErrors,
+  setInputErrors,
+}) {
   // const [candidates, setCandidates] = useState();
   const [open, setOpen] = useState(false);
   const [scroll, setScroll] = useState("paper");
@@ -48,6 +54,14 @@ function Candidates({ candidates, setInputs, isDisableCandidate }) {
     }
   }, [open]);
   const handleClick = (candidate) => {
+    setInputErrors({
+      ...inputErrors,
+      NIC: "",
+      jobRole: "",
+      employeeFirstName: "",
+      employeeLastName: "",
+      companyEmail: "",
+    });
     setInputs((prevState) => ({
       ...prevState,
       NIC: candidate.NIC,

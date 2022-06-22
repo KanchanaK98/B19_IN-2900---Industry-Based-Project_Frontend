@@ -468,7 +468,7 @@ const SideBar = ({ open, toggleDrawer, user, handleLogOut }) => {
             </ListItem>
             <Collapse in={openCollapse.Promotion} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
-                {(user.JobRole === "HR Manager" || user.teamLead) && (
+                {user.teamLead && (
                   <ListItem2
                     component={Link}
                     to="/promotion/Questions"
@@ -485,7 +485,7 @@ const SideBar = ({ open, toggleDrawer, user, handleLogOut }) => {
                   </ListItem2>
                 )}
 
-                {(user.JobRole === "HR Manager" || user.teamLead) && (
+                {(user.jobRole === "HR Manager" || user.teamLead) && (
                   <ListItem2
                     component={Link}
                     to="/promotion/Paper"
@@ -535,7 +535,7 @@ const SideBar = ({ open, toggleDrawer, user, handleLogOut }) => {
                   </ListItem2>
                 )}
 
-                {(user.jobRole !== "CTO" || user.jobRole === "IT Employee") && (
+                {(user.jobRole !== "CTO" || user.jobRole !== "IT Employee") && (
                   <ListItem2
                     component={Link}
                     to={`/promotion/evaluation/mySubmissions/${user.employeeID}`}

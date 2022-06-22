@@ -2,8 +2,9 @@ import React from "react";
 import { Typography, Button, Card, Grid, Avatar, Divider } from "@mui/material";
 import { Link } from "react-router-dom";
 function DisplayTeam({ team }) {
+  const user = JSON.parse(sessionStorage.getItem("user"));
   const { _id, teamName, teamLeadID, TeamWithEmp, ProductOfTeam } = team;
-  console.log(ProductOfTeam);
+
   return (
     <div>
       <Card
@@ -15,6 +16,12 @@ function DisplayTeam({ team }) {
           minHeight: 500,
           minWidth: 320,
           backgroundColor: "#e4ecf7",
+
+          transition: "transform 0.15s ease-in-out",
+          "&:hover": {
+            transform: "scale3d(1.05, 1.05, 1)",
+            backgroundColor: "#38bff5",
+          },
         }}
       >
         <Typography
@@ -112,15 +119,25 @@ function DisplayTeam({ team }) {
         <Divider sx={{ mt: 2, mb: 2 }}></Divider>
 
         <Typography align="center">
-          <Button
-            variant="contained"
-            component={Link}
-            to={`/teams/update/${_id}`}
-            state={{ team }}
-            sx={{ backgroundColor: "#183d78" }}
-          >
-            Update Team
-          </Button>
+          {(user.jobRole === "HR Manager" ||
+            user.employeeID === teamLeadID) && (
+            <Button
+              variant="contained"
+              component={Link}
+              to={`/teams/update/${_id}`}
+              state={{ team }}
+              sx={{
+                backgroundColor: "#183d78",
+                color: "#fff",
+                "&:hover": {
+                  backgroundColor: "#4d5575",
+                  color: "#fff",
+                },
+              }}
+            >
+              Update Team
+            </Button>
+          )}
         </Typography>
       </Card>
     </div>

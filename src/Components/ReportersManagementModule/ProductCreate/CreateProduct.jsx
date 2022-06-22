@@ -17,6 +17,7 @@ import InventoryIcon from "@mui/icons-material/Inventory";
 import { createProduct } from "../../../Api/ReportersManagementModule/ProductApi";
 import { getAllTeams } from "../../../Api/ReportersManagementModule/TeamsApi";
 import { Link } from "react-router-dom";
+import useStyles from "./ProductCreateStyles";
 function CreateProduct() {
   const [duplicated, setDuplicated] = useState(false);
   const [addSuccessfully, setAddSuccessfully] = useState(false);
@@ -103,7 +104,7 @@ function CreateProduct() {
     }
     fetchData();
   }, []);
-
+  const classes = useStyles();
   return (
     <div>
       <Box padding={1} sx={{ mt: 2, mb: 6 }}>
@@ -214,7 +215,8 @@ function CreateProduct() {
                   component={Link}
                   to="/products"
                   variant="contained"
-                  sx={{ mt: 2, backgroundColor: "#183d78" }}
+                  sx={{ mt: 2 }}
+                  className={classes.button}
                 >
                   View Products
                 </Button>
@@ -223,7 +225,8 @@ function CreateProduct() {
                 <Button
                   onClick={handleSubmit}
                   variant="contained"
-                  sx={{ mt: 2, backgroundColor: "#183d78" }}
+                  sx={{ mt: 2 }}
+                  className={classes.button}
                 >
                   Create New Product
                 </Button>

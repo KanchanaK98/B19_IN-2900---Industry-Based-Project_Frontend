@@ -23,9 +23,9 @@ import {
 } from "../../../Api/ReportersManagementModule/EmployeeApi";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { add } from "date-fns";
-import useStyles from "./EditEmployeeStyles";
+import useStyles from "./UserEditStyles";
 
-function EditEmployee() {
+function UserEdit() {
   const jobRole = JSON.parse(sessionStorage.getItem("user")).jobRole;
   const [inputErrors, setInputErrors] = useState({
     employeeFirstName: "",
@@ -288,7 +288,7 @@ function EditEmployee() {
                 <Grid item sm={12} md={12} sx={{ color: "#183d78" }}>
                   <Typography variant="h5" fontWeight="bold">
                     <PersonIcon sx={{ width: 50, height: 50 }} />
-                    USER PROFILE
+                    MY PROFILE
                   </Typography>
                 </Grid>
                 <Grid container>
@@ -444,28 +444,32 @@ function EditEmployee() {
                           </FormLabel>
                         </Grid>
                         <Grid item xs={6} md={9}>
-                         {jobRole === "HR Manager" ?( <TextField
-                            id="filled-basic"
-                            variant="filled"
-                            name="NIC"
-                            sx={{ backgroundColor: "#c7fcf7" }}
-                            value={inputs.NIC}
-                            onChange={handleChange || add(this)}
-                            error={inputErrors.NIC ? true : false}
-                            helperText={inputErrors.NIC}
-                            fullWidth
-                          />):(<TextField
-                            id="filled-basic"
-                            variant="filled"
-                            name="NIC"
-                            disabled
-                            sx={{ backgroundColor: "#c7fcf7" }}
-                            value={inputs.NIC}
-                            onChange={handleChange || add(this)}
-                            error={inputErrors.NIC ? true : false}
-                            helperText={inputErrors.NIC}
-                            fullWidth
-                          />)}
+                          {jobRole === "HR Manager" ? (
+                            <TextField
+                              id="filled-basic"
+                              variant="filled"
+                              name="NIC"
+                              sx={{ backgroundColor: "#c7fcf7" }}
+                              value={inputs.NIC}
+                              onChange={handleChange || add(this)}
+                              error={inputErrors.NIC ? true : false}
+                              helperText={inputErrors.NIC}
+                              fullWidth
+                            />
+                          ) : (
+                            <TextField
+                              id="filled-basic"
+                              variant="filled"
+                              name="NIC"
+                              disabled
+                              sx={{ backgroundColor: "#c7fcf7" }}
+                              value={inputs.NIC}
+                              onChange={handleChange || add(this)}
+                              error={inputErrors.NIC ? true : false}
+                              helperText={inputErrors.NIC}
+                              fullWidth
+                            />
+                          )}
                         </Grid>
                       </Grid>
                     </Grid>
@@ -573,7 +577,7 @@ function EditEmployee() {
                         </Grid>
                       </Grid>
                     </Grid>
-                    <Grid item xs={6}>
+                    {/* <Grid item xs={6}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={3}>
                           {jobRole === "HR Manager" && (
@@ -610,8 +614,8 @@ function EditEmployee() {
                           )}
                         </Grid>
                       </Grid>
-                    </Grid>
-                    <Grid item xs={6}>
+                    </Grid> */}
+                    {/* <Grid item xs={6}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={3}>
                           {jobRole === "HR Manager" && (
@@ -640,8 +644,8 @@ function EditEmployee() {
                           )}
                         </Grid>
                       </Grid>
-                    </Grid>
-                    <Grid item xs={6}>
+                    </Grid> */}
+                    {/* <Grid item xs={6}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={3}>
                           {jobRole === "HR Manager" && (
@@ -676,7 +680,7 @@ function EditEmployee() {
                           )}
                         </Grid>
                       </Grid>
-                    </Grid>
+                    </Grid> */}
                     <Grid item xs={6} sx={{ mb: 1 }}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={3}></Grid>
@@ -839,7 +843,7 @@ function EditEmployee() {
               </Grid>
               <Grid item sm={12} md={12} sx={{ mt: 4 }}>
                 <Grid container spacing={2}>
-                  <Grid item sm={12} md={4}>
+                  <Grid item sm={12} md={3}>
                     <Button
                       onClick={handleSubmit}
                       variant="contained"
@@ -849,10 +853,23 @@ function EditEmployee() {
                       UPDATE
                     </Button>
                   </Grid>
-                  <Grid item sm={12} md={4}>
+                  <Grid item sm={12} md={3}>
+                    <Button
+                      LinkComponent={Link}
+                      to={`/user`}
+                      state={{ allEmployees: true }}
+                      variant="contained"
+                      className={classes.button}
+                      fullWidth
+                    >
+                      my profile
+                    </Button>
+                  </Grid>
+                  <Grid item sm={12} md={3}>
                     <Button
                       LinkComponent={Link}
                       to={`/dashboard`}
+                    
                       state={{ allEmployees: true }}
                       variant="contained"
                       className={classes.button}
@@ -861,10 +878,10 @@ function EditEmployee() {
                       VIEW ALL EMPLOYEES
                     </Button>
                   </Grid>
-                  <Grid item sm={12} md={4}>
+                  <Grid item sm={12} md={3}>
                     <Button
                       LinkComponent={Link}
-                      to={`/dashboard`}
+                      to={`/user`}
                       state={{ allEmployees: true }}
                       variant="contained"
                       className={classes.button}
@@ -920,4 +937,4 @@ function EditEmployee() {
   );
 }
 
-export default EditEmployee;
+export default UserEdit;

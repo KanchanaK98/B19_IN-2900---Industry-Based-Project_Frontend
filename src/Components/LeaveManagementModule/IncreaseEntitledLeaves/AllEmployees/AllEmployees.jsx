@@ -3,7 +3,7 @@ import { Avatar, Card, CardActionArea, Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import Scrollbars from "react-custom-scrollbars";
-import { getEmployees, getLeaveBalance } from "../../../../Api/LeaveManagementModule/LeaveApi";
+import { getEmployees, getLeaveBalance, getLeaveBalanceOfEmployee } from "../../../../Api/LeaveManagementModule/LeaveApi";
 import SearchIcon from '@mui/icons-material/Search';
 
 import IconButton from "@mui/material/IconButton";
@@ -20,7 +20,7 @@ const AllEmployees = ({employeesList, setEmployee,setLeaveBalance}) => {
 
   const handleClick = async (employees) => {
     setEmployee(employees);
-    setLeaveBalance(await getLeaveBalance(employees.employeeID));
+    setLeaveBalance(await getLeaveBalanceOfEmployee(employees.employeeID));
   };
 
 

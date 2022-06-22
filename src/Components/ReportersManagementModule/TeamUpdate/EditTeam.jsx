@@ -24,8 +24,10 @@ import TeamMemberDialog from "./TeamMemberDialog";
 import { updateTeam } from "../../../Api/ReportersManagementModule/TeamsApi";
 import { getEmployeesWithoutTeam } from "../../../Api/ReportersManagementModule/TeamsApi";
 import { add } from "date-fns";
+import useStyles from "./EditTeamStyles";
 
 function EditTeam() {
+  const user = JSON.parse(sessionStorage.getItem("user"));
   const [addSuccessfully, setAddSuccessfully] = useState(false);
   const [notAdded, setnotAdded] = useState(false);
   const [duplicated, seDuplicated] = useState(false);
@@ -119,11 +121,11 @@ function EditTeam() {
   const handleOpenDialog = () => {
     setOpenDialog(true);
   };
-
+  const classes = useStyles();
   return (
     <div>
-      <Box padding={6}>
-        <Paper sx={{ padding: 4, backgroundColor: "#e4ecf7" }}>
+      <Box padding={6} bgcolor="#d7dde0" mt={4}>
+        <Paper sx={{ padding: 4, backgroundColor: "#e4ecf7", mt: 4 }}>
           <form onSubmit={handleSubmit}>
             <Typography
               variant="h5"
@@ -142,16 +144,30 @@ function EditTeam() {
                     </FormLabel>
                   </Grid>
                   <Grid item sm={8} md={8}>
-                    <TextField
-                      id="filled-basic"
-                      variant="filled"
-                      name="teamName"
-                      value={editTeam.teamName}
-                      onChange={handleChange || add(this)}
-                      error={inputErrors.teamName ? true : false}
-                      helperText={inputErrors.teamName}
-                      fullWidth
-                    />
+                    {user.jobRole === "HR Manager" ? (
+                      <TextField
+                        id="filled-basic"
+                        variant="filled"
+                        name="teamName"
+                        value={editTeam.teamName}
+                        onChange={handleChange || add(this)}
+                        error={inputErrors.teamName ? true : false}
+                        helperText={inputErrors.teamName}
+                        fullWidth
+                      />
+                    ) : (
+                      <TextField
+                        id="filled-basic"
+                        variant="filled"
+                        name="teamName"
+                        disabled
+                        value={editTeam.teamName}
+                        onChange={handleChange || add(this)}
+                        error={inputErrors.teamName ? true : false}
+                        helperText={inputErrors.teamName}
+                        fullWidth
+                      />
+                    )}
                   </Grid>
                 </Grid>
                 <Grid container sx={{ display: "flex", alignItems: "center" }}>
@@ -209,49 +225,96 @@ function EditTeam() {
                     </FormLabel>
                   </Grid>
                   <Grid item sm={8} md={8}>
-                    <TextField
-                      id="data"
-                      variant="filled"
-                      name="teamLeader"
-                      select
-                      value={editTeam.teamLeader}
-                      onChange={handleChange || add(this)}
-                      error={inputErrors.teamLeader ? true : false}
-                      helperText={inputErrors.teamLeader}
-                      fullWidth
-                      SelectProps={{
-                        renderValue: (mem) => mem.employeeName,
-                      }}
-                    >
-                      {members &&
-                        members.map((mem) => (
-                          <MenuItem value={mem} key={mem.employeeID}>
-                            <Grid
-                              container
-                              sx={{
-                                display: "flex",
-                                justifyContent: "flex-start",
-                                alignItems: "center",
-                              }}
-                            >
-                              <Grid item>
-                                <Avatar
-                                  src={mem.profilePic}
-                                  sx={{ height: 35, width: 35 }}
-                                />
+                    {user.jobRole === "HR Manager" ? (
+                      <TextField
+                        id="data"
+                        variant="filled"
+                        name="teamLeader"
+                        select
+                        value={editTeam.teamLeader}
+                        onChange={handleChange || add(this)}
+                        error={inputErrors.teamLeader ? true : false}
+                        helperText={inputErrors.teamLeader}
+                        fullWidth
+                        SelectProps={{
+                          renderValue: (mem) => mem.employeeName,
+                        }}
+                      >
+                        {members &&
+                          members.map((mem) => (
+                            <MenuItem value={mem} key={mem.employeeID}>
+                              <Grid
+                                container
+                                sx={{
+                                  display: "flex",
+                                  justifyContent: "flex-start",
+                                  alignItems: "center",
+                                }}
+                              >
+                                <Grid item>
+                                  <Avatar
+                                    src={mem.profilePic}
+                                    sx={{ height: 35, width: 35 }}
+                                  />
+                                </Grid>
+                                <Grid item>
+                                  <Typography sx={{ mb: -0.7, ml: 1 }}>
+                                    {mem.employeeName}
+                                  </Typography>
+                                  <Typography variant="body2" sx={{ ml: 1.3 }}>
+                                    {mem.employeeID}
+                                  </Typography>
+                                </Grid>
                               </Grid>
-                              <Grid item>
-                                <Typography sx={{ mb: -0.7, ml: 1 }}>
-                                  {mem.employeeName}
-                                </Typography>
-                                <Typography variant="body2" sx={{ ml: 1.3 }}>
-                                  {mem.employeeID}
-                                </Typography>
+                            </MenuItem>
+                          ))}
+                      </TextField>
+                    ) : (
+                      <TextField
+                        id="data"
+                        variant="filled"
+                        name="teamLeader"
+                        select
+                        disabled
+                        value={editTeam.teamLeader}
+                        onChange={handleChange || add(this)}
+                        error={inputErrors.teamLeader ? true : false}
+                        helperText={inputErrors.teamLeader}
+                        fullWidth
+                        SelectProps={{
+                          renderValue: (mem) => mem.employeeName,
+                        }}
+                      >
+                        {members &&
+                          members.map((mem) => (
+                            <MenuItem value={mem} key={mem.employeeID}>
+                              <Grid
+                                container
+                                sx={{
+                                  display: "flex",
+                                  justifyContent: "flex-start",
+                                  alignItems: "center",
+                                }}
+                              >
+                                <Grid item>
+                                  <Avatar
+                                    src={mem.profilePic}
+                                    sx={{ height: 35, width: 35 }}
+                                  />
+                                </Grid>
+                                <Grid item>
+                                  <Typography sx={{ mb: -0.7, ml: 1 }}>
+                                    {mem.employeeName}
+                                  </Typography>
+                                  <Typography variant="body2" sx={{ ml: 1.3 }}>
+                                    {mem.employeeID}
+                                  </Typography>
+                                </Grid>
                               </Grid>
-                            </Grid>
-                          </MenuItem>
-                        ))}
-                    </TextField>
+                            </MenuItem>
+                          ))}
+                      </TextField>
+                    )}
                   </Grid>
                 </Grid>
               </Grid>
@@ -263,7 +326,8 @@ function EditTeam() {
                   component={Link}
                   to="/teams"
                   variant="contained"
-                  sx={{ mt: 2, backgroundColor: "#183d78" }}
+                  sx={{ mt: 2 }}
+                  className={classes.button}
                 >
                   View Teams
                 </Button>
@@ -271,7 +335,8 @@ function EditTeam() {
               <Grid item md={6} textAlign="right">
                 <Button
                   variant="contained"
-                  sx={{ mt: 2, backgroundColor: "#183d78" }}
+                  sx={{ mt: 2 }}
+                  className={classes.button}
                   onClick={handleSubmit}
                 >
                   Update Team

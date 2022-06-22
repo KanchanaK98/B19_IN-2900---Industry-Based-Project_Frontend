@@ -216,7 +216,7 @@ function CreateEmployee({ candidates }) {
                   <Grid container spacing={2}>
                     <Grid item xs={6} md={3}>
                       <FormLabel className="label" sx={{ fontWeight: "bold" }}>
-                        Employee ID :
+                        Employee ID:
                       </FormLabel>
                     </Grid>
                     <Grid item xs={6} md={9}>
@@ -263,7 +263,7 @@ function CreateEmployee({ candidates }) {
                   <Grid container spacing={2}>
                     <Grid item xs={6} md={3}>
                       <FormLabel className="label" sx={{ fontWeight: "bold" }}>
-                        First Name :{" "}
+                        First Name:
                       </FormLabel>
                     </Grid>
                     <Grid item xs={6} md={9}>
@@ -288,7 +288,7 @@ function CreateEmployee({ candidates }) {
                         style={{ marginLeft: "10px", fontWeight: "bold" }}
                         className="label"
                       >
-                        Last Name :
+                        Last Name:
                       </FormLabel>
                     </Grid>
                     <Grid item xs={6} md={9}>
@@ -310,7 +310,7 @@ function CreateEmployee({ candidates }) {
                   <Grid container spacing={2}>
                     <Grid item xs={6} md={3}>
                       <FormLabel className="label" sx={{ fontWeight: "bold" }}>
-                        Company Email :
+                        Company Email:
                       </FormLabel>
                     </Grid>
                     <Grid item xs={6} md={9}>
@@ -335,7 +335,7 @@ function CreateEmployee({ candidates }) {
                         style={{ marginLeft: "10px", fontWeight: "bold" }}
                         className="label"
                       >
-                        Job Role :
+                        Job Role:
                       </FormLabel>
                     </Grid>
                     <Grid item xs={6} md={9}>

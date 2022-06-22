@@ -99,6 +99,7 @@ function UserEdit() {
     }));
 
     setUpdateField(true);
+    setInputErrors({ ...inputErrors, [e.target.name]: "" });
   };
 
   //----------validation-----------------------------
@@ -563,110 +564,7 @@ function UserEdit() {
                         </Grid>
                       </Grid>
                     </Grid>
-                    {/* <Grid item xs={6}>
-                      <Grid container spacing={2}>
-                        <Grid item xs={6} md={3}>
-                          {jobRole === "HR Manager" && (
-                            <FormLabel
-                              sx={{ fontWeight: "bold", ml: 1, mt: 2 }}
-                              className="label"
-                            >
-                              Job Role :
-                            </FormLabel>
-                          )}
-                        </Grid>
-                        <Grid item xs={6} md={9}>
-                          {jobRole === "HR Manager" && (
-                            <TextField
-                              id="data"
-                              label="Job Role"
-                              variant="filled"
-                              name="jobRole"
-                              select
-                              sx={{ backgroundColor: "#c7fcf7" }}
-                              value={inputs.jobRole}
-                              onChange={handleChange || add(this)}
-                              fullWidth
-                              SelectProps={{
-                                renderValue: (job) => job,
-                              }}
-                            >
-                              {jobRoles.map((job) => (
-                                <MenuItem value={job} key={job}>
-                                  {job}
-                                </MenuItem>
-                              ))}
-                            </TextField>
-                          )}
-                        </Grid>
-                      </Grid>
-                    </Grid> */}
-                    {/* <Grid item xs={6}>
-                      <Grid container spacing={2}>
-                        <Grid item xs={6} md={3}>
-                          {jobRole === "HR Manager" && (
-                            <FormLabel
-                              sx={{ fontWeight: "bold", ml: 1, mt: 2 }}
-                              className="label"
-                            >
-                              Job Type:
-                            </FormLabel>
-                          )}
-                        </Grid>
-                        <Grid item xs={6} md={9}>
-                          {jobRole === "HR Manager" && (
-                            <TextField
-                              id="filled-basic"
-                              label=" Job Type"
-                              variant="filled"
-                              name="jobType"
-                              sx={{ backgroundColor: "#c7fcf7" }}
-                              value={inputs.jobType}
-                              onChange={handleChange || add(this)}
-                              error={inputErrors.jobType ? true : false}
-                              helperText={inputErrors.jobType}
-                              fullWidth
-                            />
-                          )}
-                        </Grid>
-                      </Grid>
-                    </Grid> */}
-                    {/* <Grid item xs={6}>
-                      <Grid container spacing={2}>
-                        <Grid item xs={6} md={3}>
-                          {jobRole === "HR Manager" && (
-                            <FormLabel
-                              sx={{ fontWeight: "bold", ml: 1, mt: 2 }}
-                              className="label"
-                            >
-                              Status :
-                            </FormLabel>
-                          )}
-                        </Grid>
-                        <Grid item xs={6} md={9}>
-                          {jobRole === "HR Manager" && (
-                            <TextField
-                              id="filled-basic"
-                              label="Status"
-                              variant="filled"
-                              name="status"
-                              sx={{ backgroundColor: "#c7fcf7" }}
-                              value={inputs.status}
-                              onChange={handleChange || add(this)}
-                              select
-                              selectprops={{ renderValue: inputs.status }}
-                              fullWidth
-                            >
-                              <MenuItem value={"Probationary"}>
-                                Probationary
-                              </MenuItem>
-                              <MenuItem value={"Permenent"}>Permenent</MenuItem>
-                              <MenuItem value={"Resigned"}>Resigned</MenuItem>
-                            </TextField>
-                          )}
-                        </Grid>
-                      </Grid>
-                    </Grid> */}
+
                     <Grid item xs={6} sx={{ mb: 1 }}>
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={3}></Grid>
@@ -855,12 +753,12 @@ function UserEdit() {
                     <Button
                       LinkComponent={Link}
                       to={`/dashboard`}
-                      state={{ allEmployees: true }}
+                      //   state={{ allEmployees: true }}
                       variant="contained"
                       className={classes.button}
                       fullWidth
                     >
-                      VIEW ALL EMPLOYEES
+                      dashboard
                     </Button>
                   </Grid>
                   <Grid item sm={12} md={3}>

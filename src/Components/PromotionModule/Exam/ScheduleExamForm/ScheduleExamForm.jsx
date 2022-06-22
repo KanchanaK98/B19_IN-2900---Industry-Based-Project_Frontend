@@ -47,7 +47,6 @@ import useStyles from "./ScheduleExamFormStyles";
 function ScheduleExamForm() {
   const classes = useStyles();
 
-  const [ExamID, setExamID] = useState("");
   const [ExamName, setExamName] = useState("");
   const [DateScheduled, setDateScheduled] = useState(null);
   const [JobRole, setJobRole] = useState("");
@@ -57,7 +56,7 @@ function ScheduleExamForm() {
   const [Status, setStatus] = useState([]);
   const [fill, setFill] = useState(false);
   const [ExamsList, setExamsList] = useState([]);
-
+  const [ExamID, setExamID] = useState("");
   const [PaperList, setPaperList] = useState([]);
 
   const { EmployeeID } = useParams();
@@ -95,6 +94,33 @@ function ScheduleExamForm() {
 
   //console.log("examsCompleted", examsCompleted);
   //console.log("listJobRoles", listJobRoles);
+
+  //---------------------auto generated id----------------------
+
+  // get total employees saved to database...
+
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     const totalNumberOfExamInDb = ExamsList.length;
+  //     console.log("totalNumberOfExamInDb", totalNumberOfExamInDb);
+  //     let numberToString = totalNumberOfExamInDb.toString();
+  //     if (numberToString.length < 4) {
+  //       for (let i = numberToString.length; i < 4; i++) {
+  //         numberToString = "0" + numberToString;
+  //       }
+  //     }
+  //     const examID = `EXAM-00${numberToString}`;
+  //     console.log("examID", examID);
+  //     setExamID(examID);
+  //   }
+  //   fetchData();
+  // }, []);
+  // const id =`EXAM-${(ExamsList.length).toString()}`
+
+  //
+  //    setExamID(`(EXAM-00${ExamsList.length+1).toString()}`);
+
+  //------------------------------------------------------
 
   //--------------validation-----------------------
   const [inputErrors, setInputErrors] = useState({

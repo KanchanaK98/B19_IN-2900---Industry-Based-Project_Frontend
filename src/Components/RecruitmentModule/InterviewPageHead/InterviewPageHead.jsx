@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 
 const InterviewPageHead = () => {
   const classes = useStyles();
+  const user = JSON.parse(sessionStorage.getItem("user"));
 
   return (
     <Box className={classes.container}>
@@ -16,14 +17,14 @@ const InterviewPageHead = () => {
             </Typography>
           </Grid>
           <Grid md={6} item className={classes.button}>
-            <Button
+           {user && user.jobRole === "HR Manager" && ( <Button
               component={Link}
               to={"/interview/create"}
               variant="contained"
               color="primary"
             >
               Create Interview
-            </Button>
+            </Button>)}
           </Grid>
         </Grid>
      

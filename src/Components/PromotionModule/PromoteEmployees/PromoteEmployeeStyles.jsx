@@ -11,10 +11,11 @@ export const useStyles = makeStyles((theme) => ({
       jobCard : {
         padding: theme.spacing(1.3),
         "& .MuiTypography-h6": {
-            fontWeight: 400
+            fontWeight: 400,
+            fontSize: theme.spacing(2),
           },
         background:
-        "linear-gradient(-45deg, rgba(143, 173, 206, 0.8),  rgba(255, 255, 255, 0.8))",
+        "linear-gradient(-45deg, rgb(255, 255, 128),  rgba(255, 255, 255, 0.8))",
       },
       jobContainer: {
         display: "flex",

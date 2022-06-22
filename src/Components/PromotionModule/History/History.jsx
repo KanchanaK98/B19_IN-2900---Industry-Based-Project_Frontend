@@ -38,8 +38,9 @@ const History = () => {
             to={"/promotions/promoteEmployees"}
             variant="contained"
             color="primary"
+            startIcon={<AddReaction  />}
           >
-            <AddReaction sx={{ mr: 1 }} />
+            
             Promote
           </Button>
         </Grid>

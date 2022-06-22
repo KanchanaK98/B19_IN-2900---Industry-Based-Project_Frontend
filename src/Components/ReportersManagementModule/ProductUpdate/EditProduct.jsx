@@ -46,6 +46,7 @@ function EditProduct() {
       [e.target.name]: e.target.value,
     }));
     setUpdateField(true);
+    setInputErrors({ ...inputErrors, [e.target.name]: "" });
   };
 
   const errorHandle = () => {
@@ -214,7 +215,15 @@ function EditProduct() {
                       component={Link}
                       to="/products"
                       variant="contained"
-                      sx={{ mt: 2, backgroundColor: "#183d78" }}
+                      sx={{
+                        mt: 2,
+                        backgroundColor: "#183d78",
+                        color: "#fff",
+                        "&:hover": {
+                          backgroundColor: "#4d5575",
+                          color: "#fff",
+                        },
+                      }}
                     >
                       View Products
                     </Button>
@@ -222,7 +231,15 @@ function EditProduct() {
                   <Grid item md={6} textAlign="right" sx={{ mt: 2 }}>
                     <Button
                       variant="contained"
-                      sx={{ mt: 2, backgroundColor: "#183d78" }}
+                      sx={{
+                        mt: 2,
+                        backgroundColor: "#183d78",
+                        color: "#fff",
+                        "&:hover": {
+                          backgroundColor: "#4d5575",
+                          color: "#fff",
+                        },
+                      }}
                       onClick={handleSubmit}
                     >
                       Update

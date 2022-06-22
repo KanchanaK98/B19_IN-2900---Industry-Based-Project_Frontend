@@ -10,11 +10,12 @@ import {
   countEmployees,
   createEmployee,
 } from "../../../Api/ReportersManagementModule/EmployeeApi";
-import { Alert, AlertTitle, Stack, Typography } from "@mui/material";
+import { Alert, AlertTitle, MenuItem, Stack, Typography } from "@mui/material";
 import CredentialCard from "./CredentialCard";
 import useStyles from "./CreateFormStyles";
 import Candidates from "./Candidates";
 import { Link } from "react-router-dom";
+import { set } from "date-fns";
 const jobRoles = [
   "Software Engineer",
   "Senior Software Engineer",
@@ -38,6 +39,7 @@ function CreateEmployee({ candidates }) {
   const [addSuccessfully, setAddSuccessfully] = useState(false);
   const [duplicated, setDuplicated] = useState(false);
   const [notAdded, setnotAdded] = useState(false);
+  const [render, setRender] = useState(true);
   const [count, setCount] = useState("");
   const [inputErrors, setInputErrors] = useState({
     employeeID: "",
@@ -65,17 +67,16 @@ function CreateEmployee({ candidates }) {
         ...prevState,
         employeeID: ID,
       }));
-
-      // console.log(count, { message: "Hi" });
     }
     fetchData();
-  }, []);
+  }, [render]);
 
   const handleChange = (e) => {
     setInputs((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
     }));
+    setInputErrors({ ...inputErrors, [e.target.name]: "" });
   };
   const handleClear = () => {
     setInputs({
@@ -91,7 +92,7 @@ function CreateEmployee({ candidates }) {
   //--------------validation-----------------------
   const errorHandle = () => {
     let isError = false;
-    Object.keys(inputs).map((property) => {
+    Object.keys(inputs).forEach((property) => {
       if (!inputs[property]) {
         setInputErrors((prevState) => ({
           ...prevState,
@@ -121,7 +122,7 @@ function CreateEmployee({ candidates }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     //-----------------------------------
     if (candidates && candidates.length === 0) {
       setIsDisableCandidate(true);
@@ -138,6 +139,8 @@ function CreateEmployee({ candidates }) {
           setAddSuccessfully(false);
         }, 2000);
         //----------------------------------------------------------------------------
+        handleClear();
+        setRender(!render);
       }
 
       if (response.status === 400) {
@@ -145,33 +148,28 @@ function CreateEmployee({ candidates }) {
         setTimeout(() => {
           setDuplicated(false);
         }, 2000);
+        handleClear();
+        setRender(!render);
       }
-      handleClear();
     } else {
-      handleClear();
       setnotAdded(true);
       setTimeout(() => {
         setnotAdded(false);
       }, 2000);
     }
   };
-  // const [candidates, setCandidates] = useState();
+
   const [isDisableCandidate, setIsDisableCandidate] = useState(true);
   useEffect(() => {
-    // async function fetchData() {
-    //   setCandidates(await getCandidates());
-    // }
-    // fetchData();
     if (candidates && candidates.length > 0) {
-      console.log("hiii")
+      console.log("hiii");
       setIsDisableCandidate(false);
     }
     if (candidates && candidates.length === 0) {
       setIsDisableCandidate(true);
     }
   }, [candidates]);
-console.log(candidates)
-  // console.log(candidates, { message: "hi" });
+
   const classes = useStyles();
   return (
     <div>
@@ -203,6 +201,8 @@ console.log(candidates)
                     candidates={candidates}
                     isDisableCandidate={isDisableCandidate}
                     setInputs={setInputs}
+                    inputErrors={inputErrors}
+                    setInputErrors={setInputErrors}
                   />
                 </Grid>
               </Grid>
@@ -216,7 +216,7 @@ console.log(candidates)
                   <Grid container spacing={2}>
                     <Grid item xs={6} md={3}>
                       <FormLabel className="label" sx={{ fontWeight: "bold" }}>
-                        Employee ID :
+                        Employee ID:
                       </FormLabel>
                     </Grid>
                     <Grid item xs={6} md={9}>
@@ -263,7 +263,7 @@ console.log(candidates)
                   <Grid container spacing={2}>
                     <Grid item xs={6} md={3}>
                       <FormLabel className="label" sx={{ fontWeight: "bold" }}>
-                        First Name :{" "}
+                        First Name:
                       </FormLabel>
                     </Grid>
                     <Grid item xs={6} md={9}>
@@ -288,7 +288,7 @@ console.log(candidates)
                         style={{ marginLeft: "10px", fontWeight: "bold" }}
                         className="label"
                       >
-                        Last Name :
+                        Last Name:
                       </FormLabel>
                     </Grid>
                     <Grid item xs={6} md={9}>
@@ -310,7 +310,7 @@ console.log(candidates)
                   <Grid container spacing={2}>
                     <Grid item xs={6} md={3}>
                       <FormLabel className="label" sx={{ fontWeight: "bold" }}>
-                        Company Email :
+                        Company Email:
                       </FormLabel>
                     </Grid>
                     <Grid item xs={6} md={9}>
@@ -335,7 +335,7 @@ console.log(candidates)
                         style={{ marginLeft: "10px", fontWeight: "bold" }}
                         className="label"
                       >
-                        Job Role :
+                        Job Role:
                       </FormLabel>
                     </Grid>
                     <Grid item xs={6} md={9}>
@@ -348,14 +348,14 @@ console.log(candidates)
                         onChange={handleChange}
                         error={inputErrors.jobRole ? true : false}
                         helperText={inputErrors.jobRole}
-                        // select
+                        select
                         fullWidth
                       >
-                        {/* {jobRoles.map((jobRole) => (
+                        {jobRoles.map((jobRole) => (
                           <MenuItem value={jobRole} key={jobRole}>
                             {jobRole}
                           </MenuItem>
-                        ))} */}
+                        ))}
                       </TextField>
                     </Grid>
                   </Grid>

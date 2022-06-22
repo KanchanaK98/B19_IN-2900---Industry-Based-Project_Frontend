@@ -1,8 +1,6 @@
 import { Avatar, Box, Card, CardActionArea, Grid } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { viewAllEmployees } from "../../../Api/ReportersManagementModule/EmployeeApi";
 import { Scrollbars } from "react-custom-scrollbars";
-import DisplayProfiles from "./DisplayProfiles";
 function AllEmployees({ setEmployee, profiles }) {
   const handleClick = (profile) => {
     setEmployee(profile);

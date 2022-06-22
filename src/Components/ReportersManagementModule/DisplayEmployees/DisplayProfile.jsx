@@ -40,9 +40,10 @@ function DisplayProfile({ employee }) {
           padding: 5,
           maxWidth: 750,
           minWidth: 750,
-          minHeight: 450,
+          minHeight: 570,
           cursor: "pointer",
-          backgroundColor: "#e4ecf7",
+          backgroundImage: `linear-gradient(to right, rgba(214, 243, 255), rgba(94, 204, 247))`,
+          // backgroundColor: "#e4ecf7",
         }}
       >
         <Grid container>
@@ -264,7 +265,7 @@ function DisplayProfile({ employee }) {
           to={`/profile/update`}
           state={{ employee }}
           sx={{
-            mt: 5,
+            mt: 1,
             backgroundColor: "#183d78",
             color: "#fff",
             "&:hover": {

@@ -18,7 +18,7 @@ function AllRecentEmployees() {
 
   return (
     <div>
-      <Scrollbars style={{ height: 480, width: 400 }}>
+      <Scrollbars style={{ height: 500, width: 400 }}>
         <Box maxWidth={400} sx={{ mt: 5 }}>
           <Grid
             container

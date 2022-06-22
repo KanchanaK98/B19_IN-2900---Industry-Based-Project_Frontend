@@ -3,6 +3,7 @@ import * as api from "../index";
 export const fetchEmployees = async () => {
   try {
     const { data } = await api.fetchEmployees();
+    console.log(data)
     let employees = [];
     await Promise.all(
       data.data.map(async (employee) => {

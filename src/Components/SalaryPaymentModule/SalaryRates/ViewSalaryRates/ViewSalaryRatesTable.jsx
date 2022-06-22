@@ -25,7 +25,12 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 }));
 
 const StyledTableRow = styled(TableRow)(() => ({
-  "&:nth-of-type(odd)": {
+  "&:nth-of-type(1) ": {
+    borderTop: "3px solid #ad1457",
+    borderBottom: "3px solid #ad1457",
+    backgroundColor: "#f48fb1",
+  },
+  "&:nth-of-type(2n+3)": {
     backgroundColor: "#b2dfdb",
   },
   "&:nth-of-type(even)": {
@@ -40,14 +45,33 @@ const StyledTableRow = styled(TableRow)(() => ({
   },
 }));
 
-export default function ViewSalaryRatesTable() {
+export default function ViewSalaryRatesTable({ user }) {
   const { EmployeeID } = useParams();
   const classes = useStyles();
   const [ratesList, setRatesList] = useState([]);
 
+  if (!user) {
+    window.location.replace("/");
+  } else {
+    if (user.jobRole !== "HR Manager") {
+      window.location.href = "/dashboard";
+    }
+  }
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     setRatesList(await viewSalaryRatesApi());
+  //   }
+  //   fetchData();
+  // }, []);
+
   useEffect(() => {
     async function fetchData() {
-      setRatesList(await viewSalaryRatesApi());
+      const res = await viewSalaryRatesApi();
+      const descending = res.sort((a, b) =>
+        a.ChangedDate > b.ChangedDate ? -1 : 1
+      );
+      setRatesList(descending, ratesList);
+      console.log(descending);
     }
     fetchData();
   }, []);
@@ -87,7 +111,7 @@ export default function ViewSalaryRatesTable() {
               <Table className={classes.table} aria-label="customized table">
                 <TableHead>
                   <TableRow>
-                    <StyledTableCell align="left">Changed Date</StyledTableCell>
+                    <StyledTableCell align="left">Entered Date</StyledTableCell>
                     <StyledTableCell align="left">Changed BY</StyledTableCell>
                     <StyledTableCell align="left">
                       Emoloyee EPF Rate

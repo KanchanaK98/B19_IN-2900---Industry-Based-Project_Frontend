@@ -39,12 +39,20 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-export default function FindEmployeeSalary() {
+export default function FindEmployeeSalary({ user }) {
   const classes = useStyles();
   const [employeeSalaryList, setEmployeeSalaryList] = useState([]);
   const [search, setSearch] = useState("");
   const [filteredRecords, setFilteredRecords] = useState([]);
   const { EmployeeID } = useParams();
+
+  if (!user) {
+    window.location.replace("/");
+  } else {
+    if (user.employeeID !== EmployeeID) {
+      window.location.href = "/dashboard";
+    }
+  }
 
   useEffect(() => {
     async function fetchData() {

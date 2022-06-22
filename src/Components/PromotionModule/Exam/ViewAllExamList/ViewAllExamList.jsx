@@ -45,7 +45,7 @@ const StyledTableRow = styled(TableRow)(() => ({
   },
 }));
 
-export default function ViewAllExamList() {
+export default function ViewAllExamList({ user }) {
   const classes = useStyles();
   const { EmployeeID } = useParams();
 
@@ -53,6 +53,13 @@ export default function ViewAllExamList() {
   const [filteredRecords, setFilteredRecords] = useState([]);
   const [ExamsList, setExamsList] = useState([]);
 
+  if (!user) {
+    window.location.replace("/");
+  } else {
+    if (user.jobRole !== "HR Manager") {
+      window.location.href = "/dashboard";
+    }
+  }
   useEffect(() => {
     async function fetchData() {
       const res = await viewAllExamsApi();
@@ -87,19 +94,25 @@ export default function ViewAllExamList() {
           >
             <Grid>
               <div style={{ marginLeft: 10 }}>
-                <Button
-                  align="center"
-                  variant="contained"
-                  onClick={() =>
-                    window.open(
-                      ` /promotion/evaluation/exam/scheduleExam/${EmployeeID}`,
-                      "_self"
-                    )
-                  }
+                {user.jobRole === "HR Manager" && (
+                  <Button
+                    align="center"
+                    variant="contained"
+                    onClick={() =>
+                      window.open(
+                        ` /promotion/evaluation/exam/scheduleExam/${EmployeeID}`,
+                        "_self"
+                      )
+                    }
+                  >
+                    Schedule New Exam&nbsp;
+                  </Button>
+                )}
+
+                <FormControl
+                  sx={{ display: "flex-end", minWidth: 120, ml: 5 }}
+                  size="small"
                 >
-                  Schedule New Exam&nbsp;
-                </Button>
-                <FormControl sx={{ ml: 10, minWidth: 120 }} size="small">
                   <InputLabel id="demo-simple-select-helper-label">
                     Filter
                   </InputLabel>

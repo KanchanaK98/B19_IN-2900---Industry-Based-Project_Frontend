@@ -30,7 +30,7 @@ const IncreaseLeavesHr = () => {
                     <AllEmployees  render={render} employeesList={employeesList} setEmployee={setEmployee} setLeaveBalance={setLeaveBalance}/>
                 </Grid>
                 <Grid item md={8}>
-                <IncreaseEntitledLeaves setRender={setRender} employee={employee} leaveBalance={leaveBalance} />
+                <IncreaseEntitledLeaves render={render} setRender={setRender} employee={employee} setLeaveBalance={setLeaveBalance} leaveBalance={leaveBalance} />
                 </Grid>
             </Grid>
         

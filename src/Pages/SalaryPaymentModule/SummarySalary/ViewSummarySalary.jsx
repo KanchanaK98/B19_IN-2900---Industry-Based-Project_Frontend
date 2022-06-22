@@ -2,11 +2,11 @@ import React from "react";
 import ViewSummarySalaryTable from "../../../Components/SalaryPaymentModule/SummarySalary/ViewSummarySalaryTable";
 import { Grid } from "@mui/material";
 
-const ViewSummarySalary = () => {
+const ViewSummarySalary = ({ user }) => {
   return (
     <Grid container>
       <Grid item sm={12} md={12} mt={0}>
-        <ViewSummarySalaryTable />
+        <ViewSummarySalaryTable user={user} />
       </Grid>
     </Grid>
   );

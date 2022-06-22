@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
       margin: theme.spacing(2),
     },
     backgroundColor: "#cfd8dc",
-    width: "80%",
+    width: "65%",
     marginLeft: "15%",
   },
   formHeader: {
@@ -51,8 +51,9 @@ const useStyles = makeStyles((theme) => ({
   },
   viewButton: {
     display: "flex",
-    paddingRight: "15%",
+    paddingRight: "16%",
     justifyContent: "right",
+
     margin: theme.spacing(2, 5, 1),
   },
 }));

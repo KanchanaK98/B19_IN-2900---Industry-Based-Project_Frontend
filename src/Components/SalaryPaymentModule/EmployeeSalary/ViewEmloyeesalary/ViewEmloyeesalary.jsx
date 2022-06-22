@@ -6,10 +6,18 @@ import { useParams } from "react-router-dom";
 import { viewEmployeeSalaryApi } from "../../../../Api/SalaryPaymentModule/EmployeeSalaryApi/viewEmployeeSalaryApi";
 import useStyles from "./ViewEmloyeesalaryStyles";
 
-export default function ViewEmloyeesalary() {
+export default function ViewEmloyeesalary({ user }) {
   const classes = useStyles();
   const [employeeSalaryList, setEmployeeSalaryList] = useState([]);
   const { EmployeeID } = useParams();
+
+  if (!user) {
+    window.location.replace("/");
+  } else {
+    if (user.employeeID !== EmployeeID) {
+      window.location.href = "/dashboard";
+    }
+  }
 
   useEffect(() => {
     async function fetchData() {

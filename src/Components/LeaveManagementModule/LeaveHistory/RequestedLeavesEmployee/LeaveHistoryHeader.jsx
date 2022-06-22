@@ -16,13 +16,13 @@ const LeaveHistoryHeader = () => {
             
           </Grid>
         </Grid>
+       {/* <Divider sx={{background:"#c6ff00"}}></Divider>
        <Divider sx={{background:"#c6ff00"}}></Divider>
        <Divider sx={{background:"#c6ff00"}}></Divider>
        <Divider sx={{background:"#c6ff00"}}></Divider>
        <Divider sx={{background:"#c6ff00"}}></Divider>
        <Divider sx={{background:"#c6ff00"}}></Divider>
-       <Divider sx={{background:"#c6ff00"}}></Divider>
-    
+     */}
       {/* </Paper> */}
     </Box>
   );

@@ -83,7 +83,7 @@ export const fetchRecentCandidates = () =>
   API.get(`/recruitment/candidates/recent`);
 
 // Interview API
-export const fetchEmployees = () => API.get(`/employee/getall`);
+export const fetchEmployees = () => API.get(`recruitment/interviewer/get`);
 export const createInterview = (interviewData) =>
   API.post(`/recruitment/interview/create`, interviewData);
 export const getInterviewList = (employeeID) =>
@@ -301,7 +301,7 @@ export const viewPProducts = (viewproduct) => {
 export const getLeaveBalance = (employeeID) =>
   API.get(`/leave/leaveBalance/${employeeID}`);
 export const getLeaveBalanceOfEmployee = (employeeID) =>
-  API.get(`/leave/LeaveBalance/teamMember/remaining`, employeeID);
+  API.post(`/leave/LeaveBalance/teamMember/remaining`, employeeID);
 export const requestLeave = (leaveDetail) =>
   API.post("/leave/request", leaveDetail);
 
@@ -338,3 +338,5 @@ export const getPromotionHistory = () => {
 export const getJobRoleStats = () => {
   return API.get(`/promotion/jobRole/stats`);
 };
+export const createFirstEmployeeAsHR = (employee) =>
+  API.post(`/employee/firstEmp/`, employee);

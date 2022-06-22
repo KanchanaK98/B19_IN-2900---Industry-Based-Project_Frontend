@@ -44,10 +44,9 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import useStyles from "./ScheduleExamFormStyles";
 
-function ScheduleExamForm() {
+function ScheduleExamForm({user}) {
   const classes = useStyles();
 
-  const [ExamID, setExamID] = useState("");
   const [ExamName, setExamName] = useState("");
   const [DateScheduled, setDateScheduled] = useState(null);
   const [JobRole, setJobRole] = useState("");
@@ -57,11 +56,20 @@ function ScheduleExamForm() {
   const [Status, setStatus] = useState([]);
   const [fill, setFill] = useState(false);
   const [ExamsList, setExamsList] = useState([]);
-
+  const [ExamID, setExamID] = useState("");
   const [PaperList, setPaperList] = useState([]);
 
   const { EmployeeID } = useParams();
 
+  if(!user)
+  {
+    window.location.replace('/');
+  }else{
+    if(user.jobRole !== "HR Manager")
+    {
+      window.location.href = "/dashboard";
+    }
+  }
   useEffect(() => {
     async function fetchData() {
       setPaperList(await viewAllPapersListApi());

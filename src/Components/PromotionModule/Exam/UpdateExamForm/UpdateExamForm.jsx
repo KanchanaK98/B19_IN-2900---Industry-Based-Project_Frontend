@@ -27,7 +27,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import useStyles from "./UpdateExamFormStyles";
 
-function UpdateExamForm() {
+function UpdateExamForm({ user }) {
   const classes = useStyles();
 
   const [ExamName, setExamName] = useState("");
@@ -43,6 +43,13 @@ function UpdateExamForm() {
   const { EmployeeID } = useParams();
   const { ExamID } = useParams();
 
+  if (!user) {
+    window.location.replace("/");
+  } else {
+    if (user.jobRole !== "HR Manager") {
+      window.location.href = "/dashboard";
+    }
+  }
   useEffect(() => {
     async function fetchData() {
       setPaperList(await viewAllPapersListApi());

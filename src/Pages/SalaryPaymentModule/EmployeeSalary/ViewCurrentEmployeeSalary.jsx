@@ -1,10 +1,10 @@
 import React from "react";
 import ViewEmloyeesalary from "../../../Components/SalaryPaymentModule/EmployeeSalary/ViewEmloyeesalary/ViewEmloyeesalary";
 
-const ViewCurrentEmployeeSalary = () => {
+const ViewCurrentEmployeeSalary = ({ user }) => {
   return (
     <div>
-      <ViewEmloyeesalary />
+      <ViewEmloyeesalary user={user} />
     </div>
   );
 };

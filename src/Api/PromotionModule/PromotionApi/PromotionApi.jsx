@@ -26,3 +26,13 @@ export const getPromotionHistory = async () => {
     console.log(error);
   }
 };
+
+export const getJobRoleStats = async () => {
+  try {
+    const { data } = await api.getJobRoleStats();
+   console.log(data.jobRoleStats);
+   return data.jobRoleStats
+  } catch (error) {
+    console.log(error);
+  }
+};

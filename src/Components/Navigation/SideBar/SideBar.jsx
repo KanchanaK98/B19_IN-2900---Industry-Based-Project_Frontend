@@ -262,72 +262,74 @@ const SideBar = ({ open, toggleDrawer, user, handleLogOut }) => {
             </Collapse>
           </Grid>
 
-          <Grid className={classes.navItem}>
-            <ListItem
-              selected={selectedIndex === 3}
-              onClick={() => {
-                handleListItemClick(3);
-                setOpenCollapse({ Leave: !openCollapse.Leave });
-              }}
-              className={classes.navButton}
-            >
-              <ListItemIcon>
-                <AccessTimeIcon />
-              </ListItemIcon>
-              <ListItemText primary="Leaves" />
-              {openCollapse.Leave ? <ExpandLess /> : <ExpandMore />}
-            </ListItem>
-            <Collapse in={openCollapse.Leave} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding>
-                <ListItem2
-                  component={Link}
-                  to="/leaveHistory"
-                  selected={selectedIndex2 === 0}
-                  onClick={() => {
-                    handleListItemClick2(0);
-                  }}
-                  className={classes.navButton2}
-                >
-                  <ListItemIcon>
-                    <StarBorder />
-                  </ListItemIcon>
-                  <ListItemText primary="Leave History" />
-                </ListItem2>
-
-                <ListItem2
-                  component={Link}
-                  to="/requestLeave"
-                  selected={selectedIndex2 === 1}
-                  onClick={() => {
-                    handleListItemClick2(1);
-                  }}
-                  className={classes.navButton2}
-                >
-                  <ListItemIcon>
-                    <StarBorder />
-                  </ListItemIcon>
-                  <ListItemText primary="Request Leave" />
-                </ListItem2>
-
-                {user.teamLead && (
-                  <ListItem2
+          {(user.teamID || user.jobRole === "HR Manager") && (
+            <Grid className={classes.navItem}>
+              <ListItem
+                selected={selectedIndex === 3}
+                onClick={() => {
+                  handleListItemClick(3);
+                  setOpenCollapse({ Leave: !openCollapse.Leave });
+                }}
+                className={classes.navButton}
+              >
+                <ListItemIcon>
+                  <AccessTimeIcon />
+                </ListItemIcon>
+                <ListItemText primary="Leaves" />
+                {openCollapse.Leave ? <ExpandLess /> : <ExpandMore />}
+              </ListItem>
+              <Collapse in={openCollapse.Leave} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                  {user.jobRole !== "HR Manager" && (<ListItem2
                     component={Link}
-                    to="/requestedLeaves"
-                    selected={selectedIndex2 === 2}
+                    to="/leaveHistory"
+                    selected={selectedIndex2 === 0}
                     onClick={() => {
-                      handleListItemClick2(2);
+                      handleListItemClick2(0);
                     }}
                     className={classes.navButton2}
                   >
                     <ListItemIcon>
                       <StarBorder />
                     </ListItemIcon>
-                    <ListItemText primary="Requested Leave" />
-                  </ListItem2>
-                )}
-              </List>
-            </Collapse>
-          </Grid>
+                    <ListItemText primary="Leave History" />
+                  </ListItem2>)}
+
+                 {user.jobRole !== "HR Manager" && ( <ListItem2
+                    component={Link}
+                    to="/requestLeave"
+                    selected={selectedIndex2 === 1}
+                    onClick={() => {
+                      handleListItemClick2(1);
+                    }}
+                    className={classes.navButton2}
+                  >
+                    <ListItemIcon>
+                      <StarBorder />
+                    </ListItemIcon>
+                    <ListItemText primary="Request Leave" />
+                  </ListItem2>)}
+
+                  {user.teamLead && (
+                    <ListItem2
+                      component={Link}
+                      to="/requestedLeaves"
+                      selected={selectedIndex2 === 2}
+                      onClick={() => {
+                        handleListItemClick2(2);
+                      }}
+                      className={classes.navButton2}
+                    >
+                      <ListItemIcon>
+                        <StarBorder />
+                      </ListItemIcon>
+                      <ListItemText primary="Requested Leave" />
+                    </ListItem2>
+                  )}
+                </List>
+              </Collapse>
+            </Grid>
+          )}
 
           <Grid className={classes.navItem}>
             <ListItem
@@ -548,7 +550,7 @@ const SideBar = ({ open, toggleDrawer, user, handleLogOut }) => {
             </Collapse>
           </Grid>
 
-          {user.jobRole === "HR Manager" && (
+          {(user.jobRole === "HR Manager" || user.jobRole === "CTO" || user.isTeamLead)  && (
             <Grid className={classes.navItem}>
               <ListItem
                 selected={selectedIndex === 6}
@@ -585,7 +587,7 @@ const SideBar = ({ open, toggleDrawer, user, handleLogOut }) => {
                     <ListItemText primary="Interviews" />
                   </ListItem2>
 
-                  <ListItem2
+                  {(user.jobRole === "HR Manager") && (<ListItem2
                     component={Link}
                     to="/candidate"
                     selected={selectedIndex2 === 1}
@@ -598,7 +600,7 @@ const SideBar = ({ open, toggleDrawer, user, handleLogOut }) => {
                       <StarBorder />
                     </ListItemIcon>
                     <ListItemText primary="Candidates" />
-                  </ListItem2>
+                  </ListItem2>)}
                 </List>
               </Collapse>
             </Grid>

@@ -334,3 +334,6 @@ export const getPromotionHistory = () => {
   return API.get(`/promotion/history`);
 };
 
+export const getJobRoleStats = () => {
+  return API.get(`/promotion/jobRole/stats`);
+};

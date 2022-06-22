@@ -6,6 +6,7 @@ const useStyles = makeStyles((theme) => ({
     "& .MuiTextField-root": {
       margin: theme.spacing(2),
     },
+    borderRadius:  theme.spacing(3),
   },
   formHeader: {
     display: "flex",
@@ -13,10 +14,11 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(1),
     "& .MuiTypography-h4": {
       margin: theme.spacing(1, 1),
+      fontSize: theme.spacing(3.2),
       fontWeight: 500,
     },
     "& .MuiSvgIcon-root": {
-      fontSize: theme.spacing(5),
+      fontSize: theme.spacing(4),
       marginLeft: theme.spacing(2),
     },
   },

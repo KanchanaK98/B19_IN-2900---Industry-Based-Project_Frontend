@@ -33,6 +33,7 @@ const jobPositions = [
   "Product manager",
   "Associate Software engineer",
   "Intern",
+  "Software Architect"
 ];
 
 const CreateCandidateForm = ({
@@ -51,7 +52,8 @@ const CreateCandidateForm = ({
     email: "",
     cv: "",
   });
-
+  
+  
   const handleOpenDialog = () => {
     setOpenDialog(true);
   };
@@ -96,6 +98,7 @@ const CreateCandidateForm = ({
       }
       return;
     });
+    //eslint-disable-next-line
     const emailFormat = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
     if (candidateData.email && !candidateData.email.match(emailFormat)) {
       setCandidateErrors((prevState) => ({
@@ -110,6 +113,9 @@ const CreateCandidateForm = ({
         ...prevState,
         NIC: "Invalid NIC format",
       }));
+      isError = true;
+    }
+    if (candidateErrors.cv) {
       isError = true;
     }
     return isError;
@@ -132,6 +138,7 @@ const CreateCandidateForm = ({
         }
       }
       handleClear();
+      window.location.reload();
     }
   };
   const handlePDFUpload = (event) => {
@@ -145,9 +152,11 @@ const CreateCandidateForm = ({
           ...candidateData,
           cv: event.target.result,
         });
+        setCandidateErrors({ ...candidateErrors, cv: "" });
       };
     } else {
-      console.log("Please select valid pdf file");
+      setCandidateErrors({ ...candidateErrors, [event.target.name]: "Only pdf file type is allowed"});
+      
     }
   };
 
@@ -179,7 +188,7 @@ const CreateCandidateForm = ({
                     <Grid item sm={8} md={8}>
                       <TextField
                         label="Enter First Name"
-                        variant="outlined"
+                        variant="filled"
                         name="firstName"
                         value={candidateData.firstName}
                         error={candidateErrors.firstName ? true : false}
@@ -197,7 +206,7 @@ const CreateCandidateForm = ({
                     <Grid item sm={8} md={8}>
                       <TextField
                         label="Enter valid NIC"
-                        variant="outlined"
+                        variant="filled"
                         name="NIC"
                         value={candidateData.NIC}
                         error={candidateErrors.NIC ? true : false}
@@ -215,7 +224,7 @@ const CreateCandidateForm = ({
                       <MuiPhoneNumber
                         label="Enter Phone number"
                         defaultCountry={"lk"}
-                        variant="outlined"
+                        variant="filled"
                         name="phoneNumber"
                         value={candidateData.phoneNumber}
                         error={candidateErrors.phoneNumber ? true : false}
@@ -242,7 +251,7 @@ const CreateCandidateForm = ({
                     <Grid item sm={8} md={8}>
                       <TextField
                         label="Select Applied Position"
-                        variant="outlined"
+                        variant="filled"
                         name="appliedPosition"
                         select
                         value={candidateData.appliedPosition}
@@ -269,7 +278,7 @@ const CreateCandidateForm = ({
                     <Grid item sm={8} md={8}>
                       <TextField
                         label="Enter Last name"
-                        variant="outlined"
+                        variant="filled"
                         name="lastName"
                         value={candidateData.lastName}
                         error={candidateErrors.lastName ? true : false}
@@ -287,7 +296,7 @@ const CreateCandidateForm = ({
                     <Grid item sm={8} md={8}>
                       <TextField
                         label="Enter Valid Email"
-                        variant="outlined"
+                        variant="filled"
                         name="email"
                         value={candidateData.email}
                         error={candidateErrors.email ? true : false}
@@ -304,8 +313,9 @@ const CreateCandidateForm = ({
                     </Grid>
                     <Grid item sm={8} md={8}>
                       <TextField
+                      id="cv"
                         label="Upload Your CV"
-                        variant="outlined"
+                        variant="filled"
                         name="cv"
                         type={"file"}
                         error={candidateErrors.cv ? true : false}
@@ -319,7 +329,16 @@ const CreateCandidateForm = ({
                 </Grid>
               </Grid>
               <Grid item sm={12} md={12} className={classes.createButton}>
-                <Button
+              <Button
+                  color="inherit"
+                  variant="contained"
+                  size="large"
+                  onClick={handleClear}
+                  sx={{mr: 1}}
+                >
+                  Clear
+                </Button>
+                 <Button
                   color="secondary"
                   variant="contained"
                   size="large"

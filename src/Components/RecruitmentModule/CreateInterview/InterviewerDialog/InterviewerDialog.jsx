@@ -23,6 +23,7 @@ const InterviewerDialog = ({
   interview,
   employees,
   setInterviewErrors,
+  setEmployees
 }) => {
   const [interviewers, setInterviewers] = useState([]);
   useEffect(() => {
@@ -101,6 +102,7 @@ const InterviewerDialog = ({
           value=""
           onChange={(event) => {
             setInterviewers(interviewers.concat(event.target.value));
+            setEmployees(employees.filter((employee)=> employee !== event.target.value))
           }}
           fullWidth
           sx={{ mt: 3 }}

@@ -259,21 +259,22 @@ const SideBar = ({ open, toggleDrawer, user, handleLogOut }) => {
                   <ListItemText primary="Products" />
                 </ListItem2>
 
-                {user.jobRole === "HR Manager" && (<ListItem2
-                  component={Link}
-                  to="/dashboard/create"
-                  selected={selectedIndex2 === 2}
-                  onClick={() => {
-                    handleListItemClick2(2);
-                  }}
-                  className={classes.navButton2}
-                >
-                  <ListItemIcon>
-                    <StarBorder />
-                  </ListItemIcon>
-                  <ListItemText primary="Create Employee" />
-                </ListItem2>)}
-
+                {user.jobRole === "HR Manager" && (
+                  <ListItem2
+                    component={Link}
+                    to="/dashboard/create"
+                    selected={selectedIndex2 === 2}
+                    onClick={() => {
+                      handleListItemClick2(2);
+                    }}
+                    className={classes.navButton2}
+                  >
+                    <ListItemIcon>
+                      <StarBorder />
+                    </ListItemIcon>
+                    <ListItemText primary="Create Employee" />
+                  </ListItem2>
+                )}
               </List>
             </Collapse>
           </Grid>
@@ -534,20 +535,22 @@ const SideBar = ({ open, toggleDrawer, user, handleLogOut }) => {
                   </ListItem2>
                 )}
 
-                <ListItem2
-                  component={Link}
-                  to={`/promotion/evaluation/mySubmissions/${user.employeeID}`}
-                  selected={selectedIndex2 === 4}
-                  onClick={() => {
-                    handleListItemClick2(4);
-                  }}
-                  className={classes.navButton2}
-                >
-                  <ListItemIcon>
-                    <StarBorder />
-                  </ListItemIcon>
-                  <ListItemText primary="Evaluation Test" />
-                </ListItem2>
+                {(user.jobRole !== "CTO" || user.jobRole === "IT Employee") && (
+                  <ListItem2
+                    component={Link}
+                    to={`/promotion/evaluation/mySubmissions/${user.employeeID}`}
+                    selected={selectedIndex2 === 4}
+                    onClick={() => {
+                      handleListItemClick2(4);
+                    }}
+                    className={classes.navButton2}
+                  >
+                    <ListItemIcon>
+                      <StarBorder />
+                    </ListItemIcon>
+                    <ListItemText primary="Evaluation Test" />
+                  </ListItem2>
+                )}
 
                 {(user.jobRole === "CTO" || user.jobRole === "HR Manager") && (
                   <ListItem2

@@ -65,7 +65,7 @@ const History = () => {
                   <StyledTableRow key={history._id}>
                     <StyledTableCell align="center">
                       <Grid className={classes.cellContent}>
-                        <Avatar sx={{ mr: 1 }} src={history.employeePic} />
+                        <Avatar  src={history.employeePic} />
                         <Typography variant="h6">
                           {history.employeeName}
                         </Typography>
@@ -80,7 +80,7 @@ const History = () => {
                     </StyledTableCell>
                     <StyledTableCell align="center">
                       <Grid className={classes.cellContent}>
-                        <Avatar sx={{ mr: 1 }} src={history.teamLeadPic} />
+                        <Avatar src={history.teamLeadPic} />
                         <Typography variant="h6">
                           {history.teamLeadName}
                         </Typography>

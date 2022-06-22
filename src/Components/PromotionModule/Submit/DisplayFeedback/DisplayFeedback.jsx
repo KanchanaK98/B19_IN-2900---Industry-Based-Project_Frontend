@@ -11,6 +11,7 @@ import Typography from "@mui/material/Typography";
 import { Button, Box } from "@mui/material/";
 import { Grid } from "@mui/material";
 import { displayFeedbackApi } from "../../../../Api/PromotionModule/SubmissionApi/displayFeedbackApi";
+import { displayPaperApi } from "../../../../Api/PromotionModule/SubmissionApi/displayPaperApi";
 import useStyles from "./DisplayFeedbackStyles";
 import { styled } from "@mui/material/styles";
 import HistoryEduIcon from "@mui/icons-material/HistoryEdu";
@@ -44,9 +45,17 @@ const StyledTableRow = styled(TableRow)(() => ({
 
 const DisplayMyFeedback = () => {
   const classes = useStyles();
-  const [mysubmissionList, setmysubmissionList] = useState([]);
-
   const { EmployeeID } = useParams();
+  const [mysubmissionList, setmysubmissionList] = useState([]);
+  const [isPaper, setIsPaper] = useState([]);
+
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     setPaper(await displayPaperApi(EmployeeID));
+  //   }
+  //   fetchData();
+  // }, [EmployeeID]);
+  console.log("isPaper", isPaper);
   useEffect(() => {
     async function fetchData() {
       setmysubmissionList(await displayFeedbackApi(EmployeeID));

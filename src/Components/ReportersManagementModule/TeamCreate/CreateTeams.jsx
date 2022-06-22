@@ -102,6 +102,7 @@ function CreateTeams() {
           setError(false);
         }, 2000);
         handleClear();
+        
       }
     } else {
       setnotAdded(true);

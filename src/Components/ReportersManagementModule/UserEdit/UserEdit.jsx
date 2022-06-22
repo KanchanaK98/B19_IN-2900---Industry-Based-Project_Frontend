@@ -282,7 +282,7 @@ function UserEdit() {
           <Box padding={6} sx={{ mb: 4 }}>
             <Paper
               elevation={3}
-              sx={{ padding: 4.5, backgroundColor: "#e4ecf7" }}
+              sx={{ padding: 4.5, backgroundColor: "#b0e5ff" }}
             >
               <Grid container>
                 <Grid item sm={12} md={12} sx={{ color: "#183d78" }}>
@@ -444,32 +444,18 @@ function UserEdit() {
                           </FormLabel>
                         </Grid>
                         <Grid item xs={6} md={9}>
-                          {jobRole === "HR Manager" ? (
-                            <TextField
-                              id="filled-basic"
-                              variant="filled"
-                              name="NIC"
-                              sx={{ backgroundColor: "#c7fcf7" }}
-                              value={inputs.NIC}
-                              onChange={handleChange || add(this)}
-                              error={inputErrors.NIC ? true : false}
-                              helperText={inputErrors.NIC}
-                              fullWidth
-                            />
-                          ) : (
-                            <TextField
-                              id="filled-basic"
-                              variant="filled"
-                              name="NIC"
-                              disabled
-                              sx={{ backgroundColor: "#c7fcf7" }}
-                              value={inputs.NIC}
-                              onChange={handleChange || add(this)}
-                              error={inputErrors.NIC ? true : false}
-                              helperText={inputErrors.NIC}
-                              fullWidth
-                            />
-                          )}
+                          <TextField
+                            id="filled-basic"
+                            variant="filled"
+                            name="NIC"
+                            disabled
+                            sx={{ backgroundColor: "#c7fcf7" }}
+                            value={inputs.NIC}
+                            onChange={handleChange || add(this)}
+                            error={inputErrors.NIC ? true : false}
+                            helperText={inputErrors.NIC}
+                            fullWidth
+                          />
                         </Grid>
                       </Grid>
                     </Grid>
@@ -869,7 +855,6 @@ function UserEdit() {
                     <Button
                       LinkComponent={Link}
                       to={`/dashboard`}
-                    
                       state={{ allEmployees: true }}
                       variant="contained"
                       className={classes.button}

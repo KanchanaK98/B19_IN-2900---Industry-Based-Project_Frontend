@@ -10,7 +10,7 @@ import {
   countEmployees,
   createEmployee,
 } from "../../../Api/ReportersManagementModule/EmployeeApi";
-import { Alert, AlertTitle, Stack, Typography } from "@mui/material";
+import { Alert, AlertTitle, MenuItem, Stack, Typography } from "@mui/material";
 import CredentialCard from "./CredentialCard";
 import useStyles from "./CreateFormStyles";
 import Candidates from "./Candidates";
@@ -121,7 +121,7 @@ function CreateEmployee({ candidates }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     //-----------------------------------
     if (candidates && candidates.length === 0) {
       setIsDisableCandidate(true);
@@ -145,33 +145,29 @@ function CreateEmployee({ candidates }) {
         setTimeout(() => {
           setDuplicated(false);
         }, 2000);
+        handleClear();
       }
       handleClear();
     } else {
-      handleClear();
       setnotAdded(true);
       setTimeout(() => {
         setnotAdded(false);
       }, 2000);
+      handleClear();
     }
   };
-  // const [candidates, setCandidates] = useState();
+
   const [isDisableCandidate, setIsDisableCandidate] = useState(true);
   useEffect(() => {
-    // async function fetchData() {
-    //   setCandidates(await getCandidates());
-    // }
-    // fetchData();
     if (candidates && candidates.length > 0) {
-      console.log("hiii")
+      console.log("hiii");
       setIsDisableCandidate(false);
     }
     if (candidates && candidates.length === 0) {
       setIsDisableCandidate(true);
     }
   }, [candidates]);
-console.log(candidates)
-  // console.log(candidates, { message: "hi" });
+
   const classes = useStyles();
   return (
     <div>
@@ -348,14 +344,14 @@ console.log(candidates)
                         onChange={handleChange}
                         error={inputErrors.jobRole ? true : false}
                         helperText={inputErrors.jobRole}
-                        // select
+                        select
                         fullWidth
                       >
-                        {/* {jobRoles.map((jobRole) => (
+                        {jobRoles.map((jobRole) => (
                           <MenuItem value={jobRole} key={jobRole}>
                             {jobRole}
                           </MenuItem>
-                        ))} */}
+                        ))}
                       </TextField>
                     </Grid>
                   </Grid>
